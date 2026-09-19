@@ -616,7 +616,12 @@
 
   function queueSaveMonths(monthsPatch) {
     var stepPromise = writeChain.then(function () {
-      return apiCall("saveMonths", { nickname: state.profile.nickname, pin: state.pin, months: monthsPatch });
+      return apiCall("saveMonths", { nickname: state.profile.nickname, pin: state.pin, months: monthsPatch }).then(function (res) {
+        if (!res || !res.ok) {
+          throw new Error((res && (res.message || res.error)) || "save_failed");
+        }
+        return res;
+      });
     });
     writeChain = stepPromise.then(function () {}, function () {});
     return stepPromise;
