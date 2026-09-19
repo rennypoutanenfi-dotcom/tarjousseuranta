@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tarjousseuranta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14171c;
+    --surface: #1c2028;
+    --surface-2: #242933;
+    --border: #333a46;
+    --text: #eef0f3;
+    --text-dim: #9aa2b1;
+    --text-faint: #5c6473;
+    --accent: #ff6a1f;
+    --accent-dim: #ff6a1f33;
+    --good: #3ecf8e;
+    --good-dim: #3ecf8e26;
+    --bad: #ef5354;
+    --bad-dim: #ef535426;
+    --gold: #e8b93e;
+    --gold-dim: #e8b93e22;
+    --font-display: 'Oswald', 'Arial Narrow', sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  :root:not([data-theme="light"]) { color-scheme: dark; }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #f4f5f7;
+      --surface: #ffffff;
+      --surface-2: #eceef2;
+      --border: #dcdfe5;
+      --text: #171a1f;
+      --text-dim: #5c6473;
+      --text-faint: #9aa2b1;
+      --accent: #e85e18;
+      --accent-dim: #e85e1822;
+      --good: #1c9a63;
+      --good-dim: #1c9a6318;
+      --bad: #d93c3d;
+      --bad-dim: #d93c3d18;
+      --gold: #a9791a;
+      --gold-dim: #a9791a18;
+      color-scheme: light;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #f4f5f7;
+    --surface: #ffffff;
+    --surface-2: #eceef2;
+    --border: #dcdfe5;
+    --text: #171a1f;
+    --text-dim: #5c6473;
+    --text-faint: #9aa2b1;
+    --accent: #e85e18;
+    --accent-dim: #e85e1822;
+    --good: #1c9a63;
+    --good-dim: #1c9a6318;
+    --bad: #d93c3d;
+    --bad-dim: #d93c3d18;
+    --gold: #a9791a;
+    --gold-dim: #a9791a18;
+    color-scheme: light;
+  }
+  :root[data-theme="dark"] { color-scheme: dark; }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  #app {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 84px;
+  }
+  #app.auth-mode { padding-bottom: 0; }
+
+  /* header */
+  header.top {
+    padding: 20px 18px 14px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    gap: 10px;
+  }
+  header.top .brand {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+  }
+  header.top .month-label {
+    font-size: 13px;
+    color: var(--text-dim);
+    text-transform: capitalize;
+  }
+  header.top .who-label {
+    font-size: 12px;
+    color: var(--text-faint);
+    margin-top: 2px;
+  }
+  #settingsBtn {
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
+    border-radius: 10px; width: 38px; height: 38px; flex-shrink: 0; cursor: pointer;
+    display: none; align-items: center; justify-content: center;
+  }
+  #settingsBtn svg { width: 18px; height: 18px; }
+
+  main { flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+  main.auth-main { justify-content: center; min-height: 100vh; padding: 24px; }
+
+  /* generic card */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+  }
+  .card h2 {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0 0 4px;
+    color: var(--text-dim);
+  }
+
+  /* auth screen */
+  .auth-card { max-width: 400px; margin: 0 auto; width: 100%; }
+  .auth-brand { text-align: center; margin-bottom: 22px; }
+  .auth-brand .icon {
+    width: 56px; height: 56px; border-radius: 16px; background: var(--accent-dim);
+    color: var(--accent); display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 12px; font-family: var(--font-display); font-size: 26px; font-weight: 600;
+  }
+  .auth-brand h1 { font-family: var(--font-display); font-size: 22px; font-weight: 600; margin: 0; }
+  .auth-toggle { display: flex; gap: 8px; margin-top: 14px; }
+  .auth-toggle button {
+    flex: 1; background: var(--surface-2); border: 1px solid var(--border); color: var(--text-dim);
+    border-radius: 10px; padding: 10px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: var(--font-body);
+  }
+  .auth-toggle button.active { background: var(--accent-dim); color: var(--accent); border-color: var(--accent); }
+  .auth-error { color: var(--bad); font-size: 13px; margin: -6px 0 14px; }
+  .auth-link { text-align: center; font-size: 13px; color: var(--text-faint); margin-top: 14px; }
+  .auth-link a { color: var(--accent); text-decoration: none; cursor: pointer; }
+
+  /* gauge / hero */
+  .gauge-card { display: flex; align-items: center; gap: 18px; }
+  .gauge-wrap { position: relative; width: 128px; height: 128px; flex-shrink: 0; }
+  .gauge-wrap svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .gauge-wrap .ring-bg { fill: none; stroke: var(--surface-2); stroke-width: 10; }
+  .gauge-wrap .ring-fg { fill: none; stroke: var(--accent); stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset .5s ease, stroke .3s ease; }
+  .gauge-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .gauge-center .num { font-family: var(--font-display); font-size: 30px; font-weight: 600; line-height: 1; }
+  .gauge-center .den { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+  .gauge-side { flex: 1; min-width: 0; }
+  .pace-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 600; padding: 5px 10px; border-radius: 999px;
+    margin-bottom: 8px;
+  }
+  .pace-tag.ahead { background: var(--good-dim); color: var(--good); }
+  .pace-tag.behind { background: var(--bad-dim); color: var(--bad); }
+  .pace-tag.onpace { background: var(--accent-dim); color: var(--accent); }
+  .gauge-side .detail { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+  .gauge-side .detail b { color: var(--text); font-weight: 600; }
+
+  /* stat row */
+  .stat-row { display: flex; gap: 10px; }
+  .stat-box {
+    flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+    padding: 14px; text-align: left;
+  }
+  .stat-box .n { font-family: var(--font-display); font-size: 26px; font-weight: 600; }
+  .stat-box .l { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+
+  /* source table */
+  table.src { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  table.src th, table.src td { text-align: left; padding: 8px 4px; font-size: 13px; border-bottom: 1px solid var(--border); }
+  table.src th { color: var(--text-faint); font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
+  table.src td:not(:first-child), table.src th:not(:first-child) { text-align: right; }
+  table.src tr:last-child td { border-bottom: none; }
+  table.src td.hr-good { color: var(--good); font-weight: 600; }
+  table.src td.hr-bad { color: var(--text-dim); }
+
+  /* buttons */
+  .btn {
+    font-family: var(--font-body); font-weight: 600; font-size: 15px;
+    border-radius: 12px; border: none; padding: 14px 16px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%;
+  }
+  .btn-primary { background: var(--accent); color: #17110b; }
+  .btn-primary:active { opacity: .85; }
+  .btn-primary:disabled { opacity: .5; cursor: default; }
+  .btn-ghost { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+  .btn-ghost:active { background: var(--border); }
+  .btn-sm { padding: 9px 14px; font-size: 13px; width: auto; }
+
+  /* setup form */
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 13px; color: var(--text-dim); margin-bottom: 6px; }
+  .field input {
+    width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
+    font-family: var(--font-display); font-size: 22px; font-weight: 500; border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .field input.text-field { font-family: var(--font-body); font-size: 15px; font-weight: 500; }
+  .field input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .field-note { font-size: 12px; color: var(--accent); margin: -6px 0 14px; }
+  .field-hint { font-size: 12px; color: var(--text-faint); margin: -10px 0 14px; }
+
+  /* source picker grid */
+  .src-grid { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+  .src-pick {
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
+    border-radius: 12px; padding: 14px; text-align: left; font-size: 14px; font-weight: 500;
+    cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+  }
+  .src-pick:active { background: var(--border); }
+  .src-pick .tag { font-size: 11px; color: var(--text-dim); font-weight: 400; }
+
+  /* offer list */
+  .offer-list { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+  .offer-row {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .offer-row .meta { font-size: 13px; }
+  .offer-row .meta .src { font-weight: 600; }
+  .offer-row .meta .date { color: var(--text-dim); font-size: 12px; margin-top: 1px; }
+  .offer-row button {
+    background: var(--accent-dim); color: var(--accent); border: none; border-radius: 8px;
+    padding: 7px 12px; font-size: 12px; font-weight: 700; cursor: pointer;
+  }
+  .offer-row .row-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .offer-row .status-badge {
+    font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 999px;
+    background: var(--good-dim); color: var(--good);
+  }
+  .offer-row .status-badge.open { background: var(--surface); color: var(--text-faint); border: 1px solid var(--border); }
+  .del-btn {
+    background: var(--bad-dim); color: var(--bad); border: none; border-radius: 8px;
+    width: 30px; height: 30px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .del-btn svg { width: 15px; height: 15px; }
+  .empty-note { font-size: 13px; color: var(--text-faint); text-align: center; padding: 18px 8px; }
+
+  /* past-month entry form */
+  .src-count-row { display: grid; grid-template-columns: 1fr 72px 72px; gap: 8px; align-items: center; margin-bottom: 10px; }
+  .src-count-row .lbl { font-size: 13px; }
+  .src-count-row input {
+    width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
+    font-family: var(--font-display); font-size: 16px; font-weight: 500; border-radius: 8px; padding: 8px 6px; text-align: center;
+  }
+  .src-count-head { display: grid; grid-template-columns: 1fr 72px 72px; gap: 8px; margin-bottom: 6px; }
+  .src-count-head span { font-size: 10px; color: var(--text-faint); text-transform: uppercase; letter-spacing: .03em; text-align: center; }
+  .src-count-head span:first-child { text-align: left; }
+  select.text-field {
+    width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
+    font-family: var(--font-body); font-size: 15px; font-weight: 500; border-radius: 10px; padding: 10px 12px;
+  }
+
+  /* toast */
+  #toast {
+    position: fixed; left: 50%; bottom: 96px; transform: translateX(-50%) translateY(20px);
+    background: var(--text); color: var(--bg); font-size: 13px; font-weight: 600;
+    padding: 10px 16px; border-radius: 999px; opacity: 0; pointer-events: none;
+    transition: opacity .25s ease, transform .25s ease; z-index: 50; white-space: nowrap;
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* history */
+  .hist-row {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 14px; margin-bottom: 10px; cursor: pointer;
+  }
+  .hist-row .top-line { display: flex; justify-content: space-between; align-items: baseline; }
+  .hist-row .m { font-family: var(--font-display); font-size: 16px; font-weight: 600; text-transform: capitalize; }
+  .hist-row .result { font-size: 13px; color: var(--text-dim); }
+  .hist-row .sub { font-size: 12px; color: var(--text-faint); margin-top: 4px; }
+  .hist-detail { margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px; }
+
+  /* leaderboard */
+  .lb-tabs { display: flex; gap: 8px; margin-bottom: 4px; }
+  .lb-tab {
+    flex: 1; background: var(--surface); border: 1px solid var(--border); color: var(--text-dim);
+    border-radius: 12px; padding: 12px; font-size: 13px; font-weight: 600; cursor: pointer;
+    font-family: var(--font-body);
+  }
+  .lb-tab.active { background: var(--accent-dim); color: var(--accent); border-color: var(--accent); }
+  .lb-list { display: flex; flex-direction: column; gap: 8px; }
+  .lb-row {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 12px 14px;
+  }
+  .lb-row.self { border-color: var(--accent); background: var(--accent-dim); }
+  .lb-row.top1 .lb-rank { color: var(--gold); }
+  .lb-rank {
+    font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--text-faint);
+    width: 22px; text-align: center; flex-shrink: 0;
+  }
+  .lb-info { flex: 1; min-width: 0; }
+  .lb-name { font-size: 14px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .lb-company { font-size: 12px; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .lb-metric { text-align: right; flex-shrink: 0; }
+  .lb-metric .v { font-family: var(--font-display); font-size: 18px; font-weight: 600; }
+  .lb-metric .u { font-size: 11px; color: var(--text-dim); margin-top: 1px; }
+
+  /* bottom nav */
+  nav.tabbar {
+    position: fixed; left: 50%; transform: translateX(-50%); bottom: 0; width: 100%; max-width: 480px;
+    background: var(--surface); border-top: 1px solid var(--border);
+    display: flex; padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+    gap: 4px;
+  }
+  nav.tabbar button {
+    flex: 1; background: none; border: none; display: flex; flex-direction: column; align-items: center;
+    gap: 3px; padding: 6px 0; color: var(--text-faint); font-size: 11px; font-weight: 600; cursor: pointer;
+    font-family: var(--font-body);
+  }
+  nav.tabbar button.active { color: var(--accent); }
+  nav.tabbar svg { width: 22px; height: 22px; }
+
+  .loading-wrap { display: flex; align-items: center; justify-content: center; min-height: 60vh; color: var(--text-faint); font-size: 14px; }
+  .hidden { display: none !important; }
+  .section-title { font-family: var(--font-display); font-size: 13px; color: var(--text-dim); margin: 4px 2px 0; text-transform: uppercase; letter-spacing: .04em; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="top" id="topHeader">
+    <div>
+      <div class="brand">Tarjousseuranta</div>
+      <div class="month-label" id="monthLabel">&nbsp;</div>
+      <div class="who-label" id="whoLabel"></div>
+    </div>
+    <button id="settingsBtn" type="button" aria-label="Asetukset">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
+  </header>
+  <main id="main">
+    <div class="loading-wrap">Ladataan&hellip;</div>
+  </main>
+  <nav class="tabbar" id="tabbar">
+    <button data-tab="home" class="active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+      Etusivu
+    </button>
+    <button data-tab="add">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+      Lisää
+    </button>
+    <button data-tab="leaderboard">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M7 6H4a2 2 0 0 0 2 4M17 6h3a2 2 0 0 1-2 4"/></svg>
+      Tulostaulu
+    </button>
+    <button data-tab="history">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      Historia
+    </button>
+  </nav>
+</div>
+<div id="toast"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var SOURCES = [
+    { id: 1, label: "Firman liidi" },
+    { id: 2, label: "Lattialle tullut asiakas" },
+    { id: 3, label: "Suorasoitto" },
+    { id: 4, label: "Itse kontaktoitu" },
+    { id: 5, label: "Muu oma väylä" }
+  ];
+  var MONTH_NAMES = ["tammikuu","helmikuu","maaliskuu","huhtikuu","toukokuu","kesäkuu",
+    "heinäkuu","elokuu","syyskuu","lokakuu","marraskuu","joulukuu"];
+
+  var LS_API = "ts_api_url";
+  var LS_NICK = "ts_nickname";
+  var LS_PIN = "ts_pin";
+
+  var state = {
+    apiUrl: null,
+    authStatus: "checking", // need-api | checking | need-auth | ready
+    authMode: "login",      // login | register
+    authError: "",
+    authBusy: false,
+    tab: "home",
+    monthKey: monthKeyOf(new Date()),
+    profile: null,          // { nickname, company, months: {...} } once logged in
+    pin: null,              // kept in memory for this session's writes
+    leaderboardTab: "hitrate",
+    leaderboardPeriod: "month",
+    leaderboardDocs: [],
+    leaderboardLoaded: false,
+    leaderboardTimer: null,
+    historyExpanded: null
+  };
+
+  // Local authoritative offers array (current month) + serialized write
+  // queue, and sticky-deleted ids so a slow/late server echo can never
+  // resurrect something the user just deleted.
+  var localOffers = null;
+  var writeChain = Promise.resolve();
+  var deletedIds = {};
+
+  function monthKeyOf(d) {
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0");
+  }
+  function parseMonthKey(k) {
+    var parts = k.split("-");
+    return { y: parseInt(parts[0], 10), m: parseInt(parts[1], 10) - 1 };
+  }
+  function isWeekday(d) { var wd = d.getDay(); return wd !== 0 && wd !== 6; }
+  function totalWeekdaysInMonth(y, m) {
+    var days = new Date(y, m + 1, 0).getDate();
+    var c = 0;
+    for (var i = 1; i <= days; i++) { if (isWeekday(new Date(y, m, i))) c++; }
+    return c;
+  }
+  function elapsedWeekdaysInMonth(y, m, today) {
+    var lastDay = new Date(y, m + 1, 0).getDate();
+    var endDay = (today.getFullYear() === y && today.getMonth() === m) ? today.getDate() : lastDay;
+    if (today < new Date(y, m, 1)) endDay = 0;
+    if (today >= new Date(y, m + 1, 1)) endDay = lastDay;
+    var c = 0;
+    for (var i = 1; i <= endDay; i++) { if (isWeekday(new Date(y, m, i))) c++; }
+    return c;
+  }
+  function fmtDate(iso) {
+    var d = new Date(iso);
+    return d.toLocaleDateString("fi-FI", { day: "numeric", month: "numeric" }) + " klo " +
+      d.toLocaleTimeString("fi-FI", { hour: "2-digit", minute: "2-digit" });
+  }
+  function sourceLabel(id) {
+    var s = SOURCES.find(function (s) { return s.id === id; });
+    return s ? s.label : "Muu";
+  }
+  function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+  function escapeHtml(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function safeLS() {
+    try { return window.localStorage; } catch (e) { return null; }
+  }
+
+  function showToast(msg) {
+    var t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(showToast._h);
+    showToast._h = setTimeout(function () { t.classList.remove("show"); }, 1800);
+  }
+
+  // ---------- Backend (Google Apps Script) ----------
+  function apiCall(action, payload) {
+    var body = Object.assign({ action: action }, payload || {});
+    return fetch(state.apiUrl, { method: "POST", body: JSON.stringify(body) })
+      .then(function (r) { return r.json(); });
+  }
+
+  // Kiinteä oletusosoite — vaihda tähän oma Apps Script Web app -URL jos
+  // se joskus muuttuu (esim. deployataksesi uuden erillisen kopion).
+  var DEFAULT_API_URL = "https://script.google.com/macros/s/AKfycbx10v59MZZN9WHwhvOMhIXCZ465Gyap-UeN0x6zyqDElS0UIktwmyjC_LnTqPjHjf12/exec";
+
+  function resolveApiUrl() {
+    var ls = safeLS();
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var fromQuery = params.get("api");
+      if (fromQuery) {
+        if (ls) ls.setItem(LS_API, fromQuery);
+        return fromQuery;
+      }
+    } catch (e) {}
+    var stored = ls ? ls.getItem(LS_API) : null;
+    return stored || DEFAULT_API_URL;
+  }
+
+  function initAuth() {
+    state.apiUrl = resolveApiUrl();
+    if (!state.apiUrl) { state.authStatus = "need-api"; render(); return; }
+    var ls = safeLS();
+    var nick = ls ? ls.getItem(LS_NICK) : null;
+    var pin = ls ? ls.getItem(LS_PIN) : null;
+    if (!nick || !pin) { state.authStatus = "need-auth"; render(); return; }
+    state.authStatus = "checking";
+    render();
+    apiCall("login", { nickname: nick, pin: pin }).then(function (res) {
+      if (res && res.ok) {
+        state.profile = res.profile;
+        state.pin = pin;
+        localOffers = (res.profile.months && res.profile.months[state.monthKey]) ? res.profile.months[state.monthKey].offers : null;
+        state.authStatus = "ready";
+        render();
+      } else {
+        if (ls) { ls.removeItem(LS_NICK); ls.removeItem(LS_PIN); }
+        state.authStatus = "need-auth";
+        state.authError = "Kirjautuminen vanhentui, kirjaudu uudelleen.";
+        render();
+      }
+    }).catch(function () {
+      state.authStatus = "need-auth";
+      state.authError = "Palvelimeen ei saatu yhteyttä. Tarkista verkkoyhteys ja yritä uudelleen.";
+      render();
+    });
+  }
+
+  function saveApiUrlManually(url) {
+    var ls = safeLS();
+    if (ls) ls.setItem(LS_API, url);
+    state.apiUrl = url;
+    state.authStatus = "need-auth";
+    render();
+  }
+
+  function doLogin(nickname, pin) {
+    state.authBusy = true; state.authError = ""; render();
+    apiCall("login", { nickname: nickname, pin: pin }).then(function (res) {
+      state.authBusy = false;
+      if (res && res.ok) {
+        var ls = safeLS();
+        if (ls) { ls.setItem(LS_NICK, nickname); ls.setItem(LS_PIN, pin); }
+        state.profile = res.profile;
+        state.pin = pin;
+        localOffers = (res.profile.months && res.profile.months[state.monthKey]) ? res.profile.months[state.monthKey].offers : null;
+        state.authStatus = "ready";
+        render();
+      } else if (res && res.error === "not_found") {
+        state.authError = "Nimimerkkiä ei löydy. Luo ensin profiili.";
+        render();
+      } else if (res && res.error === "bad_pin") {
+        state.authError = "Väärä PIN-koodi.";
+        render();
+      } else {
+        state.authError = "Kirjautuminen epäonnistui, yritä uudelleen.";
+        render();
+      }
+    }).catch(function () {
+      state.authBusy = false;
+      state.authError = "Palvelimeen ei saatu yhteyttä.";
+      render();
+    });
+  }
+
+  function doRegister(nickname, company, pin, workDays, targetOffers) {
+    state.authBusy = true; state.authError = ""; render();
+    apiCall("register", { nickname: nickname, company: company, pin: pin }).then(function (res) {
+      if (!(res && res.ok)) {
+        state.authBusy = false;
+        state.authError = res && res.error === "taken" ? "Nimimerkki on jo käytössä." :
+          res && res.error === "pin_too_short" ? "PIN-koodin pitää olla vähintään 4 merkkiä." :
+          "Profiilin luonti epäonnistui.";
+        render();
+        return;
+      }
+      var monthsObj = {};
+      monthsObj[state.monthKey] = { monthKey: state.monthKey, workDays: workDays, targetOffers: targetOffers, offers: [] };
+      apiCall("saveMonths", { nickname: nickname, pin: pin, months: monthsObj }).then(function (res2) {
+        state.authBusy = false;
+        var ls = safeLS();
+        if (ls) { ls.setItem(LS_NICK, nickname); ls.setItem(LS_PIN, pin); }
+        state.pin = pin;
+        state.profile = (res2 && res2.ok) ? res2.profile : { nickname: nickname, company: company, months: monthsObj };
+        localOffers = [];
+        state.authStatus = "ready";
+        render();
+        showToast("Tervetuloa, " + nickname + "!");
+      }).catch(function () {
+        state.authBusy = false;
+        var ls = safeLS();
+        if (ls) { ls.setItem(LS_NICK, nickname); ls.setItem(LS_PIN, pin); }
+        state.pin = pin;
+        state.profile = { nickname: nickname, company: company, months: monthsObj };
+        localOffers = [];
+        state.authStatus = "ready";
+        render();
+      });
+    }).catch(function () {
+      state.authBusy = false;
+      state.authError = "Palvelimeen ei saatu yhteyttä.";
+      render();
+    });
+  }
+
+  function logout() {
+    var ls = safeLS();
+    if (ls) { ls.removeItem(LS_NICK); ls.removeItem(LS_PIN); }
+    state.profile = null;
+    state.pin = null;
+    localOffers = null;
+    deletedIds = {};
+    state.authMode = "login";
+    state.authError = "";
+    state.authStatus = "need-auth";
+    render();
+  }
+
+  function queueSaveMonths(monthsPatch) {
+    var stepPromise = writeChain.then(function () {
+      return apiCall("saveMonths", { nickname: state.profile.nickname, pin: state.pin, months: monthsPatch });
+    });
+    writeChain = stepPromise.then(function () {}, function () {});
+    return stepPromise;
+  }
+
+  function fetchLeaderboard() {
+    apiCall("leaderboard", {}).then(function (res) {
+      if (res && res.ok) {
+        state.leaderboardDocs = res.sellers || [];
+      }
+      state.leaderboardLoaded = true;
+      if (state.tab === "leaderboard") render();
+    }).catch(function () {
+      state.leaderboardLoaded = true;
+    });
+  }
+
+  function createProfileAndMonth(nickname, company, pin, workDays, targetOffers) {
+    doRegister(nickname, company, pin, workDays, targetOffers);
+  }
+
+  function startMonthOnly(workDays, targetOffers) {
+    var monthsObj = {};
+    monthsObj[state.monthKey] = { monthKey: state.monthKey, workDays: workDays, targetOffers: targetOffers, offers: [] };
+    localOffers = [];
+    state.profile = Object.assign({}, state.profile, { months: Object.assign({}, state.profile.months, monthsObj) });
+    render();
+    return queueSaveMonths(monthsObj);
+  }
+
+  function updateProfileAndGoal(company, workDays, targetOffers) {
+    var monthPatch = {};
+    monthPatch[state.monthKey] = { workDays: workDays, targetOffers: targetOffers };
+    var curMonths = (state.profile && state.profile.months) ? state.profile.months : {};
+    var mergedCur = Object.assign({ monthKey: state.monthKey }, curMonths[state.monthKey], monthPatch[state.monthKey]);
+    var newMonths = Object.assign({}, curMonths);
+    newMonths[state.monthKey] = mergedCur;
+    state.profile = Object.assign({}, state.profile, { company: company, months: newMonths });
+    render();
+    return queueSaveMonths(monthPatch);
+  }
+
+  function addOffer(sourceId) {
+    if (!localOffers) localOffers = (curMonthDoc() && curMonthDoc().offers) ? curMonthDoc().offers.slice() : [];
+    localOffers = localOffers.concat([{ id: genId(), ts: new Date().toISOString(), source: sourceId, closed: false, closedTs: null }]);
+    setLocalOffersOnProfile();
+    render();
+    var patch = {}; patch[state.monthKey] = { offers: localOffers.slice() };
+    return queueSaveMonths(patch);
+  }
+
+  function closeOffer(offerId) {
+    if (!localOffers) localOffers = (curMonthDoc() && curMonthDoc().offers) ? curMonthDoc().offers.slice() : [];
+    var idx = localOffers.findIndex(function (o) { return o.id === offerId; });
+    if (idx === -1) return Promise.resolve();
+    localOffers = localOffers.slice();
+    localOffers[idx] = Object.assign({}, localOffers[idx], { closed: true, closedTs: new Date().toISOString() });
+    setLocalOffersOnProfile();
+    render();
+    var patch = {}; patch[state.monthKey] = { offers: localOffers.slice() };
+    return queueSaveMonths(patch);
+  }
+
+  function deleteOffer(offerId) {
+    deletedIds[offerId] = true;
+    if (!localOffers) localOffers = (curMonthDoc() && curMonthDoc().offers) ? curMonthDoc().offers.slice() : [];
+    var idx = localOffers.findIndex(function (o) { return o.id === offerId; });
+    if (idx === -1) return Promise.resolve();
+    localOffers = localOffers.slice();
+    localOffers.splice(idx, 1);
+    setLocalOffersOnProfile();
+    render();
+    var patch = {}; patch[state.monthKey] = { offers: localOffers.slice() };
+    return queueSaveMonths(patch);
+  }
+
+  // Bulk-enter a past month's results as per-source offer/deal counts.
+  function savePastMonth(monthKey, workDays, targetOffers, sourceCounts) {
+    var parsed = parseMonthKey(monthKey);
+    var offers = [];
+    var i = 0;
+    sourceCounts.forEach(function (sc) {
+      for (var n = 0; n < sc.offerCount; n++) {
+        var closed = n < sc.dealCount;
+        var ts = new Date(parsed.y, parsed.m, 1, 9, 0, 0);
+        ts.setMinutes(ts.getMinutes() + i * 7);
+        offers.push({
+          id: genId(), ts: ts.toISOString(), source: sc.sourceId,
+          closed: closed, closedTs: closed ? ts.toISOString() : null
+        });
+        i++;
+      }
+    });
+    var monthsObj = {};
+    monthsObj[monthKey] = { monthKey: monthKey, workDays: workDays, targetOffers: targetOffers, offers: offers };
+    var newMonths = Object.assign({}, (state.profile && state.profile.months) || {}, monthsObj);
+    state.profile = Object.assign({}, state.profile, { months: newMonths });
+    if (monthKey === state.monthKey) localOffers = offers;
+    render();
+    return queueSaveMonths(monthsObj);
+  }
+
+  function setLocalOffersOnProfile() {
+    var curMonths = (state.profile && state.profile.months) ? state.profile.months : {};
+    var newMonths = Object.assign({}, curMonths);
+    newMonths[state.monthKey] = Object.assign({ monthKey: state.monthKey }, newMonths[state.monthKey], { offers: localOffers });
+    state.profile = Object.assign({}, state.profile, { months: newMonths });
+  }
+
+  function curMonthDoc() {
+    return (state.profile && state.profile.months) ? state.profile.months[state.monthKey] : null;
+  }
+
+  // ---------- Derived stats ----------
+  function computeStats(doc) {
+    var offers = (doc && doc.offers) || [];
+    var total = offers.length;
+    var closed = offers.filter(function (o) { return o.closed; }).length;
+    var hitRate = total > 0 ? (closed / total) * 100 : 0;
+
+    var parsed = parseMonthKey(doc ? doc.monthKey : state.monthKey);
+    var today = new Date();
+    var totalWd = totalWeekdaysInMonth(parsed.y, parsed.m);
+    var elapsedWd = elapsedWeekdaysInMonth(parsed.y, parsed.m, today);
+    var workDays = doc ? doc.workDays : 0;
+    var targetOffers = doc ? doc.targetOffers : 0;
+    var elapsedWorkDays = totalWd > 0 ? (workDays * (elapsedWd / totalWd)) : 0;
+    var expectedByNow = targetOffers * (totalWd > 0 ? (elapsedWd / totalWd) : 0);
+    var diff = total - expectedByNow;
+    var remainingWorkDays = Math.max(workDays - elapsedWorkDays, 0);
+    var remainingTarget = Math.max(targetOffers - total, 0);
+    var neededPerDay = remainingWorkDays > 0 ? (remainingTarget / remainingWorkDays) : (remainingTarget > 0 ? remainingTarget : 0);
+
+    var bySource = SOURCES.map(function (s) {
+      var so = offers.filter(function (o) { return o.source === s.id; });
+      var sc = so.filter(function (o) { return o.closed; }).length;
+      return { id: s.id, label: s.label, count: so.length, closed: sc, rate: so.length > 0 ? (sc / so.length) * 100 : null };
+    });
+
+    return {
+      total: total, closed: closed, hitRate: hitRate,
+      totalWd: totalWd, elapsedWd: elapsedWd, elapsedWorkDays: elapsedWorkDays,
+      diff: diff, neededPerDay: neededPerDay, remainingWorkDays: remainingWorkDays,
+      remainingTarget: remainingTarget, bySource: bySource,
+      progressFrac: targetOffers > 0 ? Math.min(total / targetOffers, 1) : 0
+    };
+  }
+
+  // ---------- Render ----------
+  function render() {
+    var app = document.getElementById("app");
+    var header = document.getElementById("topHeader");
+    var tabbar = document.getElementById("tabbar");
+    var main = document.getElementById("main");
+
+    if (state.authStatus !== "ready") {
+      app.classList.add("auth-mode");
+      header.classList.add("hidden");
+      tabbar.classList.add("hidden");
+      main.className = "auth-main";
+      renderAuth(main);
+      return;
+    }
+
+    app.classList.remove("auth-mode");
+    header.classList.remove("hidden");
+    tabbar.classList.remove("hidden");
+    main.className = "";
+
+    document.getElementById("monthLabel").textContent = monthDisplay(state.monthKey);
+    var whoLabel = document.getElementById("whoLabel");
+    whoLabel.textContent = state.profile.nickname + (state.profile.company ? " · " + state.profile.company : "");
+    var settingsBtn = document.getElementById("settingsBtn");
+    settingsBtn.style.display = state.tab === "home" ? "flex" : "none";
+
+    main.innerHTML = "";
+    if (state.tab === "home") renderHome(main);
+    else if (state.tab === "add") renderAdd(main);
+    else if (state.tab === "leaderboard") renderLeaderboard(main);
+    else if (state.tab === "history") renderHistory(main);
+
+    Array.prototype.forEach.call(document.querySelectorAll("nav.tabbar button"), function (b) {
+      b.classList.toggle("active", b.getAttribute("data-tab") === state.tab);
+    });
+  }
+
+  function renderAuth(main) {
+    main.innerHTML = "";
+    var wrap = document.createElement("div");
+    wrap.className = "auth-card";
+
+    if (state.authStatus === "need-api") {
+      wrap.innerHTML =
+        '<div class="auth-brand"><div class="icon">TS</div><h1>Tarjousseuranta</h1></div>' +
+        '<div class="card">' +
+          '<h2 style="color:var(--text);font-size:16px;font-weight:600;margin-bottom:10px;">Palvelimen osoite puuttuu</h2>' +
+          '<div class="field"><label for="apiInput">Web app -osoite</label><input id="apiInput" class="text-field" type="text" placeholder="https://script.google.com/macros/s/.../exec"></div>' +
+          '<button class="btn btn-primary" id="apiSaveBtn">Tallenna</button>' +
+        '</div>';
+      main.appendChild(wrap);
+      wrap.querySelector("#apiSaveBtn").addEventListener("click", function () {
+        var url = wrap.querySelector("#apiInput").value.trim();
+        if (!url) { showToast("Liitä osoite ensin"); return; }
+        saveApiUrlManually(url);
+      });
+      return;
+    }
+
+    if (state.authStatus === "checking") {
+      wrap.innerHTML = '<div class="loading-wrap">Kirjaudutaan&hellip;</div>';
+      main.appendChild(wrap);
+      return;
+    }
+
+    // need-auth
+    var errHtml = state.authError ? '<div class="auth-error">' + escapeHtml(state.authError) + '</div>' : '';
+    if (state.authMode === "login") {
+      wrap.innerHTML =
+        '<div class="auth-brand"><div class="icon">TS</div><h1>Tarjousseuranta</h1></div>' +
+        '<div class="auth-toggle">' +
+          '<button type="button" class="active" data-mode="login">Kirjaudu</button>' +
+          '<button type="button" data-mode="register">Luo profiili</button>' +
+        '</div>' +
+        '<div class="card" style="margin-top:14px;">' +
+          '<div class="field"><label for="liNick">Nimimerkki</label><input id="liNick" class="text-field" type="text" autocomplete="username"></div>' +
+          '<div class="field"><label for="liPin">PIN-koodi</label><input id="liPin" type="password" inputmode="numeric" autocomplete="current-password"></div>' +
+          errHtml +
+          '<button class="btn btn-primary" id="liBtn"' + (state.authBusy ? " disabled" : "") + '>' + (state.authBusy ? "Kirjaudutaan…" : "Kirjaudu") + '</button>' +
+        '</div>';
+      main.appendChild(wrap);
+      wrap.querySelector("#liBtn").addEventListener("click", function () {
+        var nick = wrap.querySelector("#liNick").value.trim();
+        var pin = wrap.querySelector("#liPin").value.trim();
+        if (!nick || !pin) { showToast("Täytä nimimerkki ja PIN"); return; }
+        doLogin(nick, pin);
+      });
+    } else {
+      wrap.innerHTML =
+        '<div class="auth-brand"><div class="icon">TS</div><h1>Tarjousseuranta</h1></div>' +
+        '<div class="auth-toggle">' +
+          '<button type="button" data-mode="login">Kirjaudu</button>' +
+          '<button type="button" class="active" data-mode="register">Luo profiili</button>' +
+        '</div>' +
+        '<div class="card" style="margin-top:14px;">' +
+          '<div class="field"><label for="reNick">Nimimerkki</label><input id="reNick" class="text-field" type="text" autocomplete="username"></div>' +
+          '<div class="field"><label for="reComp">Autoliike / firma</label><input id="reComp" class="text-field" type="text"></div>' +
+          '<div class="field"><label for="rePin">PIN-koodi (väh. 4 merkkiä)</label><input id="rePin" type="password" inputmode="numeric" autocomplete="new-password"></div>' +
+          '<div class="field"><label for="reWd">Työpäiviä tässä kuussa</label><input id="reWd" type="number" inputmode="numeric" min="0" placeholder="esim. 20"></div>' +
+          '<div class="field"><label for="reTg">Tarjoustavoite kuussa</label><input id="reTg" type="number" inputmode="numeric" min="0" placeholder="esim. 40"></div>' +
+          errHtml +
+          '<button class="btn btn-primary" id="reBtn"' + (state.authBusy ? " disabled" : "") + '>' + (state.authBusy ? "Luodaan…" : "Luo profiili") + '</button>' +
+        '</div>';
+      main.appendChild(wrap);
+      wrap.querySelector("#reBtn").addEventListener("click", function () {
+        var nick = wrap.querySelector("#reNick").value.trim();
+        var comp = wrap.querySelector("#reComp").value.trim();
+        var pin = wrap.querySelector("#rePin").value.trim();
+        var wd = parseInt(wrap.querySelector("#reWd").value, 10);
+        var tg = parseInt(wrap.querySelector("#reTg").value, 10);
+        if (!nick || !comp || !pin) { showToast("Täytä kaikki kentät"); return; }
+        if (!wd || wd <= 0 || !tg || tg <= 0) { showToast("Täytä työpäivät ja tavoite"); return; }
+        createProfileAndMonth(nick, comp, pin, wd, tg);
+      });
+    }
+    Array.prototype.forEach.call(wrap.querySelectorAll(".auth-toggle button"), function (b) {
+      b.addEventListener("click", function () {
+        state.authMode = b.getAttribute("data-mode");
+        state.authError = "";
+        render();
+      });
+    });
+  }
+
+  function monthDisplay(key) {
+    var p = parseMonthKey(key);
+    return MONTH_NAMES[p.m] + " " + p.y;
+  }
+
+  function renderHome(main) {
+    if (!curMonthDoc()) {
+      main.appendChild(buildSetupCard());
+      return;
+    }
+    var stats = computeStats(curMonthDoc());
+
+    var gcard = document.createElement("div");
+    gcard.className = "card gauge-card";
+    var r = 54, c = 2 * Math.PI * r;
+    var dash = c * stats.progressFrac;
+    var ringColor = stats.diff >= 0 ? "var(--good)" : "var(--accent)";
+    gcard.innerHTML =
+      '<div class="gauge-wrap">' +
+        '<svg viewBox="0 0 128 128">' +
+          '<circle class="ring-bg" cx="64" cy="64" r="' + r + '"></circle>' +
+          '<circle class="ring-fg" cx="64" cy="64" r="' + r + '" style="stroke:' + ringColor + ';stroke-dasharray:' + c + ';stroke-dashoffset:' + (c - dash) + '"></circle>' +
+        '</svg>' +
+        '<div class="gauge-center"><div class="num">' + stats.total + '</div><div class="den">/ ' + curMonthDoc().targetOffers + '</div></div>' +
+      '</div>' +
+      '<div class="gauge-side">' +
+        paceTagHtml(stats) +
+        '<div class="detail">' + paceDetailHtml(stats) + '</div>' +
+      '</div>';
+    main.appendChild(gcard);
+
+    var srow = document.createElement("div");
+    srow.className = "stat-row";
+    srow.innerHTML =
+      '<div class="stat-box"><div class="n">' + stats.closed + '</div><div class="l">Kauppaa</div></div>' +
+      '<div class="stat-box"><div class="n">' + (stats.total > 0 ? Math.round(stats.hitRate) + '%' : '–') + '</div><div class="l">Hitrate</div></div>' +
+      '<div class="stat-box"><div class="n">' + curMonthDoc().workDays + '</div><div class="l">Työpäivää</div></div>';
+    main.appendChild(srow);
+
+    var scard = document.createElement("div");
+    scard.className = "card";
+    var rows = stats.bySource.map(function (s) {
+      var cls = s.rate === null ? "" : (s.rate >= 30 ? "hr-good" : "hr-bad");
+      return '<tr><td>' + s.label + '</td><td>' + s.count + '</td><td>' + s.closed + '</td><td class="' + cls + '">' + (s.rate === null ? "–" : Math.round(s.rate) + "%") + '</td></tr>';
+    }).join("");
+    scard.innerHTML =
+      '<h2>Lähteet</h2>' +
+      '<table class="src"><thead><tr><th>Lähde</th><th>Tarjous</th><th>Kauppa</th><th>Hitrate</th></tr></thead><tbody>' +
+      rows + '</tbody></table>';
+    main.appendChild(scard);
+  }
+
+  function paceTagHtml(stats) {
+    var d = Math.round(Math.abs(stats.diff));
+    if (stats.total === 0 && stats.elapsedWd === 0) {
+      return '<span class="pace-tag onpace">Kuukausi alkamassa</span>';
+    }
+    if (d <= 0) {
+      return '<span class="pace-tag onpace">Tasan vauhdissa</span>';
+    }
+    if (stats.diff > 0) {
+      return '<span class="pace-tag ahead">Edellä ' + d + ' tarjousta</span>';
+    }
+    return '<span class="pace-tag behind">Jäljessä ' + d + ' tarjousta</span>';
+  }
+
+  function paceDetailHtml(stats) {
+    var needed = stats.remainingTarget > 0 ? Math.ceil(stats.neededPerDay * 10) / 10 : 0;
+    var line1 = stats.remainingTarget > 0
+      ? 'Tarvitset vielä <b>' + stats.remainingTarget + '</b> tarjousta.'
+      : 'Kuukauden tavoite on jo täynnä.';
+    var line2 = stats.remainingWorkDays > 0.1
+      ? 'Noin <b>' + needed + '</b> / työpäivä loppukuun ajan (' + Math.round(stats.remainingWorkDays) + ' pv jäljellä).'
+      : 'Työpäiviä ei ole enää jäljellä arviolta.';
+    return line1 + '<br>' + line2;
+  }
+
+  function buildSetupCard() {
+    var wrap = document.createElement("div");
+    wrap.className = "card";
+    wrap.innerHTML =
+      '<h2 style="color:var(--text);font-size:17px;font-weight:600;margin-bottom:10px;">Aseta ' + monthDisplay(state.monthKey) + ' -tavoite</h2>' +
+      '<div class="field"><label for="wdInput">Työpäiviä tässä kuussa</label><input id="wdInput" type="number" inputmode="numeric" min="0" placeholder="esim. 20"></div>' +
+      '<div class="field"><label for="tgInput">Tarjoustavoite kuussa</label><input id="tgInput" type="number" inputmode="numeric" min="0" placeholder="esim. 40"></div>' +
+      '<button class="btn btn-primary" id="startMonthBtn">Aloita kuukausi</button>';
+    wrap.querySelector("#startMonthBtn").addEventListener("click", function () {
+      var wd = parseInt(wrap.querySelector("#wdInput").value, 10);
+      var tg = parseInt(wrap.querySelector("#tgInput").value, 10);
+      if (!wd || wd <= 0 || !tg || tg <= 0) { showToast("Täytä työpäivät ja tavoite"); return; }
+      startMonthOnly(wd, tg).then(function () { showToast("Kuukausi aloitettu"); }).catch(function () { showToast("Tallennus epäonnistui"); });
+    });
+    return wrap;
+  }
+
+  function openSettings() {
+    var cur = curMonthDoc();
+    var overlay = buildOverlay();
+    overlay.card.innerHTML =
+      '<h2 style="color:var(--text);font-size:17px;font-weight:600;margin-bottom:10px;">Asetukset</h2>' +
+      '<div class="field"><label>Nimimerkki</label><input class="text-field" type="text" value="' + escapeHtml(state.profile.nickname) + '" disabled></div>' +
+      '<div class="field"><label for="ecompInput">Autoliike / firma</label><input id="ecompInput" class="text-field" type="text" value="' + escapeHtml(state.profile.company || '') + '"></div>' +
+      '<div class="field"><label for="ewdInput">Työpäiviä tässä kuussa</label><input id="ewdInput" type="number" inputmode="numeric" value="' + (cur ? cur.workDays : '') + '"></div>' +
+      '<div class="field"><label for="etgInput">Tarjoustavoite kuussa</label><input id="etgInput" type="number" inputmode="numeric" value="' + (cur ? cur.targetOffers : '') + '"></div>' +
+      '<button class="btn btn-primary" id="saveGoalBtn">Tallenna</button>' +
+      '<button class="btn btn-ghost" id="logoutBtn" style="margin-top:8px;">Kirjaudu ulos</button>' +
+      '<button class="btn btn-ghost" id="cancelGoalBtn" style="margin-top:8px;">Peruuta</button>';
+    overlay.card.querySelector("#saveGoalBtn").addEventListener("click", function () {
+      var comp = overlay.card.querySelector("#ecompInput").value.trim();
+      var wd = parseInt(overlay.card.querySelector("#ewdInput").value, 10);
+      var tg = parseInt(overlay.card.querySelector("#etgInput").value, 10);
+      if (!comp) { showToast("Täytä firma"); return; }
+      if (!wd || wd <= 0 || !tg || tg <= 0) { showToast("Täytä työpäivät ja tavoite"); return; }
+      updateProfileAndGoal(comp, wd, tg).then(function () { showToast("Tallennettu"); closeOverlay(overlay); }).catch(function () { showToast("Tallennus epäonnistui"); });
+    });
+    overlay.card.querySelector("#logoutBtn").addEventListener("click", function () {
+      closeOverlay(overlay);
+      logout();
+    });
+    overlay.card.querySelector("#cancelGoalBtn").addEventListener("click", function () { closeOverlay(overlay); });
+  }
+
+  function buildOverlay() {
+    var back = document.createElement("div");
+    back.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:60;display:flex;align-items:flex-end;justify-content:center;";
+    var card = document.createElement("div");
+    card.className = "card";
+    card.style.cssText = "width:100%;max-width:480px;border-radius:16px 16px 0 0;margin:0;max-height:88vh;overflow-y:auto;";
+    back.appendChild(card);
+    document.body.appendChild(back);
+    back.addEventListener("click", function (e) { if (e.target === back) closeOverlay({ back: back, card: card }); });
+    return { back: back, card: card };
+  }
+  function closeOverlay(overlay) { if (overlay.back && overlay.back.parentNode) overlay.back.parentNode.removeChild(overlay.back); }
+
+  function renderAdd(main) {
+    if (!curMonthDoc()) {
+      var note = document.createElement("div");
+      note.className = "card";
+      note.innerHTML = '<h2>Ei aktiivista kuukautta</h2><p style="color:var(--text-dim);font-size:14px;">Aseta ensin kuukauden tavoite Etusivulla.</p>';
+      main.appendChild(note);
+      return;
+    }
+    var offers = curMonthDoc().offers || [];
+    var openOffers = offers.filter(function (o) { return !o.closed; }).sort(function (a, b) { return new Date(b.ts) - new Date(a.ts); });
+
+    var addCard = document.createElement("div");
+    addCard.className = "card";
+    addCard.innerHTML = '<h2>Uusi tarjous</h2><p style="color:var(--text-dim);font-size:13px;margin-top:0;">Mistä tarjous tuli?</p>';
+    var grid = document.createElement("div");
+    grid.className = "src-grid";
+    SOURCES.forEach(function (s) {
+      var b = document.createElement("button");
+      b.className = "src-pick";
+      b.innerHTML = '<span>' + s.label + '</span><span class="tag">Tarjous</span>';
+      b.addEventListener("click", function () {
+        addOffer(s.id).then(function () { showToast("Tarjous kirjattu: " + s.label); }).catch(function () { showToast("Tallennus epäonnistui"); });
+      });
+      grid.appendChild(b);
+    });
+    addCard.appendChild(grid);
+    main.appendChild(addCard);
+
+    var dealCard = document.createElement("div");
+    dealCard.className = "card";
+    dealCard.innerHTML = '<h2>Merkkaa kauppa</h2><p style="color:var(--text-dim);font-size:13px;margin-top:0;">Valitse tarjous, josta syntyi kauppa.</p>';
+    var list = document.createElement("div");
+    list.className = "offer-list";
+    if (openOffers.length === 0) {
+      list.innerHTML = '<div class="empty-note">Ei avoimia tarjouksia juuri nyt.</div>';
+    } else {
+      openOffers.forEach(function (o) {
+        var row = document.createElement("div");
+        row.className = "offer-row";
+        row.innerHTML =
+          '<div class="meta"><div class="src">' + sourceLabel(o.source) + '</div><div class="date">' + fmtDate(o.ts) + '</div></div>' +
+          '<button type="button">Kauppa</button>';
+        row.querySelector("button").addEventListener("click", function () {
+          closeOffer(o.id).then(function () { showToast("Kauppa merkitty"); }).catch(function () { showToast("Tallennus epäonnistui"); });
+        });
+        list.appendChild(row);
+      });
+    }
+    dealCard.appendChild(list);
+    main.appendChild(dealCard);
+
+    var allSorted = offers.slice().sort(function (a, b) { return new Date(b.ts) - new Date(a.ts); });
+    var allCard = document.createElement("div");
+    allCard.className = "card";
+    allCard.innerHTML = '<h2>Kaikki tämän kuukauden tarjoukset</h2><p style="color:var(--text-dim);font-size:13px;margin-top:0;">Poista väärin kirjattu tarjous.</p>';
+    var allList = document.createElement("div");
+    allList.className = "offer-list";
+    if (allSorted.length === 0) {
+      allList.innerHTML = '<div class="empty-note">Ei vielä tarjouksia.</div>';
+    } else {
+      allSorted.forEach(function (o) {
+        var row = document.createElement("div");
+        row.className = "offer-row";
+        row.innerHTML =
+          '<div class="meta"><div class="src">' + sourceLabel(o.source) + '</div><div class="date">' + fmtDate(o.ts) + '</div></div>' +
+          '<div class="row-actions">' +
+            '<span class="status-badge' + (o.closed ? '' : ' open') + '">' + (o.closed ? 'Kauppa' : 'Avoin') + '</span>' +
+            '<button type="button" class="del-btn" aria-label="Poista"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg></button>' +
+          '</div>';
+        row.querySelector(".del-btn").addEventListener("click", function () {
+          deleteOffer(o.id).then(function () { showToast("Tarjous poistettu"); }).catch(function () { showToast("Poisto epäonnistui"); });
+        });
+        allList.appendChild(row);
+      });
+    }
+    allCard.appendChild(allList);
+    main.appendChild(allCard);
+  }
+
+  function leaderboardEntries(period) {
+    var yearStr = String(parseMonthKey(state.monthKey).y);
+    return state.leaderboardDocs
+      .map(function (d) {
+        var months = d.months || {};
+        var total = 0, closed = 0;
+        if (period === "year") {
+          Object.keys(months).forEach(function (k) {
+            if (k.slice(0, 4) === yearStr) {
+              var offers = (months[k] && months[k].offers) || [];
+              total += offers.length;
+              closed += offers.filter(function (o) { return o.closed; }).length;
+            }
+          });
+        } else {
+          var offers = (months[state.monthKey] && months[state.monthKey].offers) || [];
+          total = offers.length;
+          closed = offers.filter(function (o) { return o.closed; }).length;
+        }
+        var hitRate = total > 0 ? (closed / total) * 100 : 0;
+        return {
+          nickname: d.nickname || "Nimetön", company: d.company || "",
+          total: total, closed: closed, hitRate: hitRate
+        };
+      })
+      .filter(function (e) { return e.total > 0; });
+  }
+
+  function renderLeaderboard(main) {
+    if (!state.leaderboardLoaded) {
+      main.innerHTML = '<div class="loading-wrap">Ladataan tulostaulua&hellip;</div>';
+      fetchLeaderboard();
+      return;
+    }
+    var periodTabs = document.createElement("div");
+    periodTabs.className = "lb-tabs";
+    periodTabs.innerHTML =
+      '<button type="button" class="lb-tab' + (state.leaderboardPeriod === "month" ? " active" : "") + '" data-lbp="month">Kuluva kuukausi</button>' +
+      '<button type="button" class="lb-tab' + (state.leaderboardPeriod === "year" ? " active" : "") + '" data-lbp="year">Kuluva vuosi</button>';
+    Array.prototype.forEach.call(periodTabs.querySelectorAll(".lb-tab"), function (b) {
+      b.addEventListener("click", function () {
+        state.leaderboardPeriod = b.getAttribute("data-lbp");
+        render();
+      });
+    });
+    main.appendChild(periodTabs);
+
+    var tabs = document.createElement("div");
+    tabs.className = "lb-tabs";
+    tabs.innerHTML =
+      '<button type="button" class="lb-tab' + (state.leaderboardTab === "hitrate" ? " active" : "") + '" data-lb="hitrate">Kovin hitrate</button>' +
+      '<button type="button" class="lb-tab' + (state.leaderboardTab === "deals" ? " active" : "") + '" data-lb="deals">Eniten kauppaa</button>';
+    Array.prototype.forEach.call(tabs.querySelectorAll(".lb-tab"), function (b) {
+      b.addEventListener("click", function () {
+        state.leaderboardTab = b.getAttribute("data-lb");
+        render();
+      });
+    });
+    main.appendChild(tabs);
+
+    var entries = leaderboardEntries(state.leaderboardPeriod);
+    if (state.leaderboardTab === "hitrate") {
+      entries.sort(function (a, b) { return b.hitRate - a.hitRate || b.closed - a.closed; });
+    } else {
+      entries.sort(function (a, b) { return b.closed - a.closed || b.hitRate - a.hitRate; });
+    }
+    entries = entries.slice(0, 25);
+
+    var list = document.createElement("div");
+    list.className = "lb-list";
+    if (entries.length === 0) {
+      list.innerHTML = '<div class="card"><p style="color:var(--text-dim);font-size:14px;margin:0;">Ei vielä tarjouksia kirjattuna.</p></div>';
+    } else {
+      var myNick = (state.profile.nickname || "").trim().toLowerCase();
+      entries.forEach(function (e, i) {
+        var row = document.createElement("div");
+        var isSelf = e.nickname.trim().toLowerCase() === myNick;
+        row.className = "lb-row" + (isSelf ? " self" : "") + (i === 0 ? " top1" : "");
+        var metricVal = state.leaderboardTab === "hitrate" ? Math.round(e.hitRate) + "%" : String(e.closed);
+        var metricSub = state.leaderboardTab === "hitrate" ? (e.closed + " kauppaa") : (Math.round(e.hitRate) + "% hitrate");
+        row.innerHTML =
+          '<div class="lb-rank">' + (i + 1) + '</div>' +
+          '<div class="lb-info"><div class="lb-name">' + escapeHtml(e.nickname) + '</div><div class="lb-company">' + escapeHtml(e.company) + '</div></div>' +
+          '<div class="lb-metric"><div class="v">' + metricVal + '</div><div class="u">' + metricSub + '</div></div>';
+        list.appendChild(row);
+      });
+    }
+    main.appendChild(list);
+
+    if (!state.leaderboardTimer) {
+      state.leaderboardTimer = setInterval(function () {
+        if (state.tab === "leaderboard" && state.authStatus === "ready") fetchLeaderboard();
+      }, 20000);
+    }
+  }
+
+  function renderHistory(main) {
+    var addPastCard = document.createElement("div");
+    addPastCard.className = "card";
+    addPastCard.innerHTML = '<h2 style="color:var(--text);font-size:15px;font-weight:600;">Mennyt kuukausi puuttuu?</h2><p style="color:var(--text-dim);font-size:13px;margin:6px 0 12px;">Lisää ennen sovellusta tehdyt myynnit yhteenvetona.</p>';
+    var addPastBtn = document.createElement("button");
+    addPastBtn.className = "btn btn-ghost";
+    addPastBtn.type = "button";
+    addPastBtn.textContent = "Lisää mennyt kuukausi";
+    addPastBtn.addEventListener("click", openPastMonthForm);
+    addPastCard.appendChild(addPastBtn);
+    main.appendChild(addPastCard);
+
+    var months = (state.profile && state.profile.months) || {};
+    var keys = Object.keys(months).filter(function (k) { return k !== state.monthKey; }).sort().reverse();
+    if (keys.length === 0) {
+      var empty = document.createElement("div");
+      empty.className = "card";
+      empty.innerHTML = '<p style="color:var(--text-dim);font-size:14px;margin:0;">Ei vielä aiempia kuukausia.</p>';
+      main.appendChild(empty);
+      return;
+    }
+    keys.forEach(function (key) {
+      var doc = months[key];
+      var stats = computeStats(doc);
+      var row = document.createElement("div");
+      row.className = "hist-row";
+      var reached = doc.targetOffers > 0 && stats.total >= doc.targetOffers;
+      row.innerHTML =
+        '<div class="top-line"><div class="m">' + monthDisplay(key) + '</div>' +
+        '<div class="result" style="color:' + (reached ? 'var(--good)' : 'var(--text-dim)') + '">' + stats.total + ' / ' + doc.targetOffers + '</div></div>' +
+        '<div class="sub">' + stats.closed + ' kauppaa &middot; hitrate ' + (stats.total > 0 ? Math.round(stats.hitRate) + '%' : '–') + '</div>';
+      if (state.historyExpanded === key) {
+        var det = document.createElement("div");
+        det.className = "hist-detail";
+        var rows = stats.bySource.map(function (s) {
+          return '<tr><td>' + s.label + '</td><td>' + s.count + '</td><td>' + s.closed + '</td><td>' + (s.rate === null ? "–" : Math.round(s.rate) + "%") + '</td></tr>';
+        }).join("");
+        det.innerHTML = '<table class="src"><thead><tr><th>Lähde</th><th>Tarjous</th><th>Kauppa</th><th>Hitrate</th></tr></thead><tbody>' + rows + '</tbody></table>';
+        row.appendChild(det);
+      }
+      row.addEventListener("click", function () {
+        state.historyExpanded = (state.historyExpanded === key) ? null : key;
+        render();
+      });
+      main.appendChild(row);
+    });
+  }
+
+  function openPastMonthForm() {
+    var thisYear = parseMonthKey(state.monthKey).y;
+    var overlay = buildOverlay();
+    var monthOptions = "";
+    for (var mi = 0; mi < 12; mi++) {
+      var key = thisYear + "-" + String(mi + 1).padStart(2, "0");
+      var already = state.profile.months && state.profile.months[key];
+      var label = MONTH_NAMES[mi].charAt(0).toUpperCase() + MONTH_NAMES[mi].slice(1) + " " + thisYear + (already ? " (tiedot jo tallennettu)" : "");
+      monthOptions += '<option value="' + key + '">' + label + '</option>';
+    }
+
+    var srcRows = SOURCES.map(function (s) {
+      return '<div class="src-count-row">' +
+        '<div class="lbl">' + s.label + '</div>' +
+        '<input type="number" inputmode="numeric" min="0" placeholder="0" data-src="' + s.id + '" data-kind="offer">' +
+        '<input type="number" inputmode="numeric" min="0" placeholder="0" data-src="' + s.id + '" data-kind="deal">' +
+        '</div>';
+    }).join("");
+
+    overlay.card.innerHTML =
+      '<h2 style="color:var(--text);font-size:17px;font-weight:600;margin-bottom:10px;">Lisää mennyt kuukausi</h2>' +
+      '<div class="field"><label for="pmMonth">Kuukausi</label><select id="pmMonth" class="text-field">' + monthOptions + '</select></div>' +
+      '<div class="field"><label for="pmWd">Työpäiviä kuussa</label><input id="pmWd" type="number" inputmode="numeric" min="0" placeholder="esim. 20"></div>' +
+      '<div class="field"><label for="pmTg">Tarjoustavoite (tai toteuma)</label><input id="pmTg" type="number" inputmode="numeric" min="0" placeholder="esim. 40"></div>' +
+      '<div class="field-note" id="pmExistingNote" style="display:none;">Tälle kuulle on jo tallennettuja tietoja — tallennus korvaa ne.</div>' +
+      '<div class="src-count-head"><span>Lähde</span><span>Tarjous</span><span>Kauppa</span></div>' +
+      srcRows +
+      '<button class="btn btn-primary" id="pmSaveBtn" style="margin-top:6px;">Tallenna kuukausi</button>' +
+      '<button class="btn btn-ghost" id="pmCancelBtn" style="margin-top:8px;">Peruuta</button>';
+
+    var monthSelect = overlay.card.querySelector("#pmMonth");
+    var existingNote = overlay.card.querySelector("#pmExistingNote");
+    function refreshExistingNote() {
+      var key = monthSelect.value;
+      var already = state.profile.months && state.profile.months[key];
+      existingNote.style.display = already ? "block" : "none";
+    }
+    monthSelect.addEventListener("change", refreshExistingNote);
+    refreshExistingNote();
+
+    overlay.card.querySelector("#pmSaveBtn").addEventListener("click", function () {
+      var key = monthSelect.value;
+      var wd = parseInt(overlay.card.querySelector("#pmWd").value, 10);
+      var tg = parseInt(overlay.card.querySelector("#pmTg").value, 10);
+      if (!wd || wd <= 0 || !tg || tg <= 0) { showToast("Täytä työpäivät ja tavoite"); return; }
+
+      var sourceCounts = [];
+      var bad = false;
+      SOURCES.forEach(function (s) {
+        var offInput = overlay.card.querySelector('input[data-src="' + s.id + '"][data-kind="offer"]');
+        var dealInput = overlay.card.querySelector('input[data-src="' + s.id + '"][data-kind="deal"]');
+        var offC = parseInt(offInput.value, 10) || 0;
+        var dealC = parseInt(dealInput.value, 10) || 0;
+        if (dealC > offC) bad = true;
+        if (offC > 0) sourceCounts.push({ sourceId: s.id, offerCount: offC, dealCount: dealC });
+      });
+      if (bad) { showToast("Kauppoja ei voi olla enemmän kuin tarjouksia"); return; }
+      if (sourceCounts.length === 0) { showToast("Syötä ainakin yhden lähteen luvut"); return; }
+
+      savePastMonth(key, wd, tg, sourceCounts)
+        .then(function () { showToast(monthDisplay(key) + " tallennettu"); closeOverlay(overlay); })
+        .catch(function () { showToast("Tallennus epäonnistui"); });
+    });
+    overlay.card.querySelector("#pmCancelBtn").addEventListener("click", function () { closeOverlay(overlay); });
+  }
+
+  // ---------- Nav + init ----------
+  Array.prototype.forEach.call(document.querySelectorAll("nav.tabbar button"), function (b) {
+    b.addEventListener("click", function () {
+      state.tab = b.getAttribute("data-tab");
+      render();
+    });
+  });
+  document.getElementById("settingsBtn").addEventListener("click", openSettings);
+
+  setInterval(function () {
+    var k = monthKeyOf(new Date());
+    if (k !== state.monthKey) {
+      state.monthKey = k;
+      localOffers = (curMonthDoc() && curMonthDoc().offers) ? curMonthDoc().offers.slice() : null;
+      deletedIds = {};
+      render();
+    }
+  }, 60000);
+
+  render();
+  initAuth();
+})();
+</script>
+</body>
+</html>
