@@ -511,6 +511,7 @@
         localOffers = (res.profile.months && res.profile.months[state.monthKey]) ? res.profile.months[state.monthKey].offers : null;
         state.authStatus = "ready";
         render();
+        compactOldMonthsIfNeeded().catch(function () {});
       } else {
         if (ls) { ls.removeItem(LS_NICK); ls.removeItem(LS_PIN); }
         state.authStatus = "need-auth";
@@ -544,6 +545,7 @@
         localOffers = (res.profile.months && res.profile.months[state.monthKey]) ? res.profile.months[state.monthKey].offers : null;
         state.authStatus = "ready";
         render();
+        compactOldMonthsIfNeeded().catch(function () {});
       } else if (res && res.error === "not_found") {
         state.authError = "Nimimerkkiä ei löydy. Luo ensin profiili.";
         render();
@@ -699,29 +701,64 @@
   }
 
   // Bulk-enter a past month's results as per-source offer/deal counts.
+  // Stored compactly (just the counts) rather than as exploded per-offer
+  // records, since past months only ever need totals/hitrate — this keeps
+  // the Sheet cell (50 000 character limit per cell) from filling up as
+  // more months accumulate over a season. The one exception is the
+  // CURRENT month, which still needs per-offer detail for the daily
+  // add/close/delete UI, so that one is still exploded.
   function savePastMonth(monthKey, workDays, targetOffers, sourceCounts) {
-    var parsed = parseMonthKey(monthKey);
-    var offers = [];
-    var i = 0;
-    sourceCounts.forEach(function (sc) {
-      for (var n = 0; n < sc.offerCount; n++) {
-        var closed = n < sc.dealCount;
-        var ts = new Date(parsed.y, parsed.m, 1, 9, 0, 0);
-        ts.setMinutes(ts.getMinutes() + i * 7);
-        offers.push({
-          id: genId(), ts: ts.toISOString(), source: sc.sourceId,
-          closed: closed, closedTs: closed ? ts.toISOString() : null
-        });
-        i++;
-      }
-    });
     var monthsObj = {};
-    monthsObj[monthKey] = { monthKey: monthKey, workDays: workDays, targetOffers: targetOffers, offers: offers };
+    if (monthKey === state.monthKey) {
+      var parsed = parseMonthKey(monthKey);
+      var offers = [];
+      var i = 0;
+      sourceCounts.forEach(function (sc) {
+        for (var n = 0; n < sc.offerCount; n++) {
+          var closed = n < sc.dealCount;
+          var ts = new Date(parsed.y, parsed.m, 1, 9, 0, 0);
+          ts.setMinutes(ts.getMinutes() + i * 7);
+          offers.push({
+            id: genId(), ts: ts.toISOString(), source: sc.sourceId,
+            closed: closed, closedTs: closed ? ts.toISOString() : null
+          });
+          i++;
+        }
+      });
+      monthsObj[monthKey] = { monthKey: monthKey, workDays: workDays, targetOffers: targetOffers, offers: offers, bySourceCounts: [] };
+      localOffers = offers;
+    } else {
+      monthsObj[monthKey] = { monthKey: monthKey, workDays: workDays, targetOffers: targetOffers, bySourceCounts: sourceCounts, offers: [] };
+    }
     var newMonths = Object.assign({}, (state.profile && state.profile.months) || {}, monthsObj);
     state.profile = Object.assign({}, state.profile, { months: newMonths });
-    if (monthKey === state.monthKey) localOffers = offers;
     render();
     return queueSaveMonths(monthsObj);
+  }
+
+  // One-time cleanup: any already-stored month (other than the current one)
+  // that still has old-style exploded offers[] gets compacted down to
+  // bySourceCounts, freeing up space in the Sheet cell.
+  function compactOldMonthsIfNeeded() {
+    var months = (state.profile && state.profile.months) || {};
+    var patch = {};
+    var changed = false;
+    Object.keys(months).forEach(function (key) {
+      if (key === state.monthKey) return;
+      var doc = months[key];
+      if (doc && doc.offers && doc.offers.length > 0) {
+        patch[key] = {
+          monthKey: key, workDays: doc.workDays, targetOffers: doc.targetOffers,
+          bySourceCounts: offersToCounts(doc.offers), offers: []
+        };
+        changed = true;
+      }
+    });
+    if (!changed) return Promise.resolve();
+    var newMonths = Object.assign({}, months);
+    Object.keys(patch).forEach(function (k) { newMonths[k] = Object.assign({}, newMonths[k], patch[k]); });
+    state.profile = Object.assign({}, state.profile, { months: newMonths });
+    return queueSaveMonths(patch);
   }
 
   function setLocalOffersOnProfile() {
@@ -735,11 +772,48 @@
     return (state.profile && state.profile.months) ? state.profile.months[state.monthKey] : null;
   }
 
+  // Turn a detailed per-offer array into compact per-source counts.
+  function offersToCounts(offers) {
+    var m = {};
+    (offers || []).forEach(function (o) {
+      if (!m[o.source]) m[o.source] = { sourceId: o.source, offerCount: 0, dealCount: 0 };
+      m[o.source].offerCount++;
+      if (o.closed) m[o.source].dealCount++;
+    });
+    return Object.keys(m).map(function (k) { return m[k]; });
+  }
+
   // ---------- Derived stats ----------
+  // A month doc is either detailed (doc.offers: per-offer records, used for
+  // the current month so single entries can be added/closed/deleted) or
+  // compact (doc.bySourceCounts: aggregate counts, used for past months
+  // added via "Lisää mennyt kuukausi" — no per-offer detail is ever shown
+  // for those, so storing it would only waste space in the Sheet cell).
   function computeStats(doc) {
-    var offers = (doc && doc.offers) || [];
-    var total = offers.length;
-    var closed = offers.filter(function (o) { return o.closed; }).length;
+    var offers = (doc && doc.offers && doc.offers.length > 0) ? doc.offers : null;
+    var counts = (doc && doc.bySourceCounts && doc.bySourceCounts.length > 0) ? doc.bySourceCounts : null;
+    var total, closed, bySource;
+
+    if (offers) {
+      total = offers.length;
+      closed = offers.filter(function (o) { return o.closed; }).length;
+      bySource = SOURCES.map(function (s) {
+        var so = offers.filter(function (o) { return o.source === s.id; });
+        var sc = so.filter(function (o) { return o.closed; }).length;
+        return { id: s.id, label: s.label, count: so.length, closed: sc, rate: so.length > 0 ? (sc / so.length) * 100 : null };
+      });
+    } else {
+      var bySourceId = {};
+      (counts || []).forEach(function (c) { bySourceId[c.sourceId] = c; });
+      total = (counts || []).reduce(function (a, c) { return a + c.offerCount; }, 0);
+      closed = (counts || []).reduce(function (a, c) { return a + c.dealCount; }, 0);
+      bySource = SOURCES.map(function (s) {
+        var c = bySourceId[s.id];
+        var cnt = c ? c.offerCount : 0;
+        var cl = c ? c.dealCount : 0;
+        return { id: s.id, label: s.label, count: cnt, closed: cl, rate: cnt > 0 ? (cl / cnt) * 100 : null };
+      });
+    }
     var hitRate = total > 0 ? (closed / total) * 100 : 0;
 
     var parsed = parseMonthKey(doc ? doc.monthKey : state.monthKey);
@@ -754,12 +828,6 @@
     var remainingWorkDays = Math.max(workDays - elapsedWorkDays, 0);
     var remainingTarget = Math.max(targetOffers - total, 0);
     var neededPerDay = remainingWorkDays > 0 ? (remainingTarget / remainingWorkDays) : (remainingTarget > 0 ? remainingTarget : 0);
-
-    var bySource = SOURCES.map(function (s) {
-      var so = offers.filter(function (o) { return o.source === s.id; });
-      var sc = so.filter(function (o) { return o.closed; }).length;
-      return { id: s.id, label: s.label, count: so.length, closed: sc, rate: so.length > 0 ? (sc / so.length) * 100 : null };
-    });
 
     return {
       total: total, closed: closed, hitRate: hitRate,
@@ -1108,6 +1176,23 @@
     main.appendChild(allCard);
   }
 
+  // Total/closed for one month doc, supporting both the detailed (offers[])
+  // and compact (bySourceCounts[]) storage shapes (see computeStats).
+  function monthTotals(doc) {
+    if (doc && doc.offers && doc.offers.length > 0) {
+      var offers = doc.offers;
+      return { total: offers.length, closed: offers.filter(function (o) { return o.closed; }).length };
+    }
+    if (doc && doc.bySourceCounts && doc.bySourceCounts.length > 0) {
+      var counts = doc.bySourceCounts;
+      return {
+        total: counts.reduce(function (a, c) { return a + c.offerCount; }, 0),
+        closed: counts.reduce(function (a, c) { return a + c.dealCount; }, 0)
+      };
+    }
+    return { total: 0, closed: 0 };
+  }
+
   function leaderboardEntries(period) {
     var yearStr = String(parseMonthKey(state.monthKey).y);
     return state.leaderboardDocs
@@ -1117,15 +1202,15 @@
         if (period === "year") {
           Object.keys(months).forEach(function (k) {
             if (k.slice(0, 4) === yearStr) {
-              var offers = (months[k] && months[k].offers) || [];
-              total += offers.length;
-              closed += offers.filter(function (o) { return o.closed; }).length;
+              var t = monthTotals(months[k]);
+              total += t.total;
+              closed += t.closed;
             }
           });
         } else {
-          var offers = (months[state.monthKey] && months[state.monthKey].offers) || [];
-          total = offers.length;
-          closed = offers.filter(function (o) { return o.closed; }).length;
+          var t2 = monthTotals(months[state.monthKey]);
+          total = t2.total;
+          closed = t2.closed;
         }
         var hitRate = total > 0 ? (closed / total) * 100 : 0;
         return {
