@@ -339,6 +339,108 @@
   .loading-wrap { display: flex; align-items: center; justify-content: center; min-height: 60vh; color: var(--text-faint); font-size: 14px; }
   .hidden { display: none !important; }
   .section-title { font-family: var(--font-display); font-size: 13px; color: var(--text-dim); margin: 4px 2px 0; text-transform: uppercase; letter-spacing: .04em; }
+
+  /* ---------- Myyntirunko ---------- */
+  main.runko-main { padding-bottom: 150px; }
+  body.rk-on #toast { bottom: calc(140px + env(safe-area-inset-bottom)); }
+  .rk-top { display: flex; gap: 8px; align-items: stretch; }
+  .rk-seg { flex: 1; display: flex; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 3px; gap: 3px; }
+  .rk-seg button {
+    flex: 1; background: none; border: none; color: var(--text-dim); font-family: var(--font-display);
+    font-size: 15px; font-weight: 500; border-radius: 9px; padding: 9px 6px; cursor: pointer; letter-spacing: .02em;
+  }
+  .rk-seg button.active { background: var(--accent); color: #17110b; }
+  .rk-editbtn {
+    background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 12px;
+    padding: 0 12px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: var(--font-body);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .rk-editbtn svg { width: 16px; height: 16px; }
+
+  .rk-steps { display: flex; gap: 6px; overflow-x: auto; padding: 2px 1px 4px; scrollbar-width: none; }
+  .rk-steps::-webkit-scrollbar { display: none; }
+  .rk-chip {
+    flex: 0 0 auto; background: var(--surface); border: 1px solid var(--border); color: var(--text-dim);
+    border-radius: 999px; padding: 6px 11px; font-size: 12px; font-weight: 600; cursor: pointer;
+    font-family: var(--font-body); white-space: nowrap; max-width: 170px; overflow: hidden; text-overflow: ellipsis;
+  }
+  .rk-chip .n { font-family: var(--font-display); margin-right: 5px; color: var(--text-faint); }
+  .rk-chip.done { color: var(--text-faint); }
+  .rk-chip.on { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+  .rk-chip.on .n { color: var(--accent); }
+
+  .rk-card { padding: 18px 16px 20px; }
+  .rk-eyebrow { font-family: var(--font-display); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+  .rk-title { font-family: var(--font-display); font-size: 26px; font-weight: 600; line-height: 1.12; margin: 4px 0 2px; }
+  .rk-sub { font-size: 13px; color: var(--text-dim); margin-bottom: 4px; }
+  .rk-items { display: flex; flex-direction: column; gap: 4px; margin-top: 14px; }
+  .rk-q { display: grid; grid-template-columns: 14px 1fr; gap: 8px; font-size: 16px; line-height: 1.45; padding: 7px 0; border-bottom: 1px solid var(--border); }
+  .rk-q:last-child { border-bottom: none; }
+  .rk-q::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); margin-top: 9px; }
+  .rk-h { font-family: var(--font-display); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-dim); margin: 14px 0 2px; }
+  .rk-h:first-child { margin-top: 0; }
+  .rk-tip { background: var(--accent-dim); border-left: 3px solid var(--accent); border-radius: 8px; padding: 10px 12px; font-size: 15px; line-height: 1.45; font-weight: 600; margin: 6px 0; }
+  .rk-say { background: var(--good-dim); border-radius: 12px 12px 12px 4px; padding: 10px 12px; font-size: 16px; line-height: 1.45; margin: 6px 0; }
+  .rk-say .lbl { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--good); margin-bottom: 2px; }
+  .rk-kv { display: flex; justify-content: space-between; gap: 12px; font-size: 16px; padding: 9px 12px; background: var(--surface-2); border-radius: 8px; }
+  .rk-kv .k { color: var(--text-dim); }
+  .rk-kv .v { font-weight: 600; text-align: right; }
+  .rk-own { font-size: 10px; font-weight: 700; color: var(--gold); background: var(--gold-dim); border-radius: 999px; padding: 1px 6px; margin-left: 6px; vertical-align: 2px; }
+
+  .rk-next {
+    position: fixed; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px;
+    bottom: calc(66px + env(safe-area-inset-bottom)); padding: 8px 12px; z-index: 20;
+    background: linear-gradient(to top, var(--bg) 70%, transparent);
+  }
+  .rk-next-inner { display: flex; gap: 8px; align-items: stretch; }
+  .rk-prev {
+    background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 12px;
+    width: 52px; flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  }
+  .rk-prev:disabled { opacity: .35; cursor: default; }
+  .rk-prev svg, .rk-fwd svg { width: 20px; height: 20px; }
+  .rk-fwd {
+    flex: 1; min-width: 0; background: var(--accent); color: #17110b; border: none; border-radius: 12px;
+    padding: 9px 14px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 10px; text-align: left;
+    font-family: var(--font-body);
+  }
+  .rk-fwd .t { min-width: 0; }
+  .rk-fwd .l { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; opacity: .75; }
+  .rk-fwd .s { display: block; font-size: 15px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rk-fwd.end { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+
+  /* edit mode */
+  .rk-edit-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .rk-edit-head h2 { font-family: var(--font-display); font-size: 20px; font-weight: 600; margin: 0; color: var(--text); }
+  .rk-note { font-size: 12.5px; color: var(--text-dim); line-height: 1.45; }
+  .rk-erow {
+    display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 8px 8px 8px 12px;
+  }
+  .rk-erow.off { opacity: .5; }
+  .rk-erow .txt { flex: 1; min-width: 0; font-size: 14px; line-height: 1.35; }
+  .rk-erow .txt .kind { display: block; font-size: 10.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--text-faint); }
+  .rk-erow .txt b { font-weight: 600; }
+  .rk-ib {
+    width: 34px; height: 34px; flex-shrink: 0; background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
+    border-radius: 9px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0;
+  }
+  .rk-ib:disabled { opacity: .3; cursor: default; }
+  .rk-ib svg { width: 16px; height: 16px; }
+  .rk-ib.del { background: var(--bad-dim); color: var(--bad); border-color: transparent; }
+  .rk-ib.go { background: var(--accent-dim); color: var(--accent); border-color: transparent; }
+  .rk-elist { display: flex; flex-direction: column; gap: 6px; }
+  .rk-add { display: flex; flex-direction: column; gap: 8px; }
+  .rk-add textarea, .rk-add input {
+    width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
+    font-family: var(--font-body); font-size: 15px; border-radius: 10px; padding: 10px 12px; resize: vertical;
+  }
+  .rk-kinds { display: flex; gap: 6px; }
+  .rk-kinds button {
+    flex: 1; background: var(--surface-2); border: 1px solid var(--border); color: var(--text-dim); border-radius: 9px;
+    padding: 8px 4px; font-size: 12.5px; font-weight: 600; cursor: pointer; font-family: var(--font-body);
+  }
+  .rk-kinds button.on { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
 </style>
 </head>
 <body>
@@ -372,6 +474,10 @@
     <button data-tab="history">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
       Historia
+    </button>
+    <button data-tab="runko">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+      Runko
     </button>
   </nav>
 </div>
@@ -866,10 +972,12 @@
     settingsBtn.style.display = state.tab === "home" ? "flex" : "none";
 
     main.innerHTML = "";
+    document.body.classList.toggle("rk-on", state.tab === "runko");
     if (state.tab === "home") renderHome(main);
     else if (state.tab === "add") renderAdd(main);
     else if (state.tab === "leaderboard") renderLeaderboard(main);
     else if (state.tab === "history") renderHistory(main);
+    else if (state.tab === "runko") renderRunko(main);
 
     Array.prototype.forEach.call(document.querySelectorAll("nav.tabbar button"), function (b) {
       b.classList.toggle("active", b.getAttribute("data-tab") === state.tab);
@@ -1401,6 +1509,455 @@
         .catch(function () { showToast("Tallennus epäonnistui"); });
     });
     overlay.card.querySelector("#pmCancelBtn").addEventListener("click", function () { closeOverlay(overlay); });
+  }
+
+  // ---------- Myyntirunko ----------
+  // Tiimin pohja. Item kinds: q = kohta, h = väliotsikko, tip = korostettu ohje,
+  // say = sanottava repliikki, kv = tarjouksen rivi (t = otsikko, v = arvo).
+  var RUNKO_TEMPLATE = [
+    { id: "p1", title: "Puhelu 1", steps: [
+      { id: "p1-valm", title: "Valmistautuminen", items: [
+        { id: "p1-valm-1", k: "tip", t: "Tutustu myytävään autoon ennen puhelun aloittamista, jotta tiedät mitä myyt." },
+        { id: "p1-valm-2", k: "q", t: "Mieti: miksi sinä ostaisit tämän yksilön?" }
+      ]},
+      { id: "p1-ensi", title: "Ensivaikutelma ja asiakkaan kohtaaminen", items: [
+        { id: "p1-ensi-1", k: "tip", t: "Aloita puhelu positiivisella ja energisellä asenteella." },
+        { id: "p1-ensi-2", k: "q", t: "Selvitä, mistä päin Suomea asiakas on. Onko kyseessä toimitus vai nouto?" },
+        { id: "p1-ensi-3", k: "q", t: "Mitä huomioita asiakkaan asuinpaikkakunnasta? Onko se sinulle tuttu paikka? (small talk)" },
+        { id: "p1-ensi-4", k: "q", t: "Kerro, miten kaupanteko etenee tästä eteenpäin. Kerro asiakkaalle Sakan tapa tehdä kauppaa!" }
+      ]},
+      { id: "p1-tarve", title: "Tarvekartoitus", items: [
+        { id: "p1-tarve-h1", k: "h", t: "Asiakkaan nykytila" },
+        { id: "p1-tarve-1", k: "q", t: "Millä autolla ajatte nyt? Annatteko sen vaihdossa?" },
+        { id: "p1-tarve-2", k: "q", t: "Kuinka kauan auto on ollut teillä?" },
+        { id: "p1-tarve-3", k: "q", t: "Mitä ominaisuuksia ja varusteita nykyisessä autossa arvostat?" },
+        { id: "p1-tarve-4", k: "q", t: "Mitä nykyisestä autosta puuttuu?" },
+        { id: "p1-tarve-5", k: "q", t: "Mikä on ollut nykyisen auton kuukausierä?" },
+        { id: "p1-tarve-h2", k: "h", t: "Asiakkaan tavoitetila" },
+        { id: "p1-tarve-6", k: "q", t: "Kuinka kauan olette etsineet teille sopivaa autoa, ja onko niin, että voitte tehdä ostopäätöksen heti, kun tarpeisiin ja budjettiin sopiva auto löytyy? Mikä on teille sopiva kuukausierä uudessa autossa?" },
+        { id: "p1-tarve-7", k: "q", t: "Mitä varusteita ja ominaisuuksia kaipaatte uudelta autolta? Mikä juuri tässä yksilössä herätti mielenkiintonne erityisesti?" },
+        { id: "p1-tarve-8", k: "tip", t: "Sinun pitää tietää tärkeimmät asiat, joiden pitää täyttyä, jotta asiakas pystyy tekemään ostopäätöksen." }
+      ]},
+      { id: "p1-esit", title: "Myytävän tuotteen esittely ja hyväksyntä", items: [
+        { id: "p1-esit-1", k: "tip", t: "Painota läpikäynnin yhteydessä asiakkaalle tärkeitä asioita, varusteita ja pointteja." },
+        { id: "p1-esit-2", k: "q", t: "Asiakkaan ostopäätöksen helpottaminen ja tukeminen → Onko auto vapaana? Esitä aidosti hetken aikaa, että auto olisi myytynä/varattuna." },
+        { id: "p1-esit-3", k: "q", t: "Auton vanteiden ja renkaiden läpikäynti → tärkeimmät huomiot + hyväksytykset." },
+        { id: "p1-esit-4", k: "q", t: "Auton korin kunnon läpikäynti: yleisilme + tärkeimmät huomiot + hyväksytykset → Miltä kuulostaa? Eikö vaikuta hyvältä?" },
+        { id: "p1-esit-5", k: "q", t: "Auton sisustan läpikäynti + tärkeimmät huomiot + hyväksytykset → Miltä vaikuttaa, eikö kuulosta hyvältä?" },
+        { id: "p1-esit-6", k: "q", t: "Auton huoltohistoria: menneet + tulevat huollot + jakopää. Tärkeimmät huomiot ja hyväksyntä + kehut." },
+        { id: "p1-esit-7", k: "tip", t: "Auton varusteet ja myyntivaltit nostoina → fiilis ylös! Ole aidosti innoissasi autosta (yksilöstä)." },
+        { id: "p1-esit-8", k: "q", t: "Auton hyväksyntä: kysy, onko asiakkaalla jotain kysyttävää tai mielen päällä?" }
+      ]},
+      { id: "p1-vaihto", title: "Vaihtoauton selvitys ja arviointi", items: [
+        { id: "p1-vaihto-1", k: "tip", t: "Kerro asiakkaalle, että auto otetaan mielellään vaihdossa → positiivisuus." },
+        { id: "p1-vaihto-2", k: "q", t: "Onko auton korin kunnossa moitittavaa?" },
+        { id: "p1-vaihto-3", k: "q", t: "Ovatko auton lasit ehjät? Onko tuulilasissa halkeamia tai kiveniskuja? Onko tarvetta vaihtaa tuulilasia?" },
+        { id: "p1-vaihto-4", k: "q", t: "Missä kunnossa renkaat ja vanteet ovat? Sekä kesä- että talvirenkaat: nastat, aluvanteilla?" },
+        { id: "p1-vaihto-5", k: "q", t: "Onko auton sisusta ehjä, siisti ja hajuton? Onko puutteita?" },
+        { id: "p1-vaihto-h1", k: "h", t: "Huollot, korjaukset ja katsastus" },
+        { id: "p1-vaihto-6", k: "q", t: "Miten auton tekniikka toimii? Onko jotain rikki? Toimiiko kaikki?" },
+        { id: "p1-vaihto-7", k: "q", t: "Milloin on tehty edellinen huolto?" },
+        { id: "p1-vaihto-8", k: "q", t: "Milloin on seuraavan huollon aika? Mitä huoltoon kuuluu?" },
+        { id: "p1-vaihto-9", k: "q", t: "Milloin jakopää on tehty? Onko tarvetta vaihtaa jakopää?" },
+        { id: "p1-vaihto-10", k: "q", t: "Onko auton katsastus ajankohtainen? (Varmista GT-X:stä)" },
+        { id: "p1-vaihto-11", k: "q", t: "Onko auto teknisesti täysin myyntikunnossa? Onko jotain rikki?" },
+        { id: "p1-vaihto-12", k: "q", t: "Oletko huomannut auton ajettavuudessa jotain poikkeamia?" },
+        { id: "p1-vaihto-13", k: "q", t: "Tuleeko vielä jotain auton jälleenmyyntiin vaikuttavaa mieleen? Onko auto siinä kunnossa, että se voidaan sellaisenaan myydä seuraavalle asiakkaalle?" },
+        { id: "p1-vaihto-14", k: "say", t: "Kuulostaa siltä, että tuosta autosta saadaan hyvää myytävää meille, ja otetaan se kyllä mielellään vaihdossa!" }
+      ]},
+      { id: "p1-paketti", title: "Asiakkaalle sopivan tarjouspaketin selvittäminen", sub: "Sopiva kk-erä, toimitus/nouto", items: [
+        { id: "p1-paketti-1", k: "q", t: "Miten toimitus sopii asiakkaalle parhaiten?" },
+        { id: "p1-paketti-2", k: "q", t: "Mikä on sopiva kk-erä? (jos ei ole tullut jo aiemmin selville)" },
+        { id: "p1-paketti-3", k: "q", t: "Onko tässä vaiheessa kaikki selvää? Onko tullut jotain kysyttävää?" },
+        { id: "p1-paketti-h1", k: "h", t: "Päätä puhelu 1 positiivisesti ja hymyillen" },
+        { id: "p1-paketti-4", k: "say", t: "Palaan teille asiaan 15 minuutin kuluttua ratkaisun kanssa." },
+        { id: "p1-paketti-5", k: "tip", t: "Sovi tarkka takaisinsoittoaika!" }
+      ]}
+    ]},
+    { id: "p2", title: "Puhelu 2", steps: [
+      { id: "p2-avaus", title: "Puhelun avaus ja alustus", items: [
+        { id: "p2-avaus-1", k: "tip", t: "Aloita puhelu positiivisesti, luontevana jatkumona edellisen puhelun päättämiselle." },
+        { id: "p2-avaus-2", k: "q", t: "Luo tarjoukselle positiivinen alustus: oliko jotain selvitettäviä asioita, joihin kannattaa palata heti? (esim. onko meidän autossa jakopää tms. tehty)" }
+      ]},
+      { id: "p2-tarjous", title: "Tarjouksen ja ratkaisun esittäminen", items: [
+        { id: "p2-tarjous-1", k: "q", t: "Kertaus myytävästä autosta, välihyväksytys että tämä auto sopii asiakkaalle + Sakan tapa tehdä kauppaa -kertaus (jos tarve)." },
+        { id: "p2-tarjous-2", k: "kv", t: "Kuukausierä", v: "250–300 €/kk" },
+        { id: "p2-tarjous-3", k: "kv", t: "Väliraha", v: "" },
+        { id: "p2-tarjous-4", k: "kv", t: "Toimitusaikataulu", v: "" },
+        { id: "p2-tarjous-5", k: "q", t: "Kaupan sisältö: ratkaistavat asiat + integroidut palvelut." },
+        { id: "p2-tarjous-6", k: "say", t: "Miltä vaikuttaa? Tehdään tästä kaupat?" },
+        { id: "p2-tarjous-7", k: "say", t: "Saatte tästä unelmienne auton suoraan ajoon!" }
+      ]},
+      { id: "p2-vasta", title: "Vastaväitteiden kumoaminen", items: [
+        { id: "p2-vasta-1", k: "q", t: "Tarve – tuote – hinta" },
+        { id: "p2-vasta-2", k: "q", t: "Ymmärrä – oikaise – hyväksytä" },
+        { id: "p2-vasta-3", k: "tip", t: "Kysy kauppaa vähintään VIISI (5) kertaa!" },
+        { id: "p2-vasta-4", k: "q", t: "Selvitä aktiivisesti kysymällä: mistä kaupanteko on kiinni? Miten päästään kaupoille?" },
+        { id: "p2-vasta-5", k: "q", t: "Jos kauppaa ei tule suoraan, sovi uusi aika, milloin asiaan palataan. Kysy, onko jotain, mitä voit tehdä, jotta päätöksen tekeminen on helpompaa." }
+      ]}
+    ]}
+  ];
+
+  var RK_KIND_LABEL = { q: "Kohta", h: "Väliotsikko", tip: "Korostus", say: "Repliikki", kv: "Tarjousrivi" };
+  var RK_ICON = {
+    up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>',
+    down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+    left: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
+    right: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>',
+    eye: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"/><circle cx="12" cy="12" r="3"/></svg>',
+    eyeOff: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 19c-7 0-11-7-11-7a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 7 11 7a18.5 18.5 0 0 1-2.16 3.19M1 1l22 22"/></svg>',
+    trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>',
+    pen: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>'
+  };
+
+  var rk = { call: "p1", pos: { p1: 0, p2: 0 }, editing: false, editStep: null, newKind: "q", resetArmed: false, overlay: null, overlayFor: null };
+
+  // Omat muokkaukset: { calls: { p1: { order:[], hidden:{}, customSteps:[{id,title,items:[]}], itemOrder:{}, customItems:{} } } }
+  function rkKey() { return "ts_runko_" + ((state.profile && state.profile.nickname) || "anon").trim().toLowerCase(); }
+  function rkLoad() {
+    if (rk.overlay && rk.overlayFor === rkKey()) return rk.overlay;
+    var data = null;
+    try { var ls = safeLS(); var raw = ls ? ls.getItem(rkKey()) : null; if (raw) data = JSON.parse(raw); } catch (e) { data = null; }
+    if (!data || typeof data !== "object" || !data.calls) data = { calls: {} };
+    rk.overlay = data; rk.overlayFor = rkKey();
+    return data;
+  }
+  function rkSave() {
+    try { var ls = safeLS(); if (ls) ls.setItem(rkKey(), JSON.stringify(rk.overlay)); } catch (e) {}
+  }
+  function rkCallOv(callId) {
+    var d = rkLoad();
+    if (!d.calls[callId]) d.calls[callId] = {};
+    var c = d.calls[callId];
+    c.order = c.order || []; c.hidden = c.hidden || {}; c.customSteps = c.customSteps || [];
+    c.itemOrder = c.itemOrder || {}; c.customItems = c.customItems || {};
+    return c;
+  }
+  function rkHasEdits() {
+    var d = rkLoad();
+    return Object.keys(d.calls).some(function (k) {
+      var c = d.calls[k];
+      return (c.order && c.order.length) || (c.hidden && Object.keys(c.hidden).length) || (c.customSteps && c.customSteps.length) ||
+        (c.itemOrder && Object.keys(c.itemOrder).length) || (c.customItems && Object.keys(c.customItems).some(function (s) { return c.customItems[s].length; }));
+    });
+  }
+
+  // Keep the saved order, and slot any id the saved order does not know
+  // (new team steps, new own steps) in right after its default predecessor.
+  function rkMergeOrder(defaultIds, saved) {
+    var known = {}; defaultIds.forEach(function (id) { known[id] = true; });
+    var res = [];
+    (saved || []).forEach(function (id) { if (known[id] && res.indexOf(id) === -1) res.push(id); });
+    defaultIds.forEach(function (id, i) {
+      if (res.indexOf(id) !== -1) return;
+      var pos = i > 0 ? res.indexOf(defaultIds[i - 1]) + 1 : 0;
+      res.splice(pos, 0, id);
+    });
+    return res;
+  }
+
+  function rkBuild(callId) {
+    var tpl = RUNKO_TEMPLATE.filter(function (c) { return c.id === callId; })[0];
+    var ov = rkCallOv(callId);
+    var byId = {};
+    var defaults = [];
+    tpl.steps.forEach(function (s) { byId[s.id] = { id: s.id, title: s.title, sub: s.sub, items: s.items, custom: false }; defaults.push(s.id); });
+    ov.customSteps.forEach(function (s) { byId[s.id] = { id: s.id, title: s.title, sub: "", items: [], custom: true }; defaults.push(s.id); });
+    var order = rkMergeOrder(defaults, ov.order);
+    return order.map(function (sid) {
+      var s = byId[sid];
+      var own = s.custom ? (ov.customSteps.filter(function (c) { return c.id === sid; })[0].items || []) : (ov.customItems[sid] || []);
+      var itemsById = {}; var idefaults = [];
+      (s.custom ? [] : s.items).forEach(function (it) { itemsById[it.id] = Object.assign({ custom: false }, it); idefaults.push(it.id); });
+      own.forEach(function (it) { itemsById[it.id] = Object.assign({ custom: true }, it); idefaults.push(it.id); });
+      var iorder = rkMergeOrder(idefaults, ov.itemOrder[sid]);
+      return {
+        id: sid, title: s.title, sub: s.sub, custom: s.custom, hidden: !!ov.hidden[sid],
+        items: iorder.map(function (iid) { return Object.assign({}, itemsById[iid], { hidden: !!ov.hidden[iid] }); })
+      };
+    });
+  }
+  function rkVisible(callId) {
+    return rkBuild(callId).filter(function (s) { return !s.hidden; }).map(function (s) {
+      return Object.assign({}, s, { items: s.items.filter(function (i) { return !i.hidden; }) });
+    });
+  }
+  function rkCallTitle(callId) { return RUNKO_TEMPLATE.filter(function (c) { return c.id === callId; })[0].title; }
+  function rkOtherCall(callId) { return callId === "p1" ? "p2" : null; }
+
+  function renderRunko(main) {
+    main.className = "runko-main";
+    if (rk.editing) { renderRunkoEdit(main); return; }
+
+    var steps = rkVisible(rk.call);
+    if (rk.pos[rk.call] >= steps.length) rk.pos[rk.call] = Math.max(steps.length - 1, 0);
+    var idx = rk.pos[rk.call];
+
+    var top = document.createElement("div");
+    top.className = "rk-top";
+    top.innerHTML =
+      '<div class="rk-seg">' + RUNKO_TEMPLATE.map(function (c) {
+        return '<button type="button" data-call="' + c.id + '" class="' + (c.id === rk.call ? "active" : "") + '">' + escapeHtml(c.title) + '</button>';
+      }).join("") + '</div>' +
+      '<button type="button" class="rk-editbtn" id="rkEditBtn">' + RK_ICON.pen + 'Muokkaa</button>';
+    Array.prototype.forEach.call(top.querySelectorAll(".rk-seg button"), function (b) {
+      b.addEventListener("click", function () { rk.call = b.getAttribute("data-call"); render(); window.scrollTo(0, 0); });
+    });
+    top.querySelector("#rkEditBtn").addEventListener("click", function () { rk.editing = true; rk.editStep = null; rk.resetArmed = false; render(); window.scrollTo(0, 0); });
+    main.appendChild(top);
+
+    if (steps.length === 0) {
+      var empty = document.createElement("div");
+      empty.className = "card";
+      empty.innerHTML = '<p style="color:var(--text-dim);font-size:14px;margin:0;">Kaikki vaiheet on piilotettu. Palauta niitä kohdasta Muokkaa.</p>';
+      main.appendChild(empty);
+      return;
+    }
+
+    var chips = document.createElement("div");
+    chips.className = "rk-steps";
+    chips.innerHTML = steps.map(function (s, i) {
+      return '<button type="button" class="rk-chip' + (i === idx ? " on" : (i < idx ? " done" : "")) + '" data-i="' + i + '"><span class="n">' + (i + 1) + '</span>' + escapeHtml(s.title) + '</button>';
+    }).join("");
+    Array.prototype.forEach.call(chips.querySelectorAll(".rk-chip"), function (b) {
+      b.addEventListener("click", function () { rkGo(parseInt(b.getAttribute("data-i"), 10)); });
+    });
+    main.appendChild(chips);
+
+    var s = steps[idx];
+    var card = document.createElement("div");
+    card.className = "card rk-card";
+    card.innerHTML =
+      '<div class="rk-eyebrow">' + escapeHtml(rkCallTitle(rk.call)) + ' · Vaihe ' + (idx + 1) + ' / ' + steps.length + '</div>' +
+      '<div class="rk-title">' + escapeHtml(s.title) + (s.custom ? '<span class="rk-own">OMA</span>' : '') + '</div>' +
+      (s.sub ? '<div class="rk-sub">' + escapeHtml(s.sub) + '</div>' : '') +
+      '<div class="rk-items">' + (s.items.length ? s.items.map(rkItemHtml).join("") : '<div class="rk-sub">Ei kohtia. Lisää niitä kohdasta Muokkaa.</div>') + '</div>';
+    rkSwipe(card, steps.length);
+    main.appendChild(card);
+
+    // Bottom bar: back + forward, forward shows the next step's title.
+    var bar = document.createElement("div");
+    bar.className = "rk-next";
+    var nextLabel, nextTitle, nextAction, isEnd = false;
+    if (idx < steps.length - 1) {
+      nextLabel = "Seuraavaksi"; nextTitle = steps[idx + 1].title;
+      nextAction = function () { rkGo(idx + 1); };
+    } else if (rkOtherCall(rk.call) && rkVisible(rkOtherCall(rk.call)).length) {
+      var oc = rkOtherCall(rk.call);
+      nextLabel = "Seuraavaksi · " + rkCallTitle(oc); nextTitle = rkVisible(oc)[0].title;
+      nextAction = function () { rk.call = oc; rk.pos[oc] = 0; render(); window.scrollTo(0, 0); };
+    } else {
+      isEnd = true; nextLabel = "Runko käyty läpi"; nextTitle = "Takaisin alkuun";
+      nextAction = function () { rk.call = "p1"; rk.pos.p1 = 0; rk.pos.p2 = 0; render(); window.scrollTo(0, 0); };
+    }
+    bar.innerHTML =
+      '<div class="rk-next-inner">' +
+        '<button type="button" class="rk-prev" aria-label="Edellinen vaihe"' + (idx === 0 ? " disabled" : "") + '>' + RK_ICON.left + '</button>' +
+        '<button type="button" class="rk-fwd' + (isEnd ? " end" : "") + '"><span class="t"><span class="l">' + escapeHtml(nextLabel) + '</span><span class="s">' + escapeHtml(nextTitle) + '</span></span>' + RK_ICON.right + '</button>' +
+      '</div>';
+    bar.querySelector(".rk-prev").addEventListener("click", function () { if (idx > 0) rkGo(idx - 1); });
+    bar.querySelector(".rk-fwd").addEventListener("click", nextAction);
+    main.appendChild(bar);
+
+    var onChip = chips.querySelector(".rk-chip.on");
+    if (onChip) chips.scrollLeft = Math.max(onChip.offsetLeft - 16, 0);
+  }
+
+  function rkItemHtml(it) {
+    var own = it.custom ? '<span class="rk-own">OMA</span>' : '';
+    var t = escapeHtml(it.t);
+    if (it.k === "h") return '<div class="rk-h">' + t + own + '</div>';
+    if (it.k === "tip") return '<div class="rk-tip">' + t + own + '</div>';
+    if (it.k === "say") return '<div class="rk-say"><span class="lbl">Sano</span>' + t + own + '</div>';
+    if (it.k === "kv") return '<div class="rk-kv"><span class="k">' + t + '</span><span class="v">' + (it.v ? escapeHtml(it.v) : "&nbsp;") + '</span></div>';
+    return '<div class="rk-q"><span>' + t + own + '</span></div>';
+  }
+
+  function rkGo(i) { rk.pos[rk.call] = i; render(); window.scrollTo(0, 0); }
+
+  function rkSwipe(el, count) {
+    var sx = null, sy = null;
+    el.addEventListener("touchstart", function (e) { var t = e.touches[0]; sx = t.clientX; sy = t.clientY; }, { passive: true });
+    el.addEventListener("touchend", function (e) {
+      if (sx === null) return;
+      var t = e.changedTouches[0]; var dx = t.clientX - sx; var dy = t.clientY - sy; sx = null;
+      if (Math.abs(dx) < 70 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+      var i = rk.pos[rk.call];
+      if (dx < 0 && i < count - 1) rkGo(i + 1);
+      else if (dx > 0 && i > 0) rkGo(i - 1);
+    }, { passive: true });
+  }
+
+  // ----- edit mode -----
+  function rkMove(list, id, dir) {
+    var i = list.indexOf(id); var j = i + dir;
+    if (i === -1 || j < 0 || j >= list.length) return list;
+    var copy = list.slice(); copy[i] = list[j]; copy[j] = id; return copy;
+  }
+
+  function renderRunkoEdit(main) {
+    if (rk.editStep) { renderRunkoEditStep(main); return; }
+    var ov = rkCallOv(rk.call);
+    var steps = rkBuild(rk.call);
+    var ids = steps.map(function (s) { return s.id; });
+
+    var head = document.createElement("div");
+    head.className = "rk-edit-head";
+    head.innerHTML = '<h2>Muokkaa runkoa</h2><button type="button" class="btn btn-primary btn-sm" id="rkDone">Valmis</button>';
+    head.querySelector("#rkDone").addEventListener("click", function () { rk.editing = false; render(); window.scrollTo(0, 0); });
+    main.appendChild(head);
+
+    var seg = document.createElement("div");
+    seg.className = "rk-seg";
+    seg.innerHTML = RUNKO_TEMPLATE.map(function (c) {
+      return '<button type="button" data-call="' + c.id + '" class="' + (c.id === rk.call ? "active" : "") + '">' + escapeHtml(c.title) + '</button>';
+    }).join("");
+    Array.prototype.forEach.call(seg.querySelectorAll("button"), function (b) {
+      b.addEventListener("click", function () { rk.call = b.getAttribute("data-call"); render(); });
+    });
+    main.appendChild(seg);
+
+    var note = document.createElement("div");
+    note.className = "rk-note";
+    note.textContent = "Tiimin pohjaa ylläpitää Renny. Voit järjestää vaiheita, piilottaa ne joita et käy läpi ja lisätä omia. Muutokset näkyvät vain sinulle ja tallentuvat tähän laitteeseen.";
+    main.appendChild(note);
+
+    var list = document.createElement("div");
+    list.className = "rk-elist";
+    steps.forEach(function (s, i) {
+      var row = document.createElement("div");
+      row.className = "rk-erow" + (s.hidden ? " off" : "");
+      var visibleItems = s.items.filter(function (it) { return !it.hidden; }).length;
+      row.innerHTML =
+        '<div class="txt"><span class="kind">Vaihe ' + (i + 1) + (s.custom ? " · oma" : "") + (s.hidden ? " · piilotettu" : "") + '</span><b>' + escapeHtml(s.title) + '</b>' +
+          '<span class="kind" style="text-transform:none;letter-spacing:0;font-weight:500;">' + visibleItems + ' kohtaa</span></div>' +
+        '<button type="button" class="rk-ib" data-a="up" aria-label="Siirrä ylös"' + (i === 0 ? " disabled" : "") + '>' + RK_ICON.up + '</button>' +
+        '<button type="button" class="rk-ib" data-a="down" aria-label="Siirrä alas"' + (i === steps.length - 1 ? " disabled" : "") + '>' + RK_ICON.down + '</button>' +
+        (s.custom
+          ? '<button type="button" class="rk-ib del" data-a="del" aria-label="Poista vaihe">' + RK_ICON.trash + '</button>'
+          : '<button type="button" class="rk-ib" data-a="hide" aria-label="' + (s.hidden ? "Näytä" : "Piilota") + '">' + (s.hidden ? RK_ICON.eyeOff : RK_ICON.eye) + '</button>') +
+        '<button type="button" class="rk-ib go" data-a="open" aria-label="Muokkaa kohtia">' + RK_ICON.right + '</button>';
+      row.querySelector('[data-a="up"]').addEventListener("click", function () { ov.order = rkMove(ids, s.id, -1); rkSave(); render(); });
+      row.querySelector('[data-a="down"]').addEventListener("click", function () { ov.order = rkMove(ids, s.id, 1); rkSave(); render(); });
+      var hb = row.querySelector('[data-a="hide"]');
+      if (hb) hb.addEventListener("click", function () { if (ov.hidden[s.id]) delete ov.hidden[s.id]; else ov.hidden[s.id] = true; rkSave(); render(); });
+      var db = row.querySelector('[data-a="del"]');
+      if (db) db.addEventListener("click", function () {
+        ov.customSteps = ov.customSteps.filter(function (c) { return c.id !== s.id; });
+        ov.order = ov.order.filter(function (x) { return x !== s.id; });
+        delete ov.itemOrder[s.id];
+        rkSave(); render(); showToast("Oma vaihe poistettu");
+      });
+      row.querySelector('[data-a="open"]').addEventListener("click", function () { rk.editStep = s.id; render(); window.scrollTo(0, 0); });
+      list.appendChild(row);
+    });
+    main.appendChild(list);
+
+    var add = document.createElement("div");
+    add.className = "card rk-add";
+    add.innerHTML = '<h2>Lisää oma vaihe</h2><input type="text" id="rkNewStep" placeholder="Vaiheen otsikko, esim. Rahoituksen läpikäynti"><button type="button" class="btn btn-ghost" id="rkAddStep">Lisää vaihe loppuun</button>';
+    add.querySelector("#rkAddStep").addEventListener("click", function () {
+      var v = add.querySelector("#rkNewStep").value.trim();
+      if (!v) { showToast("Kirjoita otsikko ensin"); return; }
+      var id = "own-" + genId();
+      ov.customSteps.push({ id: id, title: v, items: [] });
+      ov.order = ids.concat([id]);
+      rkSave(); rk.editStep = id; render(); window.scrollTo(0, 0);
+      showToast("Vaihe lisätty, lisää sille kohdat");
+    });
+    main.appendChild(add);
+
+    if (rkHasEdits()) {
+      var reset = document.createElement("button");
+      reset.type = "button";
+      reset.className = "btn btn-ghost";
+      reset.style.color = "var(--bad)";
+      reset.textContent = rk.resetArmed ? "Vahvista: poista kaikki omat muutokset" : "Palauta tiimin pohja";
+      reset.addEventListener("click", function () {
+        if (!rk.resetArmed) { rk.resetArmed = true; render(); return; }
+        rk.overlay = { calls: {} }; rkSave(); rk.resetArmed = false; rk.pos = { p1: 0, p2: 0 };
+        render(); showToast("Tiimin pohja palautettu");
+      });
+      main.appendChild(reset);
+    }
+  }
+
+  function renderRunkoEditStep(main) {
+    var ov = rkCallOv(rk.call);
+    var steps = rkBuild(rk.call);
+    var s = steps.filter(function (x) { return x.id === rk.editStep; })[0];
+    if (!s) { rk.editStep = null; render(); return; }
+    var ids = s.items.map(function (i) { return i.id; });
+    var ownArr = s.custom
+      ? ov.customSteps.filter(function (c) { return c.id === s.id; })[0].items
+      : (ov.customItems[s.id] = ov.customItems[s.id] || []);
+
+    var head = document.createElement("div");
+    head.className = "rk-edit-head";
+    head.innerHTML = '<button type="button" class="btn btn-ghost btn-sm" id="rkBack">‹ Vaiheet</button><button type="button" class="btn btn-primary btn-sm" id="rkDone">Valmis</button>';
+    head.querySelector("#rkBack").addEventListener("click", function () { rk.editStep = null; render(); window.scrollTo(0, 0); });
+    head.querySelector("#rkDone").addEventListener("click", function () { rk.editing = false; rk.editStep = null; render(); window.scrollTo(0, 0); });
+    main.appendChild(head);
+
+    var title = document.createElement("div");
+    title.innerHTML = '<div class="rk-eyebrow">' + escapeHtml(rkCallTitle(rk.call)) + (s.custom ? " · oma vaihe" : "") + '</div><div class="rk-title" style="font-size:22px;">' + escapeHtml(s.title) + '</div>';
+    main.appendChild(title);
+
+    var list = document.createElement("div");
+    list.className = "rk-elist";
+    if (!s.items.length) list.innerHTML = '<div class="empty-note">Ei vielä kohtia.</div>';
+    s.items.forEach(function (it, i) {
+      var row = document.createElement("div");
+      row.className = "rk-erow" + (it.hidden ? " off" : "");
+      var shown = it.k === "kv" ? (it.t + (it.v ? ": " + it.v : "")) : it.t;
+      row.innerHTML =
+        '<div class="txt"><span class="kind">' + RK_KIND_LABEL[it.k || "q"] + (it.custom ? " · oma" : "") + (it.hidden ? " · piilotettu" : "") + '</span>' + escapeHtml(shown) + '</div>' +
+        '<button type="button" class="rk-ib" data-a="up" aria-label="Siirrä ylös"' + (i === 0 ? " disabled" : "") + '>' + RK_ICON.up + '</button>' +
+        '<button type="button" class="rk-ib" data-a="down" aria-label="Siirrä alas"' + (i === s.items.length - 1 ? " disabled" : "") + '>' + RK_ICON.down + '</button>' +
+        (it.custom
+          ? '<button type="button" class="rk-ib del" data-a="del" aria-label="Poista kohta">' + RK_ICON.trash + '</button>'
+          : '<button type="button" class="rk-ib" data-a="hide" aria-label="' + (it.hidden ? "Näytä" : "Piilota") + '">' + (it.hidden ? RK_ICON.eyeOff : RK_ICON.eye) + '</button>');
+      row.querySelector('[data-a="up"]').addEventListener("click", function () { ov.itemOrder[s.id] = rkMove(ids, it.id, -1); rkSave(); render(); });
+      row.querySelector('[data-a="down"]').addEventListener("click", function () { ov.itemOrder[s.id] = rkMove(ids, it.id, 1); rkSave(); render(); });
+      var hb = row.querySelector('[data-a="hide"]');
+      if (hb) hb.addEventListener("click", function () { if (ov.hidden[it.id]) delete ov.hidden[it.id]; else ov.hidden[it.id] = true; rkSave(); render(); });
+      var db = row.querySelector('[data-a="del"]');
+      if (db) db.addEventListener("click", function () {
+        var k = ownArr.findIndex(function (o) { return o.id === it.id; });
+        if (k !== -1) ownArr.splice(k, 1);
+        if (ov.itemOrder[s.id]) ov.itemOrder[s.id] = ov.itemOrder[s.id].filter(function (x) { return x !== it.id; });
+        rkSave(); render(); showToast("Kohta poistettu");
+      });
+      list.appendChild(row);
+    });
+    main.appendChild(list);
+
+    var add = document.createElement("div");
+    add.className = "card rk-add";
+    add.innerHTML =
+      '<h2>Lisää oma kohta</h2>' +
+      '<div class="rk-kinds">' + ["q", "tip", "say", "h"].map(function (k) {
+        return '<button type="button" data-k="' + k + '" class="' + (rk.newKind === k ? "on" : "") + '">' + RK_KIND_LABEL[k] + '</button>';
+      }).join("") + '</div>' +
+      '<textarea id="rkNewItem" rows="3" placeholder="' + (rk.newKind === "say" ? "Mitä sanot asiakkaalle, esim. Miltä tämä kuulostaa?" : "Kirjoita kohta") + '"></textarea>' +
+      '<button type="button" class="btn btn-ghost" id="rkAddItem">Lisää kohta loppuun</button>' +
+      '<div class="rk-note">Siirrä kohta oikeaan kohtaan nuolilla lisäämisen jälkeen.</div>';
+    Array.prototype.forEach.call(add.querySelectorAll(".rk-kinds button"), function (b) {
+      b.addEventListener("click", function () {
+        var draft = add.querySelector("#rkNewItem").value;
+        rk.newKind = b.getAttribute("data-k"); render();
+        var ta = document.getElementById("rkNewItem"); if (ta) ta.value = draft;
+      });
+    });
+    add.querySelector("#rkAddItem").addEventListener("click", function () {
+      var v = add.querySelector("#rkNewItem").value.trim();
+      if (!v) { showToast("Kirjoita kohta ensin"); return; }
+      var id = "own-" + genId();
+      ownArr.push({ id: id, k: rk.newKind, t: v });
+      ov.itemOrder[s.id] = ids.concat([id]);
+      rkSave(); render(); showToast("Kohta lisätty");
+    });
+    main.appendChild(add);
   }
 
   // ---------- Nav + init ----------
