@@ -1008,8 +1008,8 @@
 
   // ---------- Backend (Google Apps Script) ----------
   function apiCall(action, payload) {
-    // Vierailija ei koskaan lähetä mitään palvelimelle.
-    if (state.guest) return Promise.resolve(action === "leaderboard" ? { ok: true, sellers: [state.profile] } : { ok: true, profile: state.profile });
+    // Vierailija saa vain lukea tulostaulun; mitään ei kirjoiteta palvelimelle.
+    if (state.guest && action !== "leaderboard") return Promise.resolve({ ok: true, profile: state.profile });
     var body = Object.assign({ action: action }, payload || {});
     return fetch(state.apiUrl, { method: "POST", body: JSON.stringify(body) })
       .then(function (r) { return r.json(); });
@@ -1191,6 +1191,8 @@
     apiCall("leaderboard", {}).then(function (res) {
       if (res && res.ok) {
         state.leaderboardDocs = res.sellers || [];
+        // Vierailijan omat kokeilut näkyvät listalla, mutta vain tällä laitteella hetken.
+        if (state.guest && state.profile) state.leaderboardDocs = state.leaderboardDocs.concat([state.profile]);
       }
       state.leaderboardLoaded = true;
       if (state.tab === "leaderboard") render();
@@ -1802,7 +1804,7 @@
     if (state.guest) {
       var gn = document.createElement("div");
       gn.className = "card guest-note";
-      gn.textContent = "Vierailijana tulostaulu näyttää vain oman kokeilusi. Tiimin tulokset näkyvät kirjautuneille käyttäjille.";
+      gn.textContent = "Näet tiimin oikean tulostaulun. Omat kokeilusi näkyvät listalla nimellä Vierailija, mutta niitä ei tallenneta eikä kukaan muu näe niitä.";
       main.appendChild(gn);
     }
     if (!state.leaderboardLoaded) {
