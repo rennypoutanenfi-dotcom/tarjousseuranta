@@ -112,7 +112,14 @@
     color: var(--text-faint);
     margin-top: 2px;
   }
-  .hdr-btns { display: flex; gap: 8px; flex-shrink: 0; }
+  .hdr-btns { display: flex; gap: 8px; flex-shrink: 0; align-items: center; }
+  #guestEndBtn { background: var(--gold-dim); color: var(--gold); border: 1px solid var(--gold); border-radius: 10px; height: 38px; padding: 0 10px;
+    font-family: var(--font-body); font-size: 12.5px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+  header.top > div:first-child { min-width: 0; }
+  @media (max-width: 480px) { #guestEndBtn .long { display: none; } .hdr-btns { gap: 6px; } }
+  .guest-entry { margin-top: 18px; text-align: center; }
+  .guest-entry p { font-size: 12.5px; color: var(--text-dim); line-height: 1.45; margin: 8px 6px 0; }
+  .guest-note { font-size: 13px; color: var(--text-dim); padding: 12px 14px; }
   #themeBtn {
     background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
     border-radius: 10px; height: 38px; padding: 0 12px; cursor: pointer; flex-shrink: 0;
@@ -847,6 +854,7 @@
       <div class="who-label" id="whoLabel"></div>
     </div>
     <div class="hdr-btns">
+    <button id="guestEndBtn" type="button" class="hidden" title="Lopeta vierailu ja pyyhi kaikki"><span class="long">Vierailija · </span>Lopeta</button>
     <button id="themeBtn" type="button" aria-label="Vaihda vaalea tai tumma tila" title="Vaalea / tumma tila"></button>
     <button id="settingsBtn" type="button" aria-label="Asetukset">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -978,7 +986,15 @@
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
     });
   }
+  // Vierailijatilassa kaikki "tallennus" menee tähän muistiin, joka katoaa kun sivu suljetaan.
+  var guestMem = {};
+  var guestLS = {
+    getItem: function (k) { return Object.prototype.hasOwnProperty.call(guestMem, k) ? guestMem[k] : null; },
+    setItem: function (k, v) { guestMem[k] = String(v); },
+    removeItem: function (k) { delete guestMem[k]; }
+  };
   function safeLS() {
+    if (state && state.guest) return guestLS;
     try { return window.localStorage; } catch (e) { return null; }
   }
 
@@ -992,6 +1008,8 @@
 
   // ---------- Backend (Google Apps Script) ----------
   function apiCall(action, payload) {
+    // Vierailija ei koskaan lähetä mitään palvelimelle.
+    if (state.guest) return Promise.resolve(action === "leaderboard" ? { ok: true, sellers: [state.profile] } : { ok: true, profile: state.profile });
     var body = Object.assign({ action: action }, payload || {});
     return fetch(state.apiUrl, { method: "POST", body: JSON.stringify(body) })
       .then(function (r) { return r.json(); });
@@ -1123,7 +1141,27 @@
     });
   }
 
+  function startGuest() {
+    state.guest = true;
+    guestMem = {};
+    // Tyhjennä välimuistit, jotta vierailija ei näe aiemman käyttäjän laitteelle tallennettuja tietoja.
+    rf = null; vt.loaded = null; vt.a = {}; rk.overlay = null; vl.store = null; vl.index = null; lead.answers = {};
+    var mk = state.monthKey, months = {};
+    months[mk] = { monthKey: mk, workDays: 20, targetOffers: 40, offers: [] };
+    state.profile = { nickname: "Vierailija", company: "Kokeilutila", months: months };
+    state.pin = null; localOffers = []; deletedIds = {};
+    state.leaderboardLoaded = false; state.leaderboardDocs = [];
+    state.tab = "home"; state.authError = ""; state.authStatus = "ready";
+    render(); window.scrollTo(0, 0);
+    showToast("Vierailijatila: mitään ei tallenneta");
+  }
+  function endGuest() {
+    guestMem = {};
+    window.location.reload();
+  }
+
   function logout() {
+    if (state.guest) { endGuest(); return; }
     var ls = safeLS();
     if (ls) { ls.removeItem(LS_NICK); ls.removeItem(LS_PIN); }
     state.profile = null;
@@ -1381,7 +1419,8 @@
 
     document.getElementById("monthLabel").textContent = monthDisplay(state.monthKey);
     var whoLabel = document.getElementById("whoLabel");
-    whoLabel.textContent = state.profile.nickname + (state.profile.company ? " · " + state.profile.company : "");
+    whoLabel.textContent = state.guest ? "Vierailijatila · mitään ei tallenneta" : state.profile.nickname + (state.profile.company ? " · " + state.profile.company : "");
+    document.getElementById("guestEndBtn").classList.toggle("hidden", !state.guest);
     var settingsBtn = document.getElementById("settingsBtn");
     settingsBtn.style.display = state.tab === "home" ? "flex" : "none";
 
@@ -1421,8 +1460,9 @@
           '<h2 style="color:var(--text);font-size:16px;font-weight:600;margin-bottom:10px;">Palvelimen osoite puuttuu</h2>' +
           '<div class="field"><label for="apiInput">Web app -osoite</label><input id="apiInput" class="text-field" type="text" placeholder="https://script.google.com/macros/s/.../exec"></div>' +
           '<button class="btn btn-primary" id="apiSaveBtn">Tallenna</button>' +
-        '</div>';
+        '</div>' + '<div class="guest-entry"><button type="button" class="btn btn-ghost" id="guestBtn">Kokeile vierailijana</button><p>Voit katsoa ja kokeilla kaikkea. Mitään ei tallenneta, ja kaikki pyyhkiytyy pois kun suljet sivun.</p></div>';
       main.appendChild(wrap);
+      wrap.querySelector("#guestBtn").addEventListener("click", startGuest);
       wrap.querySelector("#apiSaveBtn").addEventListener("click", function () {
         var url = wrap.querySelector("#apiInput").value.trim();
         if (!url) { showToast("Liitä osoite ensin"); return; }
@@ -1451,8 +1491,9 @@
           '<div class="field"><label for="liPin">PIN-koodi</label><input id="liPin" type="password" inputmode="numeric" autocomplete="current-password"></div>' +
           errHtml +
           '<button class="btn btn-primary" id="liBtn"' + (state.authBusy ? " disabled" : "") + '>' + (state.authBusy ? "Kirjaudutaan…" : "Kirjaudu") + '</button>' +
-        '</div>';
+        '</div>' + '<div class="guest-entry"><button type="button" class="btn btn-ghost" id="guestBtn">Kokeile vierailijana</button><p>Voit katsoa ja kokeilla kaikkea. Mitään ei tallenneta, ja kaikki pyyhkiytyy pois kun suljet sivun.</p></div>';
       main.appendChild(wrap);
+      wrap.querySelector("#guestBtn").addEventListener("click", startGuest);
       wrap.querySelector("#liBtn").addEventListener("click", function () {
         var nick = wrap.querySelector("#liNick").value.trim();
         var pin = wrap.querySelector("#liPin").value.trim();
@@ -1758,6 +1799,12 @@
   }
 
   function renderLeaderboard(main) {
+    if (state.guest) {
+      var gn = document.createElement("div");
+      gn.className = "card guest-note";
+      gn.textContent = "Vierailijana tulostaulu näyttää vain oman kokeilusi. Tiimin tulokset näkyvät kirjautuneille käyttäjille.";
+      main.appendChild(gn);
+    }
     if (!state.leaderboardLoaded) {
       main.innerHTML = '<div class="loading-wrap">Ladataan tulostaulua&hellip;</div>';
       fetchLeaderboard();
@@ -3623,6 +3670,7 @@
     });
   });
   document.getElementById("settingsBtn").addEventListener("click", openSettings);
+  document.getElementById("guestEndBtn").addEventListener("click", endGuest);
   function navFade() {
     var tb = document.getElementById("tabbar"); if (!tb) return;
     var more = tb.scrollWidth - tb.clientWidth - tb.scrollLeft > 4;
