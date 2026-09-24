@@ -421,6 +421,79 @@
   .rk-home .t2 { font-size: 12.5px; color: var(--text-dim); margin-top: 1px; }
   .rk-home .ar { color: var(--accent); flex-shrink: 0; }
   .rk-home .ar svg { width: 20px; height: 20px; }
+
+  /* ---------- Tietokonenäkymä ---------- */
+  @media (min-width: 900px) {
+    #app {
+      max-width: 1320px; display: grid; grid-template-columns: 236px minmax(0, 1fr);
+      grid-template-rows: auto 1fr; padding-bottom: 0; align-items: start;
+    }
+    #app.auth-mode { display: block; max-width: none; }
+    header.top { grid-column: 2; grid-row: 1; padding: 28px 32px 18px; align-items: center; }
+    header.top .brand { display: none; }
+    header.top .month-label { font-family: var(--font-display); font-size: 24px; font-weight: 600; color: var(--text); }
+    header.top .who-label { font-size: 13px; }
+    main { grid-column: 2; grid-row: 2; width: 100%; max-width: 1080px; padding: 24px 32px 48px; }
+    nav.tabbar {
+      grid-column: 1; grid-row: 1 / span 2; position: sticky; top: 0; left: auto; transform: none;
+      width: auto; max-width: none; height: 100vh; flex-direction: column; justify-content: flex-start;
+      padding: 26px 14px; gap: 4px; border-top: none; border-right: 1px solid var(--border); background: var(--bg);
+    }
+    nav.tabbar::before {
+      content: "Tarjousseuranta"; font-family: var(--font-display); font-size: 21px; font-weight: 600;
+      color: var(--text); padding: 2px 14px 22px; letter-spacing: .02em;
+    }
+    nav.tabbar button {
+      flex: 0 0 auto; flex-direction: row; justify-content: flex-start; gap: 12px;
+      padding: 11px 14px; font-size: 14.5px; border-radius: 10px; color: var(--text-dim);
+    }
+    nav.tabbar button:hover { background: var(--surface-2); color: var(--text); }
+    nav.tabbar button.active { background: var(--accent-dim); color: var(--accent); }
+    nav.tabbar svg { width: 20px; height: 20px; }
+    #toast, body.rk-on #toast { bottom: 28px; left: calc(50% + 118px); }
+    .ov-back { align-items: center !important; }
+    .ov-card { max-width: 520px !important; border-radius: 16px !important; }
+
+    main.view-home { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+    main.view-home > * { grid-column: 1; }
+    main.view-home > .src-card { grid-column: 2; grid-row: 1 / span 3; }
+
+    main.view-add { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+    main.view-add > .add-all, main.view-add > .card:only-child { grid-column: 1 / -1; }
+
+    main.view-leaderboard { max-width: 760px; }
+
+    main.view-history { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+    main.view-history > .card { grid-column: 1 / -1; }
+    main.view-history .hist-row { margin-bottom: 0; }
+
+    main.runko-main { padding-bottom: 48px; }
+    main.rk-viewing {
+      display: grid; grid-template-columns: minmax(220px, 280px) minmax(0, 1fr); align-items: start;
+      grid-template-areas: "top top" "steps card" "steps next";
+    }
+    main.rk-viewing > .rk-top { grid-area: top; }
+    main.rk-viewing > .rk-steps { grid-area: steps; flex-direction: column; overflow: visible; position: sticky; top: 24px; gap: 4px; padding: 0; }
+    main.rk-viewing > .rk-card, main.rk-viewing > .card { grid-area: card; }
+    main.rk-viewing .rk-chip {
+      max-width: none; white-space: normal; text-align: left; border-radius: 10px;
+      padding: 10px 12px; font-size: 13.5px; line-height: 1.3; display: flex; gap: 8px;
+    }
+    main.rk-viewing .rk-chip:hover { border-color: var(--text-faint); }
+    main.rk-viewing .rk-chip.on:hover { border-color: var(--accent); }
+    .rk-card { padding: 26px 30px 30px; }
+    .rk-title { font-size: 32px; }
+    .rk-q, .rk-say, .rk-kv { font-size: 17px; }
+    .rk-tip { font-size: 16px; }
+    .rk-next {
+      grid-area: next; position: sticky; bottom: 16px; left: auto; transform: none;
+      width: auto; max-width: none; padding: 12px 0 0; background: var(--bg); box-shadow: 0 -18px 18px -6px var(--bg); z-index: 5;
+    }
+    .rk-keys { display: block; }
+    main.rk-editing { max-width: 760px; }
+  }
+  .rk-keys { display: none; font-size: 12px; color: var(--text-faint); margin-top: 16px; }
+  .rk-keys kbd { font-family: var(--font-body); font-size: 11px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; }
   /* edit mode */
   .rk-edit-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
   .rk-edit-head h2 { font-family: var(--font-display); font-size: 20px; font-weight: 600; margin: 0; color: var(--text); }
@@ -975,7 +1048,7 @@
     app.classList.remove("auth-mode");
     header.classList.remove("hidden");
     tabbar.classList.remove("hidden");
-    main.className = "";
+    main.className = "view-" + state.tab;
 
     document.getElementById("monthLabel").textContent = monthDisplay(state.monthKey);
     var whoLabel = document.getElementById("whoLabel");
@@ -1125,7 +1198,7 @@
     main.appendChild(srow);
 
     var scard = document.createElement("div");
-    scard.className = "card";
+    scard.className = "card src-card";
     var rows = stats.bySource.map(function (s) {
       var cls = s.rate === null ? "" : (s.rate >= 30 ? "hr-good" : "hr-bad");
       return '<tr><td>' + s.label + '</td><td>' + s.count + '</td><td>' + s.closed + '</td><td class="' + cls + '">' + (s.rate === null ? "–" : Math.round(s.rate) + "%") + '</td></tr>';
@@ -1208,9 +1281,10 @@
 
   function buildOverlay() {
     var back = document.createElement("div");
+    back.className = "ov-back";
     back.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:60;display:flex;align-items:flex-end;justify-content:center;";
     var card = document.createElement("div");
-    card.className = "card";
+    card.className = "card ov-card";
     card.style.cssText = "width:100%;max-width:480px;border-radius:16px 16px 0 0;margin:0;max-height:88vh;overflow-y:auto;";
     back.appendChild(card);
     document.body.appendChild(back);
@@ -1231,7 +1305,7 @@
     var openOffers = offers.filter(function (o) { return !o.closed; }).sort(function (a, b) { return new Date(b.ts) - new Date(a.ts); });
 
     var addCard = document.createElement("div");
-    addCard.className = "card";
+    addCard.className = "card add-new";
     addCard.innerHTML = '<h2>Uusi tarjous</h2><p style="color:var(--text-dim);font-size:13px;margin-top:0;">Mistä tarjous tuli?</p>';
     var grid = document.createElement("div");
     grid.className = "src-grid";
@@ -1248,7 +1322,7 @@
     main.appendChild(addCard);
 
     var dealCard = document.createElement("div");
-    dealCard.className = "card";
+    dealCard.className = "card add-deal";
     dealCard.innerHTML = '<h2>Merkkaa kauppa</h2><p style="color:var(--text-dim);font-size:13px;margin-top:0;">Valitse tarjous, josta syntyi kauppa.</p>';
     var list = document.createElement("div");
     list.className = "offer-list";
@@ -1272,7 +1346,7 @@
 
     var allSorted = offers.slice().sort(function (a, b) { return new Date(b.ts) - new Date(a.ts); });
     var allCard = document.createElement("div");
-    allCard.className = "card";
+    allCard.className = "card add-all";
     allCard.innerHTML = '<h2>Kaikki tämän kuukauden tarjoukset</h2><p style="color:var(--text-dim);font-size:13px;margin-top:0;">Poista väärin kirjattu tarjous.</p>';
     var allList = document.createElement("div");
     allList.className = "offer-list";
@@ -1712,7 +1786,7 @@
   }
 
   function renderRunko(main) {
-    main.className = "runko-main";
+    main.className = "runko-main view-runko " + (rk.editing ? "rk-editing" : "rk-viewing");
     if (rk.editing) { renderRunkoEdit(main); return; }
 
     var steps = rkVisible(rk.call);
@@ -1757,7 +1831,8 @@
       '<div class="rk-eyebrow">' + escapeHtml(rkCallTitle(rk.call)) + ' · Vaihe ' + (idx + 1) + ' / ' + steps.length + '</div>' +
       '<div class="rk-title">' + escapeHtml(s.title) + (s.custom ? '<span class="rk-own">OMA</span>' : '') + '</div>' +
       (s.sub ? '<div class="rk-sub">' + escapeHtml(s.sub) + '</div>' : '') +
-      '<div class="rk-items">' + (s.items.length ? s.items.map(rkItemHtml).join("") : '<div class="rk-sub">Ei kohtia. Lisää niitä kohdasta Muokkaa.</div>') + '</div>';
+      '<div class="rk-items">' + (s.items.length ? s.items.map(rkItemHtml).join("") : '<div class="rk-sub">Ei kohtia. Lisää niitä kohdasta Muokkaa.</div>') + '</div>' +
+      '<div class="rk-keys">Vinkki: vaihda vaihetta nuolinäppäimillä <kbd>←</kbd> <kbd>→</kbd></div>';
     rkSwipe(card, steps.length);
     main.appendChild(card);
 
@@ -1985,6 +2060,14 @@
     });
     main.appendChild(add);
   }
+
+  document.addEventListener("keydown", function (e) {
+    if (state.authStatus !== "ready" || state.tab !== "runko" || rk.editing) return;
+    var t = e.target && e.target.tagName;
+    if (t === "INPUT" || t === "TEXTAREA" || t === "SELECT" || e.altKey || e.ctrlKey || e.metaKey) return;
+    var btn = e.key === "ArrowRight" ? document.querySelector(".rk-fwd") : e.key === "ArrowLeft" ? document.querySelector(".rk-prev") : null;
+    if (btn && !btn.disabled) { e.preventDefault(); btn.click(); }
+  });
 
   // ---------- Nav + init ----------
   Array.prototype.forEach.call(document.querySelectorAll("nav.tabbar button"), function (b) {
