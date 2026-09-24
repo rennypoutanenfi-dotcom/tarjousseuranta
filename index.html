@@ -788,6 +788,8 @@
   .rf-tip .p { font-size: 11px; color: var(--text-faint); }
   .rf-tip.below { position: static; margin-top: 8px; box-shadow: none; background: var(--surface-2); }
   .rf-stats { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .rf-disc { background: #111827; color: #f3f4f6; border-radius: 12px; padding: 16px 18px; font-size: 14px; line-height: 1.6; }
+  :root:not([data-theme="light"]) .rf-disc { border: 1px solid var(--border); }
   .rf-stat { display: flex; flex-direction: column; gap: 3px; padding: 14px 16px; }
   .rf-stat.rf-a, .rf-stat.rf-b { border-left: 4px solid var(--ser); }
   .rf-stat .l { font-size: 12px; color: var(--text-dim); }
@@ -3471,6 +3473,11 @@
           '<span class="s">Korot ja kulut: <strong data-s="' + id + 'costs"></strong></span><span class="s">Todellinen vuosikorko: <strong data-s="' + id + 'apr"></strong></span></div>';
       }).join("");
     main.appendChild(stats);
+
+    var disc = document.createElement("div");
+    disc.className = "rf-disc";
+    disc.textContent = "Laskelma on suuntaa-antava esimerkkilaskelma auton hinnan ja rahoituskulujen suhteesta, eikä se ole sitova luottotarjous. Lopullinen rahoitustarjous ja kuukausierä määräytyvät rahoitusyhtiön virallisen luottopäätöksen ja sopimusehtojen mukaisesti. Rahoitus edellyttää hyväksyttyä luottopäätöstä ja kaskovakuutusta.";
+    main.appendChild(disc);
 
     var hover = null;
     function update() {
