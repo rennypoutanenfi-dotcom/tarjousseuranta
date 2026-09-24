@@ -308,6 +308,14 @@
   .hist-row .result { font-size: 13px; color: var(--text-dim); }
   .hist-row .sub { font-size: 12px; color: var(--text-faint); margin-top: 4px; }
   .hist-detail { margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px; }
+  .hist-all h2 { color: var(--text) !important; font-size: 17px !important; font-weight: 600 !important; margin-bottom: 12px !important; }
+  .hist-all-stats .stat-box { background: var(--surface-2); border: none; }
+  .hist-facts { display: flex; flex-direction: column; gap: 4px; margin: 12px 0 4px; font-size: 13px; color: var(--text-dim); }
+  .hist-facts b { color: var(--text); text-transform: capitalize; }
+  .hist-years { margin-top: 10px; }
+  .hist-year { display: flex; justify-content: space-between; align-items: baseline; margin-top: 10px; }
+  .hist-year .yx { font-family: var(--font-body); text-transform: none; letter-spacing: 0; font-size: 12px; color: var(--text-faint); }
+  .pm-when { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; }
 
   /* leaderboard */
   .lb-tabs { display: flex; gap: 8px; margin-bottom: 4px; }
@@ -496,7 +504,7 @@
     main.view-leaderboard { max-width: 760px; }
 
     main.view-history { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
-    main.view-history > .card { grid-column: 1 / -1; }
+    main.view-history > .card, main.view-history > .hist-year { grid-column: 1 / -1; }
     main.view-history .hist-row { margin-bottom: 0; }
 
     main.runko-main { padding-bottom: 48px; }
@@ -1778,9 +1786,10 @@
       .map(function (d) {
         var months = d.months || {};
         var total = 0, closed = 0;
-        if (period === "year") {
+        if (period === "year" || period === "all") {
           Object.keys(months).forEach(function (k) {
-            if (k.slice(0, 4) === yearStr) {
+            if (!/^\d{4}-\d{2}$/.test(k)) return;
+            if (period === "all" || k.slice(0, 4) === yearStr) {
               var t = monthTotals(months[k]);
               total += t.total;
               closed += t.closed;
@@ -1816,7 +1825,8 @@
     periodTabs.className = "lb-tabs";
     periodTabs.innerHTML =
       '<button type="button" class="lb-tab' + (state.leaderboardPeriod === "month" ? " active" : "") + '" data-lbp="month">Kuluva kuukausi</button>' +
-      '<button type="button" class="lb-tab' + (state.leaderboardPeriod === "year" ? " active" : "") + '" data-lbp="year">Kuluva vuosi</button>';
+      '<button type="button" class="lb-tab' + (state.leaderboardPeriod === "year" ? " active" : "") + '" data-lbp="year">Kuluva vuosi</button>' +
+      '<button type="button" class="lb-tab' + (state.leaderboardPeriod === "all" ? " active" : "") + '" data-lbp="all">Kaikki ajat</button>';
     Array.prototype.forEach.call(periodTabs.querySelectorAll(".lb-tab"), function (b) {
       b.addEventListener("click", function () {
         state.leaderboardPeriod = b.getAttribute("data-lbp");
@@ -1874,20 +1884,63 @@
     }
   }
 
+  // Kaikkien kuukausien yhteenveto vuosittain ja koko ajalta (sisältää kuluvan kuukauden).
+  function historyAgg() {
+    var months = (state.profile && state.profile.months) || {};
+    var years = {}, all = { total: 0, closed: 0, months: 0 }, best = null;
+    Object.keys(months).filter(function (k) { return /^\d{4}-\d{2}$/.test(k); }).forEach(function (k) {
+      var t = monthTotals(months[k]);
+      if (!t.total) return;
+      var y = k.slice(0, 4);
+      if (!years[y]) years[y] = { year: y, total: 0, closed: 0, months: 0, reached: 0 };
+      years[y].total += t.total; years[y].closed += t.closed; years[y].months++;
+      if (months[k].targetOffers > 0 && t.total >= months[k].targetOffers) years[y].reached++;
+      all.total += t.total; all.closed += t.closed; all.months++;
+      if (!best || t.closed > best.closed || (t.closed === best.closed && t.total > best.total)) best = { key: k, closed: t.closed, total: t.total };
+    });
+    var list = Object.keys(years).sort().reverse().map(function (y) { return years[y]; });
+    return { years: list, all: all, best: best };
+  }
+  function pct(c, t) { return t > 0 ? Math.round(c / t * 100) + "%" : "–"; }
+
   function renderHistory(main) {
     var addPastCard = document.createElement("div");
     addPastCard.className = "card";
-    addPastCard.innerHTML = '<h2 style="color:var(--text);font-size:15px;font-weight:600;">Mennyt kuukausi puuttuu?</h2><p style="color:var(--text-dim);font-size:13px;margin:6px 0 12px;">Lisää ennen sovellusta tehdyt myynnit yhteenvetona.</p>';
+    addPastCard.innerHTML = '<h2 style="color:var(--text);font-size:15px;font-weight:600;">Mennyt kuukausi puuttuu?</h2><p style="color:var(--text-dim);font-size:13px;margin:6px 0 12px;">Lisää ennen sovellusta tehdyt myynnit yhteenvetona, myös aiemmilta vuosilta.</p>';
     var addPastBtn = document.createElement("button");
     addPastBtn.className = "btn btn-ghost";
     addPastBtn.type = "button";
     addPastBtn.textContent = "Lisää mennyt kuukausi";
     addPastBtn.addEventListener("click", openPastMonthForm);
     addPastCard.appendChild(addPastBtn);
+
+    var agg = historyAgg();
+    if (agg.all.months) {
+      var at = document.createElement("div");
+      at.className = "card hist-all";
+      var bestYear = agg.years.slice().sort(function (a, b) { return b.closed - a.closed; })[0];
+      at.innerHTML = '<h2>Kaikki ajat</h2>' +
+        '<div class="stat-row hist-all-stats">' +
+          '<div class="stat-box"><div class="n">' + agg.all.total + '</div><div class="l">Tarjousta</div></div>' +
+          '<div class="stat-box"><div class="n">' + agg.all.closed + '</div><div class="l">Kauppaa</div></div>' +
+          '<div class="stat-box"><div class="n">' + pct(agg.all.closed, agg.all.total) + '</div><div class="l">Hitrate</div></div>' +
+        '</div>' +
+        '<div class="hist-facts">' +
+          '<span>' + agg.all.months + ' kuukautta kirjattu</span>' +
+          '<span>Keskimäärin ' + (Math.round(agg.all.closed / agg.all.months * 10) / 10).toLocaleString("fi-FI") + ' kauppaa / kk</span>' +
+          (agg.best ? '<span>Paras kuukausi: <b>' + monthDisplay(agg.best.key) + '</b> (' + agg.best.closed + ' kauppaa)</span>' : '') +
+          (agg.years.length > 1 && bestYear ? '<span>Paras vuosi: <b>' + bestYear.year + '</b> (' + bestYear.closed + ' kauppaa)</span>' : '') +
+        '</div>' +
+        (agg.years.length ? '<table class="src hist-years"><thead><tr><th>Vuosi</th><th>Tarjous</th><th>Kauppa</th><th>Hitrate</th><th>Kk</th></tr></thead><tbody>' +
+          agg.years.map(function (y) {
+            return '<tr><td>' + y.year + '</td><td>' + y.total + '</td><td>' + y.closed + '</td><td>' + pct(y.closed, y.total) + '</td><td>' + y.months + '</td></tr>';
+          }).join("") + '</tbody></table>' : '');
+      main.appendChild(at);
+    }
     main.appendChild(addPastCard);
 
     var months = (state.profile && state.profile.months) || {};
-    var keys = Object.keys(months).filter(function (k) { return k !== state.monthKey; }).sort().reverse();
+    var keys = Object.keys(months).filter(function (k) { return k !== state.monthKey && /^\d{4}-\d{2}$/.test(k); }).sort().reverse();
     if (keys.length === 0) {
       var empty = document.createElement("div");
       empty.className = "card";
@@ -1895,7 +1948,17 @@
       main.appendChild(empty);
       return;
     }
+    var lastYear = null;
     keys.forEach(function (key) {
+      var y = key.slice(0, 4);
+      if (y !== lastYear) {
+        lastYear = y;
+        var yh = document.createElement("div");
+        yh.className = "section-title hist-year";
+        var ya = agg.years.filter(function (x) { return x.year === y; })[0];
+        yh.innerHTML = '<span>' + y + '</span>' + (ya ? '<span class="yx">' + ya.closed + ' kauppaa · hitrate ' + pct(ya.closed, ya.total) + '</span>' : '');
+        main.appendChild(yh);
+      }
       var doc = months[key];
       var stats = computeStats(doc);
       var row = document.createElement("div");
@@ -1923,14 +1986,19 @@
   }
 
   function openPastMonthForm() {
-    var thisYear = parseMonthKey(state.monthKey).y;
+    var cur = parseMonthKey(state.monthKey), thisYear = cur.y;
     var overlay = buildOverlay();
-    var monthOptions = "";
-    for (var mi = 0; mi < 12; mi++) {
-      var key = thisYear + "-" + String(mi + 1).padStart(2, "0");
-      var already = state.profile.months && state.profile.months[key];
-      var label = MONTH_NAMES[mi].charAt(0).toUpperCase() + MONTH_NAMES[mi].slice(1) + " " + thisYear + (already ? " (tiedot jo tallennettu)" : "");
-      monthOptions += '<option value="' + key + '">' + label + '</option>';
+    var yearOptions = "";
+    for (var yy = thisYear; yy >= thisYear - 10; yy--) yearOptions += '<option value="' + yy + '">' + yy + '</option>';
+    function monthOptionsFor(year) {
+      var html = "", lastM = year === thisYear ? cur.m : 11;
+      for (var mi = 0; mi <= lastM; mi++) {
+        var key = year + "-" + String(mi + 1).padStart(2, "0");
+        var already = state.profile.months && state.profile.months[key] && monthTotals(state.profile.months[key]).total > 0;
+        var label = MONTH_NAMES[mi].charAt(0).toUpperCase() + MONTH_NAMES[mi].slice(1) + (already ? " (tiedot jo tallennettu)" : "");
+        html += '<option value="' + key + '">' + label + '</option>';
+      }
+      return html;
     }
 
     var srcRows = SOURCES.map(function (s) {
@@ -1943,7 +2011,8 @@
 
     overlay.card.innerHTML =
       '<h2 style="color:var(--text);font-size:17px;font-weight:600;margin-bottom:10px;">Lisää mennyt kuukausi</h2>' +
-      '<div class="field"><label for="pmMonth">Kuukausi</label><select id="pmMonth" class="text-field">' + monthOptions + '</select></div>' +
+      '<div class="pm-when"><div class="field"><label for="pmYear">Vuosi</label><select id="pmYear" class="text-field">' + yearOptions + '</select></div>' +
+      '<div class="field"><label for="pmMonth">Kuukausi</label><select id="pmMonth" class="text-field">' + monthOptionsFor(thisYear) + '</select></div></div>' +
       '<div class="field"><label for="pmWd">Työpäiviä kuussa</label><input id="pmWd" type="number" inputmode="numeric" min="0" placeholder="esim. 20"></div>' +
       '<div class="field"><label for="pmTg">Tarjoustavoite (tai toteuma)</label><input id="pmTg" type="number" inputmode="numeric" min="0" placeholder="esim. 40"></div>' +
       '<div class="field-note" id="pmExistingNote" style="display:none;">Tälle kuulle on jo tallennettuja tietoja — tallennus korvaa ne.</div>' +
@@ -1956,10 +2025,19 @@
     var existingNote = overlay.card.querySelector("#pmExistingNote");
     function refreshExistingNote() {
       var key = monthSelect.value;
-      var already = state.profile.months && state.profile.months[key];
+      var already = state.profile.months && state.profile.months[key] && monthTotals(state.profile.months[key]).total > 0;
       existingNote.style.display = already ? "block" : "none";
     }
     monthSelect.addEventListener("change", refreshExistingNote);
+    var yearSelect = overlay.card.querySelector("#pmYear");
+    yearSelect.addEventListener("change", function () {
+      var y = parseInt(yearSelect.value, 10);
+      monthSelect.innerHTML = monthOptionsFor(y);
+      if (y !== thisYear) monthSelect.value = y + "-12";
+      refreshExistingNote();
+    });
+    // Oletuksena edellinen kuukausi
+    if (cur.m > 0) monthSelect.value = thisYear + "-" + String(cur.m).padStart(2, "0");
     refreshExistingNote();
 
     overlay.card.querySelector("#pmSaveBtn").addEventListener("click", function () {
