@@ -343,9 +343,13 @@
   }
   nav.tabbar button.active { color: var(--accent); }
   nav.tabbar svg { width: 22px; height: 22px; }
-  @media (max-width: 440px) {
-    nav.tabbar { gap: 0; padding-left: 2px; padding-right: 2px; }
-    nav.tabbar button { font-size: 10px; letter-spacing: -.1px; }
+  @media (max-width: 899px) {
+    nav.tabbar { gap: 0; padding-left: 2px; padding-right: 2px; overflow-x: auto; scrollbar-width: none; }
+    nav.tabbar::-webkit-scrollbar { display: none; }
+    nav.tabbar.more-right { -webkit-mask-image: linear-gradient(to right, #000 84%, transparent); mask-image: linear-gradient(to right, #000 84%, transparent); }
+    nav.tabbar.more-left { -webkit-mask-image: linear-gradient(to left, #000 84%, transparent); mask-image: linear-gradient(to left, #000 84%, transparent); }
+    nav.tabbar.more-left.more-right { -webkit-mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent); mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent); }
+    nav.tabbar button { flex: 1 0 auto; min-width: 56px; padding-left: 4px; padding-right: 4px; font-size: 10px; letter-spacing: -.1px; }
   }
 
   .loading-wrap { display: flex; align-items: center; justify-content: center; min-height: 60vh; color: var(--text-faint); font-size: 14px; }
@@ -433,14 +437,14 @@
   .rk-home .t2 { font-size: 12.5px; color: var(--text-dim); margin-top: 1px; }
   .rk-home .ar { color: var(--accent); flex-shrink: 0; }
   .rk-home .ar svg { width: 20px; height: 20px; }
-  .home-tools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .home-tools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  @media (min-width: 900px) { .home-tools { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
   .home-tools .rk-home { flex-direction: column; align-items: flex-start; gap: 8px; padding: 12px; position: relative; }
   .home-tools .rk-home .t1 { font-size: 15px; line-height: 1.15; display: block; }
   .home-tools .rk-home .t2 { display: block; font-size: 11.5px; line-height: 1.3; margin-top: 3px; }
   .home-tools .rk-home .ar { position: absolute; top: 12px; right: 10px; }
   .home-tools .rk-home .ar svg { width: 16px; height: 16px; }
   .home-tools .rk-home .ic { width: 36px; height: 36px; }
-  @media (max-width: 370px) { .home-tools .rk-home .t2 { display: none; } }
 
   /* ---------- Tietokonenäkymä ---------- */
   @media (min-width: 900px) {
@@ -636,6 +640,81 @@
     .vl-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
     .vl-search { top: 16px; }
   }
+
+  /* ---------- Vaihtoauton tarkastuslista ---------- */
+  main.vt-main { --risk: var(--good); }
+  .vt-mini { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 10px; cursor: pointer;
+    background: var(--surface); border: 1px solid var(--risk); border-radius: 12px; padding: 9px 12px; box-shadow: 0 6px 16px rgba(0,0,0,.16); }
+  .vt-mini.green, .vt-risk.green { --risk: var(--good); }
+  .vt-mini.yellow, .vt-risk.yellow { --risk: var(--gold); }
+  .vt-mini.red, .vt-risk.red { --risk: var(--bad); }
+  .vt-mini .dot, .vt-risk .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--risk); flex-shrink: 0; box-shadow: 0 0 0 4px color-mix(in srgb, var(--risk) 22%, transparent); }
+  .vt-mini .mid { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .vt-mini .mid b { font-size: 14px; }
+  .vt-mini .mid span { font-size: 12px; color: var(--text-dim); }
+  .vt-mini .go { font-size: 11.5px; color: var(--text-dim); flex-shrink: 0; }
+  .vt-col { display: flex; flex-direction: column; gap: 10px; }
+  .vt-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .vt-head h2 { font-family: var(--font-display); font-size: 20px; font-weight: 600; margin: 0; }
+  .vt-sec { padding: 0; overflow: hidden; }
+  .vt-sh { width: 100%; display: flex; align-items: center; gap: 10px; background: none; border: none; color: var(--text); cursor: pointer;
+    padding: 15px 14px; font-family: var(--font-body); text-align: left; min-height: 56px; }
+  .vt-sh .n { font-family: var(--font-display); font-size: 15px; color: var(--accent); width: 18px; flex-shrink: 0; }
+  .vt-sh .t { flex: 1; font-size: 16px; font-weight: 700; }
+  .vt-prog { font-size: 12px; font-weight: 700; color: var(--text-dim); background: var(--surface-2); border-radius: 999px; padding: 3px 9px; }
+  .vt-prog.full { color: var(--good); background: var(--good-dim); }
+  .vt-sh .chev { color: var(--text-faint); display: flex; transition: transform .2s; }
+  .vt-sh .chev svg { width: 18px; height: 18px; }
+  .vt-sec.open .vt-sh .chev { transform: rotate(180deg); }
+  .vt-body { padding: 2px 14px 16px; display: flex; flex-direction: column; gap: 16px; border-top: 1px solid var(--border); padding-top: 14px; }
+  .vt-l { font-size: 14px; font-weight: 600; margin-bottom: 8px; line-height: 1.3; }
+  .vt-opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 6px; }
+  .vt-opts.two { grid-template-columns: 1fr 1fr; }
+  .vt-opt { min-height: 48px; background: var(--surface-2); border: 1.5px solid var(--border); color: var(--text); border-radius: 10px;
+    padding: 8px 8px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: var(--font-body); line-height: 1.2; }
+  .vt-opt:hover { border-color: var(--text-faint); }
+  .vt-opt.on { background: var(--accent); border-color: var(--accent); color: #17110b; }
+  .vt-in { display: flex; align-items: center; background: var(--surface-2); border: 1.5px solid var(--border); border-radius: 10px; min-height: 50px; padding: 0 12px; gap: 8px; }
+  .vt-in:focus-within { border-color: var(--accent); }
+  .vt-in input { flex: 1; min-width: 0; background: none; border: none; outline: none; color: var(--text); font-family: var(--font-body); font-size: 17px; font-weight: 600; padding: 12px 0; color-scheme: inherit; }
+  .vt-in span { color: var(--text-dim); font-size: 14px; font-weight: 600; }
+  .vt-in em { font-style: normal; color: var(--text-dim); font-size: 13px; font-weight: 700; }
+  .vt-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .vt-f textarea { width: 100%; background: var(--surface-2); border: 1.5px solid var(--border); color: var(--text); font-family: var(--font-body); font-size: 16px; border-radius: 10px; padding: 12px; resize: vertical; }
+  .vt-f textarea:focus { outline: none; border-color: var(--accent); }
+  .vt-checks { display: grid; grid-template-columns: 1fr; gap: 6px; }
+  .vt-check { display: flex; align-items: center; gap: 12px; min-height: 52px; background: var(--surface-2); border: 1.5px solid var(--border); border-radius: 10px;
+    padding: 8px 12px; color: var(--text); font-family: var(--font-body); font-size: 15px; font-weight: 600; cursor: pointer; text-align: left; }
+  .vt-check .bx { width: 26px; height: 26px; border-radius: 7px; border: 2px solid var(--text-faint); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .vt-check.on { border-color: var(--accent); background: var(--accent-dim); }
+  .vt-check.on .bx { background: var(--accent); border-color: var(--accent); }
+  .vt-check.on .bx::after { content: ""; width: 7px; height: 13px; border: solid #17110b; border-width: 0 3px 3px 0; transform: rotate(45deg) translate(-1px, -1px); }
+  .vt-next { margin-top: 2px; }
+  .vt-sum { scroll-margin-top: 80px; }
+  .vt-sum-h { font-family: var(--font-display); font-size: 18px; font-weight: 600; margin-bottom: 12px; }
+  .vt-empty { font-size: 14px; color: var(--text-dim); line-height: 1.5; }
+  .vt-verdict { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+  .vt-risk { display: flex; align-items: center; gap: 12px; border-radius: 12px; padding: 12px 14px; background: color-mix(in srgb, var(--risk) 14%, transparent); border: 1px solid var(--risk); }
+  .vt-risk b { display: block; font-size: 16px; color: var(--risk); }
+  .vt-risk span { font-size: 13px; color: var(--text-dim); }
+  .vt-rec { border-radius: 12px; padding: 12px 14px; background: var(--surface-2); }
+  .vt-rec .l { display: block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-dim); }
+  .vt-rec b { font-family: var(--font-display); font-size: 22px; font-weight: 600; }
+  .vt-b { margin-top: 12px; }
+  .vt-b .h { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 4px; }
+  .vt-b ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 3px; }
+  .vt-b li { font-size: 14px; line-height: 1.4; }
+  .vt-b.good li::marker { color: var(--good); }
+  .vt-b.bad li::marker { color: var(--bad); }
+  .vt-b.why { background: var(--surface-2); border-radius: 10px; padding: 10px 12px; margin-top: 0; }
+  #vtCopy { margin-top: 16px; }
+  @media (min-width: 560px) { .vt-checks { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 900px) {
+    main.vt-main { display: grid; grid-template-columns: minmax(0, 1fr) 380px; align-items: start; gap: 20px; }
+    .vt-mini { display: none; }
+    .vt-col { grid-column: 1; }
+    .vt-sum { grid-column: 2; grid-row: 1; position: sticky; top: 24px; max-height: calc(100vh - 48px); overflow-y: auto; }
+  }
   /* edit mode */
   .rk-edit-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
   .rk-edit-head h2 { font-family: var(--font-display); font-size: 20px; font-weight: 600; margin: 0; color: var(--text); }
@@ -704,6 +783,10 @@
     <button data-tab="vl">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-5A8 8 0 1 1 21 12Z"/><path d="M9.5 10a2.5 2.5 0 1 1 3.4 2.3c-.6.3-.9.8-.9 1.4V14"/><path d="M12 17h.01"/></svg>
       Vastalauseet
+    </button>
+    <button data-tab="vaihto">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3v-5l2-5h11l3 5h2v5h-2"/><circle cx="7.5" cy="17" r="2"/><circle cx="16.5" cy="17" r="2"/><path d="M9.5 17h5M5 12h14"/></svg>
+      Vaihtoauto
     </button>
     <button data-tab="add">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
@@ -1218,10 +1301,18 @@
     else if (state.tab === "runko") renderRunko(main);
     else if (state.tab === "liidi") renderLead(main);
     else if (state.tab === "vl") renderVl(main);
+    else if (state.tab === "vaihto") renderVt(main);
 
     Array.prototype.forEach.call(document.querySelectorAll("nav.tabbar button"), function (b) {
       b.classList.toggle("active", b.getAttribute("data-tab") === state.tab);
     });
+    // Kapealla puhelimella alavalikko vierii: pidä aktiivinen välilehti näkyvissä.
+    navFade();
+    var ab = document.querySelector("nav.tabbar button.active"), tb = document.getElementById("tabbar");
+    if (ab && tb && tb.scrollWidth > tb.clientWidth) {
+      var l = ab.offsetLeft, rgt = l + ab.offsetWidth;
+      if (l < tb.scrollLeft) tb.scrollLeft = l - 8; else if (rgt > tb.scrollLeft + tb.clientWidth) tb.scrollLeft = rgt - tb.clientWidth + 8;
+    }
   }
 
   function renderAuth(main) {
@@ -1933,7 +2024,8 @@
     var tools = [
       { tab: "runko", t: "Myyntirunko", d: "Puhelu 1 ja 2 vaihe vaiheelta" },
       { tab: "liidi", t: "Kuuma liidi", d: "Pisteytä 0–100" },
-      { tab: "vl", t: "Vastalauseet", d: "Mitä sanon nyt?" }
+      { tab: "vl", t: "Vastalauseet", d: "Mitä sanon nyt?" },
+      { tab: "vaihto", t: "Vaihtoauto", d: "Tarkastuslista ja arvio" }
     ];
     var wrap = document.createElement("div");
     wrap.className = "home-tools";
@@ -2751,6 +2843,425 @@
     c.querySelector("#vlCancel").addEventListener("click", function () { closeOverlay(ov); });
   }
 
+  // ---------- Vaihtoauton tarkastuslista ----------
+  var VT_EQUIP = [
+    ["acc", "Adaptiivinen vakionopeudensäädin"], ["koukku", "Vetokoukku"], ["pkamera", "Peruutuskamera"], ["k360", "360-kamera"],
+    ["led", "LED-ajovalot"], ["matrix", "Matrix-ajovalot"], ["lisavalot", "Lisävalot / Lazer-valot"], ["panorama", "Panoraamakatto"],
+    ["nahka", "Nahkaverhoilu"], ["puolinahka", "Puolinahkaverhoilu"], ["sahkoistuimet", "Sähkösäätöiset istuimet"],
+    ["webasto", "Webasto tai muu lisälämmitin"], ["lohko", "Lohkolämmitin"], ["lampopumppu", "Lämpöpumppu"],
+    ["sline", "S line"], ["msport", "M Sport"], ["amg", "AMG"], ["rdesign", "R-Design"], ["gtline", "GT-Line"],
+    ["muuvaruste", "Muu merkittävä varuste"]
+  ];
+  var TYRE_COND = ["Erinomainen", "Hyvä", "Tyydyttävä", "Uusittava pian"];
+  var RIM_COND = ["Hyvä", "Naarmuja", "Vaurioita"];
+  function hasWinter(a) { return a.talvityyppi !== undefined && a.talvityyppi !== "Ei talvirenkaita"; }
+  var VT_SECTIONS = [
+    { id: "perus", title: "Perustiedot", fields: [
+      { id: "auto", type: "text", label: "Auto / rekisterinumero", ph: "esim. ABC-123 Skoda Octavia", opt: true },
+      { id: "km", type: "num", label: "Mittarilukema", unit: "km" },
+      { id: "rahoitus", type: "choice", label: "Onko auto rahoituksella?", opts: ["Kyllä", "Ei"] },
+      { id: "rahoitusJaljella", type: "num", label: "Rahoitusta jäljellä", unit: "€", show: function (a) { return a.rahoitus === "Kyllä"; } },
+      { id: "asiakasArvio", type: "num", label: "Asiakkaan arvio vaihtoauton arvosta", unit: "€" }
+    ]},
+    { id: "historia", title: "Historia", fields: [
+      { id: "huoltokirja", type: "choice", label: "Huoltokirja", opts: ["Paperinen", "Digitaalinen", "Molemmat", "Ei tiedossa"] },
+      { id: "puutteet", type: "choice", label: "Puutteita tai pitkiä huoltovälejä huoltohistoriassa?", opts: ["Kyllä", "Ei", "Ei tiedossa"] },
+      { id: "katsastus", type: "choice", label: "Katsastus", opts: ["Voimassa", "Tulossa pian", "Hylätty aiemmin", "Ei tiedossa"] },
+      { id: "vauriot", type: "choice", label: "Vauriohistoria", opts: ["Ei tiedossa", "Pieniä vaurioita", "Merkittäviä vaurioita", "Lunastettu"] },
+      { id: "remontit", type: "text", label: "Tiedossa olevat isommat remontit", ph: "esim. kytkin vaihdettu 2024", opt: true },
+      { id: "avaimet", type: "choice", label: "Avainten määrä", opts: ["1", "2", "3+"] },
+      { id: "historiaLisa", type: "text", label: "Lisätiedot historiasta", opt: true, area: true }
+    ]},
+    { id: "tekniikka", title: "Huollot ja tekniikka", fields: [
+      { id: "huoltoKm", type: "num", label: "Viimeisin huolto: mittarilukema", unit: "km" },
+      { id: "huoltoKk", type: "month", label: "Viimeisin huolto: kuukausi ja vuosi" },
+      { id: "seuraavaHuolto", type: "choice", label: "Seuraava huolto ajankohtainen pian?", opts: ["Kyllä", "Ei", "Ei tiedossa"] },
+      { id: "hihna", type: "choice", label: "Jakohihna", opts: ["Vaihdettu", "Vaihdettava pian", "Ei koske autoa", "Ei tiedossa"] },
+      { id: "ketju", type: "choice", label: "Jakoketju", opts: ["Kunnossa", "Ääntää / vaatii tarkistusta", "Ei tiedossa"] },
+      { id: "moottori", type: "choice", label: "Moottorin käynti", opts: ["Tasainen", "Huomioitavaa"] },
+      { id: "vikavalot", type: "choice", label: "Vikavalot", opts: ["Ei pala", "Palaa", "Ei tarkistettu"] },
+      { id: "tekniikkaLisa", type: "text", label: "Lisätiedot huolloista, vioista ja korjaustarpeista", opt: true, area: true }
+    ]},
+    { id: "renkaat", title: "Renkaat ja vanteet", fields: [
+      { id: "kesaRenkaat", type: "choice", label: "Kesärenkaiden kunto", opts: TYRE_COND },
+      { id: "kesaVanteet", type: "choice", label: "Kesävanteiden kunto", opts: RIM_COND },
+      { id: "kesaUra", type: "pair", label: "Kesärenkaiden urasyvyys", unit: "mm", ids: ["kesaUraEtu", "kesaUraTaka"], names: ["Etu", "Taka"] },
+      { id: "talvityyppi", type: "choice", label: "Talvirenkaat", opts: ["Nastat", "Kitkat", "Ei talvirenkaita"] },
+      { id: "talviRenkaat", type: "choice", label: "Talvirenkaiden kunto", opts: TYRE_COND, show: hasWinter },
+      { id: "talviVanteet", type: "choice", label: "Talvivanteiden kunto", opts: RIM_COND, show: hasWinter },
+      { id: "talviUra", type: "pair", label: "Talvirenkaiden urasyvyys", unit: "mm", ids: ["talviUraEtu", "talviUraTaka"], names: ["Etu", "Taka"], show: hasWinter },
+      { id: "renkaatLisa", type: "text", label: "Lisätiedot renkaista ja vanteista", opt: true, area: true }
+    ]},
+    { id: "kori", title: "Korin ja sisustan kunto", fields: [
+      { id: "maali", type: "choice", label: "Maalipinta", opts: ["Erinomainen", "Normaalia kulumaa", "Huomioitavaa", "Vaatii kunnostusta"] },
+      { id: "tuulilasi", type: "choice", label: "Kiveniskemiä tuulilasissa", opts: ["Ei", "Pieniä", "Merkittäviä", "Halkeama"] },
+      { id: "naarmut", type: "choice", label: "Normaalista poikkeavia naarmuja tai lommoja", opts: ["Ei", "Pieniä", "Merkittäviä"] },
+      { id: "umpiot", type: "choice", label: "Umpiot", opts: ["Ehjät", "Kuluneet", "Vaurioituneet"] },
+      { id: "sisusta", type: "choice", label: "Sisusta", opts: ["Siisti", "Normaalia kulumaa", "Poikkeavaa kulumaa tai vaurioita"] },
+      { id: "haju", type: "choice", label: "Hajuhaitat tai tupakointi autossa", opts: ["Ei", "Lievää hajua", "Tupakoitu / voimakas haju"] },
+      { id: "koriLisa", type: "text", label: "Lisätiedot kunnostustarpeista", opt: true, area: true }
+    ]},
+    { id: "varusteet", title: "Hinnoitteluun vaikuttavat varusteet", fields: [
+      { id: "varusteet", type: "checks", items: VT_EQUIP, opt: true },
+      { id: "muuVarusteTxt", type: "text", label: "Muu merkittävä varuste", ph: "esim. Harman Kardon, vakionopeudensäädin + kaistavahti", opt: true, show: function (a) { return !!(a.varusteet && a.varusteet.muuvaruste); } }
+    ]},
+    { id: "arvio", title: "Myyjän arvio", fields: [
+      { id: "myyjanArvio", type: "text", label: "Myyjän vapaa kirjallinen arvio", ph: "Oma näkemys autosta, kysynnästä ja hinnoittelusta", opt: true, area: true }
+    ]}
+  ];
+
+  var vt = { a: {}, open: { perus: true }, loaded: null, reset: false };
+  function vtKey() { return "ts_vt_" + ((state.profile && state.profile.nickname) || "anon").trim().toLowerCase(); }
+  function vtLoad() {
+    if (vt.loaded === vtKey()) return;
+    vt.loaded = vtKey(); vt.a = {};
+    try { var ls = safeLS(); var raw = ls ? ls.getItem(vtKey()) : null; if (raw) { var d = JSON.parse(raw); if (d && typeof d === "object") vt.a = d; } } catch (e) {}
+  }
+  function vtSave() { try { var ls = safeLS(); if (ls) ls.setItem(vtKey(), JSON.stringify(vt.a)); } catch (e) {} }
+  function vtNum(v) {
+    if (v === undefined || v === null || v === "") return null;
+    var n = parseFloat(String(v).replace(/\s/g, "").replace(",", "."));
+    return isNaN(n) ? null : n;
+  }
+  function fmtNum(n) { return Math.round(n).toLocaleString("fi-FI"); }
+  function vtVisible(f) { return !f.show || f.show(vt.a); }
+  function vtFieldDone(f) {
+    if (f.opt || !vtVisible(f)) return null; // ei lasketa
+    if (f.type === "pair") return vtNum(vt.a[f.ids[0]]) !== null && vtNum(vt.a[f.ids[1]]) !== null;
+    var v = vt.a[f.id];
+    return v !== undefined && v !== null && v !== "";
+  }
+  function vtProgress(sec) {
+    var done = 0, total = 0;
+    sec.fields.forEach(function (f) { var d = vtFieldDone(f); if (d === null) return; total++; if (d) done++; });
+    return { done: done, total: total };
+  }
+
+  // ----- Arviointi -----
+  function vtEvaluate() {
+    var a = vt.a, now = new Date();
+    var r = { basics: [], strengths: [], equip: [], sales: [], negatives: [], repairs: [], tyres: [], history: [], red: [], yellow: [], unknown: [] };
+    function red(t) { r.red.push(t); }
+    function yel(t) { r.yellow.push(t); }
+    function unk(t) { r.unknown.push(t); }
+
+    // Perustiedot
+    var km = vtNum(a.km);
+    if (a.auto) r.basics.push("Auto: " + a.auto);
+    if (km !== null) {
+      r.basics.push("Mittarilukema: " + fmtNum(km) + " km");
+      if (km < 100000) r.strengths.push("Matala mittarilukema (" + fmtNum(km) + " km)");
+      else if (km >= 300000) { r.negatives.push("Erittäin korkea mittarilukema (" + fmtNum(km) + " km)"); red("Mittarilukema yli 300 000 km"); }
+      else if (km >= 220000) { r.negatives.push("Korkea mittarilukema (" + fmtNum(km) + " km)"); yel("Korkea mittarilukema"); }
+    }
+    var jaljella = vtNum(a.rahoitusJaljella), arvio = vtNum(a.asiakasArvio);
+    if (a.rahoitus === "Kyllä") r.basics.push("Rahoituksella" + (jaljella !== null ? ", jäljellä " + fmtNum(jaljella) + " €" : ", jäljellä oleva summa selvittämättä"));
+    if (a.rahoitus === "Ei") r.basics.push("Ei rahoitusta");
+    if (arvio !== null) r.basics.push("Asiakkaan arvio: " + fmtNum(arvio) + " €");
+    if (a.rahoitus === "Kyllä" && jaljella === null) unk("Rahoituksen loppusumma");
+    if (a.rahoitus === "Kyllä" && jaljella !== null && arvio !== null && jaljella > arvio) {
+      r.history.push("Rahoitusta jäljellä enemmän kuin asiakkaan oma arvio autosta (" + fmtNum(jaljella - arvio) + " € erotus)");
+      yel("Velkaa enemmän kuin auton arvo asiakkaan arviolla");
+    }
+
+    // Historia
+    var kirjaTiedossa = a.huoltokirja && a.huoltokirja !== "Ei tiedossa";
+    if (kirjaTiedossa && a.puutteet === "Ei") r.sales.push("Täydellinen huoltohistoria (" + a.huoltokirja.toLowerCase() + " huoltokirja)");
+    else if (kirjaTiedossa) r.strengths.push("Huoltokirja tallessa (" + a.huoltokirja.toLowerCase() + ")");
+    if (a.huoltokirja === "Ei tiedossa") { r.history.push("Huoltokirjaa ei tiedossa"); unk("Huoltokirja"); }
+    if (a.puutteet === "Kyllä") {
+      r.history.push("Huoltohistoriassa puutteita tai pitkiä huoltovälejä");
+      r.negatives.push("Puutteellinen huoltohistoria");
+      if (a.huoltokirja === "Ei tiedossa") red("Huoltohistoria puutteellinen eikä huoltokirjaa ole tiedossa"); else yel("Huoltohistoriassa puutteita");
+    }
+    if (a.puutteet === "Ei tiedossa") unk("Huoltohistorian kattavuus");
+    if (a.katsastus === "Voimassa") r.strengths.push("Katsastus voimassa");
+    if (a.katsastus === "Tulossa pian") { r.repairs.push("Katsastus tulossa pian"); yel("Katsastus edessä"); }
+    if (a.katsastus === "Hylätty aiemmin") { r.history.push("Katsastus hylätty aiemmin, tarkista syy"); yel("Aiempi hylätty katsastus"); }
+    if (a.katsastus === "Ei tiedossa") unk("Katsastustilanne (tarkista GT-X:stä)");
+    if (a.vauriot === "Ei tiedossa") r.strengths.push("Ei tiedossa olevia vaurioita");
+    if (a.vauriot === "Pieniä vaurioita") { r.history.push("Pieniä vaurioita historiassa"); yel("Pieniä vaurioita historiassa"); }
+    if (a.vauriot === "Merkittäviä vaurioita") { r.history.push("Merkittäviä vaurioita historiassa"); r.negatives.push("Merkittävä vauriohistoria"); red("Merkittävä vauriohistoria"); }
+    if (a.vauriot === "Lunastettu") { r.history.push("Lunastettu auto"); r.negatives.push("Lunastushistoria laskee jälleenmyyntiarvoa selvästi"); red("Lunastettu auto"); }
+    if (a.remontit) r.history.push("Isommat remontit: " + a.remontit);
+    if (a.avaimet === "1") { r.negatives.push("Vain yksi avain"); yel("Vain yksi avain"); }
+    if (a.avaimet === "2" || a.avaimet === "3+") r.sales.push(a.avaimet === "2" ? "Kaksi avainta" : "Kolme tai useampi avain");
+    if (a.historiaLisa) r.history.push(a.historiaLisa);
+
+    // Huollot ja tekniikka
+    var hKm = vtNum(a.huoltoKm), since = [];
+    if (hKm !== null && km !== null && km >= hKm) {
+      var d = km - hKm; since.push(fmtNum(d) + " km");
+      if (d > 30000) { r.repairs.push("Edellisestä huollosta " + fmtNum(d) + " km"); yel("Huollosta ajettu yli 30 000 km"); }
+    }
+    if (a.huoltoKk && /^\d{4}-\d{2}$/.test(a.huoltoKk)) {
+      var p = a.huoltoKk.split("-"); var mo = (now.getFullYear() - +p[0]) * 12 + (now.getMonth() + 1 - +p[1]);
+      if (mo >= 0) since.push(mo + " kk");
+      if (mo > 24) { r.repairs.push("Edellisestä huollosta yli 2 vuotta"); yel("Huollosta yli 2 vuotta"); }
+    }
+    if (since.length) r.basics.push("Edellisestä huollosta: " + since.join(" / "));
+    if (a.seuraavaHuolto === "Kyllä") { r.repairs.push("Määräaikaishuolto edessä pian"); yel("Huolto edessä pian"); }
+    if (a.seuraavaHuolto === "Ei") r.strengths.push("Ei huoltoa heti edessä");
+    if (a.seuraavaHuolto === "Ei tiedossa") unk("Seuraavan huollon ajankohta");
+    if (a.hihna === "Vaihdettu") r.sales.push("Jakohihna vaihdettu");
+    if (a.hihna === "Vaihdettava pian") { r.repairs.push("Jakohihnan vaihto edessä"); r.negatives.push("Jakohihnan vaihto tulossa"); yel("Jakohihnan vaihto edessä"); }
+    if (a.hihna === "Ei tiedossa") unk("Jakohihnan vaihtotilanne");
+    if (a.ketju === "Ääntää / vaatii tarkistusta") { r.repairs.push("Jakoketju ääntää, tarkistettava"); red("Jakoketju ääntää tai vaatii tarkistusta"); }
+    if (a.ketju === "Ei tiedossa") unk("Jakoketjun kunto");
+    if (a.moottori === "Tasainen") r.strengths.push("Moottori käy tasaisesti");
+    if (a.moottori === "Huomioitavaa") { r.repairs.push("Moottorin käynnissä huomioitavaa, tarkistettava"); yel("Moottorin käynnissä huomioitavaa"); }
+    if (a.vikavalot === "Ei pala") r.strengths.push("Ei vikavaloja");
+    if (a.vikavalot === "Palaa") { r.repairs.push("Vikavalo palaa, vian syy selvitettävä"); red("Vikavalo palaa"); }
+    if (a.vikavalot === "Ei tarkistettu") unk("Vikavalot");
+    if (a.tekniikkaLisa) r.repairs.push(a.tekniikkaLisa);
+
+    // Renkaat
+    function tyreSet(name, cond, rim, etu, taka, minMm) {
+      if (!cond && !rim && etu === null && taka === null) return;
+      var parts = [];
+      if (cond) parts.push(cond.toLowerCase());
+      if (etu !== null || taka !== null) parts.push("ura " + (etu !== null ? etu : "–") + " / " + (taka !== null ? taka : "–") + " mm");
+      if (rim) parts.push("vanteet: " + rim.toLowerCase());
+      r.tyres.push(name + ": " + parts.join(", "));
+      var low = [etu, taka].some(function (x) { return x !== null && x < minMm; });
+      if (cond === "Uusittava pian" || low) { r.repairs.push(name + " uusittava pian"); r.negatives.push(name + " uusittava"); yel(name + " uusittava pian"); }
+      if (rim === "Vaurioita") { r.repairs.push(name.replace("renkaat", "vanteet") + " vaurioituneet"); yel(name.replace("renkaat", "vanteissa") + " vaurioita"); }
+      if (rim === "Naarmuja") r.repairs.push(name.replace("renkaat", "vanteissa") + " naarmuja (pieni kunnostus)");
+      return cond && cond !== "Uusittava pian" && !low;
+    }
+    var kesaOk = tyreSet("Kesärenkaat", a.kesaRenkaat, a.kesaVanteet, vtNum(a.kesaUraEtu), vtNum(a.kesaUraTaka), 3);
+    var talviOk = false;
+    if (hasWinter(a)) talviOk = tyreSet("Talvirenkaat (" + a.talvityyppi.toLowerCase() + ")", a.talviRenkaat, a.talviVanteet, vtNum(a.talviUraEtu), vtNum(a.talviUraTaka), 5);
+    if (a.talvityyppi === "Ei talvirenkaita") { r.tyres.push("Ei talvirenkaita"); r.negatives.push("Ei talvirenkaita"); }
+    if (kesaOk && talviOk) r.sales.push("Kahdet hyväkuntoiset renkaat");
+    else if (a.kesaRenkaat && hasWinter(a)) r.sales.push("Kahdet renkaat");
+
+    // Kori ja sisusta
+    if (a.maali === "Erinomainen") r.strengths.push("Erinomainen maalipinta");
+    if (a.maali === "Huomioitavaa") { r.repairs.push("Maalipinnassa huomioitavaa"); yel("Maalipinnassa huomioitavaa"); }
+    if (a.maali === "Vaatii kunnostusta") { r.repairs.push("Maalipinta vaatii kunnostusta"); r.negatives.push("Maalipinta vaatii kunnostusta"); yel("Maalipinta vaatii kunnostusta"); }
+    if (a.tuulilasi === "Pieniä") r.repairs.push("Pieniä kiveniskemiä tuulilasissa");
+    if (a.tuulilasi === "Merkittäviä") { r.repairs.push("Merkittäviä kiveniskemiä tuulilasissa"); yel("Tuulilasissa merkittäviä kiveniskemiä"); }
+    if (a.tuulilasi === "Halkeama") { r.repairs.push("Tuulilasi haljennut, vaihto edessä"); r.negatives.push("Tuulilasin vaihto"); yel("Tuulilasi haljennut"); }
+    if (a.naarmut === "Pieniä") r.repairs.push("Pieniä naarmuja tai lommoja");
+    if (a.naarmut === "Merkittäviä") { r.repairs.push("Merkittäviä naarmuja tai lommoja"); r.negatives.push("Korikorjauksia tarvitaan"); yel("Merkittäviä naarmuja tai lommoja"); }
+    if (a.umpiot === "Kuluneet") r.repairs.push("Umpiot kuluneet");
+    if (a.umpiot === "Vaurioituneet") { r.repairs.push("Umpiot vaurioituneet"); yel("Umpiot vaurioituneet"); }
+    if (a.sisusta === "Siisti") r.strengths.push("Siisti sisusta");
+    if (a.sisusta === "Poikkeavaa kulumaa tai vaurioita") { r.repairs.push("Sisustassa poikkeavaa kulumaa tai vaurioita"); r.negatives.push("Sisustan kunto"); yel("Sisustassa poikkeavaa kulumaa"); }
+    if (a.haju === "Lievää hajua") r.repairs.push("Lievää hajua, otsonointi tai pesu");
+    if (a.haju === "Tupakoitu / voimakas haju") { r.repairs.push("Tupakan tai voimakkaan hajun poisto"); r.negatives.push("Tupakoitu tai voimakas haju laskee kysyntää"); yel("Tupakoitu tai voimakas haju"); }
+    if (a.koriLisa) r.repairs.push(a.koriLisa);
+
+    // Varusteet
+    var eq = a.varusteet || {};
+    VT_EQUIP.forEach(function (e) { if (eq[e[0]] && e[0] !== "muuvaruste") r.equip.push(e[1]); });
+    if (eq.muuvaruste) r.equip.push(a.muuVarusteTxt ? a.muuVarusteTxt : "Muu merkittävä varuste");
+
+    // Täyttöaste
+    var done = 0, total = 0;
+    VT_SECTIONS.forEach(function (s) { var p = vtProgress(s); done += p.done; total += p.total; });
+    r.done = done; r.total = total;
+
+    // Riskiluokka
+    r.risk = r.red.length ? "red" : (r.yellow.length ? "yellow" : "green");
+    if (r.risk === "green" && r.unknown.length >= 3) { r.risk = "yellow"; r.yellow.push(r.unknown.length + " keskeistä tietoa selvittämättä"); }
+
+    // Sisäänostosuositus
+    var plus = r.strengths.length + r.sales.length + Math.min(r.equip.length, 4) / 2;
+    var why = [];
+    // Lisäselvitys kun puuttuvat tiedot ratkaisevat; tunnetut isot riskit -> varovainen.
+    if (r.red.length === 1 && r.unknown.length >= 2) { r.rec = "Vaatii lisäselvityksiä"; why.push("Yksi merkittävä riski ja lisäksi " + r.unknown.length + " keskeistä tietoa selvittämättä: " + r.unknown.map(lcFirst).join(", ") + "."); }
+    else if (r.red.length) { r.rec = "Varovainen sisäänosto"; why.push("Merkittäviä riskejä: " + r.red.map(lcFirst).join(", ") + ". Hinnoittele korjauskulut ja riski mukaan."); }
+    else if (r.unknown.length >= 3) { r.rec = "Vaatii lisäselvityksiä"; why.push("Selvittämättä: " + r.unknown.map(lcFirst).join(", ") + "."); }
+    else if (r.yellow.length >= 4) { r.rec = "Varovainen sisäänosto"; why.push(r.yellow.length + " huomioitavaa asiaa, joiden kustannukset kasautuvat."); }
+    else if (r.yellow.length === 0 && plus >= 4) { r.rec = "Vahva sisäänosto"; why.push("Ei riskejä ja " + (r.strengths.length + r.sales.length) + " myyntiä tukevaa vahvuutta."); }
+    else { r.rec = "Normaali sisäänosto"; why.push(r.yellow.length ? "Pieniä huomioitavia asioita (" + r.yellow.length + "), jotka voi huomioida hinnassa." : "Ei riskejä, mutta erityisiä vahvuuksia on vähän."); }
+    if (r.unknown.length && r.rec !== "Vaatii lisäselvityksiä") why.push("Selvitä vielä: " + r.unknown.map(lcFirst).join(", ") + ".");
+    if (done < total * 0.6) why.push("Lista on täytetty " + done + " / " + total + ". Suositus tarkentuu, kun täytät loput.");
+    r.recWhy = why;
+    return r;
+  }
+
+  function lcFirst(t) { return t.charAt(0).toLowerCase() + t.slice(1); }
+  var VT_RISK = {
+    green: { name: "Vihreä", desc: "Ei merkittäviä riskejä" },
+    yellow: { name: "Keltainen", desc: "Huomioitavia asioita tai pieniä kunnostustarpeita" },
+    red: { name: "Punainen", desc: "Merkittäviä riskejä, puutteellinen historia tai selviä korjaustarpeita" }
+  };
+
+  function vtSummaryHtml() {
+    var r = vtEvaluate();
+    if (r.done === 0) return '<div class="vt-empty">Yhteenveto ja sisäänostosuositus syntyvät tähän automaattisesti, kun täytät listaa.</div>';
+    var rk = VT_RISK[r.risk];
+    var reasons = r.risk === "green" ? ["Ei havaittuja riskejä tai kunnostustarpeita."] : (r.risk === "red" ? r.red : r.yellow);
+    var extraYellow = r.risk === "red" && r.yellow.length ? " Lisäksi " + r.yellow.length + " pienempää huomioitavaa asiaa (ks. kunnostustarpeet)." : "";
+    function block(title, list, cls) {
+      if (!list.length) return "";
+      return '<div class="vt-b ' + (cls || "") + '"><div class="h">' + title + '</div><ul>' + list.map(function (x) { return "<li>" + escapeHtml(x) + "</li>"; }).join("") + "</ul></div>";
+    }
+    return '<div class="vt-verdict">' +
+        '<div class="vt-risk ' + r.risk + '"><span class="dot"></span><div><b>Riski: ' + rk.name + '</b><span>' + rk.desc + '</span></div></div>' +
+        '<div class="vt-rec"><span class="l">Sisäänostosuositus</span><b>' + r.rec + '</b></div>' +
+      '</div>' +
+      '<div class="vt-b why"><div class="h">Perustelu</div><ul>' +
+        '<li><b>Riskiluokka ' + rk.name.toLowerCase() + ':</b> ' + escapeHtml(reasons.join(", ")) + (r.risk === "green" ? "" : ".") + escapeHtml(extraYellow) + '</li>' +
+        r.recWhy.map(function (x, i) { return "<li>" + (i === 0 ? "<b>" + escapeHtml(r.rec) + ":</b> " : "") + escapeHtml(x) + "</li>"; }).join("") +
+      '</ul></div>' +
+      block("Perustiedot", r.basics) +
+      block("Vahvuudet hinnoitteluun", r.strengths, "good") +
+      block("Arvoa nostavat varusteet", r.equip, "good") +
+      block("Myyntiä helpottavat asiat", r.sales, "good") +
+      block("Arvoa laskevat asiat", r.negatives, "bad") +
+      block("Kunnostus- ja korjaustarpeet", r.repairs, "bad") +
+      block("Renkaiden tila", r.tyres) +
+      block("Historiassa huomioitavaa", r.history) +
+      (vt.a.myyjanArvio ? block("Myyjän arvio", [vt.a.myyjanArvio]) : "") +
+      '<button type="button" class="btn btn-ghost" id="vtCopy">Kopioi yhteenveto tekstinä</button>';
+  }
+
+  function vtSummaryText() {
+    var r = vtEvaluate(), out = [];
+    out.push("VAIHTOAUTON TARKASTUS" + (vt.a.auto ? " – " + vt.a.auto : ""));
+    out.push("Riski: " + VT_RISK[r.risk].name + " | Suositus: " + r.rec);
+    out.push("Perustelu: " + r.recWhy.join(" "));
+    [["Perustiedot", r.basics], ["Vahvuudet", r.strengths], ["Arvoa nostavat varusteet", r.equip], ["Myyntiä helpottavat", r.sales],
+     ["Arvoa laskevat", r.negatives], ["Kunnostus- ja korjaustarpeet", r.repairs], ["Renkaat", r.tyres], ["Historia", r.history],
+     ["Myyjän arvio", vt.a.myyjanArvio ? [vt.a.myyjanArvio] : []]].forEach(function (b) {
+      if (b[1].length) { out.push(""); out.push(b[0].toUpperCase()); b[1].forEach(function (x) { out.push("- " + x); }); }
+    });
+    return out.join("\n");
+  }
+
+  function vtFieldHtml(f) {
+    var a = vt.a;
+    if (!vtVisible(f)) return "";
+    var label = f.label ? '<div class="vt-l">' + escapeHtml(f.label) + (f.opt ? '' : '') + '</div>' : '';
+    if (f.type === "choice") {
+      return '<div class="vt-f">' + label + '<div class="vt-opts' + (f.opts.length === 2 ? ' two' : '') + '">' + f.opts.map(function (o) {
+        return '<button type="button" class="vt-opt' + (a[f.id] === o ? ' on' : '') + '" data-f="' + f.id + '" data-v="' + escapeHtml(o) + '">' + escapeHtml(o) + '</button>';
+      }).join("") + '</div></div>';
+    }
+    if (f.type === "num") {
+      return '<div class="vt-f">' + label + '<div class="vt-in"><input type="text" inputmode="numeric" data-f="' + f.id + '" value="' + escapeHtml(a[f.id] || "") + '" placeholder="0"><span>' + f.unit + '</span></div></div>';
+    }
+    if (f.type === "pair") {
+      return '<div class="vt-f">' + label + '<div class="vt-pair">' + f.ids.map(function (id, i) {
+        return '<div class="vt-in"><em>' + f.names[i] + '</em><input type="text" inputmode="decimal" data-f="' + id + '" value="' + escapeHtml(a[id] || "") + '" placeholder="0"><span>' + f.unit + '</span></div>';
+      }).join("") + '</div></div>';
+    }
+    if (f.type === "month") {
+      return '<div class="vt-f">' + label + '<div class="vt-in"><input type="month" data-f="' + f.id + '" value="' + escapeHtml(a[f.id] || "") + '"></div></div>';
+    }
+    if (f.type === "text") {
+      return '<div class="vt-f">' + label + (f.area
+        ? '<textarea rows="3" data-f="' + f.id + '" placeholder="' + escapeHtml(f.ph || "Vapaa teksti") + '">' + escapeHtml(a[f.id] || "") + '</textarea>'
+        : '<div class="vt-in"><input type="text" data-f="' + f.id + '" value="' + escapeHtml(a[f.id] || "") + '" placeholder="' + escapeHtml(f.ph || "") + '"></div>') + '</div>';
+    }
+    if (f.type === "checks") {
+      var eq = a.varusteet || {};
+      return '<div class="vt-checks">' + f.items.map(function (e) {
+        return '<button type="button" class="vt-check' + (eq[e[0]] ? ' on' : '') + '" data-eq="' + e[0] + '"><span class="bx"></span><span>' + escapeHtml(e[1]) + '</span></button>';
+      }).join("") + '</div>';
+    }
+    return "";
+  }
+
+  function vtMiniTitle(r) {
+    if (!r.done) return "Ei vielä arviota";
+    if (r.done < r.total * 0.4) return "Arvio kesken – täytä lisää";
+    return r.rec;
+  }
+  function renderVt(main) {
+    vtLoad();
+    main.classList.add("vt-main");
+    var r = vtEvaluate();
+
+    var mini = document.createElement("div");
+    mini.className = "vt-mini " + r.risk;
+    mini.innerHTML = '<span class="dot"></span><span class="mid"><b>' + vtMiniTitle(r) + '</b><span>Riski ' + VT_RISK[r.risk].name.toLowerCase() + ' · ' + r.done + '/' + r.total + ' täytetty</span></span><span class="go">Yhteenveto ↓</span>';
+    mini.addEventListener("click", function () { var s = document.querySelector(".vt-sum"); if (s) s.scrollIntoView({ behavior: "smooth", block: "start" }); });
+    main.appendChild(mini);
+
+    var col = document.createElement("div");
+    col.className = "vt-col";
+    col.innerHTML = '<div class="vt-head"><h2>Vaihtoauton tarkastuslista</h2><button type="button" class="btn btn-ghost btn-sm" id="vtNew">' + (vt.reset ? 'Vahvista tyhjennys' : 'Uusi tarkastus') + '</button></div>' +
+      VT_SECTIONS.map(function (s, i) {
+        var p = vtProgress(s), open = !!vt.open[s.id];
+        var badge = p.total ? '<span class="vt-prog' + (p.done === p.total ? ' full' : '') + '">' + p.done + '/' + p.total + '</span>' : (s.id === "varusteet" ? '<span class="vt-prog">' + Object.keys(vt.a.varusteet || {}).filter(function (k) { return vt.a.varusteet[k]; }).length + ' valittu</span>' : '');
+        return '<div class="card vt-sec' + (open ? ' open' : '') + '" data-s="' + s.id + '">' +
+          '<button type="button" class="vt-sh" data-toggle="' + s.id + '"><span class="n">' + (i + 1) + '</span><span class="t">' + s.title + '</span>' + badge + '<span class="chev">' + RK_ICON.down + '</span></button>' +
+          (open ? '<div class="vt-body">' + s.fields.map(vtFieldHtml).join("") +
+            (i < VT_SECTIONS.length - 1 ? '<button type="button" class="btn btn-ghost vt-next" data-next="' + VT_SECTIONS[i + 1].id + '" data-cur="' + s.id + '">Seuraava: ' + VT_SECTIONS[i + 1].title + ' ›</button>' : '<button type="button" class="btn btn-primary vt-next" data-sum="1">Näytä yhteenveto</button>') +
+          '</div>' : '') +
+        '</div>';
+      }).join("");
+    main.appendChild(col);
+
+    var sum = document.createElement("div");
+    sum.className = "card vt-sum";
+    sum.innerHTML = '<div class="vt-sum-h">Yhteenveto ja hinnoittelun tuki</div><div id="vtSumBody">' + vtSummaryHtml() + '</div>';
+    main.appendChild(sum);
+
+    function refreshSummary() {
+      var b = document.getElementById("vtSumBody"); if (b) b.innerHTML = vtSummaryHtml();
+      var r2 = vtEvaluate();
+      mini.className = "vt-mini " + r2.risk;
+      mini.querySelector("b").textContent = vtMiniTitle(r2);
+      mini.querySelector(".mid span").textContent = "Riski " + VT_RISK[r2.risk].name.toLowerCase() + " · " + r2.done + "/" + r2.total + " täytetty";
+      VT_SECTIONS.forEach(function (s) {
+        var p = vtProgress(s), el = col.querySelector('.vt-sec[data-s="' + s.id + '"] .vt-prog');
+        if (el && p.total) { el.textContent = p.done + "/" + p.total; el.classList.toggle("full", p.done === p.total); }
+      });
+    }
+    function rerender() { var y = window.scrollY; render(); window.scrollTo(0, y); }
+
+    function onClick(e) {
+      var t = e.target.closest("button"); if (!t) return;
+      if (t.id === "vtNew") {
+        if (!vt.reset) { vt.reset = true; rerender(); setTimeout(function () { if (vt.reset) { vt.reset = false; if (state.tab === "vaihto") rerender(); } }, 4000); return; }
+        vt.a = {}; vt.reset = false; vt.open = { perus: true }; vtSave(); render(); window.scrollTo(0, 0); showToast("Uusi tarkastus aloitettu"); return;
+      }
+      if (t.id === "vtCopy") {
+        var txt = vtSummaryText();
+        var done = function () { showToast("Yhteenveto kopioitu"); };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, function () { vtCopyFallback(txt); done(); });
+        else { vtCopyFallback(txt); done(); }
+        return;
+      }
+      if (t.hasAttribute("data-toggle")) { var id = t.getAttribute("data-toggle"); vt.open[id] = !vt.open[id]; rerender(); return; }
+      if (t.hasAttribute("data-next")) {
+        vt.open[t.getAttribute("data-cur")] = false; vt.open[t.getAttribute("data-next")] = true; render();
+        var el = document.querySelector('.vt-sec[data-s="' + t.getAttribute("data-next") + '"]');
+        if (el) el.scrollIntoView({ block: "start" }); window.scrollBy(0, -80); return;
+      }
+      if (t.hasAttribute("data-sum")) { var s = document.querySelector(".vt-sum"); if (s) s.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
+      if (t.hasAttribute("data-f")) {
+        var f = t.getAttribute("data-f"), v = t.getAttribute("data-v");
+        if (vt.a[f] === v) delete vt.a[f]; else vt.a[f] = v;
+        vtSave(); rerender(); return;
+      }
+      if (t.hasAttribute("data-eq")) {
+        var k = t.getAttribute("data-eq"); vt.a.varusteet = vt.a.varusteet || {};
+        if (vt.a.varusteet[k]) delete vt.a.varusteet[k]; else vt.a.varusteet[k] = 1;
+        vtSave(); rerender(); return;
+      }
+    }
+    // Kuuntelijat vain tämän renderöinnin elementeille (main-elementti säilyy renderöintien yli).
+    col.addEventListener("click", onClick);
+    sum.addEventListener("click", onClick);
+    col.addEventListener("input", function (e) {
+      var el = e.target; if (!el.hasAttribute || !el.hasAttribute("data-f")) return;
+      var f = el.getAttribute("data-f");
+      if (el.value === "") delete vt.a[f]; else vt.a[f] = el.value;
+      vtSave(); refreshSummary();
+    });
+  }
+  function vtCopyFallback(txt) {
+    var ta = document.createElement("textarea"); ta.value = txt; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); } catch (e) {} document.body.removeChild(ta);
+  }
+
   // ---------- Nav + init ----------
   Array.prototype.forEach.call(document.querySelectorAll("nav.tabbar button"), function (b) {
     b.addEventListener("click", function () {
@@ -2759,6 +3270,14 @@
     });
   });
   document.getElementById("settingsBtn").addEventListener("click", openSettings);
+  function navFade() {
+    var tb = document.getElementById("tabbar"); if (!tb) return;
+    var more = tb.scrollWidth - tb.clientWidth - tb.scrollLeft > 4;
+    tb.classList.toggle("more-right", more);
+    tb.classList.toggle("more-left", tb.scrollLeft > 4);
+  }
+  document.getElementById("tabbar").addEventListener("scroll", navFade, { passive: true });
+  window.addEventListener("resize", navFade);
 
   // ---------- Vaalea / tumma tila ----------
   // Oletuksena seurataan puhelimen asetusta; painike lukitsee valinnan tähän laitteeseen.
