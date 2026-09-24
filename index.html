@@ -495,6 +495,71 @@
   }
   .rk-keys { display: none; font-size: 12px; color: var(--text-faint); margin-top: 16px; }
   .rk-keys kbd { font-family: var(--font-body); font-size: 11px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; }
+
+  /* ---------- Kuuma liidi ---------- */
+  main.ld-main { --tier: #5b9bf0; --tier-dim: #5b9bf022; }
+  main.ld-hot { --tier: var(--bad); --tier-dim: var(--bad-dim); }
+  main.ld-warm { --tier: var(--accent); --tier-dim: var(--accent-dim); }
+  main.ld-tepid { --tier: var(--gold); --tier-dim: var(--gold-dim); }
+  .ld-mini {
+    position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 10px;
+    background: var(--surface); border: 1px solid var(--tier); border-radius: 12px; padding: 8px 14px;
+    box-shadow: 0 6px 16px rgba(0,0,0,.18);
+  }
+  .ld-mini .s { font-family: var(--font-display); font-size: 24px; font-weight: 600; color: var(--tier); min-width: 34px; }
+  .ld-mini { cursor: pointer; }
+  .ld-mini .mid { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .ld-mini .tn { font-weight: 700; font-size: 14px; }
+  .ld-mini .ac { font-size: 12px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ld-mini .c { font-size: 11px; color: var(--text-dim); text-align: right; line-height: 1.3; flex-shrink: 0; }
+  .ld-res { scroll-margin-top: 80px; }
+  .ld-qs { display: flex; flex-direction: column; gap: 10px; }
+  .ld-head { display: flex; align-items: center; justify-content: space-between; }
+  .ld-head h2 { font-family: var(--font-display); font-size: 20px; font-weight: 600; margin: 0; }
+  .ld-head .btn:disabled { opacity: .4; cursor: default; }
+  .ld-q { padding: 14px; }
+  .ld-q .qt { font-size: 15px; font-weight: 600; line-height: 1.35; display: flex; gap: 10px; margin-bottom: 10px; }
+  .ld-q .qn { font-family: var(--font-display); color: var(--text-faint); flex-shrink: 0; min-width: 16px; }
+  .ld-q.done .qn { color: var(--tier); }
+  .ld-opts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  .ld-opt {
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 10px;
+    padding: 9px 8px; cursor: pointer; font-family: var(--font-body); font-size: 13px; line-height: 1.25;
+    display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 6px; text-align: left; min-height: 58px;
+  }
+  .ld-opt em { font-style: normal; font-family: var(--font-display); font-size: 12px; color: var(--text-faint); }
+  .ld-opt:hover { border-color: var(--text-faint); }
+  .ld-opt.on { border-color: var(--tier); background: var(--tier-dim); font-weight: 600; }
+  .ld-opt.on em { color: var(--tier); }
+  .ld-res-top { display: flex; align-items: center; gap: 16px; }
+  .ld-ring { position: relative; width: 110px; height: 110px; flex-shrink: 0; }
+  .ld-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .ld-ring .bg { fill: none; stroke: var(--surface-2); stroke-width: 10; }
+  .ld-ring .fg { fill: none; stroke: var(--tier); stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset .4s ease; }
+  .ld-num { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .ld-num b { font-family: var(--font-display); font-size: 32px; font-weight: 600; line-height: 1; }
+  .ld-num span { font-size: 11px; color: var(--text-dim); }
+  .ld-res-side { flex: 1; min-width: 0; }
+  .ld-tier { font-family: var(--font-display); font-size: 22px; font-weight: 600; color: var(--tier); }
+  .ld-action { font-size: 14.5px; line-height: 1.4; margin-top: 4px; font-weight: 600; }
+  .ld-note { font-size: 12.5px; color: var(--text-dim); margin-top: 12px; }
+  .ld-gap { margin-top: 14px; background: var(--surface-2); border-radius: 10px; padding: 12px 14px; }
+  .ld-gap .h { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-dim); }
+  .ld-gap .t { font-size: 15px; line-height: 1.4; margin-top: 4px; font-weight: 600; }
+  .ld-gap.hot { background: var(--tier-dim); }
+  .ld-gap ul { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .ld-gap li { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; color: var(--text-dim); }
+  .ld-gap li b { color: var(--good); font-family: var(--font-display); font-size: 14px; flex-shrink: 0; }
+  @media (min-width: 900px) {
+    main.ld-main { display: grid; grid-template-columns: minmax(0, 1fr) 360px; align-items: start; gap: 20px; }
+    .ld-mini { display: none; }
+    .ld-qs { grid-column: 1; }
+    .ld-res { grid-column: 2; grid-row: 1; position: sticky; top: 24px; }
+    .ld-res-top { flex-direction: column; text-align: center; }
+    .ld-ring { width: 150px; height: 150px; }
+    .ld-num b { font-size: 42px; }
+    .ld-opt { font-size: 13.5px; }
+  }
   /* edit mode */
   .rk-edit-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
   .rk-edit-head h2 { font-family: var(--font-display); font-size: 20px; font-weight: 600; margin: 0; color: var(--text); }
@@ -552,6 +617,10 @@
     <button data-tab="runko">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
       Runko
+    </button>
+    <button data-tab="liidi">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4.4 0 7-2.9 7-6.8 0-3.6-2.4-6-4.1-8.2-.4 1.8-1.3 3-2.6 3.6C12.6 7.4 11.2 4.4 8.6 2c.2 3.3-1.4 5.3-2.8 7.2C4.7 10.8 5 12.6 5 15.2 5 19.1 7.6 22 12 22Z"/></svg>
+      Liidi
     </button>
     <button data-tab="add">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
@@ -1064,6 +1133,7 @@
     else if (state.tab === "leaderboard") renderLeaderboard(main);
     else if (state.tab === "history") renderHistory(main);
     else if (state.tab === "runko") renderRunko(main);
+    else if (state.tab === "liidi") renderLead(main);
 
     Array.prototype.forEach.call(document.querySelectorAll("nav.tabbar button"), function (b) {
       b.classList.toggle("active", b.getAttribute("data-tab") === state.tab);
@@ -2083,6 +2153,141 @@
     var btn = e.key === "ArrowRight" ? document.querySelector(".rk-fwd") : e.key === "ArrowLeft" ? document.querySelector(".rk-prev") : null;
     if (btn && !btn.disabled) { e.preventDefault(); btn.click(); }
   });
+
+  // ---------- Kuuma liidi -pisteytys ----------
+  // Jokainen kysymys: vaihtoehdot järjestyksessä 10 / 5 / 0 pistettä.
+  // fix = lyhyt nimi "mikä puuttuu" -lauseeseen.
+  var LEAD_QUESTIONS = [
+    { id: "aika", q: "Milloin auton hankinta on ajankohtainen?", o: ["Tänään–7 pv", "Tämän kuun aikana", "Myöhemmin"], fix: "hankinnan sopiminen tälle viikolle" },
+    { id: "auto", q: "Onko asiakas jo löytänyt kiinnostavan auton?", o: ["Juuri tämä auto", "Muutama vaihtoehto", "Vain kartoittaa"], fix: "yhteen autoon keskittyminen" },
+    { id: "kkera", q: "Onko rahoituksen kuukausierä sopivalla tasolla?", o: ["Kyllä", "Lähes", "Ei vielä tiedossa"], fix: "sopivan kuukausierän löytäminen" },
+    { id: "vaihto", q: "Onko vaihtoauto arvioitu?", o: ["Kyllä", "Tiedot osittain", "Ei vaihtoautoa tai ei arvioitu"], fix: "vaihtoauton arviointi" },
+    { id: "paattaja", q: "Onko päätöksentekijä paikalla tai mukana keskustelussa?", o: ["Kyllä", "Tavoitettavissa", "Ei"], fix: "päätöksentekijän osallistuminen" },
+    { id: "koeajo", q: "Onko koeajo tehty tai sovittu?", o: ["Tehty", "Sovittu", "Ei"], fix: "koeajo" },
+    { id: "budjetti", q: "Onko budjetti selvillä?", o: ["Selkeä", "Suuntaa-antava", "Ei tiedossa"], fix: "budjetin selvittäminen" },
+    { id: "syy", q: "Onko asiakkaalla selkeä syy vaihtaa autoa?", o: ["Kyllä, akuutti", "Jonkinlainen", "Ei todellista painetta"], fix: "vaihtamisen syyn kirkastaminen" },
+    { id: "kilpailu", q: "Onko hän kilpailuttamassa aktiivisesti?", o: ["Ei, keskittyy tähän autoon", "Vertailee vähän", "Hakee vain halvinta"], fix: "kilpailutuksen lopettaminen tähän autoon" },
+    { id: "askel", q: "Onko seuraava askel sovittu tarkasti?", o: ["Kyllä: aika + sisältö", "Palataan asiaan", "Ei"], fix: "tarkka seuraava askel (aika + sisältö)" }
+  ];
+  var LEAD_POINTS = [10, 5, 0];
+  var LEAD_TIERS = [
+    { min: 80, key: "hot", icon: "🔥", name: "Kuuma", action: "Klousaa nyt: varaus, rahoitushakemus tai kaupan hyväksyntä." },
+    { min: 60, key: "warm", icon: "🟠", name: "Lämmin", action: "Varaa konkreettinen seuraava askel 24–48 h sisään." },
+    { min: 40, key: "tepid", icon: "🟡", name: "Haalea", action: "Selvitä yksi suurin este: budjetti, vaihtoauto tai päätöksentekijä." },
+    { min: 0, key: "cold", icon: "🔵", name: "Kylmä", action: "Kevyt seuranta, älä käytä liikaa aikaa heti." }
+  ];
+  var lead = { answers: {} }; // id -> vaihtoehdon indeksi 0/1/2
+
+  function leadTier(score) {
+    for (var i = 0; i < LEAD_TIERS.length; i++) if (score >= LEAD_TIERS[i].min) return LEAD_TIERS[i];
+    return LEAD_TIERS[LEAD_TIERS.length - 1];
+  }
+  function leadScore() {
+    var s = 0;
+    LEAD_QUESTIONS.forEach(function (q) { var a = lead.answers[q.id]; if (a !== undefined) s += LEAD_POINTS[a]; });
+    return s;
+  }
+  function leadAnsweredCount() {
+    return LEAD_QUESTIONS.filter(function (q) { return lead.answers[q.id] !== undefined; }).length;
+  }
+  function joinFi(list) {
+    if (list.length <= 1) return list.join("");
+    return list.slice(0, -1).join(", ") + " ja " + list[list.length - 1];
+  }
+  // Pienin määrä parannuksia, joilla päästään kuumaksi (80+). Vastatut kysymykset
+  // ensin (ne ovat tiedossa olevia puutteita), isoin pistelisäys ensin.
+  function leadGap(score) {
+    if (score >= 80) return null;
+    var cands = LEAD_QUESTIONS.map(function (q, i) {
+      var a = lead.answers[q.id];
+      var cur = a === undefined ? 0 : LEAD_POINTS[a];
+      return { q: q, i: i, gain: 10 - cur, answered: a !== undefined };
+    }).filter(function (c) { return c.gain > 0; });
+    cands.sort(function (x, y) {
+      if (x.answered !== y.answered) return x.answered ? -1 : 1;
+      return y.gain - x.gain || x.i - y.i;
+    });
+    var picked = [], s = score;
+    for (var k = 0; k < cands.length && s < 80; k++) { picked.push(cands[k]); s += cands[k].gain; }
+    return { picked: picked, to: s };
+  }
+  function capFirst(t) { return t.charAt(0).toUpperCase() + t.slice(1); }
+
+  function leadResultHtml() {
+    var score = leadScore(), n = leadAnsweredCount(), t = leadTier(score);
+    var r = 46, c = 2 * Math.PI * r, dash = c * score / 100;
+    var html =
+      '<div class="ld-res-top">' +
+        '<div class="ld-ring"><svg viewBox="0 0 110 110"><circle class="bg" cx="55" cy="55" r="' + r + '"></circle>' +
+          '<circle class="fg" cx="55" cy="55" r="' + r + '" style="stroke-dasharray:' + c + ';stroke-dashoffset:' + (c - dash) + '"></circle></svg>' +
+          '<div class="ld-num"><b>' + score + '</b><span>/ 100</span></div></div>' +
+        '<div class="ld-res-side">' +
+          '<div class="ld-tier">' + t.icon + ' ' + t.name + '</div>' +
+          '<div class="ld-action">' + escapeHtml(t.action) + '</div>' +
+        '</div>' +
+      '</div>';
+    if (n < LEAD_QUESTIONS.length) {
+      html += '<div class="ld-note">Vastattu ' + n + ' / ' + LEAD_QUESTIONS.length + '. Vastaamattomat lasketaan nollaksi.</div>';
+    }
+    var gap = leadGap(score);
+    if (gap && n > 0) {
+      var names = gap.picked.slice(0, 3).map(function (p) { return p.q.fix; });
+      var more = gap.picked.length - names.length;
+      var verb = gap.picked.length === 1 ? "nostaisi" : "nostaisivat";
+      var txt = capFirst(joinFi(names)) + (more > 0 ? " sekä " + more + " muuta asiaa" : "") + " " + verb + " arvion " + score + " → " + Math.min(gap.to, 100) + " pisteeseen.";
+      html += '<div class="ld-gap"><div class="h">Mikä puuttuu, jotta tästä tulee kuuma?</div><div class="t">' + escapeHtml(txt) + '</div>' +
+        '<ul>' + gap.picked.map(function (p) {
+          return '<li><span>' + escapeHtml(p.q.q) + '</span><b>+' + p.gain + '</b></li>';
+        }).join("") + '</ul></div>';
+    } else if (score >= 80) {
+      html += '<div class="ld-gap hot"><div class="h">Liidi on kuuma</div><div class="t">Älä jää odottamaan. Kysy kauppaa nyt.</div></div>';
+    }
+    return html;
+  }
+
+  function renderLead(main) {
+    var t = leadTier(leadScore());
+    main.classList.add("ld-main", "ld-" + t.key);
+
+    var bar = document.createElement("div");
+    bar.className = "ld-mini";
+    bar.setAttribute("role", "button");
+    bar.innerHTML = '<span class="s">' + leadScore() + '</span>' +
+      '<span class="mid"><span class="tn">' + t.icon + ' ' + t.name + '</span><span class="ac">' + escapeHtml(t.action) + '</span></span>' +
+      '<span class="c">' + leadAnsweredCount() + '/' + LEAD_QUESTIONS.length + '<br>Tulos ↓</span>';
+    bar.addEventListener("click", function () {
+      var r = document.querySelector(".ld-res"); if (r) r.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    main.appendChild(bar);
+
+    var qs = document.createElement("div");
+    qs.className = "ld-qs";
+    qs.innerHTML = '<div class="ld-head"><h2>Kuuma liidi</h2><button type="button" class="btn btn-ghost btn-sm" id="ldReset"' + (leadAnsweredCount() ? '' : ' disabled') + '>Tyhjennä</button></div>' +
+      LEAD_QUESTIONS.map(function (q, i) {
+        var a = lead.answers[q.id];
+        return '<div class="card ld-q' + (a !== undefined ? ' done' : '') + '"><div class="qt"><span class="qn">' + (i + 1) + '</span>' + escapeHtml(q.q) + '</div>' +
+          '<div class="ld-opts">' + q.o.map(function (o, k) {
+            return '<button type="button" data-q="' + q.id + '" data-k="' + k + '" class="ld-opt p' + LEAD_POINTS[k] + (a === k ? ' on' : '') + '">' +
+              '<span>' + escapeHtml(o) + '</span><em>' + LEAD_POINTS[k] + '</em></button>';
+          }).join("") + '</div></div>';
+      }).join("");
+    Array.prototype.forEach.call(qs.querySelectorAll(".ld-opt"), function (b) {
+      b.addEventListener("click", function () {
+        var id = b.getAttribute("data-q"), k = parseInt(b.getAttribute("data-k"), 10);
+        if (lead.answers[id] === k) delete lead.answers[id]; else lead.answers[id] = k;
+        var y = window.scrollY; render(); window.scrollTo(0, y);
+      });
+    });
+    qs.querySelector("#ldReset").addEventListener("click", function () {
+      lead.answers = {}; render(); window.scrollTo(0, 0); showToast("Pisteytys tyhjennetty");
+    });
+    main.appendChild(qs);
+
+    var res = document.createElement("div");
+    res.className = "card ld-res";
+    res.innerHTML = leadResultHtml();
+    main.appendChild(res);
+  }
 
   // ---------- Nav + init ----------
   Array.prototype.forEach.call(document.querySelectorAll("nav.tabbar button"), function (b) {
