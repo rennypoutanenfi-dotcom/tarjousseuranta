@@ -333,7 +333,7 @@
   .hy-plot .base { stroke: var(--text-faint); }
   .hy-plot .ax, .hy-plot .vl { fill: var(--text-faint); font-size: 11px; font-family: var(--font-body); }
   .hy-plot .vl { fill: var(--text-dim); font-weight: 600; }
-  .hy-plot .yr { fill: var(--text); font-size: 12.5px; font-weight: 700; font-family: var(--font-body); }
+  .hy-plot .yr { fill: var(--text); font-size: 11.5px; font-weight: 700; font-family: var(--font-body); }
   .hy-plot .gr { fill: var(--text-faint); font-size: 11.5px; font-weight: 700; font-family: var(--font-body); }
   .hy-plot .gr.up { fill: var(--good); }
   .hy-plot .gr.down { fill: var(--bad); }
@@ -344,6 +344,11 @@
   .hy-tip b { width: 100%; color: var(--text); font-size: 13.5px; }
   .hy-tip strong { color: var(--text); margin-left: 4px; }
   .hy-note { font-size: 11.5px; color: var(--text-faint); margin-top: 8px; line-height: 1.4; }
+  .hy-years { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin-top: 12px; }
+  .hy-years::-webkit-scrollbar { display: none; }
+  .hy-years button { flex: 0 0 auto; background: var(--surface-2); border: 1px solid var(--border); color: var(--text-dim); border-radius: 999px; padding: 6px 13px; font-family: var(--font-body); font-size: 13px; font-weight: 700; cursor: pointer; }
+  .hy-years button.on { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+  .hy-plot .yr.fut { fill: var(--text-faint); font-weight: 500; }
 
   /* leaderboard */
   .lb-tabs { display: flex; gap: 8px; margin-bottom: 4px; }
@@ -1931,90 +1936,102 @@
   }
   function pct(c, t) { return t > 0 ? Math.round(c / t * 100) + "%" : "–"; }
 
-  // Pylväskaavio: jokaiselle vuodelle tarjoukset ja kaupat rinnakkain.
-  function histYearChartCard(agg) {
-    var mode = state.histChartMode || "total";
-    var curY = String(parseMonthKey(state.monthKey).y);
-    var years = agg.years.slice().sort(function (a, b) { return a.year < b.year ? -1 : 1; });
+  // Pylväskaavio: valitun vuoden jokainen kuukausi, tarjoukset ja kaupat rinnakkain.
+  var MONTH_SHORT = ["tammi", "helmi", "maalis", "huhti", "touko", "kesä", "heinä", "elo", "syys", "loka", "marras", "joulu"];
+  function histMonthChartCard(agg) {
+    var months = (state.profile && state.profile.months) || {};
+    var cur = parseMonthKey(state.monthKey);
+    var yearsAvail = agg.years.map(function (y) { return +y.year; });
+    if (yearsAvail.indexOf(cur.y) === -1) yearsAvail.push(cur.y);
+    yearsAvail.sort(function (a, b) { return b - a; });
+    var year = state.histChartYear && yearsAvail.indexOf(state.histChartYear) !== -1 ? state.histChartYear : cur.y;
+    var cmp = state.histChartCmp || "prev";
+    function tot(y, m) { // m 0..11
+      var k = y + "-" + String(m + 1).padStart(2, "0");
+      return months[k] ? monthTotals(months[k]) : null;
+    }
+    var data = [];
+    for (var m = 0; m < 12; m++) {
+      var t = tot(year, m), future = year === cur.y && m > cur.m;
+      var base = cmp === "prev" ? (m === 0 ? tot(year - 1, 11) : tot(year, m - 1)) : tot(year - 1, m);
+      var g = null;
+      if (t && t.total && base && base.closed > 0) g = (t.closed - base.closed) / base.closed * 100;
+      data.push({ m: m, o: t ? t.total : 0, d: t ? t.closed : 0, has: !!(t && t.total), future: future, partial: year === cur.y && m === cur.m, growth: g, base: base });
+    }
     var card = document.createElement("div");
     card.className = "card hy-card";
-    card.innerHTML = '<div class="hy-head"><div><h2>Kasvu vuosittain</h2><p>' + (mode === "total" ? "Tarjoukset ja kaupat yhteensä vuodessa." : "Keskiarvo kirjattua kuukautta kohden, jolloin vajaat vuodet ovat vertailukelpoisia.") + '</p></div>' +
-      '<div class="hy-seg"><button type="button" data-m="total" class="' + (mode === "total" ? "on" : "") + '">Yhteensä</button><button type="button" data-m="avg" class="' + (mode === "avg" ? "on" : "") + '">Kk-keskiarvo</button></div></div>' +
+    card.innerHTML = '<div class="hy-head"><div><h2>Kasvu kuukausittain</h2><p>Tarjoukset ja kaupat kuukausittain. Kasvu lasketaan kaupoista.</p></div>' +
+      '<div class="hy-seg"><button type="button" data-c="prev" class="' + (cmp === "prev" ? "on" : "") + '">vs. edellinen kk</button><button type="button" data-c="yoy" class="' + (cmp === "yoy" ? "on" : "") + '">vs. viime vuosi</button></div></div>' +
+      '<div class="hy-years">' + yearsAvail.map(function (y) { return '<button type="button" data-y="' + y + '" class="' + (y === year ? "on" : "") + '">' + y + '</button>'; }).join("") + '</div>' +
       '<div class="hy-legend"><span><i class="o"></i>Tarjoukset</span><span><i class="d"></i>Kaupat</span></div>' +
       '<div class="hy-plot"></div><div class="hy-tip"></div>';
+    function rer() { var sy = window.scrollY; render(); window.scrollTo(0, sy); }
     Array.prototype.forEach.call(card.querySelectorAll(".hy-seg button"), function (b) {
-      b.addEventListener("click", function () { state.histChartMode = b.getAttribute("data-m"); var y = window.scrollY; render(); window.scrollTo(0, y); });
+      b.addEventListener("click", function () { state.histChartCmp = b.getAttribute("data-c"); rer(); });
     });
-    var data = years.map(function (y) {
-      var f = mode === "avg" ? 1 / Math.max(y.months, 1) : 1;
-      return { year: y.year, o: y.total * f, d: y.closed * f, months: y.months, partial: y.year === curY, hit: y.total ? y.closed / y.total : 0 };
+    Array.prototype.forEach.call(card.querySelectorAll(".hy-years button"), function (b) {
+      b.addEventListener("click", function () { state.histChartYear = +b.getAttribute("data-y"); rer(); });
     });
-    // Kasvu kaupoissa edelliseen vuoteen. Yhteensä-tilassa keskeneräistä vuotta ei verrata.
-    data.forEach(function (x, i) {
-      x.growth = null;
-      if (i === 0) return;
-      var p = data[i - 1];
-      if (mode === "total" && x.partial) return;
-      if (p.d > 0) x.growth = (x.d - p.d) / p.d * 100;
-    });
-    function fmt(v) { return mode === "avg" ? (Math.round(v * 10) / 10).toLocaleString("fi-FI") : String(Math.round(v)); }
     var plot = card.querySelector(".hy-plot"), tip = card.querySelector(".hy-tip");
-    function draw(sel) {
-      var W = Math.max(plot.clientWidth || 320, 260), H = 230, pl = 34, pr = 6, pt = 18, pb = 44;
-      var max = Math.max.apply(null, data.map(function (x) { return Math.max(x.o, x.d); }).concat([1]));
+    var sel = null;
+    function draw() {
+      var W = Math.max(plot.clientWidth || 320, 260), H = 230, pl = 30, pr = 4, pt = 18, pb = 40;
+      var max = Math.max.apply(null, data.map(function (x) { return Math.max(x.o, x.d); }).concat([4]));
       var raw = max / 4, mag = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10));
-      var step = [1, 2, 2.5, 5, 10].map(function (m) { return m * mag; }).filter(function (v) { return v >= raw; })[0];
-      if (mode === "total") step = Math.max(1, Math.round(step));
+      var step = Math.max(1, Math.round([1, 2, 2.5, 5, 10].map(function (k) { return k * mag; }).filter(function (v) { return v >= raw; })[0]));
       var top = Math.ceil(max / step) * step;
-      var x0 = pl, x1 = W - pr, yb = H - pb, gw = (x1 - x0) / data.length;
-      var bw = Math.min(30, Math.max(8, gw * 0.3));
+      var x0 = pl, x1 = W - pr, yb = H - pb, gw = (x1 - x0) / 12, wide = gw >= 44;
+      var bw = Math.min(22, Math.max(5, gw * 0.34));
       function Y(v) { return yb - (yb - pt) * v / top; }
       function bar(x, v, cls) {
-        var y = Y(v), h = yb - y, r = Math.min(4, h, bw / 2);
+        var y = Y(v), h = yb - y, r = Math.min(3, h, bw / 2);
         if (h <= 0) return "";
         return '<path class="' + cls + '" d="M' + x + ' ' + yb + 'V' + (y + r) + 'Q' + x + ' ' + y + ' ' + (x + r) + ' ' + y + 'H' + (x + bw - r) + 'Q' + (x + bw) + ' ' + y + ' ' + (x + bw) + ' ' + (y + r) + 'V' + yb + 'Z"/>';
       }
-      var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" height="' + H + '" role="img" aria-label="Tarjoukset ja kaupat vuosittain">';
+      var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" height="' + H + '" role="img" aria-label="Tarjoukset ja kaupat kuukausittain ' + year + '">';
       for (var v = 0; v <= top + 1e-9; v += step) {
         s += '<line class="g" x1="' + x0 + '" x2="' + x1 + '" y1="' + Y(v) + '" y2="' + Y(v) + '"/>';
-        s += '<text class="ax" x="' + (x0 - 6) + '" y="' + (Y(v) + 4) + '" text-anchor="end">' + fmt(v) + '</text>';
+        s += '<text class="ax" x="' + (x0 - 5) + '" y="' + (Y(v) + 4) + '" text-anchor="end">' + v + '</text>';
       }
       data.forEach(function (x, i) {
         var cx = x0 + gw * i + gw / 2, bx = cx - bw - 1;
-        if (sel === i) s += '<rect class="hl" x="' + (x0 + gw * i + 2) + '" y="' + pt + '" width="' + (gw - 4) + '" height="' + (yb - pt) + '" rx="6"/>';
+        if (sel === i) s += '<rect class="hl" x="' + (x0 + gw * i + 1) + '" y="' + pt + '" width="' + (gw - 2) + '" height="' + (yb - pt) + '" rx="5"/>';
         s += '<g class="' + (x.partial ? "partial" : "") + '">' + bar(bx, x.o, "bo") + bar(cx + 1, x.d, "bd") + '</g>';
-        if (gw > 44) {
-          s += '<text class="vl" x="' + (bx + bw / 2) + '" y="' + (Y(x.o) - 4) + '" text-anchor="middle">' + fmt(x.o) + '</text>';
-          s += '<text class="vl" x="' + (cx + 1 + bw / 2) + '" y="' + (Y(x.d) - 4) + '" text-anchor="middle">' + fmt(x.d) + '</text>';
+        if (wide && x.has) {
+          s += '<text class="vl" x="' + (bx + bw / 2) + '" y="' + (Y(x.o) - 4) + '" text-anchor="middle">' + x.o + '</text>';
+          s += '<text class="vl" x="' + (cx + 1 + bw / 2) + '" y="' + (Y(x.d) - 4) + '" text-anchor="middle">' + x.d + '</text>';
         }
-        s += '<text class="yr" x="' + cx + '" y="' + (yb + 17) + '" text-anchor="middle">' + x.year + (x.partial ? "*" : "") + '</text>';
-        var gt = x.growth === null ? (i > 0 && x.partial && mode === "total" ? "kesken" : "") : (x.growth >= 0 ? "▲ " : "▼ ") + Math.abs(Math.round(x.growth)) + "%";
-        if (gt) s += '<text class="gr ' + (x.growth === null ? "" : (x.growth >= 0 ? "up" : "down")) + '" x="' + cx + '" y="' + (yb + 34) + '" text-anchor="middle">' + gt + '</text>';
+        s += '<text class="yr' + (x.future ? ' fut' : '') + '" x="' + cx + '" y="' + (yb + 15) + '" text-anchor="middle">' + (wide ? MONTH_SHORT[i] : (i + 1)) + '</text>';
+        if (x.growth !== null && !x.partial) {
+          var up = x.growth >= 0;
+          s += '<text class="gr ' + (up ? "up" : "down") + '" x="' + cx + '" y="' + (yb + 31) + '" text-anchor="middle">' + (up ? "▲" : "▼") + (wide ? " " + Math.abs(Math.round(x.growth)) + "%" : "") + '</text>';
+        }
         s += '<rect class="hit" data-i="' + i + '" x="' + (x0 + gw * i) + '" y="0" width="' + gw + '" height="' + H + '" fill="transparent"/>';
       });
       s += '<line class="base" x1="' + x0 + '" x2="' + x1 + '" y1="' + yb + '" y2="' + yb + '"/></svg>';
       plot.innerHTML = s;
-      if (sel !== null && sel !== undefined && data[sel]) {
-        var x = data[sel];
-        tip.innerHTML = '<b>' + x.year + (x.partial ? ' (kesken)' : '') + '</b><span>Tarjoukset <strong>' + fmt(x.o) + '</strong></span><span>Kaupat <strong>' + fmt(x.d) + '</strong></span>' +
-          '<span>Hitrate <strong>' + Math.round(x.hit * 100) + '%</strong></span><span>Kirjattuja kk <strong>' + x.months + '</strong></span>' +
-          (x.growth !== null ? '<span>Kaupat vs. ' + data[sel - 1].year + ' <strong>' + (x.growth >= 0 ? "+" : "") + Math.round(x.growth) + '%</strong></span>' : '');
+      if (sel !== null && data[sel]) {
+        var x = data[sel], name = MONTH_NAMES[sel].charAt(0).toUpperCase() + MONTH_NAMES[sel].slice(1) + " " + year;
+        var baseName = cmp === "prev" ? (sel === 0 ? "joulukuu " + (year - 1) : MONTH_NAMES[sel - 1]) : MONTH_NAMES[sel] + " " + (year - 1);
+        tip.innerHTML = '<b>' + name + (x.partial ? ' (kesken)' : '') + '</b>' +
+          (x.has ? '<span>Tarjoukset <strong>' + x.o + '</strong></span><span>Kaupat <strong>' + x.d + '</strong></span><span>Hitrate <strong>' + Math.round(x.d / x.o * 100) + '%</strong></span>' +
+            (x.growth !== null ? '<span>Kaupat vs. ' + baseName + ' <strong>' + (x.growth >= 0 ? "+" : "") + Math.round(x.growth) + '% (' + x.base.closed + ' → ' + x.d + ')</strong></span>' : '<span>Ei vertailutietoa (' + baseName + ')</span>')
+           : '<span>' + (x.future ? 'Kuukausi ei ole vielä alkanut.' : 'Ei kirjattuja tarjouksia.') + '</span>');
         tip.style.display = "flex";
-      } else { tip.innerHTML = ""; tip.style.display = "none"; }
+      } else { tip.style.display = "none"; tip.innerHTML = ""; }
     }
-    var sel = null;
-    plot.addEventListener("click", function (e) {
+    function pick(e) {
       var h = e.target.closest ? e.target.closest(".hit") : null; if (!h) return;
-      var i = parseInt(h.getAttribute("data-i"), 10); if (sel !== i) { sel = i; draw(sel); }
-    });
-    plot.addEventListener("mousemove", function (e) {
-      var h = e.target.closest ? e.target.closest(".hit") : null; if (!h) return;
-      var i = parseInt(h.getAttribute("data-i"), 10); if (sel !== i) { sel = i; draw(sel); }
-    });
-    setTimeout(function () { draw(sel); }, 0);
+      var i = parseInt(h.getAttribute("data-i"), 10); if (sel !== i) { sel = i; draw(); }
+    }
+    plot.addEventListener("click", pick);
+    plot.addEventListener("mousemove", pick);
+    setTimeout(draw, 0);
+    var yd = agg.years.filter(function (y) { return +y.year === year; })[0];
     var note = document.createElement("div");
     note.className = "hy-note";
-    if (data.some(function (x) { return x.partial; })) note.textContent = "* Kuluva vuosi on kesken" + (mode === "total" ? ", joten sitä ei verrata edelliseen vuoteen yhteensä-tilassa. Vaihda Kk-keskiarvoon nähdäksesi tämän vuoden tahdin." : ".");
+    note.textContent = (yd ? year + ": " + yd.total + " tarjousta, " + yd.closed + " kauppaa, hitrate " + pct(yd.closed, yd.total) + ". " : "") +
+      (cmp === "yoy" ? "Vertailu samaan kuukauteen viime vuonna huomioi kausivaihtelun." : "Kuluvan kuukauden kasvua ei näytetä, koska kuukausi on kesken.");
     card.appendChild(note);
     return card;
   }
@@ -2052,7 +2069,7 @@
             return '<tr><td>' + y.year + '</td><td>' + y.total + '</td><td>' + y.closed + '</td><td>' + pct(y.closed, y.total) + '</td><td>' + y.months + '</td></tr>';
           }).join("") + '</tbody></table>' : '');
       main.appendChild(at);
-      main.appendChild(histYearChartCard(agg));
+      main.appendChild(histMonthChartCard(agg));
     }
     main.appendChild(addPastCard);
 
