@@ -400,7 +400,7 @@
   .rk-prev:disabled { opacity: .35; cursor: default; }
   .rk-prev svg, .rk-fwd svg { width: 20px; height: 20px; }
   .rk-fwd {
-    flex: 1; min-width: 0; background: var(--accent); color: #17110b; border: none; border-radius: 12px;
+    flex: 1; min-width: 0; background: var(--accent); color: #17110b; border: 1px solid transparent; border-radius: 12px;
     padding: 9px 14px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 10px; text-align: left;
     font-family: var(--font-body);
   }
@@ -468,9 +468,10 @@
     main.view-history .hist-row { margin-bottom: 0; }
 
     main.runko-main { padding-bottom: 48px; }
+    main.rk-viewing { padding-bottom: 120px; }
     main.rk-viewing {
       display: grid; grid-template-columns: minmax(220px, 280px) minmax(0, 1fr); align-items: start;
-      grid-template-areas: "top top" "steps card" "steps next";
+      grid-template-areas: "top top" "steps card";
     }
     main.rk-viewing > .rk-top { grid-area: top; }
     main.rk-viewing > .rk-steps { grid-area: steps; flex-direction: column; overflow: visible; position: sticky; top: 24px; gap: 4px; padding: 0; }
@@ -486,8 +487,8 @@
     .rk-q, .rk-say, .rk-kv { font-size: 17px; }
     .rk-tip { font-size: 16px; }
     .rk-next {
-      grid-area: next; position: sticky; bottom: 16px; left: auto; transform: none;
-      width: auto; max-width: none; padding: 12px 0 0; background: var(--bg); box-shadow: 0 -18px 18px -6px var(--bg); z-index: 5;
+      position: fixed; bottom: 0; transform: none; max-width: none;
+      padding: 28px 0 20px; background: linear-gradient(to top, var(--bg) 70%, transparent); z-index: 5;
     }
     .rk-keys { display: block; }
     main.rk-editing { max-width: 760px; }
@@ -1860,9 +1861,23 @@
     bar.querySelector(".rk-fwd").addEventListener("click", nextAction);
     main.appendChild(bar);
 
+    rkPlaceBar();
     var onChip = chips.querySelector(".rk-chip.on");
     if (onChip) chips.scrollLeft = Math.max(onChip.offsetLeft - 16, 0);
   }
+
+  // Tietokoneella alapalkki on kiinteästi ruudun alareunassa vaihekortin levyisenä,
+  // jotta painike pysyy samassa kohdassa vaiheesta toiseen.
+  function rkPlaceBar() {
+    var bar = document.querySelector(".rk-next");
+    if (!bar) return;
+    var card = document.querySelector("main.rk-viewing > .rk-card, main.rk-viewing > .card");
+    if (card && window.matchMedia("(min-width: 900px)").matches) {
+      var r = card.getBoundingClientRect();
+      bar.style.left = r.left + "px"; bar.style.width = r.width + "px";
+    } else { bar.style.left = ""; bar.style.width = ""; }
+  }
+  window.addEventListener("resize", rkPlaceBar);
 
   function rkItemHtml(it) {
     var own = it.custom ? '<span class="rk-own">OMA</span>' : '';
