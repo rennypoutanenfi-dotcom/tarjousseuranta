@@ -335,6 +335,10 @@
   }
   nav.tabbar button.active { color: var(--accent); }
   nav.tabbar svg { width: 22px; height: 22px; }
+  @media (max-width: 440px) {
+    nav.tabbar { gap: 0; padding-left: 2px; padding-right: 2px; }
+    nav.tabbar button { font-size: 10px; letter-spacing: -.1px; }
+  }
 
   .loading-wrap { display: flex; align-items: center; justify-content: center; min-height: 60vh; color: var(--text-faint); font-size: 14px; }
   .hidden { display: none !important; }
@@ -560,6 +564,62 @@
     .ld-num b { font-size: 42px; }
     .ld-opt { font-size: 13.5px; }
   }
+
+  /* ---------- Vastalausepankki ---------- */
+  .vl-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .vl-head h2 { font-family: var(--font-display); font-size: 20px; font-weight: 600; margin: 0; }
+  .vl-search { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 0 8px 0 12px; box-shadow: 0 6px 16px rgba(0,0,0,.14); }
+  .vl-search:focus-within { border-color: var(--accent); }
+  .vl-search .ic { color: var(--text-faint); display: flex; }
+  .vl-search .ic svg { width: 18px; height: 18px; }
+  .vl-search input { flex: 1; min-width: 0; background: none; border: none; color: var(--text); font-family: var(--font-body); font-size: 16px; padding: 13px 0; outline: none; }
+  .vl-search input::-webkit-search-cancel-button { display: none; }
+  .vl-search .clr { background: var(--surface-2); border: none; color: var(--text-dim); width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  .vl-search .clr svg { width: 14px; height: 14px; }
+  .vl-chips { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; margin: 0 -16px; padding-left: 16px; padding-right: 16px; }
+  .vl-chips::-webkit-scrollbar { display: none; }
+  .vl-chip { flex: 0 0 auto; background: var(--surface); border: 1px solid var(--border); color: var(--text-dim); border-radius: 999px; padding: 7px 12px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: var(--font-body); white-space: nowrap; }
+  .vl-chip.on { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+  .vl-chip.fav.on { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+  .vl-info { font-size: 12px; color: var(--text-faint); margin: -4px 2px -6px; min-height: 14px; }
+  .vl-list { display: flex; flex-direction: column; gap: 10px; }
+  .vl-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 14px 12px; }
+  .vl-card.best { border-color: var(--accent); }
+  .vl-top { display: flex; align-items: center; gap: 6px; margin: -4px -4px 6px 0; }
+  .vl-top .sp { flex: 1; }
+  .vl-cat { font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--text-dim); }
+  .vl-tag { font-size: 10px; font-weight: 700; color: var(--gold); background: var(--gold-dim); border-radius: 999px; padding: 2px 7px; }
+  .vl-tag.best { color: var(--accent); background: var(--accent-dim); }
+  .vl-ib { width: 34px; height: 34px; border-radius: 9px; background: none; border: none; color: var(--text-faint); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .vl-ib:hover { background: var(--surface-2); color: var(--text); }
+  .vl-ib svg { width: 17px; height: 17px; }
+  .vl-ib.fav.on { color: var(--gold); }
+  .vl-t { font-family: var(--font-display); font-size: 20px; font-weight: 600; line-height: 1.2; }
+  .vl-m { font-size: 13.5px; color: var(--text-dim); margin-top: 6px; line-height: 1.4; }
+  .vl-m span { font-weight: 700; color: var(--text); }
+  .vl-acts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 12px; }
+  .vl-act { background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 10px; padding: 10px 6px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: var(--font-body); line-height: 1.2; min-height: 44px; }
+  .vl-act:hover { border-color: var(--text-faint); }
+  .vl-act.on { background: var(--accent); border-color: var(--accent); color: #17110b; }
+  .vl-say { margin-top: 10px; border-radius: 10px; padding: 12px 14px; font-size: 17px; line-height: 1.45; font-weight: 500; background: var(--good-dim); }
+  .vl-say.q { background: var(--accent-dim); }
+  .vl-say.c { background: var(--gold-dim); }
+  .vl-say .h { display: block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--good); margin-bottom: 3px; }
+  .vl-say.q .h { color: var(--accent); }
+  .vl-say.c .h { color: var(--gold); }
+  .vl-empty { font-size: 14px; color: var(--text-dim); line-height: 1.5; }
+  .linkish { background: none; border: none; padding: 0; color: var(--accent); font: inherit; font-weight: 600; cursor: pointer; text-decoration: underline; }
+  .vl-hidden { font-size: 13px; }
+  .vl-hidden ul { list-style: none; padding: 0; margin: 10px 0 0; display: flex; flex-direction: column; gap: 6px; }
+  .vl-hidden li { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 8px 8px 8px 12px; }
+  .vl-foot { font-size: 12px; color: var(--text-faint); }
+  .vl-f textarea { width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); font-family: var(--font-body); font-size: 15px; border-radius: 10px; padding: 10px 12px; resize: vertical; }
+  .vl-hint { margin: 6px 0 0 !important; }
+  @media (min-width: 900px) {
+    .vl-chips { flex-wrap: wrap; overflow: visible; margin: 0; padding: 0; }
+    .vl-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+    .vl-search { top: 16px; }
+  }
   /* edit mode */
   .rk-edit-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
   .rk-edit-head h2 { font-family: var(--font-display); font-size: 20px; font-weight: 600; margin: 0; color: var(--text); }
@@ -621,6 +681,10 @@
     <button data-tab="liidi">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4.4 0 7-2.9 7-6.8 0-3.6-2.4-6-4.1-8.2-.4 1.8-1.3 3-2.6 3.6C12.6 7.4 11.2 4.4 8.6 2c.2 3.3-1.4 5.3-2.8 7.2C4.7 10.8 5 12.6 5 15.2 5 19.1 7.6 22 12 22Z"/></svg>
       Liidi
+    </button>
+    <button data-tab="vl">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-5A8 8 0 1 1 21 12Z"/><path d="M9.5 10a2.5 2.5 0 1 1 3.4 2.3c-.6.3-.9.8-.9 1.4V14"/><path d="M12 17h.01"/></svg>
+      Vastalauseet
     </button>
     <button data-tab="add">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
@@ -1134,6 +1198,7 @@
     else if (state.tab === "history") renderHistory(main);
     else if (state.tab === "runko") renderRunko(main);
     else if (state.tab === "liidi") renderLead(main);
+    else if (state.tab === "vl") renderVl(main);
 
     Array.prototype.forEach.call(document.querySelectorAll("nav.tabbar button"), function (b) {
       b.classList.toggle("active", b.getAttribute("data-tab") === state.tab);
@@ -2287,6 +2352,373 @@
     res.className = "card ld-res";
     res.innerHTML = leadResultHtml();
     main.appendChild(res);
+  }
+
+  var VL_BUILTIN = [{"id":"b00","cat":"hinta","t":"Auto on liian kallis.","m":"Asiakas ei vielä näe arvon ja hinnan suhdetta.","a":"Ymmärrän. Katsotaan, mistä kokonaishinta muodostuu: kunto, varusteet, historia, takuu ja käyttökulut.","q":"Tuntuuko hinta korkealta verrattuna budjettiin vai johonkin toiseen autoon?","c":"Katsotaan rinnalle vaihtoehto, jossa päästään sinulle sopivampaan tasoon.","k":"kallis, liian kallis, hinta korkea, korkea hinta, maksaa liikaa, ylihintainen, hintava, kallista, liikaa rahaa, hintapyyntö, tinkiä, alennus, hinta ei miellytä, hinta liian kova, kova hinta"},{"id":"b01","cat":"rahoitus","t":"Kuukausierä on liian iso.","m":"Kuukausibudjetti ei kohtaa ehdotusta.","a":"Ymmärrän. Erää voidaan usein säätää käsirahalla, laina-ajalla tai autovalinnalla.","q":"Mikä olisi sinulle mukava kuukausierä?","c":"Tehdään siihen tasoon kaksi vaihtoehtoa.","k":"kuukausierä liian iso, kk-erä iso, kk erä, erä korkea, kuukausimaksu, maksuerä, lyhennys liian iso, liikaa kuussa, erä liian suuri, kuukausierä korkea, kallis kuukausierä"},{"id":"b02","cat":"rahoitus","t":"Käsiraha on liian suuri.","m":"Asiakas haluaa pitää käteistä itsellään.","a":"Se on järkevää. Katsotaan laskelma pienemmällä käsirahalla.","q":"Paljonko haluat jättää itsellesi puskuriksi?","c":"Tehdään rahoitus sillä summalla ja katsotaan erä.","k":"käsiraha liian suuri, käsiraha, etumaksu, omarahoitus, alkumaksu, käteisosuus, en halua laittaa rahaa, käsirahaa ei ole, ei käsirahaa"},{"id":"b03","cat":"rahoitus","t":"Korko on liian korkea.","m":"Asiakas katsoo prosenttia, ei kokonaisuutta.","a":"Ymmärrän — katsotaan aina korko ja kokonaiskulut yhdessä. Voin selvittää myös vaihtoehtoiset rahoitusmallit.","q":"Onko sinulla vertailussa jokin konkreettinen rahoitustarjous?","c":"Verrataan tarjoukset samalla käsirahalla ja laina-ajalla.","k":"korko liian korkea, korko, korkoprosentti, rahoituskorko, prosentti, rahoitus kallis, kallis rahoitus, pankki halvempi, efektiivinen korko, korkea korko"},{"id":"b04","cat":"rahoitus","t":"Rahoituksen kulut ovat liian suuret.","m":"Kokonaiskustannus tuntuu epäselvältä tai suurelta.","a":"Hyvä että nostit esiin. Puretaan kulut auki, jotta tiedät tarkasti mitä maksat ja mistä.","q":"Haluatko pienempää erää, lyhyempää laina-aikaa vai mahdollisimman pieniä kokonaiskuluja?","c":"Rakennetaan laskelma sinun tärkeimmän tavoitteesi mukaan.","k":"rahoituskulut, rahoituksen kulut, avausmaksu, käsittelymaksu, tilinhoitomaksu, rahoitus kallis, kokonaiskulut, lainan hinta, piilokulut, kulut liian suuret, rahoitus maksaa liikaa"},{"id":"b05","cat":"hinta","t":"Väliraha on liian iso.","m":"Nykyisen auton hyvitys, ostettavan auton hinta tai rahoitus ei kohtaa.","a":"Ymmärrän. Välirahaa voidaan ratkaista useammasta kohdasta, ei vain yhdestä.","q":"Mikä väliraha olisi sellainen, että kauppa tuntuisi järkevältä?","c":"Katsotaan pääsemmekö siihen tällä autolla tai sopivalla vaihtoehdolla.","k":"väliraha liian iso, väliraha, erotus, maksettavaa jää liikaa, hyvityksen jälkeen, liikaa välirahaa, välirahaa liikaa, maksettava summa"},{"id":"b06","cat":"rahoitus","t":"En halua maksaa näin pitkää rahoitusta.","m":"Pitkä sitoutuminen huolettaa.","a":"Se on ymmärrettävää. Pidempi aika tuo joustoa erään, mutta voimme tehdä myös lyhyemmän mallin.","q":"Onko sinulle tärkeämpää saada laina nopeasti pois vai pitää kuukausierä matalana?","c":"Tehdään molemmat laskelmat rinnakkain.","k":"pitkä rahoitus, laina-aika, pitkä laina, pitkä sopimus, monta vuotta, sitoutuminen, 60 kk, 72 kk, liian pitkä laina, laina aika"},{"id":"b07","cat":"rahoitus","t":"Haluan maksaa auton käteisellä.","m":"Asiakas ei pidä rahoituksesta.","a":"Se onnistuu hyvin. Rahoitus on vain vaihtoehto, ei edellytys.","q":"Haluatko silti nähdä rahoitusvaihtoehdon vertailun vuoksi?","c":"Sovitaan käteiskaupalle lopullinen kokonaisuus.","k":"käteinen, maksan käteisellä, käteiskauppa, maksan itse, ei rahoitusta, en halua lainaa, säästöt, kertamaksu, ei tarvita rahoitusta"},{"id":"b08","cat":"rahoitus","t":"En halua sitoutua kuukausimaksuun.","m":"Talouden epävarmuus tai rahoitusvastuun pelko.","a":"Ymmärrän. Silloin kannattaa rakentaa ratkaisu, jossa erä ja kokonaisriski ovat varmasti turvallisia.","q":"Onko huoli enemmän erän suuruudesta vai tulevien tulojen epävarmuudesta?","c":"Katsotaan sinulle maltillisempi ja turvallinen vaihtoehto.","k":"en halua kuukausimaksua, sitoutua kuukausimaksuun, velka, en halua velkaa, lainaa en ota, epävarma talous, työpaikka epävarma, tulot, rahoitus pelottaa"},{"id":"b09","cat":"hinta","t":"Budjettini ei riitä tähän autoon.","m":"Auto kiinnostaa, mutta raja tulee vastaan.","a":"Hyvä, että budjetti on selkeä. Etsitään samaan tarpeeseen sopiva ratkaisu sen sisältä.","q":"Mikä tässä autossa on sinulle tärkein ominaisuus, josta et halua tinkiä?","c":"Näytän kaksi budjettiisi sopivaa vaihtoehtoa.","k":"budjetti ei riitä, budjetti, raha ei riitä, ei ole varaa, varaa ei ole, liian kallis minulle, hintakatto, maksimi, rahat ei riitä, yli budjetin, rahaa ei ole"},{"id":"b10","cat":"kilpailija","t":"Löysin saman auton halvemmalla.","m":"Asiakas vertailee hintaa ilman kokonaisvertailua.","a":"Katsotaan ihmeessä rinnakkain — sama malli ei aina tarkoita samaa historiaa, kuntoa, varustelua tai turvaa.","q":"Lähetätkö ilmoituksen, niin verrataan ne rehellisesti?","c":"Jos tämä on kokonaisuutena parempi, tehdään tästä sinulle mahdollisimman kilpailukykyinen.","k":"löysin halvemmalla, halvemmalla, halvempi, sama auto halvemmalla, nettiauto halvempi, ilmoitus halvempi, muualla halvempi, halvemmalla toisaalla"},{"id":"b11","cat":"kilpailija","t":"Kilpailija tarjoaa paremman hinnan.","m":"Asiakas hakee neuvotteluvaraa.","a":"Hyvä, että kerroit. Haluan verrata aidosti samaa kokonaisuutta ennen kuin vastaan.","q":"Mikä on heidän lopullinen hinnan, hyvityksen ja rahoituksen kokonaisuus?","c":"Tuodaan tämä mahdollisimman lähelle, jos ehdot ovat vertailukelpoiset.","k":"kilpailija halvempi, kilpailija parempi hinta, toinen liike halvempi, parempi tarjous, alempi hinta, halvempi tarjous, kilpaileva tarjous"},{"id":"b12","cat":"kilpailija","t":"Kilpailija antaa paremman hyvityksen vaihtoautosta.","m":"Asiakas katsoo vain hyvitystä.","a":"Hyvitys on tärkeä, mutta katsotaan samalla ostettavan auton hinta ja rahoitus — väliraha ratkaisee.","q":"Paljonko heidän tarjouksensa jättää lopulta välirahaa?","c":"Verrataan molemmat tarjoukset rivi riviltä.","k":"kilpailija parempi hyvitys, parempi hyvitys, vaihtohyvitys muualla, maksavat enemmän vaihtoautosta, vaihtoauto muualla, enemmän hyvitystä"},{"id":"b13","cat":"kilpailija","t":"Haluan käydä vielä toisessa liikkeessä.","m":"Asiakas ei ole riittävän varma.","a":"Totta kai kannattaa vertailla. Haluan vain varmistaa, mitä haet sieltä vielä lisää.","q":"Mikä tässä jäi sellaiseksi, ettei päätös tunnu vielä varmalta?","c":"Sovitaan aika, jolloin palaan asiaan sen käynnin jälkeen.","k":"toinen liike, käyn muualla, käydä toisessa liikkeessä, toinen kauppa, kiertää liikkeitä, katsomassa muualla, toinen autoliike"},{"id":"b14","cat":"kilpailija","t":"Vertailen vielä vaihtoehtoja.","m":"Tarve tai valintaperusteet ovat epäselvät.","a":"Hyvä päätös tehdään vertaamalla oikeita asioita, ei vain ilmoituksia.","q":"Mitkä kolme asiaa ratkaisevat sinulle lopullisen valinnan?","c":"Tehdään tästä vertailun mittatikku.","k":"vertailen, vertailla, vaihtoehdot, katselen muita, muita autoja, vertailu, harkitsen vaihtoehtoja, vertaan"},{"id":"b15","cat":"kilpailija","t":"Katson ensin netistä lisää autoja.","m":"Asiakas ei koe vielä kiirettä.","a":"Ymmärrän. Netissä on paljon vaihtoehtoja, mutta tässä pääset arvioimaan auton oikeasti.","q":"Mitä haluat netistä vielä löytää, mitä tästä ei löydy?","c":"Pidetään tämä vaihtoehto sinulla mukana vertailussa.","k":"netti, katson netistä, nettiauto, tori, ilmoitukset, selata, internet, verkosta, katselen netistä"},{"id":"b16","cat":"kilpailija","t":"Odotan, jos hinta laskee.","m":"Asiakas hakee parempaa diiliä eikä halua menettää rahaa.","a":"Ymmärrän. Samalla hyvä yksilö voi mennä ennen sitä, joten kannattaa päättää sen arvon eikä arvailun perusteella.","q":"Mikä hinta tekisi päätöksestä helpon tänään?","c":"Selvitän, mitä voimme tehdä nyt ilman odottelua.","k":"odotan hinnan laskua, hinta laskee, alennus, kampanja, myöhemmin halvempi, hinnanlasku, odotan alennusta, halpenee"},{"id":"b17","cat":"kilpailija","t":"Tuo toinen merkki kiinnostaa enemmän.","m":"Asiakas ei ole sitoutunut tähän autoon.","a":"Hyvä — verrataan niitä sinun käytössäsi, ei vain merkin maineella.","q":"Mikä siinä toisessa merkissä vetää sinua eniten puoleensa?","c":"Katsotaan täyttääkö tämä samat tarpeet paremmin.","k":"toinen merkki, eri merkki, toinen automerkki, kiinnostaa enemmän, merkki, toyota, volkswagen, skoda, volvo, bmw"},{"id":"b18","cat":"kilpailija","t":"Haluan nähdä ensin kilpailijan tarjouksen.","m":"Asiakas haluaa neuvotteluaseman.","a":"Se on reilua. Kun saat sen, katsotaan tarjoukset samalla laskutavalla.","q":"Milloin saat tarjouksen käsiisi?","c":"Sovitaan heti tarkka aika vertailulle.","k":"kilpailijan tarjous, odotan tarjousta, vertailutarjous, tarjous muualta, katson ensin tarjouksen, toisen liikkeen tarjous"},{"id":"b19","cat":"epaarointi","t":"En halua tehdä päätöstä heti.","m":"Jokin ratkaisematon epäilys.","a":"Ymmärrän. Autan mieluummin poistamaan epäilyksen kuin painostan päätökseen.","q":"Mikä yksi asia pitäisi ratketa, että päätös olisi mahdollinen?","c":"Ratkaistaan se nyt ja sovitaan lopullinen päätöshetki.","k":"en päätä heti, päätös heti, ei tänään, en päätä nyt, painostus, kiire, en halua kiirehtiä, ei nyt, liian nopea"},{"id":"b20","cat":"vaihtoauto","t":"Saan vaihtoautostani enemmän muualla.","m":"Hyvityksen taso ei tunnu reilulta.","a":"Se voi olla mahdollista. Verrataan kuitenkin aina koko kauppa, koska suurempi hyvitys voi näkyä ostettavan auton hinnassa.","q":"Mikä on heidän tarjoama välirahansa?","c":"Verrataan väliraha ja kokonaiskulut rinnakkain.","k":"saan enemmän muualla, vaihtoauto enemmän muualla, parempi hinta vaihtoautosta, vaihtoarvo muualla, hyvitys muualla parempi"},{"id":"b21","cat":"vaihtoauto","t":"Vaihtoauton hyvitys on liian pieni.","m":"Asiakkaalla on korkeampi odotus arvosta.","a":"Ymmärrän. Käydään arvio läpi avoimesti: kunto, kilometrit, renkaat, historia ja markkinahinta.","q":"Mihin hyvitystasoon itse peilaat arvoa?","c":"Katsotaan, pystymmekö parantamaan kokonaisuutta.","k":"hyvitys liian pieni, hyvitys pieni, alakanttiin, arvio pieni, vaihtohyvitys, auton arvo, liian vähän, hyvitys alhainen, vaihtoauton hinta pieni"},{"id":"b22","cat":"vaihtoauto","t":"En tiedä paljonko vaihtoautoni on arvoinen.","m":"Asiakas ei voi arvioida kaupan järkevyyttä.","a":"Ei tarvitsekaan tietää etukäteen — teemme siitä läpinäkyvän arvion.","q":"Onko autossa jotain vaurioita, velkaa tai remontteja, jotka olisi hyvä huomioida?","c":"Aloitetaan rekisterinumerosta ja tehdään arvio.","k":"en tiedä arvoa, paljonko saan, arvio, hinta-arvio, mitä autosta saa, vaihtoauton arvo, paljonko autoni on arvoinen, arvon arviointi"},{"id":"b23","cat":"vaihtoauto","t":"Haluan myydä vaihtoautoni itse.","m":"Asiakas tavoittelee korkeampaa hintaa.","a":"Ymmärrän. Itse myymällä voi saada enemmän, mutta silloin hoidat myös ilmoittelun, näytöt, tinkijät ja riskit.","q":"Onko sinulle tärkeämpää maksimaalinen hinta vai helppo ja varma vaihto?","c":"Tehdään tarjous, niin voit verrata sitä itsemyynnin vaivaan.","k":"myyn itse, myydä itse, yksityisesti, myyn torissa, nettiauto, oma myynti, myyn vaihtoautoni itse"},{"id":"b24","cat":"vaihtoauto","t":"Vaihtoautossani on vielä velkaa liikaa.","m":"Negatiivinen väliraha pelottaa.","a":"Se on yleinen tilanne, ja se voidaan laskea selkeästi osaksi kokonaisuutta.","q":"Paljonko rahoitusyhtiöltä on tämän päivän loppuvelka?","c":"Lasketaan ensin tarkka erotus ja vaihtoehdot sen hoitamiseen.","k":"velka, velkaa autossa, rahoitus jäljellä, laina autossa, loppuvelka, negatiivinen, omistusoikeus, velkaa enemmän kuin arvo"},{"id":"b25","cat":"vaihtoauto","t":"En halua tuoda vaihtoautoa näytille.","m":"Vaiva tai pelko matalasta arviosta.","a":"Ymmärrän. Alkuarvio onnistuu kuvilla ja tiedoilla, ja lopullinen tarkistus tehdään vasta kun kauppa etenee.","q":"Voitko lähettää rekisterinumeron, kilometrit ja muutaman kuvan?","c":"Teen sinulle alustavan arvion jo niiden perusteella.","k":"en halua tuoda näytille, tuoda näytille, arviointi, ei aikaa tuoda, etäarvio, kuvat, en ehdi tuoda autoa"},{"id":"b26","cat":"vaihtoauto","t":"Vaihtoautossani on vikoja.","m":"Asiakas pelkää, ettei auto kelpaa.","a":"Se ei automaattisesti estä vaihtoa. Tärkeintä on, että tiedämme viat rehellisesti.","q":"Mitä vikoja siinä on ja ovatko ne tutkittuja?","c":"Arvioidaan auto realistisesti ja katsotaan kokonaisuus.","k":"vikoja, vika, rikki, viallinen, remontti, korjattavaa, kolari, vaurio, vaihtoautossa vikaa"},{"id":"b27","cat":"vaihtoauto","t":"Vaihtoautoni on liian hyvä vaihdettavaksi.","m":"Tunneside tai epäily uuden auton hyödystä.","a":"Ymmärrän — silloin uuden pitää aidosti parantaa arkeasi.","q":"Mikä nykyisessä autossa kuitenkin sai sinut katsomaan vaihtoa?","c":"Verrataan, tuoko tämä auto siihen tarpeeseen oikean parannuksen.","k":"liian hyvä vaihdettavaksi, hyvä auto, toimii, ei tarvetta vaihtaa, kiintymys, auto on hyvä"},{"id":"b28","cat":"vaihtoauto","t":"En ole valmis luopumaan nykyisestä autostani.","m":"Muutos tuntuu isolta.","a":"Se on täysin ymmärrettävää. Ei vaihdeta vain vaihtamisen vuoksi.","q":"Mikä pitäisi olla uudessa autossa paremmin, että vaihtaminen olisi perusteltua?","c":"Katsotaan täyttääkö tämä juuri ne ehdot.","k":"en halua luopua, luopua autosta, rakas auto, en halua vaihtaa, muutos, en ole valmis vaihtamaan"},{"id":"b29","cat":"vaihtoauto","t":"Puoliso käyttää nykyistä autoani.","m":"Vaihdon aikataulu ei ole käytännössä mahdollinen.","a":"Ratkaistaan aikataulu niin, ettei arki mene hankalaksi.","q":"Milloin auto olisi realistisesti vapaa vaihtoon?","c":"Voimme ajoittaa luovutuksen sen mukaan.","k":"puoliso käyttää autoa, auto ajossa, aikataulu, luovutus, auto ei vapaana, vaimo käyttää, mies käyttää"},{"id":"b30","cat":"epaarointi","t":"Pitää miettiä.","m":"Todellinen vastalause on piilossa.","a":"Ymmärrän täysin. Jotta en arvaa väärin, selvitetään mikä tässä mietityttää eniten.","q":"Onko se auto, hinta, vaihtoauto vai jokin muu?","c":"Kun tuo kohta on kunnossa, tehdäänkö päätös?","k":"pitää miettiä, miettiä, harkita, pohtia, mietin, mietintään, fundeerata, mietitään, harkitaan"},{"id":"b31","cat":"epaarointi","t":"Palaan myöhemmin.","m":"Asiakas haluaa poistua sitoutumatta.","a":"Sopii. Tehdään paluusta kuitenkin hyödyllinen, ettei asia jää roikkumaan.","q":"Milloin sinulla on realistisesti aikaa tehdä päätös?","c":"Sovitaan tarkka soittoaika.","k":"palaan myöhemmin, palaan, myöhemmin, otan yhteyttä, soitellaan, ensi viikolla, palataan asiaan"},{"id":"b32","cat":"epaarointi","t":"Soitan, jos kiinnostaa.","m":"Asiakas ei koe omistajuutta seuraavasta askeleesta.","a":"Totta kai. Minäkin voin ottaa vastuun seurannasta.","q":"Sopiiko, että soitan sinulle torstaina ja katsotaan missä mennään?","c":"Laitan sen kalenteriin, niin asia ei unohdu.","k":"soitan jos kiinnostaa, soitan itse, otan yhteyttä, ilmoittelen, soitan sitten, ilmoitan"},{"id":"b33","cat":"epaarointi","t":"En ole vielä varma.","m":"Tietoa tai tunnetta puuttuu.","a":"Hyvä, että sanot sen suoraan. Epävarmuus kannattaa selvittää ennen päätöstä.","q":"Mistä olet epävarmin?","c":"Ratkaistaan se kohta ja katsotaan sen jälkeen uudestaan.","k":"en ole varma, epävarma, en tiedä, epäröin, epäilen, epävarmuus, ei varma"},{"id":"b34","cat":"epaarointi","t":"Katsellaan nyt vain.","m":"Asiakas ei halua myyntipainetta.","a":"Tervetuloa katsomaan rauhassa — minun tehtäväni on auttaa, ei hoputtaa.","q":"Minkälaiseen käyttöön autoa katsellaan?","c":"Näytän pari järkevintä vaihtoehtoa ilman sitoutumista.","k":"katsellaan vain, katsella, vain katsomassa, selailen, ei ostamassa, kartoitus, katselen vain, ihan vaan katselen"},{"id":"b35","cat":"epaarointi","t":"En ole ostamassa vielä tänään.","m":"Asiakas puolustautuu painostusta vastaan.","a":"Se on täysin ok. Selvitetään silti, onko tämä sellainen vaihtoehto, johon kannattaa palata.","q":"Millä aikataululla autonvaihto olisi sinulle ajankohtainen?","c":"Sovitaan seuraava askel sinun aikataulusi mukaan.","k":"en osta tänään, ei tänään, ei vielä, ei nyt, en ole ostamassa, tänään ei"},{"id":"b36","cat":"epaarointi","t":"Haluan nukkua yön yli.","m":"Päätös tuntuu isolta.","a":"Hyvä päätös kestää yön yli. Käydään vain ensin kaikki luvut ja ehdot selkeästi läpi.","q":"Mikä asia pitää olla aamulla selvempi kuin nyt?","c":"Sovitaan, että soitan huomenna tähän aikaan.","k":"yön yli, nukkua yön yli, huomenna, mietin yön yli, huomiseen"},{"id":"b37","cat":"epaarointi","t":"En halua tehdä hätiköityä päätöstä.","m":"Asiakas pelkää katumista.","a":"Juuri niin — siksi päätös tehdään faktoilla, ei kiireellä.","q":"Mitä tietoa tarvitset, jotta päätös tuntuisi harkitulta?","c":"Kootaan se nyt valmiiksi päätöksesi tueksi.","k":"hätiköity, hätiköidä, kiire, harkita rauhassa, katua, virhe, en halua katua"},{"id":"b38","cat":"epaarointi","t":"En tiedä, tarvitsenko uutta autoa.","m":"Ostopaine puuttuu.","a":"Silloin ei kannata vaihtaa väkisin. Katsotaan, tuoko vaihto sinulle aidosti hyötyä.","q":"Mikä sai sinut alun perin katsomaan toista autoa?","c":"Jos tämä ratkaisee sen ongelman, vaihto voi olla järkevä.","k":"tarvitsenko uutta autoa, tarve, tarvitsenko, ei tarvetta, onko järkeä, en tiedä tarvitsenko"},{"id":"b39","cat":"epaarointi","t":"Nykyinen auto toimii vielä hyvin.","m":"Vaihdolle ei ole selkeää perustetta.","a":"Se on hyvä lähtökohta. Vaihto kannattaa tehdä silloin, kun se on omilla ehdoilla eikä pakon edessä.","q":"Haluatko vaihtaa ennen tulevia kuluja, vai kaipaatko enemmän tilaa, turvallisuutta tai tekniikkaa?","c":"Verrataan nykyistä autoasi tähän juuri noilla asioilla.","k":"nykyinen auto toimii, toimii hyvin, nykyinen auto, ei vikaa, ei tarvetta vaihtaa, vanha auto toimii"},{"id":"b40","cat":"paatos","t":"Pitää puhua puolison kanssa.","m":"Päätöksentekijä puuttuu.","a":"Totta kai, tämä kannattaa päättää yhdessä.","q":"Mikä puolison kannalta ratkaisee eniten: hinta, tilat, väri vai turvallisuus?","c":"Otetaanko hänet mukaan puhelimella tai sovitaan yhteinen käynti?","k":"puoliso, pitää puhua puolison kanssa, vaimo, mies, avokki, kumppani, kotona, kysyä kotoa, keskustella, perhe, puhun puolison kanssa"},{"id":"b41","cat":"paatos","t":"Päätöksen tekee puoliso.","m":"Väärä henkilö on keskustelussa.","a":"Hyvä tietää — haluan kertoa asiat myös hänelle oikein.","q":"Milloin hänet saisi mukaan?","c":"Sovitaan 15 minuutin yhteinen aika.","k":"puoliso päättää, vaimo päättää, mies päättää, en päätä itse, päätöksen tekee, päättäjä"},{"id":"b42","cat":"paatos","t":"Vanhempani neuvovat minua auton ostossa.","m":"Asiakas tarvitsee hyväksyntää tai turvaa.","a":"Ymmärrän. Voin tehdä selkeän yhteenvedon, jonka voit näyttää heille.","q":"Mitä he yleensä haluavat tietää ennen kuin suosittelevat autoa?","c":"Lähetän vertailun hinnasta, historiasta ja kustannuksista.","k":"vanhemmat, isä, äiti, faija, mutsi, neuvoa, kysyä vanhemmilta, vanhemmat neuvoo"},{"id":"b43","cat":"paatos","t":"Yrityksen toinen omistaja päättää asiasta.","m":"Ostajalla ei ole valtuutta.","a":"Selvä. Tehdään hänelle päätöksentekoa helpottava paketti.","q":"Mitkä luvut tai hyödyt hänelle ratkaisevat eniten?","c":"Valmistelen tarjouksen, jonka voitte käydä yhdessä läpi.","k":"yritys, osakas, toinen omistaja, hallitus, firma, pomo, esihenkilö, yrityksen päätös"},{"id":"b44","cat":"paatos","t":"Minun pitää kysyä kirjanpitäjältä.","m":"Yritysauton verotus tai rahoitus epäilyttää.","a":"Hyvä, silloin päätös tehdään oikein. Voin toimittaa kaikki rahoitus- ja kustannustiedot valmiiksi.","q":"Tarvitseeko kirjanpitäjä erityisesti ALV-, leasing- tai kulutietoja?","c":"Lähetän tiedot tänään ja sovitaan paluu niiden jälkeen.","k":"kirjanpitäjä, tilitoimisto, verotus, alv, yritysauto, leasing, vähennys, kysyä kirjanpitäjältä"},{"id":"b45","cat":"paatos","t":"En voi tehdä päätöstä ilman toista kuskia.","m":"Auto tulee yhteiseen käyttöön.","a":"Totta kai — molempien pitää olla tyytyväisiä.","q":"Mikä toiselle kuljettajalle on tärkeintä?","c":"Varaa hänelle oma koeajo.","k":"toinen kuski, toinen kuljettaja, yhteinen auto, kuski, perhe, molemmat ajavat"},{"id":"b46","cat":"paatos","t":"Puoliso ei pidä tästä väristä.","m":"Auto ei tunnu molemmille oikealta.","a":"Väri vaikuttaa yllättävän paljon siihen, miltä omistaminen tuntuu.","q":"Onko hänellä jokin väri tai sävy, joka olisi selvästi parempi?","c":"Katson heti vastaavat vaihtoehdot oikealla värillä.","k":"puoliso ei pidä väristä, väri, puoliso väri, ei tykkää väristä, väri ei käy"},{"id":"b47","cat":"paatos","t":"Puoliso haluaa eri merkin.","m":"Merkkimielikuva tai luottamus on muualla.","a":"Ymmärrän. Selvitetään, mikä siinä merkissä tuntuu paremmalta.","q":"Onko kyse ulkonäöstä, luotettavuudesta, ajettavuudesta vai maineesta?","c":"Verrataan näitä samoilla kriteereillä.","k":"puoliso haluaa eri merkin, puoliso merkki, haluaa toisen merkin, vaimo haluaa, mies haluaa"},{"id":"b48","cat":"paatos","t":"En tiedä, suostuuko puoliso tähän kuukausierään.","m":"Yhteinen talouspäätös puuttuu.","a":"Silloin kannattaa viedä kotiin täysin selkeä laskelma.","q":"Mikä erä olisi sellainen, jonka tiedät olevan hänellekin hyväksyttävä?","c":"Tehdään siihen tasoon valmis ehdotus.","k":"puoliso kuukausierä, yhteinen talous, suostuuko puoliso, kuukausierä puoliso, puoliso rahat"},{"id":"b49","cat":"paatos","t":"Haluan ottaa jonkun mukaan katsomaan autoa.","m":"Asiakas kaipaa varmistusta.","a":"Ehdottomasti — ulkopuolinen mielipide voi helpottaa päätöstä.","q":"Milloin hän pääsisi mukaan?","c":"Pidetään auto valmiina koeajoa varten sovittuun aikaan.","k":"ottaa joku mukaan, kaveri, tuttu, mekaanikko, asiantuntija, mielipide, mukaan katsomaan, isä mukaan"},{"id":"b50","cat":"sahko","t":"En uskalla ostaa sähköautoa.","m":"Käytännön epävarmuus.","a":"Ymmärrän. Käydään sinun oma arki läpi, niin nähdään sopiiko sähköauto sinulle oikeasti.","q":"Mikä sähköautossa huolettaa eniten?","c":"Lasketaan reitit, lataus ja kustannukset sinun ajoillasi.","k":"en uskalla sähköautoa, sähköauto pelottaa, sähköauto, uskalla, ev, täyssähkö, sähkö"},{"id":"b51","cat":"sahko","t":"En pysty lataamaan kotona.","m":"Latausrutiini tuntuu mahdottomalta.","a":"Kotilataus helpottaa, mutta ei ole aina pakollinen — työpaikka, kaupat ja pikalataus voivat riittää.","q":"Missä auto seisoo tavallisesti pisimpään?","c":"Katsotaan latauspaikat oman arjen ympäriltäsi.","k":"en voi ladata kotona, lataus kotona, ei latauspaikkaa, kerrostalo, latauspiste, pistoke, taloyhtiö, kotilataus"},{"id":"b52","cat":"sahko","t":"Toimintasäde ei riitä minulle.","m":"Asiakas arvioi pahinta yksittäistä ajopäivää.","a":"Katsotaan normaali viikko ja pidemmät reissut erikseen.","q":"Mikä on pisin tavallinen matka, jonka ajat ilman taukoa?","c":"Lasketaan, montako latausta juuri se reitti tarvitsee.","k":"toimintasäde, kantama, range, riittääkö, kilometrit latauksella, matka ei riitä, toimintamatka"},{"id":"b53","cat":"sahko","t":"Akku huolettaa.","m":"Kallis korjausriski.","a":"Ymmärrän. Akkua arvioidaan kunnon, jäljellä olevan takuun ja auton historian kautta.","q":"Huolettaako sinua enemmän kapasiteetti vai mahdollinen korjauskulu?","c":"Käydään tämän yksilön akkutilanne ja turva läpi.","k":"akku, akun kunto, akun kesto, soh, akun vaihto, akun hinta, akku hajoaa, akku huolettaa"},{"id":"b54","cat":"sahko","t":"Talvirange huolettaa.","m":"Suomen talvi tuntuu riskiltä.","a":"Talvi lyhentää toimintamatkaa, mutta se voidaan huomioida ennakkoon ja arjen latauksella.","q":"Kuinka paljon ajat pisimpänä tavallisena talvipäivänä?","c":"Katsotaan auto, jossa talvimarginaali riittää siihen ajoon.","k":"talvi, talvirange, pakkanen, kylmä, talvikantama, sähköauto talvella"},{"id":"b55","cat":"sahko","t":"Pikalataus tuntuu hankalalta.","m":"Asiakas ei tunne prosessia.","a":"Ensimmäinen kerta tuntuu monesta hankalalta, mutta käytännössä se on muutaman napin rutiini.","q":"Oletko käyttänyt pikalaturia aiemmin?","c":"Näytän sinulle latauksen käytännössä.","k":"pikalataus, pikalaturi, lataaminen hankalaa, latausasema, lataussovellus, latauskortti"},{"id":"b56","cat":"sahko","t":"En tiedä paljonko sähköauton käyttö maksaa.","m":"Kustannuksia ei voi hahmottaa.","a":"Lasketaan se sinun kilometreilläsi ja lataustavallasi, ei yleisellä arviolla.","q":"Paljonko ajat suunnilleen kuukaudessa?","c":"Tehdään vertailu nykyiseen autoosi.","k":"sähköauton käyttökulut, sähkön hinta, latauksen hinta, käyttökulut, kustannukset, paljonko maksaa ajaa"},{"id":"b57","cat":"sahko","t":"Sähköauton jälleenmyyntiarvo pelottaa.","m":"Asiakas pelkää arvonalenemaa.","a":"Arvonalenema koskee kaikkia autoja, mutta siksi ostohinta, mallin kysyntä ja rahoitusrakenne ovat tärkeitä.","q":"Kuinka pitkään ajattelet pitää autoa?","c":"Valitaan malli ja rahoitus, jotka sopivat siihen vaihtosykliin.","k":"jälleenmyyntiarvo, arvonalenema, arvo putoaa, arvonlasku, sähköauton arvo, myyntiarvo"},{"id":"b58","cat":"sahko","t":"En halua odottaa lataamista reissuilla.","m":"Pelko matkustamisen hankaloitumisesta.","a":"Ymmärrän. Pitkillä matkoilla lataus kannattaa sovittaa ruokailu- ja taukopaikkoihin.","q":"Kuinka usein ajat yli 300 kilometrin reissuja?","c":"Katsotaan yksi oma reittisi käytännössä.","k":"odottaa latausta, reissu, pitkä matka, lataus reissulla, mökkimatka, lomamatka"},{"id":"b59","cat":"sahko","t":"En tiedä sopiiko sähköauto ajoihini.","m":"Asiakas tarvitsee henkilökohtaisen varmistuksen.","a":"Sitä ei tarvitse arvata — käydään ajot ja latausmahdollisuudet läpi.","q":"Mistä minne ajat tavallisella viikolla?","c":"Teen sinulle sähköautoarvion omasta arjestasi.","k":"sopiiko sähköauto, ajot, arki, työmatka, sopiiko minulle, sähköauto sopivuus"},{"id":"b60","cat":"luottamus","t":"En luota käytetyn auton kuntoon.","m":"Pelko virheostoksesta.","a":"Ymmärrän. Siksi käymme historian, tarkastukset, kunnon ja turvan läpi avoimesti.","q":"Mikä käytetyssä autossa huolettaa sinua eniten?","c":"Katsotaan juuri ne kohdat yhdessä tästä autosta.","k":"en luota kuntoon, kunto, käytetty auto, luottaa, sika säkissä, piilovika, käytetyn kunto"},{"id":"b61","cat":"luottamus","t":"Pelkään, että autoon tulee kallis vika.","m":"Taloudellinen riski.","a":"Se on järkevä huoli. Siksi katsotaan mallin historia, kunto ja mahdollinen lisäturva.","q":"Haluatko ensisijaisesti mahdollisimman huolettoman auton vai mahdollisimman pienen ostohinnan?","c":"Rakennetaan kauppa niin, että riski pysyy sinulle sopivana.","k":"kallis vika, korjaus, remontti, rikkoutua, riski, korjauskulut, iso vika"},{"id":"b62","cat":"luottamus","t":"Huoltohistoria ei vakuuta.","m":"Dokumentaatio tai säännöllisyys epäilyttää.","a":"Hyvä huomio. Katsotaan huollot päivämäärä ja kilometritasolla.","q":"Mikä kohta historiassa herätti epäilyksen?","c":"Selvitän sen ennen kuin etenemme.","k":"huoltohistoria, huoltokirja, huollot puuttuu, dokumentit, huoltohistoria epäselvä, huollot"},{"id":"b63","cat":"luottamus","t":"Kilometrejä on liikaa.","m":"Asiakas yhdistää kilometrit automaattisesti riskiin.","a":"Kilometrit ovat yksi osa kokonaisuutta; huolto, käyttö ja kunto kertovat usein enemmän.","q":"Mikä kilometrimäärä tuntuisi sinusta turvalliselta?","c":"Näytän vaihtoehdon, joka pysyy siinä rajassa.","k":"kilometrit, liikaa kilometrejä, ajettu paljon, km, mittarilukema, paljon ajettu, kilsat"},{"id":"b64","cat":"luottamus","t":"Auto on liian vanha.","m":"Tekniikka, turvallisuus tai korjauskulut huolettavat.","a":"Ymmärrän. Katsotaan, mitä uudempi ikä käytännössä sinulle tuo.","q":"Haetko uudempaa tekniikkaa, pienempää riskiä vai parempaa jälleenmyyntiarvoa?","c":"Rajataan vaihtoehdot sinulle sopivaan ikään.","k":"liian vanha, vanha, vuosimalli, ikä, vanha malli, vanha auto"},{"id":"b65","cat":"luottamus","t":"Auto on liian uusi ja tekniikkaa on liikaa.","m":"Käytön monimutkaisuus huolettaa.","a":"Tuo on reilu huomio. Kaikkea ei tarvitse käyttää, mutta tärkeimmät toiminnot ovat yleensä hyvin yksinkertaisia.","q":"Mikä tekniikassa tuntuu hankalimmalta?","c":"Käydään perustoiminnot yhdessä läpi koeajolla.","k":"liian uusi, tekniikka, liikaa tekniikkaa, monimutkainen, näytöt, elektroniikka, vaikea käyttää"},{"id":"b66","cat":"luottamus","t":"En tunne tätä automallia.","m":"Tuntematon tuntuu riskiltä.","a":"Siksi kannattaa verrata mallia omaan käyttöön, eikä ostaa pelkän nimen perusteella.","q":"Mihin tuttuun autoon vertaat tätä?","c":"Näytän tärkeimmät erot käytännössä.","k":"en tunne mallia, malli, tuntematon malli, en tunne, outo malli"},{"id":"b67","cat":"luottamus","t":"Tämä merkki ei ole minulle tuttu.","m":"Merkkiluottamus puuttuu.","a":"Ymmärrän. Katsotaan faktat: huollot, maine, kustannukset ja tämän yksilön kunto.","q":"Mitä odotat merkiltä eniten?","c":"Verrataan tämä sinun tuttuihin merkkeihisi.","k":"merkki ei tuttu, tuntematon merkki, kiinalainen, uusi merkki, outo merkki"},{"id":"b68","cat":"luottamus","t":"En tiedä, onko tämä luotettava malli.","m":"Asiakas tarvitsee näyttöä, ei vain vakuuttelua.","a":"Hyvä kysymys. Kerron rehellisesti mallin vahvuudet ja asiat, jotka on hyvä huomioida.","q":"Onko joku tietty asia, josta olet kuullut huonoa?","c":"Käydään se kohta läpi ennen päätöstä.","k":"luotettava malli, luotettavuus, vikatilastot, maine, kestävyys, onko luotettava"},{"id":"b69","cat":"luottamus","t":"Takuu ei tunnu riittävältä.","m":"Asiakas haluaa enemmän turvaa.","a":"Ymmärrän. Selvitetään, millaista turvaa tarvitset ja mitä lisäturvaa on saatavilla.","q":"Mikä vika tai kuluerä sinua eniten pelottaa?","c":"Rakennetaan mukaan sinulle sopiva turva.","k":"takuu, takuu ei riitä, turva, lisäturva, sakavarma, huoltosopimus, jatkotakuu"},{"id":"b70","cat":"koeajo","t":"Haluan koeajaa vielä pidempään.","m":"Asiakas ei saanut riittävää varmuutta.","a":"Ehdottomasti. Parempi tehdä päätös kunnollisen kokemuksen pohjalta.","q":"Mitä haluat pidemmällä koeajolla testata?","c":"Sovitaan reitti, jolla ne asiat selviävät.","k":"pidempi koeajo, koeajo, testata, koeajaa uudestaan, pidempään koeajaa, yön yli koeajo"},{"id":"b71","cat":"koeajo","t":"En ehtinyt koeajolla kokeilla kaikkea.","m":"Koeajo jäi liian pintapuoliseksi.","a":"Korjataan se. Käydään läpi ne toiminnot, jotka vaikuttavat sinun arkeesi.","q":"Mikä jäi kokeilematta?","c":"Tehdään lyhyt toinen koeajo juuri niille asioille.","k":"en ehtinyt kokeilla, kokeilla, koeajo lyhyt, ei ehtinyt, kaikki kokeilematta"},{"id":"b72","cat":"koeajo","t":"Haluan koeajaa puolison kanssa.","m":"Molempien hyväksyntä puuttuu.","a":"Hyvä idea — näin molemmat voivat arvioida tilat ja ajotuntuman.","q":"Milloin puoliso pääsee mukaan?","c":"Varaan teille yhteisen koeajoajan.","k":"koeajo puolison kanssa, yhdessä koeajo, puoliso koeajolle"},{"id":"b73","cat":"koeajo","t":"Haluan ajaa autolla moottoritiellä.","m":"Asiakas arvioi pidemmän ajon mukavuutta.","a":"Se on järkevää, etenkin jos ajat maantietä paljon.","q":"Kuinka pitkää matkaa ajat tavallisesti?","c":"Valitaan koeajoreitti, jolla pääset testaamaan sen.","k":"moottoritie, maantie, valtatie, pitkä ajo, meluisa, moottoritiellä"},{"id":"b74","cat":"koeajo","t":"Haluan kokeilla auton pysäköintiä.","m":"Koko tai näkyvyys mietityttää.","a":"Hyvä, se on arjessa tärkeä asia.","q":"Onko sinulla kotona, töissä tai kaupassa jokin hankala parkkipaikka?","c":"Testataan pysäköinti ja avustimet ennen päätöstä.","k":"pysäköinti, parkkeeraus, parkki, peruutus, kamera, parkkipaikka"},{"id":"b75","cat":"koeajo","t":"Haluan verrata tätä nykyiseen autooni.","m":"Hyöty vaihtamisesta ei ole selkeä.","a":"Juuri niin kannattaa tehdä. Verrataan käytännön asioita, ei vain vuosimallia.","q":"Mitkä kolme asiaa nykyisessä autossa haluat parantaa?","c":"Katsotaan täyttyvätkö ne tässä.","k":"verrata nykyiseen, oma auto, vertailu nykyiseen, verrata omaan autoon"},{"id":"b76","cat":"koeajo","t":"Auto tuntui erilaiselta kuin odotin.","m":"Odotus ja kokemus eivät kohdanneet.","a":"Hyvä, että huomasit sen. Selvitetään, oliko ero hyvä vai huono.","q":"Mikä tuntui erilaiselta: alusta, ohjaus, teho vai näkyvyys?","c":"Verrataan sitä sopivampaan vaihtoehtoon.","k":"tuntui erilaiselta, tuntuma, ajotuntuma, erilainen, jousitus, ohjaus, ei tuntunut hyvältä"},{"id":"b77","cat":"koeajo","t":"Ajoasento ei ollut heti täydellinen.","m":"Ergonomia epäilyttää.","a":"Säädetään se rauhassa — istuin, ratti ja peilit vaikuttavat paljon.","q":"Tuntuiko ongelma jaloissa, selässä vai näkyvyydessä?","c":"Tehdään säädöt ja otetaan uusi lyhyt koeajo.","k":"ajoasento, istuin, selkä, ergonomia, ratti, penkki"},{"id":"b78","cat":"koeajo","t":"En ole varma näkyvyydestä.","m":"Turvallisuuden ja hallinnan tunne puuttuu.","a":"Ymmärrän. Käydään peilit, kamerat ja katvealueet käytännössä läpi.","q":"Mihin suuntaan näkyvyys tuntui heikoimmalta?","c":"Testataan se seuraavalla ajolla.","k":"näkyvyys, katvealue, peilit, kamerat, huono näkyvyys"},{"id":"b79","cat":"koeajo","t":"Haluan testata, mahtuuko lapsi ja tavarat autoon.","m":"Perheen arjen toimivuus epäilyttää.","a":"Ehdottomasti — se on paras tapa varmistaa sopivuus.","q":"Onko käytössä turvakaukalo, vaunut tai useampi istuin?","c":"Tuokaa ne mukaan, niin testataan autossa oikeasti.","k":"lapsi, lapset, turvaistuin, kaukalo, vaunut, rattaat, perhe, mahtuuko"},{"id":"b80","cat":"ominaisuudet","t":"Tavaratila on liian pieni.","m":"Käytännöllisyys ei riitä.","a":"Ymmärrän. Tavaratilan pitää toimia sinun oikeassa arjessasi.","q":"Mitä sinne pitää mahtua tavallisesti?","c":"Testataan tavarat tai katsotaan suurempi vaihtoehto.","k":"tavaratila pieni, tavaratila, takakontti, kontti, tila, koira, tavarat ei mahdu"},{"id":"b81","cat":"ominaisuudet","t":"Takapenkki on liian ahdas.","m":"Perhe- tai matkustuskäyttö ei toimi.","a":"Jos takapenkkiä käytetään paljon, siitä ei kannata tinkiä.","q":"Ketkä istuvat takana yleensä ja kuinka pitkiä matkoja?","c":"Näytän mallin, jossa takatiloihin tulee selvä parannus.","k":"takapenkki ahdas, takapenkki, ahdas, jalkatila, takatila"},{"id":"b82","cat":"ominaisuudet","t":"Auto on liian iso.","m":"Ajettavuus tai pysäköinti arveluttaa.","a":"Ymmärrän. Koko tuntuu usein nopeasti luontevalta, mutta sitä ei tarvitse arvata.","q":"Onko haaste kotipihassa, parkkihallissa vai kaupungissa?","c":"Kokeillaan sitä ympäristöä vastaavalla koeajolla.","k":"liian iso, iso auto, suuri, kömpelö, pitkä auto"},{"id":"b83","cat":"ominaisuudet","t":"Auto on liian pieni.","m":"Auto ei palvele tulevia tarpeita.","a":"Hyvä havainto — silloin kannattaa katsoa kerralla riittävä koko.","q":"Missä tilanteessa tila loppuu ensimmäisenä?","c":"Rajataan seuraava vaihtoehto siihen kokoluokkaan.","k":"liian pieni, pieni auto, tila loppuu, ahdas"},{"id":"b84","cat":"ominaisuudet","t":"Auto kuluttaa liikaa.","m":"Kuukausittaiset kulut huolettavat.","a":"Katsotaan kulutus sinun kilometreilläsi euroina, ei vain litralukuna.","q":"Paljonko ajat kuukaudessa ja millaista ajoa?","c":"Lasketaan kustannus nykyiseen autoosi verrattuna.","k":"kuluttaa liikaa, kulutus, polttoaine, bensa, litrat, janoinen, polttoainekulut"},{"id":"b85","cat":"ominaisuudet","t":"En tarvitse näin tehokasta autoa.","m":"Asiakas ei näe tehon hyötyä tai pelkää kustannuksia.","a":"Se on reilu ajatus. Tärkeintä on, että tehoa on omaan käyttöön sopivasti.","q":"Tarvitsetko tehoa ohituksiin, vetoon vai et oikeastaan lainkaan?","c":"Katsotaan järkevämpi moottorivaihtoehto.","k":"liian tehokas, teho, hevosvoimat, turhan tehokas, liikaa tehoa"},{"id":"b86","cat":"ominaisuudet","t":"Auto ei tunnu tarpeeksi tehokkaalta.","m":"Ajettavuus tai suorituskyky jää vajaaksi.","a":"Ymmärrän — auton pitää tuntua varmalta etenkin ohituksissa ja kuormalla.","q":"Missä tilanteessa kaipaat enemmän suorituskykyä?","c":"Näytän vaihtoehdon, joka vastaa siihen.","k":"ei tarpeeksi tehokas, hidas, tehoton, vetää huonosti, ohitukset, heikko moottori"},{"id":"b87","cat":"ominaisuudet","t":"Varusteita puuttuu.","m":"Asiakas ei halua tinkiä arjen mukavuudesta.","a":"Hyvä, silloin tiedämme tarkasti mitä etsitään.","q":"Mitkä varusteet ovat sinulle pakollisia?","c":"Katson heti vastaavan yksilön niillä varusteilla.","k":"varusteita puuttuu, varusteet, puuttuu, vakionopeudensäädin, lisälämmitin, navigaattori, vetokoukku, peruutuskamera"},{"id":"b88","cat":"ominaisuudet","t":"Tässä on liikaa turhaa varustetta.","m":"Asiakas ei halua maksaa asioista, joita ei käytä.","a":"Ymmärrän. Silloin kannattaa löytää auto, jossa raha menee sinulle tärkeisiin ominaisuuksiin.","q":"Mistä varusteista maksaisit mielelläsi ja mistä et?","c":"Rajataan haku siihen varustetasoon.","k":"turhaa varustetta, turhat varusteet, ylivarusteltu, liikaa varusteita"},{"id":"b89","cat":"ominaisuudet","t":"Väri ei ole mieluinen.","m":"Omistamisen tunne ei synny.","a":"Väri on tärkeä — autoa katsotaan joka päivä.","q":"Mikä väri olisi sinulle oikea?","c":"Katson löytyykö sama malli toivotulla värillä.","k":"väri, väri ei mieluinen, en tykkää väristä, en pidä väristä, sävy, ruma väri, väri ei käy, eri väri"},{"id":"b90","cat":"ominaisuudet","t":"En halua dieseliä.","m":"Käyttöprofiili, maine tai tulevaisuus huolettaa.","a":"Ymmärrän. Valitaan käyttövoima sinun ajojesi perusteella.","q":"Mikä dieselissä arveluttaa eniten?","c":"Verrataan bensiini-, hybridi- tai sähkövaihtoehtoa samoilla kustannuksilla.","k":"en halua dieseliä, diesel, dieseli, käyttövoimavero"},{"id":"b91","cat":"ominaisuudet","t":"En halua bensa-autoa.","m":"Polttoainekulut tai ympäristöarvot.","a":"Ymmärrän. Silloin hybridin tai sähköauton soveltuvuus kannattaa selvittää.","q":"Onko tärkein syy kulutus, päästöt vai ajotuntuma?","c":"Katsotaan sinulle sopivampi käyttövoima.","k":"en halua bensaa, bensa, bensiini, polttomoottori, bensa-auto"},{"id":"b92","cat":"ominaisuudet","t":"En halua hybridiä.","m":"Tekniikka tuntuu monimutkaiselta tai epäilyttää.","a":"Selvä. Hybridi ei sovi kaikille käyttötavoille.","q":"Haluatko mieluummin selkeän bensiini- vai täyssähköauton?","c":"Rajataan vaihtoehdot siihen.","k":"en halua hybridiä, hybridi, lataushybridi, phev"},{"id":"b93","cat":"ominaisuudet","t":"En halua automaattia / manuaalia.","m":"Tottumus tai käyttötarve.","a":"Ymmärrän — voimansiirto vaikuttaa paljon ajotuntumaan.","q":"Onko kyse tottumuksesta vai tietystä käyttötarpeesta?","c":"Katsotaan sinulle sopiva vaihteisto.","k":"automaatti, manuaali, vaihteisto, käsivaihteet, automaattivaihteisto"},{"id":"b94","cat":"ominaisuudet","t":"En halua nelivetoista / etuvetoista autoa.","m":"Ajotapa tai talviolosuhteet.","a":"Hyvä rajaus. Vetotapa kannattaa valita sen mukaan, missä ja miten ajat.","q":"Onko sinulla paljon mökki-, lumi- tai vetokäyttöä?","c":"Näytän vaihtoehdon oikealla vetotavalla.","k":"neliveto, 4x4, awd, etuveto, takaveto, vetotapa"},{"id":"b95","cat":"hinta","t":"Vakuutukset pelottavat hinnan takia.","m":"Kokonaiskuukausikulu voi ylittää budjetin.","a":"Tuo kannattaa selvittää ennen päätöstä, ei jälkikäteen.","q":"Haluatko, että arvioidaan vakuutusluokka ja kokonaiskulut?","c":"Tehdään autosta kuukausitasoinen kokonaisbudjetti.","k":"vakuutus, vakuutukset kalliit, kasko, liikennevakuutus, vakuutusmaksu"},{"id":"b96","cat":"hinta","t":"Verot ja käyttökulut mietityttävät.","m":"Asiakas ei tiedä auton todellista kokonaiskustannusta.","a":"Hyvä, silloin lasketaan hankintahinnan lisäksi käyttö.","q":"Paljonko ajat vuodessa ja missä suhteessa kaupunkia sekä maantietä?","c":"Teen vertailun nykyiseen autoosi euroina.","k":"verot, vero, ajoneuvovero, käyttömaksu, käyttökulut, kokonaiskustannus"},{"id":"b97","cat":"hinta","t":"En tiedä paljonko huollot maksavat.","m":"Omistamisen riskit ovat epäselvät.","a":"Käydään läpi huolto-ohjelma ja todennäköiset kuluvat osat.","q":"Kuinka pitkään ajattelet pitää autoa?","c":"Arvioidaan kulut juuri sille omistusajalle.","k":"huollot, huoltokulut, huollon hinta, huoltomaksu, huolto kallis"},{"id":"b98","cat":"epaarointi","t":"En tiedä, milloin auton saisi luovutukseen.","m":"Aikataulu voi estää kaupan.","a":"Selvitän luovutusajan tarkasti ennen kuin sitoudut mihinkään.","q":"Mihin päivään mennessä tarvitset auton viimeistään?","c":"Sovitaan tähän aikatauluun sopiva ratkaisu.","k":"luovutus, toimitusaika, milloin saa, aikataulu, luovutusaika, kuinka nopeasti"},{"id":"b99","cat":"epaarointi","t":"En ole varma, onko nyt oikea aika ostaa auto.","m":"Asiakas pohtii taloutta, markkinaa tai elämäntilannetta.","a":"Ymmärrän. Oikea aika on silloin, kun auto ja kokonaisuus palvelevat arkea ilman että talous kiristyy liikaa.","q":"Mikä pitäisi muuttua, jotta ajankohta tuntuisi oikealta?","c":"Katsotaan, voidaanko tehdä ratkaisu, joka tuntuu turvalliselta jo nyt.","k":"oikea aika, ajankohta, onko nyt oikea aika, talous, taantuma, elämäntilanne"}];
+  // ---------- Vastalausepankki ----------
+  var VL_CATS = [
+    { id: "hinta", name: "Hinta" },
+    { id: "rahoitus", name: "Rahoitus" },
+    { id: "vaihtoauto", name: "Vaihtoauto" },
+    { id: "kilpailija", name: "Kilpailija" },
+    { id: "paatos", name: "Päätöksenteko" },
+    { id: "luottamus", name: "Luottamus" },
+    { id: "sahko", name: "Sähköauto" },
+    { id: "koeajo", name: "Koeajo" },
+    { id: "ominaisuudet", name: "Auton ominaisuudet" },
+    { id: "epaarointi", name: "Yleinen epäröinti" }
+  ];
+  function vlCatName(id) { var c = VL_CATS.filter(function (x) { return x.id === id; })[0]; return c ? c.name : "Muu"; }
+
+  // Käsiteryhmät: hakusana laajenee koko ryhmään, jolloin "maksaa liikaa"
+  // löytää hinnan ja "lyhennys" kuukausierän, vaikka sanaa ei olisi kortissa.
+  var VL_CONCEPTS = [
+    ["hinta", "kallis", "kalliimpi", "hintava", "maksaa", "liikaa", "korkea", "kova", "euro", "raha", "halpa", "halvempi", "kustannus", "budjetti", "varaa", "tinkiä", "alennus", "ylihintainen", "pyyntö"],
+    ["kuukausierä", "erä", "kk", "kuukausimaksu", "maksuerä", "lyhennys", "kuukausi"],
+    ["rahoitus", "laina", "korko", "osamaksu", "luotto", "leasing", "pankki", "velka", "käsiraha", "rahoituskulut", "kulut"],
+    ["vaihtoauto", "vaihto", "hyvitys", "vaihtohyvitys", "nykyinen", "arvio", "väliraha", "myydä"],
+    ["kilpailija", "muualla", "toinen", "liike", "halvemmalla", "tarjous", "vertailu", "vertailla", "netti", "nettiauto", "tori"],
+    ["puoliso", "vaimo", "mies", "avokki", "kumppani", "perhe", "vanhemmat", "isä", "äiti", "päättää", "kysyä"],
+    ["miettiä", "harkita", "pohtia", "palata", "myöhemmin", "epävarma", "varma", "huomenna", "yön", "kiire"],
+    ["sähköauto", "sähkö", "ev", "lataus", "ladata", "latauspiste", "akku", "toimintasäde", "kantama", "range", "pikalataus"],
+    ["kunto", "vika", "riski", "rikki", "takuu", "historia", "huolto", "kilometrit", "luottaa", "luotettava"],
+    ["koeajo", "koeajaa", "testata", "kokeilla", "ajotuntuma"],
+    ["tila", "tavaratila", "takapenkki", "iso", "pieni", "ahdas", "mahtua"],
+    ["kulutus", "bensa", "bensiini", "polttoaine", "diesel", "hybridi", "vakuutus", "vero", "käyttökulut"]
+  ];
+  var VL_STOP = { "on": 1, "ja": 1, "se": 1, "tämä": 1, "tää": 1, "että": 1, "mun": 1, "minun": 1, "mä": 1, "minä": 1, "olla": 1, "oli": 1, "ole": 1,
+    "vielä": 1, "vaan": 1, "vain": 1, "nyt": 1, "kun": 1, "jos": 1, "niin": 1, "tuo": 1, "auto": 1, "auton": 1, "autoa": 1, "autossa": 1, "on.": 1, "sinä": 1, "te": 1, "me": 1, "ei": 1, "en": 1 };
+
+  function vlNorm(s) { return String(s || "").toLowerCase().replace(/[’'`´]/g, ""); }
+  function vlFold(s) { return s.replace(/ä/g, "a").replace(/ö/g, "o").replace(/å/g, "a"); }
+  function vlTokens(s) {
+    return vlNorm(s).split(/[^a-zåäö0-9]+/).filter(function (t) { return t.length > 1 && !VL_STOP[t]; }).map(vlFold);
+  }
+  function vlLev(a, b, max) {
+    if (Math.abs(a.length - b.length) > max) return max + 1;
+    var prev = [], cur, i, j;
+    for (j = 0; j <= b.length; j++) prev[j] = j;
+    for (i = 1; i <= a.length; i++) {
+      cur = [i]; var rowMin = i;
+      for (j = 1; j <= b.length; j++) {
+        cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+        if (cur[j] < rowMin) rowMin = cur[j];
+      }
+      if (rowMin > max) return max + 1;
+      prev = cur;
+    }
+    return prev[b.length];
+  }
+  // 0..1: kuinka hyvin hakusana osuu sanaan (taivutus, yhdyssana, kirjoitusvirhe).
+  function vlMatch(q, d) {
+    if (q === d) return 1;
+    var ml = Math.min(q.length, d.length);
+    if (ml >= 4) {
+      var need = Math.max(4, Math.ceil(ml * 0.7));
+      if (q.slice(0, need) === d.slice(0, need)) return 0.85;
+    }
+    if (q.length >= 4 && d.indexOf(q) !== -1) return 0.7;          // "erä" / "kuukausierä"
+    if (d.length >= 4 && q.length > d.length && q.indexOf(d) !== -1) return 0.6;
+    if (q.length >= 4) {
+      var max = q.length >= 7 ? 2 : 1;
+      var dist = vlLev(q, d.slice(0, q.length + max), max);
+      if (dist <= max) return 0.7 - dist * 0.1;
+    }
+    return 0;
+  }
+  var VL_CONCEPTS_F = VL_CONCEPTS.map(function (g) { return g.map(vlFold); });
+
+  function vlIndex(items) {
+    var df = {};
+    var docs = items.map(function (it) {
+      var d = {
+        it: it,
+        t: vlTokens(it.t), k: vlTokens(it.k), m: vlTokens(it.m),
+        r: vlTokens([it.a, it.q, it.c].join(" ")),
+        cat: vlTokens(vlCatName(it.cat)),
+        phrase: vlFold(vlNorm(it.t + " | " + it.k))
+      };
+      var seen = {};
+      d.t.concat(d.k, d.m).forEach(function (w) { if (!seen[w]) { seen[w] = 1; df[w] = (df[w] || 0) + 1; } });
+      return d;
+    });
+    return { docs: docs, df: df, n: docs.length };
+  }
+  function vlBest(q, arr) { var b = 0; for (var i = 0; i < arr.length && b < 1; i++) { var m = vlMatch(q, arr[i]); if (m > b) b = m; } return b; }
+
+  function vlSearch(index, query) {
+    var qt = vlTokens(query);
+    if (!qt.length) return [];
+    var qPhrase = vlFold(vlNorm(query).trim());
+    // Käsitelaajennus: hakusanaa vastaavan ryhmän muut sanat mukaan puolipainolla.
+    var extra = [];
+    qt.forEach(function (q) {
+      VL_CONCEPTS_F.forEach(function (g) {
+        if (g.some(function (w) { return vlMatch(q, w) >= 0.85; })) g.forEach(function (w) { if (qt.indexOf(w) === -1 && extra.indexOf(w) === -1) extra.push(w); });
+      });
+    });
+    function idf(w) {
+      var df = index.df[w] || 0;
+      return Math.log(1 + (index.n + 1) / (df + 1));
+    }
+    var res = index.docs.map(function (d) {
+      var s = 0, hit = 0;
+      qt.forEach(function (q) {
+        var w = idf(q);
+        var m = Math.max(3 * vlBest(q, d.t), 2.6 * vlBest(q, d.k), 1.2 * vlBest(q, d.m), 0.6 * vlBest(q, d.r), 1.5 * vlBest(q, d.cat));
+        if (m > 0) hit++;
+        s += w * m;
+      });
+      extra.forEach(function (q) {
+        var m = Math.max(vlBest(q, d.t), vlBest(q, d.k)) >= 0.85 ? 0.9 : 0;
+        s += m;
+      });
+      if (qPhrase.length >= 4 && d.phrase.indexOf(qPhrase) !== -1) s += 6;
+      s *= (0.5 + 0.5 * hit / qt.length); // kaikki sanat osuvat -> täysi pistemäärä
+      return { d: d, s: s };
+    }).filter(function (r) { return r.s > 0.9; });
+    res.sort(function (a, b) { return b.s - a.s; });
+    if (res.length) { var top = res[0].s; res = res.filter(function (r) { return r.s >= top * 0.3; }); }
+    return res;
+  }
+
+  // Omat muutokset: { own: [...], edits: {id: {...}}, hidden: {id: 1}, fav: {id: 1} }
+  var vl = { q: "", cat: "all", favOnly: false, open: {}, store: null, storeFor: null, index: null, showHidden: false };
+  function vlKey() { return "ts_vl_" + ((state.profile && state.profile.nickname) || "anon").trim().toLowerCase(); }
+  function vlLoad() {
+    if (vl.store && vl.storeFor === vlKey()) return vl.store;
+    var d = null;
+    try { var ls = safeLS(); var raw = ls ? ls.getItem(vlKey()) : null; if (raw) d = JSON.parse(raw); } catch (e) { d = null; }
+    if (!d || typeof d !== "object") d = {};
+    d.own = d.own || []; d.edits = d.edits || {}; d.hidden = d.hidden || {}; d.fav = d.fav || {};
+    vl.store = d; vl.storeFor = vlKey(); vl.index = null;
+    return d;
+  }
+  function vlSave() { vl.index = null; try { var ls = safeLS(); if (ls) ls.setItem(vlKey(), JSON.stringify(vl.store)); } catch (e) {} }
+  function vlAll() {
+    var st = vlLoad();
+    var list = VL_BUILTIN.map(function (b) {
+      var e = st.edits[b.id];
+      return Object.assign({}, b, e || {}, { id: b.id, builtin: true, edited: !!e });
+    }).concat(st.own.map(function (o) { return Object.assign({}, o, { own: true }); }));
+    return list;
+  }
+  function vlVisible() { var st = vlLoad(); return vlAll().filter(function (x) { return !st.hidden[x.id]; }); }
+  function vlGetIndex() { if (!vl.index) vl.index = vlIndex(vlVisible()); return vl.index; }
+
+  var VL_ICON = {
+    star: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.4.9-4.6 4.5 1.1 6.3L12 17.3l-5.7 3 1.1-6.3-4.6-4.5 6.4-.9z"/></svg>',
+    starO: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2.8l2.8 5.8 6.4.9-4.6 4.5 1.1 6.3L12 17.3l-5.7 3 1.1-6.3-4.6-4.5 6.4-.9z"/></svg>',
+    search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
+    x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>'
+  };
+  var VL_ACTS = [
+    { k: "a", label: "Mitä sanon nyt?", head: "Sano näin" },
+    { k: "q", label: "Seuraava kysymys", head: "Kysy tämä" },
+    { k: "c", label: "Klousaa kauppaan", head: "Klousaus" }
+  ];
+
+  function vlCardHtml(x, rank) {
+    var st = vlLoad();
+    var fav = !!st.fav[x.id];
+    var open = vl.open[x.id] || null;
+    var html = '<div class="vl-card' + (rank === 0 && vl.q ? ' best' : '') + '" data-id="' + escapeHtml(x.id) + '">' +
+      '<div class="vl-top"><span class="vl-cat">' + escapeHtml(vlCatName(x.cat)) + '</span>' +
+        (x.own ? '<span class="vl-tag">OMA</span>' : (x.edited ? '<span class="vl-tag">MUOKATTU</span>' : '')) +
+        (rank === 0 && vl.q ? '<span class="vl-tag best">PARAS OSUMA</span>' : '') +
+        '<span class="sp"></span>' +
+        '<button type="button" class="vl-ib" data-act="edit" aria-label="Muokkaa">' + RK_ICON.pen + '</button>' +
+        '<button type="button" class="vl-ib fav' + (fav ? ' on' : '') + '" data-act="fav" aria-label="' + (fav ? 'Poista suosikeista' : 'Lisää suosikkeihin') + '">' + (fav ? VL_ICON.star : VL_ICON.starO) + '</button>' +
+      '</div>' +
+      '<div class="vl-t">”' + escapeHtml(x.t) + '”</div>' +
+      '<div class="vl-m"><span>Mitä asiakas tarkoittaa:</span> ' + escapeHtml(x.m) + '</div>' +
+      '<div class="vl-acts">' + VL_ACTS.map(function (a) {
+        return '<button type="button" class="vl-act' + (open === a.k ? ' on' : '') + '" data-act="open" data-k="' + a.k + '">' + a.label + '</button>';
+      }).join("") + '</div>';
+    if (open) {
+      var act = VL_ACTS.filter(function (a) { return a.k === open; })[0];
+      html += '<div class="vl-say ' + open + '"><span class="h">' + act.head + '</span>' + escapeHtml(x[open] || "–") + '</div>';
+    }
+    return html + '</div>';
+  }
+
+  function renderVl(main) {
+    main.classList.add("vl-main");
+    var st = vlLoad();
+
+    var head = document.createElement("div");
+    head.className = "vl-head";
+    head.innerHTML = '<h2>Vastalausepankki</h2><button type="button" class="btn btn-primary btn-sm" id="vlAdd">+ Lisää oma</button>';
+    head.querySelector("#vlAdd").addEventListener("click", function () { vlEdit(null); });
+    main.appendChild(head);
+
+    var sb = document.createElement("div");
+    sb.className = "vl-search";
+    sb.innerHTML = '<span class="ic">' + VL_ICON.search + '</span>' +
+      '<input id="vlQ" type="search" enterkeyhint="search" autocomplete="off" placeholder="Mitä asiakas sanoi? esim. liian kallis, pitää miettiä…" value="' + escapeHtml(vl.q) + '">' +
+      (vl.q ? '<button type="button" class="clr" aria-label="Tyhjennä haku">' + VL_ICON.x + '</button>' : '');
+    main.appendChild(sb);
+
+    var chips = document.createElement("div");
+    chips.className = "vl-chips";
+    var favCount = vlVisible().filter(function (x) { return st.fav[x.id]; }).length;
+    chips.innerHTML =
+      '<button type="button" class="vl-chip' + (vl.cat === "all" && !vl.favOnly ? ' on' : '') + '" data-c="all">Kaikki</button>' +
+      '<button type="button" class="vl-chip fav' + (vl.favOnly ? ' on' : '') + '" data-c="fav">★ Suosikit' + (favCount ? ' ' + favCount : '') + '</button>' +
+      VL_CATS.map(function (c) { return '<button type="button" class="vl-chip' + (vl.cat === c.id && !vl.favOnly ? ' on' : '') + '" data-c="' + c.id + '">' + c.name + '</button>'; }).join("");
+    Array.prototype.forEach.call(chips.querySelectorAll(".vl-chip"), function (b) {
+      b.addEventListener("click", function () {
+        var c = b.getAttribute("data-c");
+        if (c === "fav") { vl.favOnly = !vl.favOnly; vl.cat = "all"; }
+        else { vl.favOnly = false; vl.cat = c; }
+        render();
+      });
+    });
+    main.appendChild(chips);
+
+    var list = document.createElement("div");
+    list.className = "vl-list";
+    main.appendChild(list);
+
+    var info = document.createElement("div");
+    info.className = "vl-info";
+    main.insertBefore(info, list);
+
+    function fill() {
+      var items;
+      if (vl.q.trim()) items = vlSearch(vlGetIndex(), vl.q).map(function (r) { return r.d.it; });
+      else items = vlVisible();
+      if (vl.favOnly) items = items.filter(function (x) { return st.fav[x.id]; });
+      else if (vl.cat !== "all") items = items.filter(function (x) { return x.cat === vl.cat; });
+      if (!vl.q.trim()) {
+        var order = {}; VL_CATS.forEach(function (c, i) { order[c.id] = i; });
+        items = items.slice().sort(function (a, b) { return (st.fav[b.id] ? 1 : 0) - (st.fav[a.id] ? 1 : 0) || order[a.cat] - order[b.cat]; });
+      }
+      info.textContent = vl.q.trim()
+        ? (items.length ? items.length + " osumaa, parhaiten osuvat ensin" : "")
+        : items.length + " vastalausetta";
+      if (!items.length) {
+        list.innerHTML = '<div class="card vl-empty">' + (vl.q.trim()
+          ? 'Ei osumia haulle ”' + escapeHtml(vl.q) + '”' + (vl.cat !== "all" || vl.favOnly ? ' tästä rajauksesta. <button type="button" class="linkish" id="vlAllCats">Hae kaikista</button>' : '. Kokeile toista sanaa tai <button type="button" class="linkish" id="vlAddQ">lisää tämä omaksi vastalauseeksi</button>.')
+          : (vl.favOnly ? 'Ei vielä suosikkeja. Lisää tähdellä kortin oikeasta yläkulmasta.' : 'Ei vastalauseita tässä kategoriassa.')) + '</div>';
+        var ac = list.querySelector("#vlAllCats");
+        if (ac) ac.addEventListener("click", function () { vl.cat = "all"; vl.favOnly = false; render(); });
+        var aq = list.querySelector("#vlAddQ");
+        if (aq) aq.addEventListener("click", function () { vlEdit(null, vl.q); });
+        return;
+      }
+      list.innerHTML = items.slice(0, 120).map(vlCardHtml).join("");
+    }
+    fill();
+
+    list.addEventListener("click", function (e) {
+      var btn = e.target.closest("button[data-act]");
+      if (!btn) return;
+      var card = btn.closest(".vl-card"); var id = card.getAttribute("data-id");
+      var act = btn.getAttribute("data-act");
+      if (act === "open") {
+        var k = btn.getAttribute("data-k");
+        vl.open[id] = vl.open[id] === k ? null : k;
+        var x = vlAll().filter(function (y) { return y.id === id; })[0];
+        var tmp = document.createElement("div"); tmp.innerHTML = vlCardHtml(x, card.classList.contains("best") ? 0 : 1);
+        card.replaceWith(tmp.firstChild);
+      } else if (act === "fav") {
+        if (st.fav[id]) delete st.fav[id]; else st.fav[id] = 1;
+        vlSave(); fill();
+        var fc = chips.querySelector('[data-c="fav"]');
+        var n = vlVisible().filter(function (x) { return st.fav[x.id]; }).length;
+        if (fc) fc.textContent = "★ Suosikit" + (n ? " " + n : "");
+      } else if (act === "edit") {
+        vlEdit(vlAll().filter(function (y) { return y.id === id; })[0]);
+      }
+    });
+
+    var qi = sb.querySelector("#vlQ");
+    var t;
+    qi.addEventListener("input", function () {
+      clearTimeout(t);
+      t = setTimeout(function () {
+        var had = !!vl.q; vl.q = qi.value;
+        if (had !== !!vl.q) { var pos = qi.selectionStart; render(); var n = document.getElementById("vlQ"); if (n) { n.focus(); try { n.setSelectionRange(pos, pos); } catch (e2) {} } }
+        else fill();
+      }, 120);
+    });
+    var clr = sb.querySelector(".clr");
+    if (clr) clr.addEventListener("click", function () { vl.q = ""; render(); var n = document.getElementById("vlQ"); if (n) n.focus(); });
+
+    var hiddenIds = Object.keys(st.hidden);
+    if (hiddenIds.length) {
+      var hb = document.createElement("div");
+      hb.className = "vl-hidden";
+      hb.innerHTML = '<button type="button" class="linkish" id="vlShowHidden">' + (vl.showHidden ? 'Piilota lista' : 'Piilotetut vastalauseet (' + hiddenIds.length + ')') + '</button>' +
+        (vl.showHidden ? '<ul>' + VL_BUILTIN.filter(function (b) { return st.hidden[b.id]; }).map(function (b) {
+          return '<li><span>' + escapeHtml(b.t) + '</span><button type="button" class="btn btn-ghost btn-sm" data-restore="' + b.id + '">Palauta</button></li>';
+        }).join("") + '</ul>' : '');
+      hb.querySelector("#vlShowHidden").addEventListener("click", function () { vl.showHidden = !vl.showHidden; render(); });
+      Array.prototype.forEach.call(hb.querySelectorAll("[data-restore]"), function (b) {
+        b.addEventListener("click", function () { delete st.hidden[b.getAttribute("data-restore")]; vlSave(); render(); showToast("Vastalause palautettu"); });
+      });
+      main.appendChild(hb);
+    }
+    var note = document.createElement("div");
+    note.className = "vl-foot";
+    note.textContent = "Omat vastalauseet, muokkaukset ja suosikit tallentuvat tähän laitteeseen.";
+    main.appendChild(note);
+  }
+
+  function vlEdit(x, preset) {
+    var st = vlLoad();
+    var isNew = !x;
+    x = x || { t: preset || "", cat: vl.cat !== "all" ? vl.cat : "hinta", m: "", a: "", q: "", c: "", k: "" };
+    var ov = buildOverlay();
+    function fld(id, label, val, rows, hint) {
+      return '<div class="field vl-f"><label for="' + id + '">' + label + '</label>' +
+        (rows ? '<textarea id="' + id + '" rows="' + rows + '">' + escapeHtml(val || "") + '</textarea>' : '<input id="' + id + '" class="text-field" type="text" value="' + escapeHtml(val || "") + '">') +
+        (hint ? '<div class="field-hint vl-hint">' + hint + '</div>' : '') + '</div>';
+    }
+    ov.card.innerHTML =
+      '<h2 style="color:var(--text);font-size:17px;font-weight:600;margin-bottom:12px;">' + (isNew ? 'Uusi oma vastalause' : (x.own ? 'Muokkaa omaa vastalausetta' : 'Muokkaa vastalausetta')) + '</h2>' +
+      fld("vlT", "Asiakkaan vastalause", x.t, 0) +
+      '<div class="field vl-f"><label for="vlC">Kategoria</label><select id="vlC" class="text-field">' +
+        VL_CATS.map(function (c) { return '<option value="' + c.id + '"' + (c.id === x.cat ? ' selected' : '') + '>' + c.name + '</option>'; }).join("") + '</select></div>' +
+      fld("vlM", "Mitä asiakas todennäköisesti tarkoittaa", x.m, 2) +
+      fld("vlA", "Mitä sanon nyt? (vastausrunko)", x.a, 3) +
+      fld("vlQq", "Seuraava kysymys (jatkokysymys)", x.q, 2) +
+      fld("vlCc", "Klousaa kauppaan (klousauslause)", x.c, 2) +
+      fld("vlK", "Avainsanat ja muut sanamuodot", x.k, 2, "Pilkuilla erotettuna, esim. kallis, hinta korkea, maksaa liikaa") +
+      '<button class="btn btn-primary" id="vlSave">Tallenna</button>' +
+      (!isNew && x.own ? '<button class="btn btn-ghost" id="vlDel" style="margin-top:8px;color:var(--bad)">Poista vastalause</button>' : '') +
+      (!isNew && x.builtin && x.edited ? '<button class="btn btn-ghost" id="vlReset" style="margin-top:8px;">Palauta alkuperäinen teksti</button>' : '') +
+      (!isNew && x.builtin ? '<button class="btn btn-ghost" id="vlHide" style="margin-top:8px;color:var(--bad)">Poista listalta</button>' : '') +
+      '<button class="btn btn-ghost" id="vlCancel" style="margin-top:8px;">Peruuta</button>';
+    var c = ov.card;
+    c.querySelector("#vlSave").addEventListener("click", function () {
+      var v = {
+        t: c.querySelector("#vlT").value.trim().replace(/^[”“"]+|[”“"]+$/g, ""),
+        cat: c.querySelector("#vlC").value,
+        m: c.querySelector("#vlM").value.trim(), a: c.querySelector("#vlA").value.trim(),
+        q: c.querySelector("#vlQq").value.trim(), c: c.querySelector("#vlCc").value.trim(),
+        k: c.querySelector("#vlK").value.trim()
+      };
+      if (!v.t) { showToast("Kirjoita vastalause ensin"); return; }
+      if (isNew) st.own.unshift(Object.assign({ id: "own-" + genId() }, v));
+      else if (x.own) { var i = st.own.findIndex(function (o) { return o.id === x.id; }); if (i !== -1) st.own[i] = Object.assign({ id: x.id }, v); }
+      else st.edits[x.id] = v;
+      vlSave(); closeOverlay(ov); render(); showToast(isNew ? "Vastalause lisätty" : "Tallennettu");
+    });
+    var del = c.querySelector("#vlDel");
+    if (del) del.addEventListener("click", function () {
+      if (del.getAttribute("data-armed") !== "1") { del.setAttribute("data-armed", "1"); del.textContent = "Vahvista poisto"; return; }
+      st.own = st.own.filter(function (o) { return o.id !== x.id; }); delete st.fav[x.id];
+      vlSave(); closeOverlay(ov); render(); showToast("Vastalause poistettu");
+    });
+    var rs = c.querySelector("#vlReset");
+    if (rs) rs.addEventListener("click", function () { delete st.edits[x.id]; vlSave(); closeOverlay(ov); render(); showToast("Alkuperäinen palautettu"); });
+    var hd = c.querySelector("#vlHide");
+    if (hd) hd.addEventListener("click", function () {
+      st.hidden[x.id] = 1; vlSave(); closeOverlay(ov); render(); showToast("Poistettu listalta. Palautus sivun alareunasta.");
+    });
+    c.querySelector("#vlCancel").addEventListener("click", function () { closeOverlay(ov); });
   }
 
   // ---------- Nav + init ----------
