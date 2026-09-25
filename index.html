@@ -963,6 +963,166 @@
     header.top .brand { display: none; }
     header.top { background: none; }
   }
+
+  /* ---------- Päivän johtamispaneeli ---------- */
+  .home-col { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  main.view-home { gap: 14px; }
+  .day-panel { display: flex; flex-direction: column; align-items: stretch; gap: 14px; }
+  .dp-lbl { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+  .dp-big { display: flex; align-items: baseline; gap: 8px; margin-top: 2px; }
+  .dp-big b { font-family: var(--font-display); font-size: 44px; font-weight: 600; line-height: 1; }
+  .dp-big span { font-size: 15px; color: var(--text-dim); font-weight: 600; }
+  .dp-bar { height: 8px; background: var(--surface-2); border-radius: 99px; overflow: hidden; margin: 10px 0 8px; }
+  .dp-bar i { display: block; height: 100%; background: var(--accent-fill); border-radius: 99px; transition: width .4s ease; }
+  .dp-msg { font-size: 14px; color: var(--text-dim); line-height: 1.4; }
+  .dp-msg b { color: var(--text); }
+  .dp-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+  .dp-grid > div { background: var(--surface-2); border-radius: 10px; padding: 9px 8px; min-width: 0; }
+  .dp-grid b { display: block; font-family: var(--font-display); font-size: 22px; font-weight: 600; line-height: 1.1; white-space: nowrap; }
+  .dp-grid b small { font-size: 13px; color: var(--text-dim); font-weight: 500; }
+  .dp-grid b em { font-style: normal; font-size: 12px; margin-left: 3px; vertical-align: 3px; }
+  .dp-grid b.hr.up { color: var(--good); }
+  .dp-grid b.hr.down { color: var(--bad); }
+  .dp-grid span { display: block; font-size: 11px; color: var(--text-dim); margin-top: 2px; line-height: 1.25; }
+  .dp-foot { font-size: 13px; color: var(--text-dim); border-top: 1px solid var(--border); padding-top: 10px; }
+  .dp-foot b { color: var(--text); }
+  .big-add { font-size: 17px; padding: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 14px; }
+  .big-add .pl { font-size: 24px; line-height: 0; font-weight: 500; }
+
+  .todo-sum { display: flex; flex-direction: column; margin-top: 6px; }
+  .todo-row { display: flex; align-items: center; gap: 12px; background: none; border: none; border-top: 1px solid var(--border); padding: 10px 2px; color: var(--text); font-family: var(--font-body); font-size: 14px; text-align: left; cursor: pointer; }
+  .todo-row:first-child { border-top: none; }
+  .todo-row b { font-family: var(--font-display); font-size: 22px; font-weight: 600; min-width: 28px; }
+  .todo-row span { flex: 1; min-width: 0; }
+  .todo-row i, .todo-item i { font-style: normal; color: var(--text-faint); font-size: 20px; }
+  .todo-row.hot b { color: var(--accent); }
+  .todo-row.warn b { color: var(--gold); }
+  .todo-list { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+  .todo-item, .pick-list .todo-item { display: flex; align-items: center; gap: 10px; width: 100%; background: var(--surface-2); border: 1px solid transparent; border-radius: 10px; padding: 10px 12px; color: var(--text); font-family: var(--font-body); text-align: left; cursor: pointer; }
+  .todo-item:hover { border-color: var(--accent); }
+  .ti-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+  .ti-t { font-weight: 700; font-size: 14.5px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .ti-s { font-size: 12.5px; color: var(--text-dim); display: flex; flex-wrap: wrap; align-items: center; gap: 2px 0; }
+  .todo-more { background: none; border: none; color: var(--accent); font-weight: 700; font-size: 13px; padding: 8px 0 0; cursor: pointer; font-family: var(--font-body); text-align: left; }
+  .todo-empty { font-size: 13px; color: var(--text-dim); line-height: 1.45; margin-top: 8px; }
+  .pick-list { display: flex; flex-direction: column; gap: 6px; }
+
+  .sc-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; padding: 2px 8px 2px 3px; border-radius: 99px; white-space: nowrap; }
+  .sc-badge b { font-family: var(--font-display); font-size: 12px; font-weight: 600; background: rgba(255,255,255,.18); border-radius: 99px; padding: 0 5px; min-width: 20px; text-align: center; }
+  .sc-badge.hot { background: var(--accent-fill); color: var(--on-accent); }
+  .sc-badge.act { background: var(--gold-dim); color: var(--gold); }
+  .sc-badge.act b { background: var(--gold-dim); }
+  .sc-badge.fol { background: var(--surface-2); color: var(--text-dim); border: 1px solid var(--border); }
+  .sc-badge.fol b { background: var(--border); }
+  .st-chip { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 6px; background: var(--surface); border: 1px solid var(--border); color: var(--text-dim); }
+  .st-chip.st-k { color: var(--ser-b); border-color: var(--ser-b); }
+  .st-chip.st-r { color: var(--gold); border-color: var(--gold); }
+  .st-chip.st-d { color: var(--good); border-color: transparent; background: var(--good-dim); }
+  .st-chip.st-l { color: var(--text-faint); }
+  .ti-s .sep, .offer-row .sub .sep { font-style: normal; color: var(--text-faint); margin: 0 5px; }
+  .nd.late, .vo.late { color: var(--bad); font-weight: 700; }
+  .nd.today { color: var(--accent); font-weight: 700; }
+  .nd.none { color: var(--text-faint); font-style: italic; }
+
+  .tr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+  .tr-grid > div { background: var(--surface-2); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; }
+  .tr-grid span { font-size: 12px; color: var(--text-dim); }
+  .tr-grid b { font-family: var(--font-display); font-size: 26px; font-weight: 600; line-height: 1.15; }
+  .tr-grid em { font-style: normal; font-size: 12.5px; font-weight: 700; }
+  .tr-grid em.up { color: var(--good); } .tr-grid em.down { color: var(--bad); } .tr-grid em.flat { color: var(--text-faint); }
+  .tr-note { font-size: 12px; color: var(--text-faint); margin-top: 8px; line-height: 1.4; }
+
+  .vr-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .vr-head h2 { margin: 0; }
+  .vr-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+  .vr-row > span { width: 48px; font-size: 13px; color: var(--text-dim); flex-shrink: 0; }
+  .vr-scale { display: flex; gap: 5px; flex: 1; }
+  .vr-scale button { flex: 1; min-width: 0; height: 36px; border-radius: 9px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); font-family: var(--font-body); font-weight: 700; font-size: 14px; cursor: pointer; padding: 0 4px; }
+  .vr-scale.fo button { font-size: 12.5px; }
+  .vr-scale button.on { background: var(--accent-fill); border-color: var(--accent-fill); color: var(--on-accent); }
+  .vr-in { width: 100%; margin: 12px 0 10px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 10px; padding: 10px 12px; font-family: var(--font-body); font-size: 14px; }
+  .vr-sum { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 8px; font-size: 13.5px; color: var(--text-dim); }
+  .vr-sum b { color: var(--text); font-family: var(--font-display); font-size: 18px; font-weight: 600; }
+  .vr-note { font-size: 13.5px; margin-top: 8px; padding: 8px 10px; border-left: 3px solid var(--accent-fill); background: var(--surface-2); border-radius: 0 8px 8px 0; }
+  .vr-corr { font-size: 12px; color: var(--text-faint); margin-top: 10px; line-height: 1.4; }
+  .vr-corr b { color: var(--text); }
+
+  table.src tr.best td { background: var(--accent-dim); }
+  table.src tr.best td:first-child { border-radius: 6px 0 0 6px; }
+  table.src tr.best td:last-child { border-radius: 0 6px 6px 0; }
+  .best-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--accent); margin-left: 4px; }
+  .src-kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+  .src-kpis > div { background: var(--surface-2); border-radius: 10px; padding: 9px 12px; }
+  .src-kpis span { display: block; font-size: 12px; color: var(--text-dim); }
+  .src-kpis b { font-family: var(--font-display); font-size: 20px; font-weight: 600; }
+  .src-kpis small { display: block; font-size: 11px; color: var(--text-faint); }
+  .src-lost { font-size: 12.5px; color: var(--text-dim); margin-top: 10px; }
+
+  /* ---------- Tarjoukset-näkymä ---------- */
+  .src-pick > span:first-child { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .src-pick .tc { font-size: 11.5px; color: var(--text-dim); font-weight: 500; }
+  .of-seg { display: flex; gap: 4px; background: var(--surface-2); border-radius: 10px; padding: 3px; margin: 4px 0 6px; }
+  .of-seg button { flex: 1; background: none; border: none; border-radius: 8px; padding: 8px 4px; font-family: var(--font-body); font-size: 12.5px; font-weight: 700; color: var(--text-dim); cursor: pointer; white-space: nowrap; }
+  .of-seg button b { color: var(--accent); margin-left: 2px; }
+  .of-seg button.on { background: var(--surface); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,.15); }
+  .offer-row .meta { background: none; border: none; padding: 0; color: var(--text); text-align: left; font-family: var(--font-body); cursor: pointer; flex: 1; display: flex; flex-direction: column; gap: 3px; }
+  .offer-row .meta .src { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; white-space: normal; }
+  .offer-row .meta .sub { font-size: 12.5px; color: var(--text-dim); display: flex; flex-wrap: wrap; align-items: center; gap: 2px 0; }
+  .offer-row .meta .date { font-size: 11.5px; color: var(--text-faint); }
+  .offer-row.is-lost .meta .src { color: var(--text-dim); }
+  .del-btn.confirm { width: auto; padding: 0 10px; color: var(--on-accent); background: var(--bad); border-color: var(--bad); font-size: 12px; font-weight: 700; font-family: var(--font-body); }
+  .deal-btn .short { display: none; }
+  @media (max-width: 400px) { .deal-btn .long { display: none; } .deal-btn .short { display: inline; } .deal-btn { padding: 0 10px; } }
+  body.fab-on #toast { bottom: calc(150px + env(safe-area-inset-bottom)); }
+  #fabAdd.away { opacity: 0; pointer-events: none; transform: translateY(12px); }
+  #fabAdd { transition: opacity .2s ease, transform .2s ease; }
+
+  /* ---------- Tarjouskortti ja pikakirjaus ---------- */
+  .qa-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .qa-head h3 { font-family: var(--font-display); font-size: 20px; font-weight: 600; margin: 0; }
+  .ov-x { background: var(--surface-2); border: 1px solid var(--border); color: var(--text); width: 36px; height: 36px; border-radius: 10px; cursor: pointer; font-size: 15px; flex-shrink: 0; }
+  .qa-card .add-sub, .oe-card .add-sub { margin-top: 4px; line-height: 1.45; }
+  .oe-sec { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-dim); margin: 16px 0 8px; }
+  .oe-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .oe-chips button { background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 999px; padding: 8px 13px; font-family: var(--font-body); font-size: 13.5px; font-weight: 600; cursor: pointer; }
+  .oe-chips.small button { padding: 6px 11px; font-size: 12.5px; }
+  .oe-chips button.on { background: var(--accent-fill); border-color: var(--accent-fill); color: var(--on-accent); }
+  .oe-chips[data-g="st"] button[data-v="d"].on { background: var(--good); border-color: var(--good); color: #fff; }
+  .oe-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10px; margin-top: 12px; }
+  .oe-f { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; min-width: 0; }
+  .oe-f label { font-size: 12.5px; color: var(--text-dim); font-weight: 600; }
+  .oe-f input { width: 100%; min-width: 0; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 10px; padding: 10px 11px; font-family: var(--font-body); font-size: 15px; }
+  .oe-f input:focus { outline: none; border-color: var(--accent); }
+  .oe-card > .oe-f { margin-top: 10px; }
+  .oe-hint { font-size: 11.5px; color: var(--text-faint); margin: 0; line-height: 1.4; }
+  .oe-warn { font-size: 13px; background: var(--gold-dim); color: var(--gold); border-radius: 10px; padding: 10px 12px; margin-top: 10px; }
+  .oe-score { display: flex; align-items: flex-end; gap: 10px; flex-wrap: wrap; }
+  .oe-score .oe-f { width: 120px; margin-bottom: 0; }
+  .oe-sb { padding-bottom: 10px; }
+  .oe-score .btn { margin-left: auto; }
+  .oe-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 18px; }
+  #oeDel { color: var(--text-dim); }
+  #oeDel.confirm { color: var(--on-accent); background: var(--bad); border-color: var(--bad); }
+  @media (max-width: 360px) { .oe-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- Liidi → tarjous ---------- */
+  .ld-link { display: flex; flex-direction: column; gap: 10px; }
+  .ld-link .ll-t { font-size: 13.5px; color: var(--text-dim); line-height: 1.4; }
+  .ld-link .ll-t b { color: var(--text); }
+  .ld-link .ll-a { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* ---------- Kelluva kirjausnappi (puhelin) ---------- */
+  #fabAdd { position: fixed; right: 16px; bottom: calc(84px + env(safe-area-inset-bottom)); z-index: 40; height: 54px; padding: 0 20px 0 16px; border-radius: 99px; border: none;
+    background: var(--accent-fill); color: var(--on-accent); font-family: var(--font-body); font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 6px;
+    box-shadow: 0 10px 24px -8px var(--accent-fill), 0 2px 6px rgba(0,0,0,.25); cursor: pointer; }
+  #fabAdd .pl { font-size: 26px; line-height: 0; font-weight: 400; }
+  body.fab-on main { padding-bottom: 84px; }
+  @media (min-width: 900px) {
+    #fabAdd { display: none; }
+    body.fab-on main { padding-bottom: 48px; }
+    main.view-home { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: start; gap: 18px; }
+    main.view-home > .home-col { grid-column: auto; grid-row: auto; }
+  }
 </style>
 </head>
 <body>
@@ -1011,7 +1171,7 @@
     </button>
     <button data-tab="add">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
-      Lisää
+      Tarjoukset
     </button>
     <button data-tab="leaderboard">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M7 6H4a2 2 0 0 0 2 4M17 6h3a2 2 0 0 1-2 4"/></svg>
@@ -1023,6 +1183,7 @@
     </button>
   </nav>
 </div>
+<button type="button" id="fabAdd" class="hidden" aria-label="Kirjaa tarjous"><span class="pl">+</span> Kirjaa tarjous</button>
 <div id="toast"></div>
 
 <script>
@@ -1058,7 +1219,9 @@
     leaderboardDocs: [],
     leaderboardLoaded: false,
     leaderboardTimer: null,
-    historyExpanded: null
+    historyExpanded: null,
+    offerFilter: "avoimet",
+    vireEdit: false
   };
 
   // Local authoritative offers array (current month) + serialized write
@@ -1265,7 +1428,8 @@
     state.guest = true;
     guestMem = {};
     // Tyhjennä välimuistit, jotta vierailija ei näe aiemman käyttäjän laitteelle tallennettuja tietoja.
-    rf = null; vt.loaded = null; vt.a = {}; rk.overlay = null; vl.store = null; vl.index = null; lead.answers = {};
+    rf = null; vt.loaded = null; vt.a = {}; rk.overlay = null; vl.store = null; vl.index = null; lead.answers = {}; lead.target = null;
+    dcache = {}; dfail = {}; cryptoKeyP = null;
     var mk = state.monthKey, months = {};
     months[mk] = { monthKey: mk, workDays: 20, targetOffers: 40, offers: [] };
     state.profile = { nickname: "Vierailija", company: "Kokeilutila", months: months };
@@ -1287,6 +1451,7 @@
     state.profile = null;
     state.pin = null;
     localOffers = null;
+    dcache = {}; dfail = {}; cryptoKeyP = null; lead.target = null;
     deletedIds = {};
     state.authMode = "login";
     state.authError = "";
@@ -1441,7 +1606,9 @@
       if (doc && doc.offers && doc.offers.length > 0) {
         patch[key] = {
           monthKey: key, workDays: doc.workDays, targetOffers: doc.targetOffers,
-          bySourceCounts: offersToCounts(doc.offers), offers: []
+          bySourceCounts: offersToCounts(doc.offers), offers: [],
+          // Avoimet tarjoukset siirtyvät mukana, jotta niiden follow-up ei katoa kuun vaihtuessa.
+          carry: (doc.carry || []).concat(doc.offers.filter(function (o) { return isActive(o); }))
         };
         changed = true;
       }
@@ -1530,6 +1697,522 @@
     };
   }
 
+  // ---------- Follow-up: tarjouksen tila, lisätiedot ja salaus ----------
+  // Tarjous: { id, ts, source, closed, closedTs, st, nd, vo, sc, lr, ex }
+  //   st = o avoin | k koeajo | r rahoitus kesken | d kauppa | l hävitty
+  //   nd = seuraavan toimenpiteen päivä (YYYY-MM-DD), vo = tarjous voimassa asti
+  //   sc = liidipisteet 0–100, lr = hävityksen syy
+  //   ex = salattu { c: asiakastunniste, car, sum, kate, na: seuraava toimenpide }
+  // Salaus tehdään selaimessa PIN-koodista johdetulla avaimella, joten tulostaulun
+  // kautta muille näkyy vain lukukelvoton merkkijono.
+  var ST_LABEL = { o: "Avoin", k: "Koeajo", r: "Rahoitus kesken", d: "Kauppa", l: "Hävitty" };
+  var ST_ORDER = ["o", "k", "r", "d", "l"];
+  var LOST_REASONS = [
+    { k: "hinta", t: "Hinta" }, { k: "rahoitus", t: "Rahoitus" }, { k: "vaihtoauto", t: "Vaihtoauto" },
+    { k: "eitav", t: "Ei tavoitettu" }, { k: "muualta", t: "Osti muualta" }, { k: "muu", t: "Muu" }
+  ];
+  var NEXT_ACTIONS = ["Soita", "Koeajo", "Rahoituspäätös", "Päivitä tarjous", "Vaihtoauton arvio"];
+
+  function ostat(o) { return o.closed ? "d" : (o.st && o.st !== "d" ? o.st : "o"); }
+  function isActive(o) { var s = ostat(o); return s !== "d" && s !== "l"; }
+
+  var dcache = {};     // id -> purettu lisätieto-objekti
+  var dfail = {};      // id -> purku epäonnistui (esim. väärä PIN)
+  var decrypting = false;
+  var cryptoKeyP = null, cryptoKeyFor = null;
+  var CRYPTO_OK = !!(window.crypto && window.crypto.subtle && window.TextEncoder);
+
+  function ckey() {
+    var nick = String((state.profile && state.profile.nickname) || "").toLowerCase();
+    var id = nick + "|" + state.pin;
+    if (cryptoKeyP && cryptoKeyFor === id) return cryptoKeyP;
+    cryptoKeyFor = id;
+    var enc = new TextEncoder();
+    cryptoKeyP = crypto.subtle.importKey("raw", enc.encode(String(state.pin)), "PBKDF2", false, ["deriveKey"]).then(function (base) {
+      return crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: enc.encode("tarjousseuranta|" + nick), iterations: 150000, hash: "SHA-256" },
+        base, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]);
+    });
+    return cryptoKeyP;
+  }
+  function u8ToB64(u8) { var s = ""; for (var i = 0; i < u8.length; i++) s += String.fromCharCode(u8[i]); return btoa(s); }
+  function b64ToU8(s) { var b = atob(s), u = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
+  function encObj(obj) {
+    if (!CRYPTO_OK || !state.pin) return Promise.reject(new Error("no_crypto"));
+    var iv = crypto.getRandomValues(new Uint8Array(12));
+    return ckey().then(function (k) {
+      return crypto.subtle.encrypt({ name: "AES-GCM", iv: iv }, k, new TextEncoder().encode(JSON.stringify(obj)));
+    }).then(function (ct) {
+      var c = new Uint8Array(ct), all = new Uint8Array(iv.length + c.length);
+      all.set(iv, 0); all.set(c, iv.length);
+      return "v1:" + u8ToB64(all);
+    });
+  }
+  function decObj(str) {
+    if (!CRYPTO_OK || !state.pin || typeof str !== "string" || str.indexOf("v1:") !== 0) return Promise.reject(new Error("bad"));
+    var all = b64ToU8(str.slice(3));
+    return ckey().then(function (k) {
+      return crypto.subtle.decrypt({ name: "AES-GCM", iv: all.slice(0, 12) }, k, all.slice(12));
+    }).then(function (pt) { return JSON.parse(new TextDecoder().decode(pt)); });
+  }
+  function hasDetails(d) {
+    return !!d && Object.keys(d).some(function (k) { return d[k] !== "" && d[k] !== null && d[k] !== undefined; });
+  }
+
+  // Kaikki tarjoukset, joita voi vielä hoitaa: kuluvan kuun tarjoukset + aiemmilta
+  // kuukausilta siirtyneet avoimet (doc.carry).
+  function offerRefs() {
+    var months = (state.profile && state.profile.months) || {};
+    var out = [];
+    Object.keys(months).forEach(function (mk) {
+      if (!/^\d{4}-\d{2}$/.test(mk)) return;
+      var doc = months[mk] || {};
+      if (mk === state.monthKey) (doc.offers || []).forEach(function (o) { out.push({ o: o, mk: mk }); });
+      else (doc.carry || []).forEach(function (o) { out.push({ o: o, mk: mk }); });
+    });
+    return out;
+  }
+  function findRef(mk, id) {
+    var r = offerRefs().filter(function (x) { return x.mk === mk && x.o.id === id; });
+    return r[0] || null;
+  }
+
+  function decryptAll() {
+    if (decrypting || state.guest || !CRYPTO_OK || !state.pin || state.authStatus !== "ready") return;
+    var todo = [];
+    offerRefs().forEach(function (r) { if (r.o.ex && !dcache[r.o.id] && !dfail[r.o.id]) todo.push({ key: r.o.id, ex: r.o.ex }); });
+    var months = (state.profile && state.profile.months) || {};
+    Object.keys(months).forEach(function (mk) {
+      var vr = (months[mk] && months[mk].vr) || {};
+      Object.keys(vr).forEach(function (dd) {
+        var key = "vr:" + mk + ":" + dd;
+        if (vr[dd] && vr[dd].ne && !dcache[key] && !dfail[key]) todo.push({ key: key, ex: vr[dd].ne });
+      });
+    });
+    if (!todo.length) return;
+    decrypting = true;
+    Promise.all(todo.map(function (t) {
+      return decObj(t.ex).then(function (d) { dcache[t.key] = d || {}; }, function () { dfail[t.key] = true; });
+    })).then(function () {
+      decrypting = false;
+      if (state.authStatus === "ready" && !document.querySelector(".ov-back")) {
+        var y = window.scrollY; render(); window.scrollTo(0, y);
+      }
+    });
+  }
+
+  // Päivitä yksi tarjous (kuluva kuu tai siirtynyt) ja tallenna.
+  function patchOffer(mk, id, changes) {
+    if (mk === state.monthKey) {
+      if (!localOffers) localOffers = (curMonthDoc() && curMonthDoc().offers) ? curMonthDoc().offers.slice() : [];
+      var idx = localOffers.findIndex(function (o) { return o.id === id; });
+      if (idx === -1) return Promise.resolve();
+      localOffers = localOffers.slice();
+      localOffers[idx] = Object.assign({}, localOffers[idx], changes);
+      setLocalOffersOnProfile();
+      render();
+      var patch = {}; patch[state.monthKey] = { offers: localOffers.slice() };
+      return queueSaveMonths(patch);
+    }
+    var months = Object.assign({}, state.profile.months);
+    var doc = Object.assign({}, months[mk]);
+    var carry = (doc.carry || []).slice();
+    var i = carry.findIndex(function (o) { return o.id === id; });
+    if (i === -1) return Promise.resolve();
+    var before = carry[i], after = Object.assign({}, before, changes);
+    var counts = (doc.bySourceCounts || []).map(function (c) { return Object.assign({}, c); });
+    if (!before.closed && after.closed) {
+      var c = counts.filter(function (x) { return x.sourceId === after.source; })[0];
+      if (c) c.dealCount++; else counts.push({ sourceId: after.source, offerCount: 1, dealCount: 1 });
+    }
+    if (isActive(after)) carry[i] = after; else carry.splice(i, 1);
+    doc.carry = carry; doc.bySourceCounts = counts;
+    months[mk] = doc;
+    state.profile = Object.assign({}, state.profile, { months: months });
+    render();
+    var p = {}; p[mk] = { carry: carry, bySourceCounts: counts };
+    return queueSaveMonths(p);
+  }
+
+  function removeCarried(mk, id) {
+    var months = Object.assign({}, state.profile.months);
+    var doc = Object.assign({}, months[mk]);
+    var carry = (doc.carry || []).slice();
+    var i = carry.findIndex(function (o) { return o.id === id; });
+    if (i === -1) return Promise.resolve();
+    var o = carry[i];
+    carry.splice(i, 1);
+    var counts = (doc.bySourceCounts || []).map(function (c) { return Object.assign({}, c); });
+    var c = counts.filter(function (x) { return x.sourceId === o.source; })[0];
+    if (c) { c.offerCount = Math.max(0, c.offerCount - 1); if (o.closed) c.dealCount = Math.max(0, c.dealCount - 1); }
+    doc.carry = carry; doc.bySourceCounts = counts; months[mk] = doc;
+    state.profile = Object.assign({}, state.profile, { months: months });
+    render();
+    var p = {}; p[mk] = { carry: carry, bySourceCounts: counts };
+    return queueSaveMonths(p);
+  }
+
+  function setOfferStatus(mk, id, st) {
+    var r = findRef(mk, id); if (!r) return Promise.resolve();
+    var ch = { st: st };
+    if (st === "d") { ch.closed = true; ch.closedTs = r.o.closedTs || new Date().toISOString(); }
+    else { ch.closed = false; ch.closedTs = null; }
+    if (st !== "l") ch.lr = null;
+    return patchOffer(mk, id, ch);
+  }
+
+  // Tallenna lisätiedot: salaa ja päivitä samalla muut kentät.
+  function saveOfferDetails(mk, id, changes, details) {
+    var d = {};
+    Object.keys(details || {}).forEach(function (k) { if (details[k] !== "" && details[k] !== null && details[k] !== undefined) d[k] = details[k]; });
+    dcache[id] = d; delete dfail[id];
+    if (!hasDetails(d)) return patchOffer(mk, id, Object.assign({}, changes, { ex: null }));
+    if (state.guest) return patchOffer(mk, id, changes);
+    return encObj(d).then(function (ex) {
+      return patchOffer(mk, id, Object.assign({}, changes, { ex: ex }));
+    });
+  }
+
+  // ---------- Päivämäärät ----------
+  function ymd(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function todayYmd() { return ymd(new Date()); }
+  function addDaysYmd(n) { var d = new Date(); d.setDate(d.getDate() + n); return ymd(d); }
+  function ymdToDate(s) { var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function dayDiff(s) { return Math.round((ymdToDate(s) - ymdToDate(todayYmd())) / 86400000); }
+  var WD_SHORT = ["su", "ma", "ti", "ke", "to", "pe", "la"];
+  function fmtYmd(s) { var d = ymdToDate(s); return WD_SHORT[d.getDay()] + " " + d.getDate() + "." + (d.getMonth() + 1) + "."; }
+  function relDay(s) {
+    if (!s) return "";
+    var n = dayDiff(s);
+    if (n < 0) return "Myöhässä " + (-n) + " pv";
+    if (n === 0) return "Tänään";
+    if (n === 1) return "Huomenna";
+    return fmtYmd(s);
+  }
+  function nextWeekday(n) { var d = new Date(); d.setDate(d.getDate() + n); while (!isWeekday(d)) d.setDate(d.getDate() + 1); return ymd(d); }
+  function nextMonday() { var d = new Date(); d.setDate(d.getDate() + ((8 - d.getDay()) % 7 || 7)); return ymd(d); }
+  function isoToYmd(iso) { return ymd(new Date(iso)); }
+
+  // ---------- Liidipisteiden merkki ----------
+  function scoreBadge(sc) {
+    if (sc === null || sc === undefined || sc === "") return "";
+    var cls = sc >= 85 ? "hot" : sc >= 60 ? "act" : "fol";
+    var t = sc >= 85 ? "Soita nyt" : sc >= 60 ? "Aktiivinen" : "Seuranta";
+    return '<span class="sc-badge ' + cls + '"><b>' + sc + '</b>' + t + '</span>';
+  }
+
+  // ---------- Tänään hoidettavat ----------
+  function dueInfo() {
+    var t = todayYmd(), tm = addDaysYmd(1);
+    var act = offerRefs().filter(function (r) { return isActive(r.o); });
+    var calls = act.filter(function (r) { return r.o.nd && r.o.nd <= t; });
+    var fin = act.filter(function (r) { return ostat(r.o) === "r"; });
+    var drive = act.filter(function (r) { return ostat(r.o) === "k"; });
+    var expiring = act.filter(function (r) { return r.o.vo && r.o.vo >= t && r.o.vo <= tm; });
+    var noStep = act.filter(function (r) { return !r.o.nd; });
+    function prio(r) {
+      var o = r.o, p = 0;
+      if (o.nd && o.nd < t) p += 3000 + dayDiff(o.nd) * -10;
+      else if (o.nd === t) p += 2000;
+      if (o.vo && o.vo >= t && o.vo <= tm) p += 1500;
+      if (ostat(o) === "r") p += 300;
+      if (ostat(o) === "k") p += 200;
+      p += (o.sc || 0);
+      return p;
+    }
+    var list = act.filter(function (r) {
+      var o = r.o;
+      return (o.nd && o.nd <= t) || (o.vo && o.vo >= t && o.vo <= tm);
+    }).sort(function (a, b) { return prio(b) - prio(a); });
+    return { act: act, calls: calls, fin: fin, drive: drive, expiring: expiring, noStep: noStep, list: list, prio: prio };
+  }
+
+  function offerTitle(o) {
+    var d = dcache[o.id];
+    if (d && d.c) return d.c;
+    if (o.ex && dfail[o.id]) return sourceLabel(o.source) + " (lukittu)";
+    return sourceLabel(o.source);
+  }
+  function offerSubHtml(o, opts) {
+    var d = dcache[o.id] || {};
+    var bits = [];
+    var s = ostat(o);
+    bits.push('<span class="st-chip st-' + s + '">' + ST_LABEL[s] + (s === "l" && o.lr ? ": " + lostLabel(o.lr) : "") + '</span>');
+    if (d.car) bits.push('<span>' + escapeHtml(d.car) + '</span>');
+    if (isActive(o) && o.nd) bits.push('<span class="nd' + (o.nd < todayYmd() ? ' late' : o.nd === todayYmd() ? ' today' : '') + '">' + escapeHtml((d.na ? d.na + " · " : "") + relDay(o.nd)) + '</span>');
+    else if (isActive(o) && !(opts && opts.noStepHint === false)) bits.push('<span class="nd none">Ei seuraavaa askelta</span>');
+    if (isActive(o) && o.vo) bits.push('<span class="vo' + (dayDiff(o.vo) <= 1 ? ' late' : '') + '">Voimassa ' + fmtYmd(o.vo) + '</span>');
+    return bits.join('<i class="sep">·</i>');
+  }
+  function lostLabel(k) { var r = LOST_REASONS.filter(function (x) { return x.k === k; })[0]; return r ? r.t : k; }
+
+  // ---------- Tarjouksen kirjaus (pikakirjaus) ----------
+  function todayCountBySource() {
+    var t = todayYmd(), m = {};
+    ((curMonthDoc() && curMonthDoc().offers) || []).forEach(function (o) { if (isoToYmd(o.ts) === t) m[o.source] = (m[o.source] || 0) + 1; });
+    return m;
+  }
+  function quickAddOffer(sourceId) {
+    if (!localOffers) localOffers = (curMonthDoc() && curMonthDoc().offers) ? curMonthDoc().offers.slice() : [];
+    var o = { id: genId(), ts: new Date().toISOString(), source: sourceId, closed: false, closedTs: null, st: "o" };
+    localOffers = localOffers.concat([o]);
+    setLocalOffersOnProfile();
+    render();
+    var patch = {}; patch[state.monthKey] = { offers: localOffers.slice() };
+    queueSaveMonths(patch).catch(function () { showToast("Tallennus epäonnistui"); });
+    return o;
+  }
+  function openQuickAdd() {
+    if (!curMonthDoc()) { state.tab = "home"; render(); showToast("Aseta ensin kuukauden tavoite"); return; }
+    var ov = buildOverlay();
+    ov.card.classList.add("qa-card");
+    var tc = todayCountBySource();
+    ov.card.innerHTML = '<div class="qa-head"><h3>Kirjaa tarjous</h3><button type="button" class="ov-x" aria-label="Sulje">✕</button></div>' +
+      '<p class="add-sub">Mistä tarjous tuli? Yksi painallus kirjaa sen.</p>' +
+      '<div class="src-grid">' + SOURCES.map(function (s) {
+        return '<button type="button" class="src-pick" data-s="' + s.id + '"><span><span class="l">' + s.label + '</span>' +
+          '<span class="tc">' + (tc[s.id] ? 'Tänään ' + tc[s.id] + ' kpl' : 'Tänään –') + '</span></span><span class="plus" aria-hidden="true">+</span></button>';
+      }).join("") + '</div>';
+    ov.card.querySelector(".ov-x").addEventListener("click", function () { closeOverlay(ov); });
+    Array.prototype.forEach.call(ov.card.querySelectorAll(".src-pick"), function (b) {
+      b.addEventListener("click", function () {
+        var sid = parseInt(b.getAttribute("data-s"), 10);
+        var o = quickAddOffer(sid);
+        closeOverlay(ov);
+        openOfferEditor(state.monthKey, o.id, { fresh: true });
+      });
+    });
+  }
+
+  // ---------- Tarjouskortti (muokkaus) ----------
+  function openOfferEditor(mk, id, opts) {
+    var r = findRef(mk, id); if (!r) return;
+    var o = r.o, d = Object.assign({}, dcache[o.id] || {});
+    var locked = o.ex && dfail[o.id];
+    var st = ostat(o), lr = o.lr || null, nd = o.nd || "", vo = o.vo || "", sc = (o.sc === 0 || o.sc) ? o.sc : "";
+    var ov = buildOverlay();
+    ov.card.classList.add("oe-card");
+    function field(id2, label, val, type, ph, extra) {
+      return '<div class="oe-f"><label for="' + id2 + '">' + label + '</label><input id="' + id2 + '" type="' + (type || "text") + '"' +
+        (ph ? ' placeholder="' + escapeHtml(ph) + '"' : '') + ' value="' + escapeHtml(val == null ? "" : val) + '"' + (extra || "") + '></div>';
+    }
+    function draw() {
+      ov.card.innerHTML =
+        '<div class="qa-head"><h3>' + (opts && opts.fresh ? 'Tarjous kirjattu ✓' : 'Tarjouskortti') + '</h3><button type="button" class="ov-x" aria-label="Sulje">✕</button></div>' +
+        '<p class="add-sub">' + escapeHtml(sourceLabel(o.source)) + ' · ' + fmtDate(o.ts) + (mk !== state.monthKey ? ' · ' + monthDisplay(mk) : '') +
+          (opts && opts.fresh ? '<br>Lisätiedot ovat vapaaehtoisia. Voit myös sulkea tämän heti.' : '') + '</p>' +
+        (locked ? '<div class="oe-warn">Lisätietoja ei saatu auki tällä PIN-koodilla. Jos tallennat, vanhat lisätiedot korvataan.</div>' : '') +
+        '<div class="oe-sec">Tila</div><div class="oe-chips" data-g="st">' + ST_ORDER.map(function (k) {
+          return '<button type="button" data-v="' + k + '" class="' + (st === k ? 'on' : '') + '">' + ST_LABEL[k] + '</button>';
+        }).join("") + '</div>' +
+        (st === "l" ? '<div class="oe-sec">Hävityksen syy</div><div class="oe-chips" data-g="lr">' + LOST_REASONS.map(function (x) {
+          return '<button type="button" data-v="' + x.k + '" class="' + (lr === x.k ? 'on' : '') + '">' + x.t + '</button>';
+        }).join("") + '</div>' : '') +
+        '<div class="oe-grid">' +
+          field("oeC", "Asiakas (tunniste)", d.c, "text", "esim. MK / Octavia-mies", ' maxlength="40" autocomplete="off"') +
+          field("oeCar", "Kiinnostava auto", d.car, "text", "esim. Skoda Octavia 2021", ' maxlength="50" autocomplete="off"') +
+          field("oeSum", "Tarjoussumma €", d.sum, "number", "", ' inputmode="numeric" min="0"') +
+          field("oeKate", "Arvioitu kate €", d.kate, "number", "", ' inputmode="numeric"') +
+        '</div>' +
+        '<p class="oe-hint">Älä kirjaa puhelinnumeroita, henkilötunnuksia tai koko nimeä. Lisätiedot salataan PIN-koodillasi.</p>' +
+        (st !== "d" && st !== "l" ?
+          '<div class="oe-sec">Seuraava toimenpide</div>' +
+          '<div class="oe-chips small" data-g="na">' + NEXT_ACTIONS.map(function (t) {
+            return '<button type="button" data-v="' + escapeHtml(t) + '" class="' + (d.na === t ? 'on' : '') + '">' + escapeHtml(t) + '</button>';
+          }).join("") + '</div>' +
+          field("oeNa", "Mitä sovittiin?", d.na, "text", "esim. Soita rahoituspäätöksestä", ' maxlength="60" autocomplete="off"') +
+          '<div class="oe-sec">Milloin?</div>' +
+          '<div class="oe-chips small" data-g="nd">' +
+            [["Tänään", todayYmd()], ["Huomenna", addDaysYmd(1)], ["+3 pv", nextWeekday(3)], ["Ensi ma", nextMonday()]].map(function (x) {
+              return '<button type="button" data-v="' + x[1] + '" class="' + (nd === x[1] ? 'on' : '') + '">' + x[0] + '</button>';
+            }).join("") +
+          '</div>' +
+          '<div class="oe-grid">' +
+            field("oeNd", "Päivä", nd, "date") +
+            field("oeVo", "Tarjous voimassa asti", vo, "date") +
+          '</div>' : '') +
+        '<div class="oe-sec">Liidipisteet</div>' +
+        '<div class="oe-score">' + field("oeSc", "Pisteet 0–100", sc, "number", "", ' inputmode="numeric" min="0" max="100" step="5"') +
+          '<div class="oe-sb">' + scoreBadge(sc === "" ? null : +sc) + '</div>' +
+          '<button type="button" class="btn btn-ghost btn-sm" id="oeLead">Pisteytä testillä</button></div>' +
+        '<div class="oe-actions">' +
+          '<button type="button" class="btn btn-primary" id="oeSave">Tallenna</button>' +
+          '<button type="button" class="btn btn-ghost" id="oeDel">Poista tarjous</button>' +
+        '</div>';
+      bind();
+    }
+    function readInputs() {
+      function v(sel) { var el = ov.card.querySelector(sel); return el ? el.value.trim() : undefined; }
+      var c = v("#oeC"), car = v("#oeCar"), sum = v("#oeSum"), kate = v("#oeKate"), na = v("#oeNa"), nd2 = v("#oeNd"), vo2 = v("#oeVo"), sc2 = v("#oeSc");
+      if (c !== undefined) d.c = c;
+      if (car !== undefined) d.car = car;
+      if (sum !== undefined) d.sum = sum === "" ? "" : Math.max(0, Math.round(+sum) || 0);
+      if (kate !== undefined) d.kate = kate === "" ? "" : Math.round(+kate) || 0;
+      if (na !== undefined) d.na = na;
+      if (nd2 !== undefined) nd = nd2;
+      if (vo2 !== undefined) vo = vo2;
+      if (sc2 !== undefined) sc = sc2 === "" ? "" : Math.max(0, Math.min(100, Math.round(+sc2) || 0));
+    }
+    function bind() {
+      ov.card.querySelector(".ov-x").addEventListener("click", function () { closeOverlay(ov); });
+      Array.prototype.forEach.call(ov.card.querySelectorAll(".oe-chips button"), function (b) {
+        b.addEventListener("click", function () {
+          readInputs();
+          var g = b.parentNode.getAttribute("data-g"), val = b.getAttribute("data-v");
+          if (g === "st") { st = val; if (st !== "l") lr = null; }
+          else if (g === "lr") lr = lr === val ? null : val;
+          else if (g === "na") d.na = d.na === val ? "" : val;
+          else if (g === "nd") nd = nd === val ? "" : val;
+          var y = ov.card.scrollTop; draw(); ov.card.scrollTop = y;
+        });
+      });
+      var scIn = ov.card.querySelector("#oeSc");
+      scIn.addEventListener("input", function () {
+        var n = scIn.value === "" ? null : Math.max(0, Math.min(100, Math.round(+scIn.value) || 0));
+        ov.card.querySelector(".oe-sb").innerHTML = scoreBadge(n);
+      });
+      ov.card.querySelector("#oeLead").addEventListener("click", function () {
+        readInputs();
+        doSave(false).then(function () {
+          closeOverlay(ov);
+          lead.target = { mk: mk, id: id };
+          lead.answers = {};
+          state.tab = "liidi"; render(); window.scrollTo(0, 0);
+        });
+      });
+      ov.card.querySelector("#oeSave").addEventListener("click", function () {
+        readInputs();
+        doSave(true).then(function () { closeOverlay(ov); });
+      });
+      ov.card.querySelector("#oeDel").addEventListener("click", function () {
+        var b = ov.card.querySelector("#oeDel");
+        if (!b.classList.contains("confirm")) { b.classList.add("confirm"); b.textContent = "Vahvista poisto"; return; }
+        closeOverlay(ov);
+        deleteAnyOffer(mk, id);
+      });
+    }
+    function doSave(toast) {
+      var ch = { st: st, nd: (st === "d" || st === "l") ? null : (nd || null), vo: (st === "d" || st === "l") ? null : (vo || null), lr: st === "l" ? lr : null, sc: sc === "" ? null : sc };
+      if (st === "d") { ch.closed = true; ch.closedTs = o.closedTs || new Date().toISOString(); }
+      else { ch.closed = false; ch.closedTs = null; }
+      var p = locked && !hasDetails(d) ? patchOffer(mk, id, ch) : saveOfferDetails(mk, id, ch, d);
+      return p.then(function () { if (toast) showToast(st === "d" ? "Kauppa merkitty" : "Tallennettu"); },
+        function () { showToast("Tallennus epäonnistui"); });
+    }
+    draw();
+  }
+
+  function deleteAnyOffer(mk, id) {
+    delete dcache[id];
+    var p = mk === state.monthKey ? deleteOffer(id) : removeCarried(mk, id);
+    return p.then(function () { showToast("Tarjous poistettu"); }, function () { showToast("Poisto epäonnistui"); });
+  }
+
+  // ---------- Viikkotrendi ----------
+  function weekStart(d) { var x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x; }
+  function weekTrend() {
+    var now = new Date();
+    var ws = weekStart(now), lws = new Date(ws); lws.setDate(lws.getDate() - 7);
+    var sameOffset = now - ws; // viime viikko samaan hetkeen asti
+    var lwe = new Date(lws.getTime() + sameOffset);
+    var detailed = [];
+    var months = (state.profile && state.profile.months) || {};
+    Object.keys(months).forEach(function (mk) { (months[mk].offers || []).concat(mk === state.monthKey ? [] : (months[mk].carry || [])).forEach(function (o) { detailed.push(o); }); });
+    var seen = {};
+    detailed = detailed.filter(function (o) { if (seen[o.id]) return false; seen[o.id] = true; return true; });
+    function cnt(a, b) {
+      var of = detailed.filter(function (o) { var t = new Date(o.ts); return t >= a && t < b; }).length;
+      var dl = detailed.filter(function (o) { if (!o.closed || !o.closedTs) return false; var t = new Date(o.closedTs); return t >= a && t < b; }).length;
+      return { o: of, d: dl };
+    }
+    var cur = cnt(ws, new Date(now.getTime() + 1));
+    var prev = cnt(lws, lwe);
+    // Jos viime viikko osuu edelliseen kuuhun, jonka tarjoukset on jo tiivistetty, vertailua ei voi tehdä.
+    var pmk = monthKeyOf(lws), pdoc = months[pmk];
+    var comparable = pmk === state.monthKey || !!(pdoc && pdoc.offers && pdoc.offers.length);
+    return { cur: cur, prev: comparable ? prev : null };
+  }
+
+  // ---------- Päivän vire ----------
+  var FOCI = [{ k: "t", t: "Tarjoukset" }, { k: "s", t: "Soitot" }, { k: "k", t: "Kaupat" }];
+  function vireToday() {
+    var doc = curMonthDoc(); var dd = String(new Date().getDate());
+    return (doc && doc.vr && doc.vr[dd]) || null;
+  }
+  function saveVire(entry, note) {
+    var doc = curMonthDoc(); if (!doc) return Promise.resolve();
+    var dd = String(new Date().getDate());
+    var key = "vr:" + state.monthKey + ":" + dd;
+    var p = (note && !state.guest) ? encObj({ n: note }).then(function (ne) { return ne; }, function () { return null; }) : Promise.resolve(null);
+    return p.then(function (ne) {
+      var e = Object.assign({}, entry);
+      if (ne) e.ne = ne;
+      dcache[key] = { n: note || "" };
+      var vr = Object.assign({}, doc.vr || {}); vr[dd] = e;
+      var months = Object.assign({}, state.profile.months);
+      months[state.monthKey] = Object.assign({}, months[state.monthKey], { vr: vr });
+      state.profile = Object.assign({}, state.profile, { months: months });
+      render();
+      var patch = {}; patch[state.monthKey] = { vr: vr };
+      return queueSaveMonths(patch);
+    });
+  }
+  function vireCorrelation() {
+    var doc = curMonthDoc(); if (!doc || !doc.vr) return null;
+    var byDay = {};
+    (doc.offers || []).forEach(function (o) { var d = new Date(o.ts); if (monthKeyOf(d) === state.monthKey) { var k = String(d.getDate()); byDay[k] = (byDay[k] || 0) + 1; } });
+    var today = String(new Date().getDate());
+    var hi = [], lo = [];
+    Object.keys(doc.vr).forEach(function (dd) {
+      if (dd === today) return;
+      var v = doc.vr[dd]; if (!v || !v.v) return;
+      (v.v >= 4 ? hi : lo).push(byDay[dd] || 0);
+    });
+    if (hi.length + lo.length < 5 || !hi.length || !lo.length) return { n: hi.length + lo.length };
+    function avg(a) { return a.reduce(function (x, y) { return x + y; }, 0) / a.length; }
+    return { n: hi.length + lo.length, hi: avg(hi), lo: avg(lo) };
+  }
+
+  // ---------- Liidipisteet tarjoukselle ----------
+  function leadLinkCard() {
+    var card = document.createElement("div");
+    card.className = "card ld-link";
+    var score = leadScore(), n = leadAnsweredCount();
+    var tr = lead.target ? findRef(lead.target.mk, lead.target.id) : null;
+    if (lead.target && !tr) lead.target = null;
+    if (tr) {
+      card.innerHTML = '<div class="ll-t">Pisteytät tarjousta: <b>' + escapeHtml(offerTitle(tr.o)) + '</b></div>' +
+        '<div class="ll-a"><button type="button" class="btn btn-primary btn-sm" id="llSave"' + (n ? '' : ' disabled') + '>Tallenna ' + score + ' pistettä tarjoukselle</button>' +
+        '<button type="button" class="btn btn-ghost btn-sm" id="llCancel">Peru</button></div>';
+      card.querySelector("#llSave").addEventListener("click", function () {
+        var t = lead.target; lead.target = null;
+        patchOffer(t.mk, t.id, { sc: score }).then(function () { showToast("Pisteet tallennettu"); }, function () { showToast("Tallennus epäonnistui"); });
+        state.tab = "add"; state.offerFilter = "avoimet"; render(); window.scrollTo(0, 0);
+      });
+      card.querySelector("#llCancel").addEventListener("click", function () { lead.target = null; render(); });
+      return card;
+    }
+    var act = offerRefs().filter(function (r) { return isActive(r.o); });
+    card.innerHTML = '<div class="ll-t">Liitä pisteet tarjoukseen, niin näet tarjouslistassa kenelle soittaa ensin.</div>' +
+      '<div class="ll-a"><button type="button" class="btn btn-ghost btn-sm" id="llPick"' + (n && act.length ? '' : ' disabled') + '>Tallenna ' + score + ' pistettä tarjoukselle…</button></div>';
+    card.querySelector("#llPick").addEventListener("click", function () {
+      var ov = buildOverlay();
+      ov.card.innerHTML = '<div class="qa-head"><h3>Mille tarjoukselle?</h3><button type="button" class="ov-x" aria-label="Sulje">✕</button></div>' +
+        '<div class="pick-list">' + act.sort(function (a, b) { return new Date(b.o.ts) - new Date(a.o.ts); }).map(function (r) {
+          return '<button type="button" class="todo-item" data-mk="' + r.mk + '" data-id="' + r.o.id + '"><span class="ti-main"><span class="ti-t">' + escapeHtml(offerTitle(r.o)) + scoreBadge(r.o.sc) + '</span>' +
+            '<span class="ti-s">' + offerSubHtml(r.o) + '</span></span><i>›</i></button>';
+        }).join("") + '</div>';
+      ov.card.querySelector(".ov-x").addEventListener("click", function () { closeOverlay(ov); });
+      Array.prototype.forEach.call(ov.card.querySelectorAll(".todo-item"), function (b) {
+        b.addEventListener("click", function () {
+          closeOverlay(ov);
+          patchOffer(b.getAttribute("data-mk"), b.getAttribute("data-id"), { sc: score }).then(function () { showToast("Pisteet tallennettu"); }, function () { showToast("Tallennus epäonnistui"); });
+        });
+      });
+    });
+    return card;
+  }
+
   // ---------- Render ----------
   function render() {
     var app = document.getElementById("app");
@@ -1541,6 +2224,8 @@
       app.classList.add("auth-mode");
       header.classList.add("hidden");
       tabbar.classList.add("hidden");
+      document.getElementById("fabAdd").classList.add("hidden");
+      document.body.classList.remove("fab-on");
       main.className = "auth-main";
       renderAuth(main);
       return;
@@ -1554,7 +2239,12 @@
     document.getElementById("monthLabel").textContent = monthDisplay(state.monthKey);
     var whoLabel = document.getElementById("whoLabel");
     whoLabel.textContent = state.guest ? "Vierailijatila · mitään ei tallenneta" : state.profile.nickname + (state.profile.company ? " · " + state.profile.company : "");
-    document.getElementById("guestEndBtn").classList.toggle("hidden", !state.guest);
+    document.getElementById("guestEndBtn").classList.add("hidden");
+    var fabOn = ["home", "leaderboard", "history"].indexOf(state.tab) !== -1 && !!curMonthDoc();
+    document.getElementById("fabAdd").classList.toggle("hidden", !fabOn);
+    document.body.classList.toggle("fab-on", fabOn);
+    if (state.tab !== "home") { document.getElementById("fabAdd").classList.remove("away"); if (bigAddObs) { bigAddObs.disconnect(); bigAddObs = null; } }
+    decryptAll();
     var settingsBtn = document.getElementById("settingsBtn");
     settingsBtn.style.display = state.tab === "home" ? "flex" : "none";
 
@@ -1682,47 +2372,318 @@
       main.appendChild(rkHomeButton());
       return;
     }
-    var stats = computeStats(curMonthDoc());
+    var doc = curMonthDoc();
+    var stats = computeStats(doc);
+    var colA = document.createElement("div"); colA.className = "home-col home-a";
+    var colB = document.createElement("div"); colB.className = "home-col home-b";
+    main.appendChild(colA); main.appendChild(colB);
 
-    var gcard = document.createElement("div");
-    gcard.className = "card gauge-card";
-    var r = 54, c = 2 * Math.PI * r;
-    var dash = c * stats.progressFrac;
-    var ringColor = stats.diff >= 0 ? "var(--good)" : "var(--accent)";
-    gcard.innerHTML =
-      '<div class="gauge-wrap">' +
-        '<svg viewBox="0 0 128 128">' +
-          '<circle class="ring-bg" cx="64" cy="64" r="' + r + '"></circle>' +
-          '<circle class="ring-fg" cx="64" cy="64" r="' + r + '" style="stroke:' + ringColor + ';stroke-dasharray:' + c + ';stroke-dashoffset:' + (c - dash) + '"></circle>' +
-        '</svg>' +
-        '<div class="gauge-center"><div class="num">' + stats.total + '</div><div class="den">/ ' + curMonthDoc().targetOffers + '</div></div>' +
+    // --- Päivän paneeli ---
+    var t = todayYmd();
+    var todayN = (doc.offers || []).filter(function (o) { return isoToYmd(o.ts) === t; }).length;
+    var now = new Date(), pm = parseMonthKey(state.monthKey);
+    var lastDay = new Date(pm.y, pm.m + 1, 0).getDate(), remWd = 0;
+    for (var i = now.getDate(); i <= lastDay; i++) if (isWeekday(new Date(pm.y, pm.m, i))) remWd++;
+    var beforeToday = stats.total - todayN;
+    var needLeft = Math.max(doc.targetOffers - beforeToday, 0);
+    var dailyNeed = isWeekday(now) ? Math.ceil(needLeft / Math.max(remWd, 1)) : 0;
+    var todayLeft = Math.max(dailyNeed - todayN, 0);
+    var missing = Math.max(doc.targetOffers - stats.total, 0);
+
+    // Hitraten suunta edelliseen kuukauteen verrattuna.
+    var prevKey = monthKeyOf(new Date(pm.y, pm.m - 1, 1));
+    var pt = monthTotals((state.profile.months || {})[prevKey]);
+    var prevRate = pt.total > 0 ? pt.closed / pt.total * 100 : null;
+    var arrow = "", arrowCls = "";
+    if (prevRate !== null && stats.total > 0) {
+      var dr = stats.hitRate - prevRate;
+      if (dr >= 1) { arrow = "▲"; arrowCls = "up"; } else if (dr <= -1) { arrow = "▼"; arrowCls = "down"; }
+    }
+    var dayFrac = dailyNeed > 0 ? Math.min(todayN / dailyNeed, 1) : (todayN > 0 ? 1 : 0);
+
+    var panel = document.createElement("div");
+    panel.className = "card gauge-card day-panel";
+    panel.innerHTML =
+      '<div class="dp-today">' +
+        '<div class="dp-lbl">Tänään</div>' +
+        '<div class="dp-big"><b>' + todayN + '</b><span>/ ' + dailyNeed + ' tarjousta</span></div>' +
+        '<div class="dp-bar"><i style="width:' + Math.round(dayFrac * 100) + '%"></i></div>' +
+        '<div class="dp-msg">' + (!isWeekday(now) ? 'Viikonloppu. Tavoite lasketaan arkipäiville.' :
+          todayLeft > 0 ? 'Tänään tarvitset vielä <b>' + todayLeft + '</b> ' + (todayLeft === 1 ? 'tarjouksen' : 'tarjousta') + '.' :
+          dailyNeed > 0 ? 'Päivän tavoite täynnä. Jokainen lisätarjous kirii kuukautta.' : 'Kuukauden tavoite on täynnä.') + '</div>' +
       '</div>' +
-      '<div class="gauge-side">' +
-        paceTagHtml(stats) +
-        '<div class="detail">' + paceDetailHtml(stats) + '</div>' +
-      '</div>';
-    main.appendChild(gcard);
-    main.appendChild(rkHomeButton());
+      '<div class="dp-grid">' +
+        '<div><b>' + stats.total + '<small>/' + doc.targetOffers + '</small></b><span>Tarjoukset kk</span></div>' +
+        '<div><b>' + stats.closed + '</b><span>Kaupat</span></div>' +
+        '<div><b class="hr ' + arrowCls + '">' + (stats.total > 0 ? Math.round(stats.hitRate) + '%' : '–') + (arrow ? '<em>' + arrow + '</em>' : '') + '</b><span>Hitrate' + (prevRate !== null ? ' (ed. ' + Math.round(prevRate) + '%)' : '') + '</span></div>' +
+        '<div><b>' + missing + '</b><span>Puuttuu</span></div>' +
+      '</div>' +
+      '<div class="dp-foot">' + (missing > 0 ? 'Tavoitteesta puuttuu <b>' + missing + '</b> ' + (missing === 1 ? 'tarjous' : 'tarjousta') + ' · ' + remWd + ' arkipäivää jäljellä' : 'Kuukauden tavoite saavutettu.') + '</div>';
+    colA.appendChild(panel);
 
-    var srow = document.createElement("div");
-    srow.className = "stat-row";
-    srow.innerHTML =
-      '<div class="stat-box"><div class="n">' + stats.closed + '</div><div class="l">Kauppaa</div></div>' +
-      '<div class="stat-box"><div class="n">' + (stats.total > 0 ? Math.round(stats.hitRate) + '%' : '–') + '</div><div class="l">Hitrate</div></div>' +
-      '<div class="stat-box"><div class="n">' + curMonthDoc().workDays + '</div><div class="l">Työpäivää</div></div>';
-    main.appendChild(srow);
+    var addBtn = document.createElement("button");
+    addBtn.type = "button"; addBtn.className = "btn btn-primary big-add";
+    addBtn.innerHTML = '<span class="pl">+</span> Kirjaa tarjous';
+    addBtn.addEventListener("click", openQuickAdd);
+    colA.appendChild(addBtn);
+    watchBigAdd(addBtn);
 
+    colA.appendChild(todoCard());
+    colA.appendChild(rkHomeButton());
+
+    colB.appendChild(vireCard());
+    colB.appendChild(trendCard());
+    colB.appendChild(sourceCard(stats, doc));
+  }
+
+  var bigAddObs = null;
+  function watchBigAdd(el) {
+    var fab = document.getElementById("fabAdd");
+    if (bigAddObs) { bigAddObs.disconnect(); bigAddObs = null; }
+    if (!("IntersectionObserver" in window)) return;
+    fab.classList.add("away");
+    bigAddObs = new IntersectionObserver(function (en) {
+      if (state.tab !== "home") { fab.classList.remove("away"); return; }
+      fab.classList.toggle("away", en[0].isIntersecting || en[0].boundingClientRect.top > 0);
+    });
+    bigAddObs.observe(el);
+  }
+
+  function todoCard() {
+    var di = dueInfo();
+    var card = document.createElement("div");
+    card.className = "card todo-card";
+    var chips = [
+      { n: di.calls.length, t: di.calls.length === 1 ? "asiakas vaatii yhteydenoton tänään" : "asiakasta vaatii yhteydenoton tänään", f: "hoida", cls: di.calls.length ? "hot" : "" },
+      { n: di.fin.length, t: "rahoitusta kesken", f: "avoimet", cls: "" },
+      { n: di.drive.length, t: "koeajoa sovittu / tehty", f: "avoimet", cls: "" },
+      { n: di.expiring.length, t: di.expiring.length === 1 ? "tarjous vanhenee tänään tai huomenna" : "tarjousta vanhenee tänään tai huomenna", f: "hoida", cls: di.expiring.length ? "warn" : "" },
+      { n: di.noStep.length, t: "avointa ilman seuraavaa askelta", f: "avoimet", cls: di.noStep.length ? "warn" : "" }
+    ];
+    var show = chips.filter(function (c, i) { return c.n > 0 || i === 0; });
+    card.innerHTML = '<h2>Tänään hoidettavat</h2>' +
+      '<div class="todo-sum">' + show.map(function (c) {
+        return '<button type="button" class="todo-row ' + c.cls + '" data-f="' + c.f + '"><b>' + c.n + '</b><span>' + c.t + '</span><i>›</i></button>';
+      }).join("") + '</div>' +
+      (di.list.length ? '<div class="todo-list">' + di.list.slice(0, 5).map(function (r) {
+        return '<button type="button" class="todo-item" data-mk="' + r.mk + '" data-id="' + r.o.id + '">' +
+          '<span class="ti-main"><span class="ti-t">' + escapeHtml(offerTitle(r.o)) + scoreBadge(r.o.sc) + '</span>' +
+          '<span class="ti-s">' + offerSubHtml(r.o) + '</span></span><i>›</i></button>';
+      }).join("") + (di.list.length > 5 ? '<button type="button" class="todo-more" data-f="hoida">Näytä kaikki ' + di.list.length + '</button>' : '') + '</div>' :
+      '<div class="todo-empty">' + (di.act.length ? 'Ei myöhässä olevia tai tälle päivälle sovittuja. Merkitse tarjouksille seuraava askel, niin ne nousevat tähän oikeana päivänä.' :
+        'Ei avoimia tarjouksia. Kirjaa tarjous ja lisää sille seuraava askel, niin se nousee tähän oikeana päivänä.') + '</div>');
+    Array.prototype.forEach.call(card.querySelectorAll("[data-f]"), function (b) {
+      b.addEventListener("click", function () { state.offerFilter = b.getAttribute("data-f"); state.tab = "add"; render(); window.scrollTo(0, 0); });
+    });
+    Array.prototype.forEach.call(card.querySelectorAll(".todo-item"), function (b) {
+      b.addEventListener("click", function () { openOfferEditor(b.getAttribute("data-mk"), b.getAttribute("data-id")); });
+    });
+    return card;
+  }
+
+  function trendCard() {
+    var w = weekTrend();
+    var card = document.createElement("div");
+    card.className = "card trend-card";
+    function delta(a, b) {
+      if (b === null) return '<em class="flat">–</em>';
+      var d = a - b;
+      return d > 0 ? '<em class="up">▲ ' + d + '</em>' : d < 0 ? '<em class="down">▼ ' + (-d) + '</em>' : '<em class="flat">±0</em>';
+    }
+    card.innerHTML = '<h2>Viikon trendi</h2>' +
+      '<div class="tr-grid">' +
+        '<div><span>Tarjoukset</span><b>' + w.cur.o + '</b>' + delta(w.cur.o, w.prev ? w.prev.o : null) + '</div>' +
+        '<div><span>Kaupat</span><b>' + w.cur.d + '</b>' + delta(w.cur.d, w.prev ? w.prev.d : null) + '</div>' +
+      '</div>' +
+      '<div class="tr-note">' + (w.prev ? 'Vertailu: viime viikko samaan hetkeen asti (' + w.prev.o + ' tarjousta, ' + w.prev.d + ' kauppaa).' : 'Viime viikon vertailutietoa ei ole (osuu edelliseen kuukauteen).') + '</div>';
+    return card;
+  }
+
+  function vireCard() {
+    var card = document.createElement("div");
+    card.className = "card vire-card";
+    var cur = vireToday();
+    var key = "vr:" + state.monthKey + ":" + new Date().getDate();
+    var note = (dcache[key] && dcache[key].n) || "";
+    var editing = state.vireEdit || !cur;
+    var corr = vireCorrelation();
+    var corrHtml = corr && corr.hi !== undefined
+      ? '<div class="vr-corr">Tässä kuussa: vire 4–5 → <b>' + corr.hi.toFixed(1) + '</b> tarjousta/pv, vire 1–3 → <b>' + corr.lo.toFixed(1) + '</b> tarjousta/pv.</div>'
+      : '<div class="vr-corr">Kun vireitä on kirjattu 5 päivältä, näet tässä miten vire näkyy tarjouksissa.</div>';
+    if (!editing) {
+      var fo = FOCI.filter(function (f) { return f.k === cur.fo; })[0];
+      card.innerHTML = '<div class="vr-head"><h2>Päivän vire</h2><button type="button" class="btn btn-ghost btn-sm" id="vrEdit">Muokkaa</button></div>' +
+        '<div class="vr-sum"><span>Vire <b>' + (cur.v || "–") + '</b>/5</span><span>Fiilis <b>' + (cur.f || "–") + '</b>/5</span>' + (fo ? '<span>Fokus <b>' + fo.t + '</b></span>' : '') + '</div>' +
+        (note ? '<div class="vr-note">' + escapeHtml(note) + '</div>' : '') + corrHtml;
+      card.querySelector("#vrEdit").addEventListener("click", function () { state.vireEdit = true; render(); });
+      return card;
+    }
+    var v = cur ? cur.v : null, f = cur ? cur.f : null, foc = cur ? cur.fo : null;
+    function scale(g, val) {
+      return '<div class="vr-scale" data-g="' + g + '">' + [1, 2, 3, 4, 5].map(function (n) {
+        return '<button type="button" data-v="' + n + '" class="' + (val === n ? 'on' : '') + '">' + n + '</button>';
+      }).join("") + '</div>';
+    }
+    function draw() {
+      card.innerHTML = '<h2>Päivän vire</h2>' +
+        '<div class="vr-row"><span>Vire</span>' + scale("v", v) + '</div>' +
+        '<div class="vr-row"><span>Fiilis</span>' + scale("f", f) + '</div>' +
+        '<div class="vr-row"><span>Fokus</span><div class="vr-scale fo" data-g="fo">' + FOCI.map(function (x) {
+          return '<button type="button" data-v="' + x.k + '" class="' + (foc === x.k ? 'on' : '') + '">' + x.t + '</button>';
+        }).join("") + '</div></div>' +
+        '<input type="text" id="vrNote" class="vr-in" maxlength="80" placeholder="Mikä auttaa tänään onnistumaan?" value="' + escapeHtml(note) + '">' +
+        '<button type="button" class="btn btn-primary btn-sm" id="vrSave"' + (v && f ? '' : ' disabled') + '>Tallenna vire</button>';
+      Array.prototype.forEach.call(card.querySelectorAll(".vr-scale button"), function (b) {
+        b.addEventListener("click", function () {
+          note = card.querySelector("#vrNote").value;
+          var g = b.parentNode.getAttribute("data-g"), val = b.getAttribute("data-v");
+          if (g === "v") v = +val; else if (g === "f") f = +val; else foc = foc === val ? null : val;
+          draw();
+        });
+      });
+      card.querySelector("#vrSave").addEventListener("click", function () {
+        var n = card.querySelector("#vrNote").value.trim();
+        state.vireEdit = false;
+        saveVire({ v: v, f: f, fo: foc }, n).then(function () { showToast("Vire tallennettu"); }, function () { showToast("Tallennus epäonnistui"); });
+      });
+    }
+    draw();
+    return card;
+  }
+
+  function sourceCard(stats, doc) {
     var scard = document.createElement("div");
     scard.className = "card src-card";
+    var offers = doc.offers || [];
+    var best = null;
+    stats.bySource.forEach(function (s) { if (s.count >= 2 && s.rate !== null && (!best || s.rate > best.rate || (s.rate === best.rate && s.closed > best.closed))) best = s; });
     var rows = stats.bySource.map(function (s) {
       var cls = s.rate === null ? "" : (s.rate >= 30 ? "hr-good" : "hr-bad");
-      return '<tr><td>' + s.label + '</td><td>' + s.count + '</td><td>' + s.closed + '</td><td class="' + cls + '">' + (s.rate === null ? "–" : Math.round(s.rate) + "%") + '</td></tr>';
+      return '<tr' + (best && best.id === s.id ? ' class="best"' : '') + '><td>' + s.label + (best && best.id === s.id ? ' <span class="best-tag">Paras</span>' : '') + '</td><td>' + s.count + '</td><td>' + s.closed + '</td><td class="' + cls + '">' + (s.rate === null ? "–" : Math.round(s.rate) + " %") + '</td></tr>';
     }).join("");
+    var deals = offers.filter(function (o) { return o.closed; });
+    var kates = deals.map(function (o) { var d = dcache[o.id]; return d && d.kate !== undefined && d.kate !== "" ? +d.kate : null; }).filter(function (x) { return x !== null; });
+    var days = deals.filter(function (o) { return o.closedTs; }).map(function (o) { return Math.max(0, (new Date(o.closedTs) - new Date(o.ts)) / 86400000); });
+    var lost = offers.filter(function (o) { return ostat(o) === "l"; });
+    var lostBy = {};
+    lost.forEach(function (o) { var k = o.lr || "muu"; lostBy[k] = (lostBy[k] || 0) + 1; });
+    function avg(a) { return a.reduce(function (x, y) { return x + y; }, 0) / a.length; }
+    var fmtEur = function (n) { return Math.round(n).toLocaleString("fi-FI") + " €"; };
     scard.innerHTML =
       '<h2>Lähteet</h2>' +
-      '<table class="src"><thead><tr><th>Lähde</th><th>Tarjous</th><th>Kauppa</th><th>Hitrate</th></tr></thead><tbody>' +
-      rows + '</tbody></table>';
-    main.appendChild(scard);
+      '<table class="src"><thead><tr><th>Lähde</th><th>Tarj.</th><th>Kaup.</th><th>Hitrate</th></tr></thead><tbody>' +
+      rows + '</tbody></table>' +
+      '<div class="src-kpis">' +
+        '<div><span>Ø kate / kauppa</span><b>' + (kates.length ? fmtEur(avg(kates)) : '–') + '</b>' + (kates.length && kates.length < deals.length ? '<small>' + kates.length + '/' + deals.length + ' kaupasta</small>' : '') + '</div>' +
+        '<div><span>Ø aika kauppaan</span><b>' + (days.length ? (avg(days) < 1 ? '< 1 pv' : Math.round(avg(days)) + ' pv') : '–') + '</b></div>' +
+      '</div>' +
+      (lost.length ? '<div class="src-lost">Hävityt (' + lost.length + '): ' + Object.keys(lostBy).sort(function (a, b) { return lostBy[b] - lostBy[a]; }).map(function (k) { return lostLabel(k) + ' ' + lostBy[k]; }).join(', ') + '</div>' : '');
+    return scard;
+  }
+
+  function renderAdd(main) {
+    if (!curMonthDoc()) {
+      var note = document.createElement("div");
+      note.className = "card";
+      note.innerHTML = '<h2>Ei aktiivista kuukautta</h2><p style="color:var(--text-dim);font-size:14px;">Aseta ensin kuukauden tavoite Etusivulla.</p>';
+      main.appendChild(note);
+      return;
+    }
+    var offers = curMonthDoc().offers || [];
+    var tc = todayCountBySource();
+
+    var addCard = document.createElement("div");
+    addCard.className = "card add-new";
+    addCard.innerHTML = '<h2>Uusi tarjous</h2><p class="add-sub">Mistä tarjous tuli? Yksi painallus kirjaa sen.</p>';
+    var grid = document.createElement("div");
+    grid.className = "src-grid";
+    SOURCES.forEach(function (s) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "src-pick";
+      b.innerHTML = '<span><span class="l">' + s.label + '</span><span class="tc">' + (tc[s.id] ? 'Tänään ' + tc[s.id] + ' kpl' : 'Tänään –') + '</span></span><span class="plus" aria-hidden="true">+</span>';
+      b.addEventListener("click", function () {
+        var o = quickAddOffer(s.id);
+        showToast("Tarjous kirjattu: " + s.label);
+        openOfferEditor(state.monthKey, o.id, { fresh: true });
+      });
+      grid.appendChild(b);
+    });
+    addCard.appendChild(grid);
+    main.appendChild(addCard);
+
+    var f = state.offerFilter || "avoimet";
+    var refs = offerRefs();
+    var t = todayYmd(), tm = addDaysYmd(1);
+    var list;
+    if (f === "hoida") list = dueInfo().list;
+    else if (f === "avoimet") list = refs.filter(function (r) { return isActive(r.o); }).sort(function (a, b) {
+      var an = a.o.nd || "9999", bn = b.o.nd || "9999";
+      if (an !== bn) return an < bn ? -1 : 1;
+      return new Date(b.o.ts) - new Date(a.o.ts);
+    });
+    else list = refs.filter(function (r) { return r.mk === state.monthKey; }).sort(function (a, b) { return new Date(b.o.ts) - new Date(a.o.ts); });
+
+    var dealsN = offers.filter(function (o) { return o.closed; }).length;
+    var activeN = refs.filter(function (r) { return isActive(r.o); }).length;
+    var dueN = dueInfo().list.length;
+    var allCard = document.createElement("div");
+    allCard.className = "card add-all";
+    allCard.innerHTML = '<div class="add-head"><h2>Tarjoukset</h2>' +
+      '<span class="add-count">Tässä kuussa ' + offers.length + (offers.length === 1 ? ' tarjous' : ' tarjousta') + ' · ' + dealsN + (dealsN === 1 ? ' kauppa' : ' kauppaa') + '</span></div>' +
+      '<div class="of-seg">' +
+        '<button type="button" data-f="hoida" class="' + (f === "hoida" ? 'on' : '') + '">Hoida tänään' + (dueN ? ' <b>' + dueN + '</b>' : '') + '</button>' +
+        '<button type="button" data-f="avoimet" class="' + (f === "avoimet" ? 'on' : '') + '">Avoimet <b>' + activeN + '</b></button>' +
+        '<button type="button" data-f="kk" class="' + (f === "kk" ? 'on' : '') + '">Kuukausi</button>' +
+      '</div>';
+    Array.prototype.forEach.call(allCard.querySelectorAll(".of-seg button"), function (b) {
+      b.addEventListener("click", function () { state.offerFilter = b.getAttribute("data-f"); render(); });
+    });
+    var allList = document.createElement("div");
+    allList.className = "offer-list";
+    var TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>';
+    if (list.length === 0) {
+      allList.innerHTML = '<div class="empty-note">' + (f === "hoida" ? 'Ei tälle päivälle sovittuja tai myöhässä olevia. Hyvä tilanne.' : f === "avoimet" ? 'Ei avoimia tarjouksia.' : 'Ei vielä tarjouksia. Kirjaa ensimmäinen yllä.') + '</div>';
+    } else {
+      list.forEach(function (r) {
+        var o = r.o;
+        var row = document.createElement("div");
+        row.className = "offer-row" + (o.closed ? " is-deal" : "") + (ostat(o) === "l" ? " is-lost" : "");
+        row.innerHTML =
+          '<button type="button" class="meta" title="Avaa tarjouskortti">' +
+            '<span class="src">' + escapeHtml(offerTitle(o)) + scoreBadge(o.sc) + '</span>' +
+            '<span class="sub">' + offerSubHtml(o) + '</span>' +
+            '<span class="date">' + (offerTitle(o) !== sourceLabel(o.source) ? escapeHtml(sourceLabel(o.source)) + ' · ' : '') + fmtDate(o.ts) + (r.mk !== state.monthKey ? ' · ' + monthDisplay(r.mk) : '') + '</span>' +
+          '</button>' +
+          '<div class="row-actions">' +
+            (o.closed
+              ? '<button type="button" class="deal-done" title="Peru kauppa">✓ Kauppa</button>'
+              : ostat(o) === "l" ? '' : '<button type="button" class="deal-btn"><span class="long">Merkitse kaupaksi</span><span class="short">Kaupaksi</span></button>') +
+            '<button type="button" class="del-btn" aria-label="Poista tarjous" title="Poista tarjous">' + TRASH + '</button>' +
+          '</div>';
+        row.querySelector(".meta").addEventListener("click", function () { openOfferEditor(r.mk, o.id); });
+        var dealBtn = row.querySelector(".deal-btn");
+        if (dealBtn) dealBtn.addEventListener("click", function () {
+          setOfferStatus(r.mk, o.id, "d").then(function () { showToast("Kauppa merkitty"); }, function () { showToast("Tallennus epäonnistui"); });
+        });
+        var doneBtn = row.querySelector(".deal-done");
+        if (doneBtn) doneBtn.addEventListener("click", function () {
+          setOfferStatus(r.mk, o.id, "o").then(function () { showToast("Kauppa peruttu"); }, function () { showToast("Tallennus epäonnistui"); });
+        });
+        row.querySelector(".del-btn").addEventListener("click", function () {
+          var b = row.querySelector(".del-btn");
+          if (!b.classList.contains("confirm")) {
+            b.classList.add("confirm"); b.innerHTML = "Poista?";
+            setTimeout(function () { if (b.isConnected && b.classList.contains("confirm")) { b.classList.remove("confirm"); b.innerHTML = TRASH; } }, 3000);
+            return;
+          }
+          deleteAnyOffer(r.mk, o.id);
+        });
+        allList.appendChild(row);
+      });
+    }
+    allCard.appendChild(allList);
+    main.appendChild(allCard);
   }
 
   function paceTagHtml(stats) {
@@ -1770,6 +2731,16 @@
   function openSettings() {
     var cur = curMonthDoc();
     var overlay = buildOverlay();
+    if (state.guest) {
+      overlay.card.innerHTML =
+        '<h2 style="color:var(--text);font-size:17px;font-weight:600;margin-bottom:10px;">Vierailijatila</h2>' +
+        '<p style="color:var(--text-dim);font-size:14px;line-height:1.5;margin:0 0 14px;">Mitään ei tallenneta. Kun lopetat tai suljet sivun, kaikki kokeilut pyyhkiytyvät.</p>' +
+        '<button class="btn btn-primary" id="guestEnd2">Lopeta vierailu</button>' +
+        '<button class="btn btn-ghost" id="guestCancel" style="margin-top:8px;">Jatka kokeilua</button>';
+      overlay.card.querySelector("#guestEnd2").addEventListener("click", endGuest);
+      overlay.card.querySelector("#guestCancel").addEventListener("click", function () { closeOverlay(overlay); });
+      return;
+    }
     overlay.card.innerHTML =
       '<h2 style="color:var(--text);font-size:17px;font-weight:600;margin-bottom:10px;">Asetukset</h2>' +
       '<div class="field"><label>Nimimerkki</label><input class="text-field" type="text" value="' + escapeHtml(state.profile.nickname) + '" disabled></div>' +
@@ -1807,75 +2778,6 @@
     return { back: back, card: card };
   }
   function closeOverlay(overlay) { if (overlay.back && overlay.back.parentNode) overlay.back.parentNode.removeChild(overlay.back); }
-
-  function renderAdd(main) {
-    if (!curMonthDoc()) {
-      var note = document.createElement("div");
-      note.className = "card";
-      note.innerHTML = '<h2>Ei aktiivista kuukautta</h2><p style="color:var(--text-dim);font-size:14px;">Aseta ensin kuukauden tavoite Etusivulla.</p>';
-      main.appendChild(note);
-      return;
-    }
-    var offers = curMonthDoc().offers || [];
-
-    var addCard = document.createElement("div");
-    addCard.className = "card add-new";
-    addCard.innerHTML = '<h2>Uusi tarjous</h2><p class="add-sub">Mistä tarjous tuli?</p>';
-    var grid = document.createElement("div");
-    grid.className = "src-grid";
-    SOURCES.forEach(function (s) {
-      var b = document.createElement("button");
-      b.type = "button";
-      b.className = "src-pick";
-      b.innerHTML = '<span>' + s.label + '</span><span class="plus" aria-hidden="true">+</span>';
-      b.addEventListener("click", function () {
-        addOffer(s.id).then(function () { showToast("Tarjous kirjattu: " + s.label); }).catch(function () { showToast("Tallennus epäonnistui"); });
-      });
-      grid.appendChild(b);
-    });
-    addCard.appendChild(grid);
-    main.appendChild(addCard);
-
-    var allSorted = offers.slice().sort(function (a, b) { return new Date(b.ts) - new Date(a.ts); });
-    var dealsN = offers.filter(function (o) { return o.closed; }).length;
-    var allCard = document.createElement("div");
-    allCard.className = "card add-all";
-    allCard.innerHTML = '<div class="add-head"><h2>Tämän kuun tarjoukset</h2>' +
-      '<span class="add-count">' + offers.length + (offers.length === 1 ? ' tarjous' : ' tarjousta') + ' · ' + dealsN + (dealsN === 1 ? ' kauppa' : ' kauppaa') + '</span></div>';
-    var allList = document.createElement("div");
-    allList.className = "offer-list";
-    var TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>';
-    if (allSorted.length === 0) {
-      allList.innerHTML = '<div class="empty-note">Ei vielä tarjouksia. Kirjaa ensimmäinen yllä.</div>';
-    } else {
-      allSorted.forEach(function (o) {
-        var row = document.createElement("div");
-        row.className = "offer-row" + (o.closed ? " is-deal" : "");
-        row.innerHTML =
-          '<div class="meta"><div class="src">' + sourceLabel(o.source) + '</div><div class="date">' + fmtDate(o.ts) + '</div></div>' +
-          '<div class="row-actions">' +
-            (o.closed
-              ? '<button type="button" class="deal-done" title="Peru kauppa">✓ Kauppa</button>'
-              : '<button type="button" class="deal-btn">Merkitse kaupaksi</button>') +
-            '<button type="button" class="del-btn" aria-label="Poista tarjous" title="Poista tarjous">' + TRASH + '</button>' +
-          '</div>';
-        var dealBtn = row.querySelector(".deal-btn");
-        if (dealBtn) dealBtn.addEventListener("click", function () {
-          closeOffer(o.id).then(function () { showToast("Kauppa merkitty"); }).catch(function () { showToast("Tallennus epäonnistui"); });
-        });
-        var doneBtn = row.querySelector(".deal-done");
-        if (doneBtn) doneBtn.addEventListener("click", function () {
-          reopenOffer(o.id).then(function () { showToast("Kauppa peruttu"); }).catch(function () { showToast("Tallennus epäonnistui"); });
-        });
-        row.querySelector(".del-btn").addEventListener("click", function () {
-          deleteOffer(o.id).then(function () { showToast("Tarjous poistettu"); }).catch(function () { showToast("Poisto epäonnistui"); });
-        });
-        allList.appendChild(row);
-      });
-    }
-    allCard.appendChild(allList);
-    main.appendChild(allCard);
-  }
 
   // Total/closed for one month doc, supporting both the detailed (offers[])
   // and compact (bySourceCounts[]) storage shapes (see computeStats).
@@ -2943,7 +3845,7 @@
     { min: 40, key: "tepid", icon: "🟡", name: "Haalea", action: "Selvitä yksi suurin este: budjetti, vaihtoauto tai päätöksentekijä." },
     { min: 0, key: "cold", icon: "🔵", name: "Kylmä", action: "Kevyt seuranta, älä käytä liikaa aikaa heti." }
   ];
-  var lead = { answers: {} }; // id -> vaihtoehdon indeksi 0/1/2
+  var lead = { answers: {}, target: null }; // id -> vaihtoehdon indeksi 0/1/2; target = pisteytettävä tarjous
 
   function leadTier(score) {
     for (var i = 0; i < LEAD_TIERS.length; i++) if (score >= LEAD_TIERS[i].min) return LEAD_TIERS[i];
@@ -3026,6 +3928,7 @@
       var r = document.querySelector(".ld-res"); if (r) r.scrollIntoView({ behavior: "smooth", block: "start" });
     });
     main.appendChild(bar);
+    if (lead.target) main.appendChild(leadLinkCard());
 
     var qs = document.createElement("div");
     qs.className = "ld-qs";
@@ -3054,6 +3957,7 @@
     res.className = "card ld-res";
     res.innerHTML = leadResultHtml();
     main.appendChild(res);
+    if (!lead.target) res.appendChild(leadLinkCard());
   }
 
   var VL_BUILTIN = [{"id":"b00","cat":"hinta","t":"Auto on liian kallis.","m":"Asiakas ei vielä näe arvon ja hinnan suhdetta.","a":"Ymmärrän. Katsotaan, mistä kokonaishinta muodostuu: kunto, varusteet, historia, takuu ja käyttökulut.","q":"Tuntuuko hinta korkealta verrattuna budjettiin vai johonkin toiseen autoon?","c":"Katsotaan rinnalle vaihtoehto, jossa päästään sinulle sopivampaan tasoon.","k":"kallis, liian kallis, hinta korkea, korkea hinta, maksaa liikaa, ylihintainen, hintava, kallista, liikaa rahaa, hintapyyntö, tinkiä, alennus, hinta ei miellytä, hinta liian kova, kova hinta"},{"id":"b01","cat":"rahoitus","t":"Kuukausierä on liian iso.","m":"Kuukausibudjetti ei kohtaa ehdotusta.","a":"Ymmärrän. Erää voidaan usein säätää käsirahalla, laina-ajalla tai autovalinnalla.","q":"Mikä olisi sinulle mukava kuukausierä?","c":"Tehdään siihen tasoon kaksi vaihtoehtoa.","k":"kuukausierä liian iso, kk-erä iso, kk erä, erä korkea, kuukausimaksu, maksuerä, lyhennys liian iso, liikaa kuussa, erä liian suuri, kuukausierä korkea, kallis kuukausierä"},{"id":"b02","cat":"rahoitus","t":"Käsiraha on liian suuri.","m":"Asiakas haluaa pitää käteistä itsellään.","a":"Se on järkevää. Katsotaan laskelma pienemmällä käsirahalla.","q":"Paljonko haluat jättää itsellesi puskuriksi?","c":"Tehdään rahoitus sillä summalla ja katsotaan erä.","k":"käsiraha liian suuri, käsiraha, etumaksu, omarahoitus, alkumaksu, käteisosuus, en halua laittaa rahaa, käsirahaa ei ole, ei käsirahaa"},{"id":"b03","cat":"rahoitus","t":"Korko on liian korkea.","m":"Asiakas katsoo prosenttia, ei kokonaisuutta.","a":"Ymmärrän — katsotaan aina korko ja kokonaiskulut yhdessä. Voin selvittää myös vaihtoehtoiset rahoitusmallit.","q":"Onko sinulla vertailussa jokin konkreettinen rahoitustarjous?","c":"Verrataan tarjoukset samalla käsirahalla ja laina-ajalla.","k":"korko liian korkea, korko, korkoprosentti, rahoituskorko, prosentti, rahoitus kallis, kallis rahoitus, pankki halvempi, efektiivinen korko, korkea korko"},{"id":"b04","cat":"rahoitus","t":"Rahoituksen kulut ovat liian suuret.","m":"Kokonaiskustannus tuntuu epäselvältä tai suurelta.","a":"Hyvä että nostit esiin. Puretaan kulut auki, jotta tiedät tarkasti mitä maksat ja mistä.","q":"Haluatko pienempää erää, lyhyempää laina-aikaa vai mahdollisimman pieniä kokonaiskuluja?","c":"Rakennetaan laskelma sinun tärkeimmän tavoitteesi mukaan.","k":"rahoituskulut, rahoituksen kulut, avausmaksu, käsittelymaksu, tilinhoitomaksu, rahoitus kallis, kokonaiskulut, lainan hinta, piilokulut, kulut liian suuret, rahoitus maksaa liikaa"},{"id":"b05","cat":"hinta","t":"Väliraha on liian iso.","m":"Nykyisen auton hyvitys, ostettavan auton hinta tai rahoitus ei kohtaa.","a":"Ymmärrän. Välirahaa voidaan ratkaista useammasta kohdasta, ei vain yhdestä.","q":"Mikä väliraha olisi sellainen, että kauppa tuntuisi järkevältä?","c":"Katsotaan pääsemmekö siihen tällä autolla tai sopivalla vaihtoehdolla.","k":"väliraha liian iso, väliraha, erotus, maksettavaa jää liikaa, hyvityksen jälkeen, liikaa välirahaa, välirahaa liikaa, maksettava summa"},{"id":"b06","cat":"rahoitus","t":"En halua maksaa näin pitkää rahoitusta.","m":"Pitkä sitoutuminen huolettaa.","a":"Se on ymmärrettävää. Pidempi aika tuo joustoa erään, mutta voimme tehdä myös lyhyemmän mallin.","q":"Onko sinulle tärkeämpää saada laina nopeasti pois vai pitää kuukausierä matalana?","c":"Tehdään molemmat laskelmat rinnakkain.","k":"pitkä rahoitus, laina-aika, pitkä laina, pitkä sopimus, monta vuotta, sitoutuminen, 60 kk, 72 kk, liian pitkä laina, laina aika"},{"id":"b07","cat":"rahoitus","t":"Haluan maksaa auton käteisellä.","m":"Asiakas ei pidä rahoituksesta.","a":"Se onnistuu hyvin. Rahoitus on vain vaihtoehto, ei edellytys.","q":"Haluatko silti nähdä rahoitusvaihtoehdon vertailun vuoksi?","c":"Sovitaan käteiskaupalle lopullinen kokonaisuus.","k":"käteinen, maksan käteisellä, käteiskauppa, maksan itse, ei rahoitusta, en halua lainaa, säästöt, kertamaksu, ei tarvita rahoitusta"},{"id":"b08","cat":"rahoitus","t":"En halua sitoutua kuukausimaksuun.","m":"Talouden epävarmuus tai rahoitusvastuun pelko.","a":"Ymmärrän. Silloin kannattaa rakentaa ratkaisu, jossa erä ja kokonaisriski ovat varmasti turvallisia.","q":"Onko huoli enemmän erän suuruudesta vai tulevien tulojen epävarmuudesta?","c":"Katsotaan sinulle maltillisempi ja turvallinen vaihtoehto.","k":"en halua kuukausimaksua, sitoutua kuukausimaksuun, velka, en halua velkaa, lainaa en ota, epävarma talous, työpaikka epävarma, tulot, rahoitus pelottaa"},{"id":"b09","cat":"hinta","t":"Budjettini ei riitä tähän autoon.","m":"Auto kiinnostaa, mutta raja tulee vastaan.","a":"Hyvä, että budjetti on selkeä. Etsitään samaan tarpeeseen sopiva ratkaisu sen sisältä.","q":"Mikä tässä autossa on sinulle tärkein ominaisuus, josta et halua tinkiä?","c":"Näytän kaksi budjettiisi sopivaa vaihtoehtoa.","k":"budjetti ei riitä, budjetti, raha ei riitä, ei ole varaa, varaa ei ole, liian kallis minulle, hintakatto, maksimi, rahat ei riitä, yli budjetin, rahaa ei ole"},{"id":"b10","cat":"kilpailija","t":"Löysin saman auton halvemmalla.","m":"Asiakas vertailee hintaa ilman kokonaisvertailua.","a":"Katsotaan ihmeessä rinnakkain — sama malli ei aina tarkoita samaa historiaa, kuntoa, varustelua tai turvaa.","q":"Lähetätkö ilmoituksen, niin verrataan ne rehellisesti?","c":"Jos tämä on kokonaisuutena parempi, tehdään tästä sinulle mahdollisimman kilpailukykyinen.","k":"löysin halvemmalla, halvemmalla, halvempi, sama auto halvemmalla, nettiauto halvempi, ilmoitus halvempi, muualla halvempi, halvemmalla toisaalla"},{"id":"b11","cat":"kilpailija","t":"Kilpailija tarjoaa paremman hinnan.","m":"Asiakas hakee neuvotteluvaraa.","a":"Hyvä, että kerroit. Haluan verrata aidosti samaa kokonaisuutta ennen kuin vastaan.","q":"Mikä on heidän lopullinen hinnan, hyvityksen ja rahoituksen kokonaisuus?","c":"Tuodaan tämä mahdollisimman lähelle, jos ehdot ovat vertailukelpoiset.","k":"kilpailija halvempi, kilpailija parempi hinta, toinen liike halvempi, parempi tarjous, alempi hinta, halvempi tarjous, kilpaileva tarjous"},{"id":"b12","cat":"kilpailija","t":"Kilpailija antaa paremman hyvityksen vaihtoautosta.","m":"Asiakas katsoo vain hyvitystä.","a":"Hyvitys on tärkeä, mutta katsotaan samalla ostettavan auton hinta ja rahoitus — väliraha ratkaisee.","q":"Paljonko heidän tarjouksensa jättää lopulta välirahaa?","c":"Verrataan molemmat tarjoukset rivi riviltä.","k":"kilpailija parempi hyvitys, parempi hyvitys, vaihtohyvitys muualla, maksavat enemmän vaihtoautosta, vaihtoauto muualla, enemmän hyvitystä"},{"id":"b13","cat":"kilpailija","t":"Haluan käydä vielä toisessa liikkeessä.","m":"Asiakas ei ole riittävän varma.","a":"Totta kai kannattaa vertailla. Haluan vain varmistaa, mitä haet sieltä vielä lisää.","q":"Mikä tässä jäi sellaiseksi, ettei päätös tunnu vielä varmalta?","c":"Sovitaan aika, jolloin palaan asiaan sen käynnin jälkeen.","k":"toinen liike, käyn muualla, käydä toisessa liikkeessä, toinen kauppa, kiertää liikkeitä, katsomassa muualla, toinen autoliike"},{"id":"b14","cat":"kilpailija","t":"Vertailen vielä vaihtoehtoja.","m":"Tarve tai valintaperusteet ovat epäselvät.","a":"Hyvä päätös tehdään vertaamalla oikeita asioita, ei vain ilmoituksia.","q":"Mitkä kolme asiaa ratkaisevat sinulle lopullisen valinnan?","c":"Tehdään tästä vertailun mittatikku.","k":"vertailen, vertailla, vaihtoehdot, katselen muita, muita autoja, vertailu, harkitsen vaihtoehtoja, vertaan"},{"id":"b15","cat":"kilpailija","t":"Katson ensin netistä lisää autoja.","m":"Asiakas ei koe vielä kiirettä.","a":"Ymmärrän. Netissä on paljon vaihtoehtoja, mutta tässä pääset arvioimaan auton oikeasti.","q":"Mitä haluat netistä vielä löytää, mitä tästä ei löydy?","c":"Pidetään tämä vaihtoehto sinulla mukana vertailussa.","k":"netti, katson netistä, nettiauto, tori, ilmoitukset, selata, internet, verkosta, katselen netistä"},{"id":"b16","cat":"kilpailija","t":"Odotan, jos hinta laskee.","m":"Asiakas hakee parempaa diiliä eikä halua menettää rahaa.","a":"Ymmärrän. Samalla hyvä yksilö voi mennä ennen sitä, joten kannattaa päättää sen arvon eikä arvailun perusteella.","q":"Mikä hinta tekisi päätöksestä helpon tänään?","c":"Selvitän, mitä voimme tehdä nyt ilman odottelua.","k":"odotan hinnan laskua, hinta laskee, alennus, kampanja, myöhemmin halvempi, hinnanlasku, odotan alennusta, halpenee"},{"id":"b17","cat":"kilpailija","t":"Tuo toinen merkki kiinnostaa enemmän.","m":"Asiakas ei ole sitoutunut tähän autoon.","a":"Hyvä — verrataan niitä sinun käytössäsi, ei vain merkin maineella.","q":"Mikä siinä toisessa merkissä vetää sinua eniten puoleensa?","c":"Katsotaan täyttääkö tämä samat tarpeet paremmin.","k":"toinen merkki, eri merkki, toinen automerkki, kiinnostaa enemmän, merkki, toyota, volkswagen, skoda, volvo, bmw"},{"id":"b18","cat":"kilpailija","t":"Haluan nähdä ensin kilpailijan tarjouksen.","m":"Asiakas haluaa neuvotteluaseman.","a":"Se on reilua. Kun saat sen, katsotaan tarjoukset samalla laskutavalla.","q":"Milloin saat tarjouksen käsiisi?","c":"Sovitaan heti tarkka aika vertailulle.","k":"kilpailijan tarjous, odotan tarjousta, vertailutarjous, tarjous muualta, katson ensin tarjouksen, toisen liikkeen tarjous"},{"id":"b19","cat":"epaarointi","t":"En halua tehdä päätöstä heti.","m":"Jokin ratkaisematon epäilys.","a":"Ymmärrän. Autan mieluummin poistamaan epäilyksen kuin painostan päätökseen.","q":"Mikä yksi asia pitäisi ratketa, että päätös olisi mahdollinen?","c":"Ratkaistaan se nyt ja sovitaan lopullinen päätöshetki.","k":"en päätä heti, päätös heti, ei tänään, en päätä nyt, painostus, kiire, en halua kiirehtiä, ei nyt, liian nopea"},{"id":"b20","cat":"vaihtoauto","t":"Saan vaihtoautostani enemmän muualla.","m":"Hyvityksen taso ei tunnu reilulta.","a":"Se voi olla mahdollista. Verrataan kuitenkin aina koko kauppa, koska suurempi hyvitys voi näkyä ostettavan auton hinnassa.","q":"Mikä on heidän tarjoama välirahansa?","c":"Verrataan väliraha ja kokonaiskulut rinnakkain.","k":"saan enemmän muualla, vaihtoauto enemmän muualla, parempi hinta vaihtoautosta, vaihtoarvo muualla, hyvitys muualla parempi"},{"id":"b21","cat":"vaihtoauto","t":"Vaihtoauton hyvitys on liian pieni.","m":"Asiakkaalla on korkeampi odotus arvosta.","a":"Ymmärrän. Käydään arvio läpi avoimesti: kunto, kilometrit, renkaat, historia ja markkinahinta.","q":"Mihin hyvitystasoon itse peilaat arvoa?","c":"Katsotaan, pystymmekö parantamaan kokonaisuutta.","k":"hyvitys liian pieni, hyvitys pieni, alakanttiin, arvio pieni, vaihtohyvitys, auton arvo, liian vähän, hyvitys alhainen, vaihtoauton hinta pieni"},{"id":"b22","cat":"vaihtoauto","t":"En tiedä paljonko vaihtoautoni on arvoinen.","m":"Asiakas ei voi arvioida kaupan järkevyyttä.","a":"Ei tarvitsekaan tietää etukäteen — teemme siitä läpinäkyvän arvion.","q":"Onko autossa jotain vaurioita, velkaa tai remontteja, jotka olisi hyvä huomioida?","c":"Aloitetaan rekisterinumerosta ja tehdään arvio.","k":"en tiedä arvoa, paljonko saan, arvio, hinta-arvio, mitä autosta saa, vaihtoauton arvo, paljonko autoni on arvoinen, arvon arviointi"},{"id":"b23","cat":"vaihtoauto","t":"Haluan myydä vaihtoautoni itse.","m":"Asiakas tavoittelee korkeampaa hintaa.","a":"Ymmärrän. Itse myymällä voi saada enemmän, mutta silloin hoidat myös ilmoittelun, näytöt, tinkijät ja riskit.","q":"Onko sinulle tärkeämpää maksimaalinen hinta vai helppo ja varma vaihto?","c":"Tehdään tarjous, niin voit verrata sitä itsemyynnin vaivaan.","k":"myyn itse, myydä itse, yksityisesti, myyn torissa, nettiauto, oma myynti, myyn vaihtoautoni itse"},{"id":"b24","cat":"vaihtoauto","t":"Vaihtoautossani on vielä velkaa liikaa.","m":"Negatiivinen väliraha pelottaa.","a":"Se on yleinen tilanne, ja se voidaan laskea selkeästi osaksi kokonaisuutta.","q":"Paljonko rahoitusyhtiöltä on tämän päivän loppuvelka?","c":"Lasketaan ensin tarkka erotus ja vaihtoehdot sen hoitamiseen.","k":"velka, velkaa autossa, rahoitus jäljellä, laina autossa, loppuvelka, negatiivinen, omistusoikeus, velkaa enemmän kuin arvo"},{"id":"b25","cat":"vaihtoauto","t":"En halua tuoda vaihtoautoa näytille.","m":"Vaiva tai pelko matalasta arviosta.","a":"Ymmärrän. Alkuarvio onnistuu kuvilla ja tiedoilla, ja lopullinen tarkistus tehdään vasta kun kauppa etenee.","q":"Voitko lähettää rekisterinumeron, kilometrit ja muutaman kuvan?","c":"Teen sinulle alustavan arvion jo niiden perusteella.","k":"en halua tuoda näytille, tuoda näytille, arviointi, ei aikaa tuoda, etäarvio, kuvat, en ehdi tuoda autoa"},{"id":"b26","cat":"vaihtoauto","t":"Vaihtoautossani on vikoja.","m":"Asiakas pelkää, ettei auto kelpaa.","a":"Se ei automaattisesti estä vaihtoa. Tärkeintä on, että tiedämme viat rehellisesti.","q":"Mitä vikoja siinä on ja ovatko ne tutkittuja?","c":"Arvioidaan auto realistisesti ja katsotaan kokonaisuus.","k":"vikoja, vika, rikki, viallinen, remontti, korjattavaa, kolari, vaurio, vaihtoautossa vikaa"},{"id":"b27","cat":"vaihtoauto","t":"Vaihtoautoni on liian hyvä vaihdettavaksi.","m":"Tunneside tai epäily uuden auton hyödystä.","a":"Ymmärrän — silloin uuden pitää aidosti parantaa arkeasi.","q":"Mikä nykyisessä autossa kuitenkin sai sinut katsomaan vaihtoa?","c":"Verrataan, tuoko tämä auto siihen tarpeeseen oikean parannuksen.","k":"liian hyvä vaihdettavaksi, hyvä auto, toimii, ei tarvetta vaihtaa, kiintymys, auto on hyvä"},{"id":"b28","cat":"vaihtoauto","t":"En ole valmis luopumaan nykyisestä autostani.","m":"Muutos tuntuu isolta.","a":"Se on täysin ymmärrettävää. Ei vaihdeta vain vaihtamisen vuoksi.","q":"Mikä pitäisi olla uudessa autossa paremmin, että vaihtaminen olisi perusteltua?","c":"Katsotaan täyttääkö tämä juuri ne ehdot.","k":"en halua luopua, luopua autosta, rakas auto, en halua vaihtaa, muutos, en ole valmis vaihtamaan"},{"id":"b29","cat":"vaihtoauto","t":"Puoliso käyttää nykyistä autoani.","m":"Vaihdon aikataulu ei ole käytännössä mahdollinen.","a":"Ratkaistaan aikataulu niin, ettei arki mene hankalaksi.","q":"Milloin auto olisi realistisesti vapaa vaihtoon?","c":"Voimme ajoittaa luovutuksen sen mukaan.","k":"puoliso käyttää autoa, auto ajossa, aikataulu, luovutus, auto ei vapaana, vaimo käyttää, mies käyttää"},{"id":"b30","cat":"epaarointi","t":"Pitää miettiä.","m":"Todellinen vastalause on piilossa.","a":"Ymmärrän täysin. Jotta en arvaa väärin, selvitetään mikä tässä mietityttää eniten.","q":"Onko se auto, hinta, vaihtoauto vai jokin muu?","c":"Kun tuo kohta on kunnossa, tehdäänkö päätös?","k":"pitää miettiä, miettiä, harkita, pohtia, mietin, mietintään, fundeerata, mietitään, harkitaan"},{"id":"b31","cat":"epaarointi","t":"Palaan myöhemmin.","m":"Asiakas haluaa poistua sitoutumatta.","a":"Sopii. Tehdään paluusta kuitenkin hyödyllinen, ettei asia jää roikkumaan.","q":"Milloin sinulla on realistisesti aikaa tehdä päätös?","c":"Sovitaan tarkka soittoaika.","k":"palaan myöhemmin, palaan, myöhemmin, otan yhteyttä, soitellaan, ensi viikolla, palataan asiaan"},{"id":"b32","cat":"epaarointi","t":"Soitan, jos kiinnostaa.","m":"Asiakas ei koe omistajuutta seuraavasta askeleesta.","a":"Totta kai. Minäkin voin ottaa vastuun seurannasta.","q":"Sopiiko, että soitan sinulle torstaina ja katsotaan missä mennään?","c":"Laitan sen kalenteriin, niin asia ei unohdu.","k":"soitan jos kiinnostaa, soitan itse, otan yhteyttä, ilmoittelen, soitan sitten, ilmoitan"},{"id":"b33","cat":"epaarointi","t":"En ole vielä varma.","m":"Tietoa tai tunnetta puuttuu.","a":"Hyvä, että sanot sen suoraan. Epävarmuus kannattaa selvittää ennen päätöstä.","q":"Mistä olet epävarmin?","c":"Ratkaistaan se kohta ja katsotaan sen jälkeen uudestaan.","k":"en ole varma, epävarma, en tiedä, epäröin, epäilen, epävarmuus, ei varma"},{"id":"b34","cat":"epaarointi","t":"Katsellaan nyt vain.","m":"Asiakas ei halua myyntipainetta.","a":"Tervetuloa katsomaan rauhassa — minun tehtäväni on auttaa, ei hoputtaa.","q":"Minkälaiseen käyttöön autoa katsellaan?","c":"Näytän pari järkevintä vaihtoehtoa ilman sitoutumista.","k":"katsellaan vain, katsella, vain katsomassa, selailen, ei ostamassa, kartoitus, katselen vain, ihan vaan katselen"},{"id":"b35","cat":"epaarointi","t":"En ole ostamassa vielä tänään.","m":"Asiakas puolustautuu painostusta vastaan.","a":"Se on täysin ok. Selvitetään silti, onko tämä sellainen vaihtoehto, johon kannattaa palata.","q":"Millä aikataululla autonvaihto olisi sinulle ajankohtainen?","c":"Sovitaan seuraava askel sinun aikataulusi mukaan.","k":"en osta tänään, ei tänään, ei vielä, ei nyt, en ole ostamassa, tänään ei"},{"id":"b36","cat":"epaarointi","t":"Haluan nukkua yön yli.","m":"Päätös tuntuu isolta.","a":"Hyvä päätös kestää yön yli. Käydään vain ensin kaikki luvut ja ehdot selkeästi läpi.","q":"Mikä asia pitää olla aamulla selvempi kuin nyt?","c":"Sovitaan, että soitan huomenna tähän aikaan.","k":"yön yli, nukkua yön yli, huomenna, mietin yön yli, huomiseen"},{"id":"b37","cat":"epaarointi","t":"En halua tehdä hätiköityä päätöstä.","m":"Asiakas pelkää katumista.","a":"Juuri niin — siksi päätös tehdään faktoilla, ei kiireellä.","q":"Mitä tietoa tarvitset, jotta päätös tuntuisi harkitulta?","c":"Kootaan se nyt valmiiksi päätöksesi tueksi.","k":"hätiköity, hätiköidä, kiire, harkita rauhassa, katua, virhe, en halua katua"},{"id":"b38","cat":"epaarointi","t":"En tiedä, tarvitsenko uutta autoa.","m":"Ostopaine puuttuu.","a":"Silloin ei kannata vaihtaa väkisin. Katsotaan, tuoko vaihto sinulle aidosti hyötyä.","q":"Mikä sai sinut alun perin katsomaan toista autoa?","c":"Jos tämä ratkaisee sen ongelman, vaihto voi olla järkevä.","k":"tarvitsenko uutta autoa, tarve, tarvitsenko, ei tarvetta, onko järkeä, en tiedä tarvitsenko"},{"id":"b39","cat":"epaarointi","t":"Nykyinen auto toimii vielä hyvin.","m":"Vaihdolle ei ole selkeää perustetta.","a":"Se on hyvä lähtökohta. Vaihto kannattaa tehdä silloin, kun se on omilla ehdoilla eikä pakon edessä.","q":"Haluatko vaihtaa ennen tulevia kuluja, vai kaipaatko enemmän tilaa, turvallisuutta tai tekniikkaa?","c":"Verrataan nykyistä autoasi tähän juuri noilla asioilla.","k":"nykyinen auto toimii, toimii hyvin, nykyinen auto, ei vikaa, ei tarvetta vaihtaa, vanha auto toimii"},{"id":"b40","cat":"paatos","t":"Pitää puhua puolison kanssa.","m":"Päätöksentekijä puuttuu.","a":"Totta kai, tämä kannattaa päättää yhdessä.","q":"Mikä puolison kannalta ratkaisee eniten: hinta, tilat, väri vai turvallisuus?","c":"Otetaanko hänet mukaan puhelimella tai sovitaan yhteinen käynti?","k":"puoliso, pitää puhua puolison kanssa, vaimo, mies, avokki, kumppani, kotona, kysyä kotoa, keskustella, perhe, puhun puolison kanssa"},{"id":"b41","cat":"paatos","t":"Päätöksen tekee puoliso.","m":"Väärä henkilö on keskustelussa.","a":"Hyvä tietää — haluan kertoa asiat myös hänelle oikein.","q":"Milloin hänet saisi mukaan?","c":"Sovitaan 15 minuutin yhteinen aika.","k":"puoliso päättää, vaimo päättää, mies päättää, en päätä itse, päätöksen tekee, päättäjä"},{"id":"b42","cat":"paatos","t":"Vanhempani neuvovat minua auton ostossa.","m":"Asiakas tarvitsee hyväksyntää tai turvaa.","a":"Ymmärrän. Voin tehdä selkeän yhteenvedon, jonka voit näyttää heille.","q":"Mitä he yleensä haluavat tietää ennen kuin suosittelevat autoa?","c":"Lähetän vertailun hinnasta, historiasta ja kustannuksista.","k":"vanhemmat, isä, äiti, faija, mutsi, neuvoa, kysyä vanhemmilta, vanhemmat neuvoo"},{"id":"b43","cat":"paatos","t":"Yrityksen toinen omistaja päättää asiasta.","m":"Ostajalla ei ole valtuutta.","a":"Selvä. Tehdään hänelle päätöksentekoa helpottava paketti.","q":"Mitkä luvut tai hyödyt hänelle ratkaisevat eniten?","c":"Valmistelen tarjouksen, jonka voitte käydä yhdessä läpi.","k":"yritys, osakas, toinen omistaja, hallitus, firma, pomo, esihenkilö, yrityksen päätös"},{"id":"b44","cat":"paatos","t":"Minun pitää kysyä kirjanpitäjältä.","m":"Yritysauton verotus tai rahoitus epäilyttää.","a":"Hyvä, silloin päätös tehdään oikein. Voin toimittaa kaikki rahoitus- ja kustannustiedot valmiiksi.","q":"Tarvitseeko kirjanpitäjä erityisesti ALV-, leasing- tai kulutietoja?","c":"Lähetän tiedot tänään ja sovitaan paluu niiden jälkeen.","k":"kirjanpitäjä, tilitoimisto, verotus, alv, yritysauto, leasing, vähennys, kysyä kirjanpitäjältä"},{"id":"b45","cat":"paatos","t":"En voi tehdä päätöstä ilman toista kuskia.","m":"Auto tulee yhteiseen käyttöön.","a":"Totta kai — molempien pitää olla tyytyväisiä.","q":"Mikä toiselle kuljettajalle on tärkeintä?","c":"Varaa hänelle oma koeajo.","k":"toinen kuski, toinen kuljettaja, yhteinen auto, kuski, perhe, molemmat ajavat"},{"id":"b46","cat":"paatos","t":"Puoliso ei pidä tästä väristä.","m":"Auto ei tunnu molemmille oikealta.","a":"Väri vaikuttaa yllättävän paljon siihen, miltä omistaminen tuntuu.","q":"Onko hänellä jokin väri tai sävy, joka olisi selvästi parempi?","c":"Katson heti vastaavat vaihtoehdot oikealla värillä.","k":"puoliso ei pidä väristä, väri, puoliso väri, ei tykkää väristä, väri ei käy"},{"id":"b47","cat":"paatos","t":"Puoliso haluaa eri merkin.","m":"Merkkimielikuva tai luottamus on muualla.","a":"Ymmärrän. Selvitetään, mikä siinä merkissä tuntuu paremmalta.","q":"Onko kyse ulkonäöstä, luotettavuudesta, ajettavuudesta vai maineesta?","c":"Verrataan näitä samoilla kriteereillä.","k":"puoliso haluaa eri merkin, puoliso merkki, haluaa toisen merkin, vaimo haluaa, mies haluaa"},{"id":"b48","cat":"paatos","t":"En tiedä, suostuuko puoliso tähän kuukausierään.","m":"Yhteinen talouspäätös puuttuu.","a":"Silloin kannattaa viedä kotiin täysin selkeä laskelma.","q":"Mikä erä olisi sellainen, jonka tiedät olevan hänellekin hyväksyttävä?","c":"Tehdään siihen tasoon valmis ehdotus.","k":"puoliso kuukausierä, yhteinen talous, suostuuko puoliso, kuukausierä puoliso, puoliso rahat"},{"id":"b49","cat":"paatos","t":"Haluan ottaa jonkun mukaan katsomaan autoa.","m":"Asiakas kaipaa varmistusta.","a":"Ehdottomasti — ulkopuolinen mielipide voi helpottaa päätöstä.","q":"Milloin hän pääsisi mukaan?","c":"Pidetään auto valmiina koeajoa varten sovittuun aikaan.","k":"ottaa joku mukaan, kaveri, tuttu, mekaanikko, asiantuntija, mielipide, mukaan katsomaan, isä mukaan"},{"id":"b50","cat":"sahko","t":"En uskalla ostaa sähköautoa.","m":"Käytännön epävarmuus.","a":"Ymmärrän. Käydään sinun oma arki läpi, niin nähdään sopiiko sähköauto sinulle oikeasti.","q":"Mikä sähköautossa huolettaa eniten?","c":"Lasketaan reitit, lataus ja kustannukset sinun ajoillasi.","k":"en uskalla sähköautoa, sähköauto pelottaa, sähköauto, uskalla, ev, täyssähkö, sähkö"},{"id":"b51","cat":"sahko","t":"En pysty lataamaan kotona.","m":"Latausrutiini tuntuu mahdottomalta.","a":"Kotilataus helpottaa, mutta ei ole aina pakollinen — työpaikka, kaupat ja pikalataus voivat riittää.","q":"Missä auto seisoo tavallisesti pisimpään?","c":"Katsotaan latauspaikat oman arjen ympäriltäsi.","k":"en voi ladata kotona, lataus kotona, ei latauspaikkaa, kerrostalo, latauspiste, pistoke, taloyhtiö, kotilataus"},{"id":"b52","cat":"sahko","t":"Toimintasäde ei riitä minulle.","m":"Asiakas arvioi pahinta yksittäistä ajopäivää.","a":"Katsotaan normaali viikko ja pidemmät reissut erikseen.","q":"Mikä on pisin tavallinen matka, jonka ajat ilman taukoa?","c":"Lasketaan, montako latausta juuri se reitti tarvitsee.","k":"toimintasäde, kantama, range, riittääkö, kilometrit latauksella, matka ei riitä, toimintamatka"},{"id":"b53","cat":"sahko","t":"Akku huolettaa.","m":"Kallis korjausriski.","a":"Ymmärrän. Akkua arvioidaan kunnon, jäljellä olevan takuun ja auton historian kautta.","q":"Huolettaako sinua enemmän kapasiteetti vai mahdollinen korjauskulu?","c":"Käydään tämän yksilön akkutilanne ja turva läpi.","k":"akku, akun kunto, akun kesto, soh, akun vaihto, akun hinta, akku hajoaa, akku huolettaa"},{"id":"b54","cat":"sahko","t":"Talvirange huolettaa.","m":"Suomen talvi tuntuu riskiltä.","a":"Talvi lyhentää toimintamatkaa, mutta se voidaan huomioida ennakkoon ja arjen latauksella.","q":"Kuinka paljon ajat pisimpänä tavallisena talvipäivänä?","c":"Katsotaan auto, jossa talvimarginaali riittää siihen ajoon.","k":"talvi, talvirange, pakkanen, kylmä, talvikantama, sähköauto talvella"},{"id":"b55","cat":"sahko","t":"Pikalataus tuntuu hankalalta.","m":"Asiakas ei tunne prosessia.","a":"Ensimmäinen kerta tuntuu monesta hankalalta, mutta käytännössä se on muutaman napin rutiini.","q":"Oletko käyttänyt pikalaturia aiemmin?","c":"Näytän sinulle latauksen käytännössä.","k":"pikalataus, pikalaturi, lataaminen hankalaa, latausasema, lataussovellus, latauskortti"},{"id":"b56","cat":"sahko","t":"En tiedä paljonko sähköauton käyttö maksaa.","m":"Kustannuksia ei voi hahmottaa.","a":"Lasketaan se sinun kilometreilläsi ja lataustavallasi, ei yleisellä arviolla.","q":"Paljonko ajat suunnilleen kuukaudessa?","c":"Tehdään vertailu nykyiseen autoosi.","k":"sähköauton käyttökulut, sähkön hinta, latauksen hinta, käyttökulut, kustannukset, paljonko maksaa ajaa"},{"id":"b57","cat":"sahko","t":"Sähköauton jälleenmyyntiarvo pelottaa.","m":"Asiakas pelkää arvonalenemaa.","a":"Arvonalenema koskee kaikkia autoja, mutta siksi ostohinta, mallin kysyntä ja rahoitusrakenne ovat tärkeitä.","q":"Kuinka pitkään ajattelet pitää autoa?","c":"Valitaan malli ja rahoitus, jotka sopivat siihen vaihtosykliin.","k":"jälleenmyyntiarvo, arvonalenema, arvo putoaa, arvonlasku, sähköauton arvo, myyntiarvo"},{"id":"b58","cat":"sahko","t":"En halua odottaa lataamista reissuilla.","m":"Pelko matkustamisen hankaloitumisesta.","a":"Ymmärrän. Pitkillä matkoilla lataus kannattaa sovittaa ruokailu- ja taukopaikkoihin.","q":"Kuinka usein ajat yli 300 kilometrin reissuja?","c":"Katsotaan yksi oma reittisi käytännössä.","k":"odottaa latausta, reissu, pitkä matka, lataus reissulla, mökkimatka, lomamatka"},{"id":"b59","cat":"sahko","t":"En tiedä sopiiko sähköauto ajoihini.","m":"Asiakas tarvitsee henkilökohtaisen varmistuksen.","a":"Sitä ei tarvitse arvata — käydään ajot ja latausmahdollisuudet läpi.","q":"Mistä minne ajat tavallisella viikolla?","c":"Teen sinulle sähköautoarvion omasta arjestasi.","k":"sopiiko sähköauto, ajot, arki, työmatka, sopiiko minulle, sähköauto sopivuus"},{"id":"b60","cat":"luottamus","t":"En luota käytetyn auton kuntoon.","m":"Pelko virheostoksesta.","a":"Ymmärrän. Siksi käymme historian, tarkastukset, kunnon ja turvan läpi avoimesti.","q":"Mikä käytetyssä autossa huolettaa sinua eniten?","c":"Katsotaan juuri ne kohdat yhdessä tästä autosta.","k":"en luota kuntoon, kunto, käytetty auto, luottaa, sika säkissä, piilovika, käytetyn kunto"},{"id":"b61","cat":"luottamus","t":"Pelkään, että autoon tulee kallis vika.","m":"Taloudellinen riski.","a":"Se on järkevä huoli. Siksi katsotaan mallin historia, kunto ja mahdollinen lisäturva.","q":"Haluatko ensisijaisesti mahdollisimman huolettoman auton vai mahdollisimman pienen ostohinnan?","c":"Rakennetaan kauppa niin, että riski pysyy sinulle sopivana.","k":"kallis vika, korjaus, remontti, rikkoutua, riski, korjauskulut, iso vika"},{"id":"b62","cat":"luottamus","t":"Huoltohistoria ei vakuuta.","m":"Dokumentaatio tai säännöllisyys epäilyttää.","a":"Hyvä huomio. Katsotaan huollot päivämäärä ja kilometritasolla.","q":"Mikä kohta historiassa herätti epäilyksen?","c":"Selvitän sen ennen kuin etenemme.","k":"huoltohistoria, huoltokirja, huollot puuttuu, dokumentit, huoltohistoria epäselvä, huollot"},{"id":"b63","cat":"luottamus","t":"Kilometrejä on liikaa.","m":"Asiakas yhdistää kilometrit automaattisesti riskiin.","a":"Kilometrit ovat yksi osa kokonaisuutta; huolto, käyttö ja kunto kertovat usein enemmän.","q":"Mikä kilometrimäärä tuntuisi sinusta turvalliselta?","c":"Näytän vaihtoehdon, joka pysyy siinä rajassa.","k":"kilometrit, liikaa kilometrejä, ajettu paljon, km, mittarilukema, paljon ajettu, kilsat"},{"id":"b64","cat":"luottamus","t":"Auto on liian vanha.","m":"Tekniikka, turvallisuus tai korjauskulut huolettavat.","a":"Ymmärrän. Katsotaan, mitä uudempi ikä käytännössä sinulle tuo.","q":"Haetko uudempaa tekniikkaa, pienempää riskiä vai parempaa jälleenmyyntiarvoa?","c":"Rajataan vaihtoehdot sinulle sopivaan ikään.","k":"liian vanha, vanha, vuosimalli, ikä, vanha malli, vanha auto"},{"id":"b65","cat":"luottamus","t":"Auto on liian uusi ja tekniikkaa on liikaa.","m":"Käytön monimutkaisuus huolettaa.","a":"Tuo on reilu huomio. Kaikkea ei tarvitse käyttää, mutta tärkeimmät toiminnot ovat yleensä hyvin yksinkertaisia.","q":"Mikä tekniikassa tuntuu hankalimmalta?","c":"Käydään perustoiminnot yhdessä läpi koeajolla.","k":"liian uusi, tekniikka, liikaa tekniikkaa, monimutkainen, näytöt, elektroniikka, vaikea käyttää"},{"id":"b66","cat":"luottamus","t":"En tunne tätä automallia.","m":"Tuntematon tuntuu riskiltä.","a":"Siksi kannattaa verrata mallia omaan käyttöön, eikä ostaa pelkän nimen perusteella.","q":"Mihin tuttuun autoon vertaat tätä?","c":"Näytän tärkeimmät erot käytännössä.","k":"en tunne mallia, malli, tuntematon malli, en tunne, outo malli"},{"id":"b67","cat":"luottamus","t":"Tämä merkki ei ole minulle tuttu.","m":"Merkkiluottamus puuttuu.","a":"Ymmärrän. Katsotaan faktat: huollot, maine, kustannukset ja tämän yksilön kunto.","q":"Mitä odotat merkiltä eniten?","c":"Verrataan tämä sinun tuttuihin merkkeihisi.","k":"merkki ei tuttu, tuntematon merkki, kiinalainen, uusi merkki, outo merkki"},{"id":"b68","cat":"luottamus","t":"En tiedä, onko tämä luotettava malli.","m":"Asiakas tarvitsee näyttöä, ei vain vakuuttelua.","a":"Hyvä kysymys. Kerron rehellisesti mallin vahvuudet ja asiat, jotka on hyvä huomioida.","q":"Onko joku tietty asia, josta olet kuullut huonoa?","c":"Käydään se kohta läpi ennen päätöstä.","k":"luotettava malli, luotettavuus, vikatilastot, maine, kestävyys, onko luotettava"},{"id":"b69","cat":"luottamus","t":"Takuu ei tunnu riittävältä.","m":"Asiakas haluaa enemmän turvaa.","a":"Ymmärrän. Selvitetään, millaista turvaa tarvitset ja mitä lisäturvaa on saatavilla.","q":"Mikä vika tai kuluerä sinua eniten pelottaa?","c":"Rakennetaan mukaan sinulle sopiva turva.","k":"takuu, takuu ei riitä, turva, lisäturva, jatkoturva, huoltosopimus, jatkotakuu, sakavarma, sakaturva"},{"id":"b70","cat":"koeajo","t":"Haluan koeajaa vielä pidempään.","m":"Asiakas ei saanut riittävää varmuutta.","a":"Ehdottomasti. Parempi tehdä päätös kunnollisen kokemuksen pohjalta.","q":"Mitä haluat pidemmällä koeajolla testata?","c":"Sovitaan reitti, jolla ne asiat selviävät.","k":"pidempi koeajo, koeajo, testata, koeajaa uudestaan, pidempään koeajaa, yön yli koeajo"},{"id":"b71","cat":"koeajo","t":"En ehtinyt koeajolla kokeilla kaikkea.","m":"Koeajo jäi liian pintapuoliseksi.","a":"Korjataan se. Käydään läpi ne toiminnot, jotka vaikuttavat sinun arkeesi.","q":"Mikä jäi kokeilematta?","c":"Tehdään lyhyt toinen koeajo juuri niille asioille.","k":"en ehtinyt kokeilla, kokeilla, koeajo lyhyt, ei ehtinyt, kaikki kokeilematta"},{"id":"b72","cat":"koeajo","t":"Haluan koeajaa puolison kanssa.","m":"Molempien hyväksyntä puuttuu.","a":"Hyvä idea — näin molemmat voivat arvioida tilat ja ajotuntuman.","q":"Milloin puoliso pääsee mukaan?","c":"Varaan teille yhteisen koeajoajan.","k":"koeajo puolison kanssa, yhdessä koeajo, puoliso koeajolle"},{"id":"b73","cat":"koeajo","t":"Haluan ajaa autolla moottoritiellä.","m":"Asiakas arvioi pidemmän ajon mukavuutta.","a":"Se on järkevää, etenkin jos ajat maantietä paljon.","q":"Kuinka pitkää matkaa ajat tavallisesti?","c":"Valitaan koeajoreitti, jolla pääset testaamaan sen.","k":"moottoritie, maantie, valtatie, pitkä ajo, meluisa, moottoritiellä"},{"id":"b74","cat":"koeajo","t":"Haluan kokeilla auton pysäköintiä.","m":"Koko tai näkyvyys mietityttää.","a":"Hyvä, se on arjessa tärkeä asia.","q":"Onko sinulla kotona, töissä tai kaupassa jokin hankala parkkipaikka?","c":"Testataan pysäköinti ja avustimet ennen päätöstä.","k":"pysäköinti, parkkeeraus, parkki, peruutus, kamera, parkkipaikka"},{"id":"b75","cat":"koeajo","t":"Haluan verrata tätä nykyiseen autooni.","m":"Hyöty vaihtamisesta ei ole selkeä.","a":"Juuri niin kannattaa tehdä. Verrataan käytännön asioita, ei vain vuosimallia.","q":"Mitkä kolme asiaa nykyisessä autossa haluat parantaa?","c":"Katsotaan täyttyvätkö ne tässä.","k":"verrata nykyiseen, oma auto, vertailu nykyiseen, verrata omaan autoon"},{"id":"b76","cat":"koeajo","t":"Auto tuntui erilaiselta kuin odotin.","m":"Odotus ja kokemus eivät kohdanneet.","a":"Hyvä, että huomasit sen. Selvitetään, oliko ero hyvä vai huono.","q":"Mikä tuntui erilaiselta: alusta, ohjaus, teho vai näkyvyys?","c":"Verrataan sitä sopivampaan vaihtoehtoon.","k":"tuntui erilaiselta, tuntuma, ajotuntuma, erilainen, jousitus, ohjaus, ei tuntunut hyvältä"},{"id":"b77","cat":"koeajo","t":"Ajoasento ei ollut heti täydellinen.","m":"Ergonomia epäilyttää.","a":"Säädetään se rauhassa — istuin, ratti ja peilit vaikuttavat paljon.","q":"Tuntuiko ongelma jaloissa, selässä vai näkyvyydessä?","c":"Tehdään säädöt ja otetaan uusi lyhyt koeajo.","k":"ajoasento, istuin, selkä, ergonomia, ratti, penkki"},{"id":"b78","cat":"koeajo","t":"En ole varma näkyvyydestä.","m":"Turvallisuuden ja hallinnan tunne puuttuu.","a":"Ymmärrän. Käydään peilit, kamerat ja katvealueet käytännössä läpi.","q":"Mihin suuntaan näkyvyys tuntui heikoimmalta?","c":"Testataan se seuraavalla ajolla.","k":"näkyvyys, katvealue, peilit, kamerat, huono näkyvyys"},{"id":"b79","cat":"koeajo","t":"Haluan testata, mahtuuko lapsi ja tavarat autoon.","m":"Perheen arjen toimivuus epäilyttää.","a":"Ehdottomasti — se on paras tapa varmistaa sopivuus.","q":"Onko käytössä turvakaukalo, vaunut tai useampi istuin?","c":"Tuokaa ne mukaan, niin testataan autossa oikeasti.","k":"lapsi, lapset, turvaistuin, kaukalo, vaunut, rattaat, perhe, mahtuuko"},{"id":"b80","cat":"ominaisuudet","t":"Tavaratila on liian pieni.","m":"Käytännöllisyys ei riitä.","a":"Ymmärrän. Tavaratilan pitää toimia sinun oikeassa arjessasi.","q":"Mitä sinne pitää mahtua tavallisesti?","c":"Testataan tavarat tai katsotaan suurempi vaihtoehto.","k":"tavaratila pieni, tavaratila, takakontti, kontti, tila, koira, tavarat ei mahdu"},{"id":"b81","cat":"ominaisuudet","t":"Takapenkki on liian ahdas.","m":"Perhe- tai matkustuskäyttö ei toimi.","a":"Jos takapenkkiä käytetään paljon, siitä ei kannata tinkiä.","q":"Ketkä istuvat takana yleensä ja kuinka pitkiä matkoja?","c":"Näytän mallin, jossa takatiloihin tulee selvä parannus.","k":"takapenkki ahdas, takapenkki, ahdas, jalkatila, takatila"},{"id":"b82","cat":"ominaisuudet","t":"Auto on liian iso.","m":"Ajettavuus tai pysäköinti arveluttaa.","a":"Ymmärrän. Koko tuntuu usein nopeasti luontevalta, mutta sitä ei tarvitse arvata.","q":"Onko haaste kotipihassa, parkkihallissa vai kaupungissa?","c":"Kokeillaan sitä ympäristöä vastaavalla koeajolla.","k":"liian iso, iso auto, suuri, kömpelö, pitkä auto"},{"id":"b83","cat":"ominaisuudet","t":"Auto on liian pieni.","m":"Auto ei palvele tulevia tarpeita.","a":"Hyvä havainto — silloin kannattaa katsoa kerralla riittävä koko.","q":"Missä tilanteessa tila loppuu ensimmäisenä?","c":"Rajataan seuraava vaihtoehto siihen kokoluokkaan.","k":"liian pieni, pieni auto, tila loppuu, ahdas"},{"id":"b84","cat":"ominaisuudet","t":"Auto kuluttaa liikaa.","m":"Kuukausittaiset kulut huolettavat.","a":"Katsotaan kulutus sinun kilometreilläsi euroina, ei vain litralukuna.","q":"Paljonko ajat kuukaudessa ja millaista ajoa?","c":"Lasketaan kustannus nykyiseen autoosi verrattuna.","k":"kuluttaa liikaa, kulutus, polttoaine, bensa, litrat, janoinen, polttoainekulut"},{"id":"b85","cat":"ominaisuudet","t":"En tarvitse näin tehokasta autoa.","m":"Asiakas ei näe tehon hyötyä tai pelkää kustannuksia.","a":"Se on reilu ajatus. Tärkeintä on, että tehoa on omaan käyttöön sopivasti.","q":"Tarvitsetko tehoa ohituksiin, vetoon vai et oikeastaan lainkaan?","c":"Katsotaan järkevämpi moottorivaihtoehto.","k":"liian tehokas, teho, hevosvoimat, turhan tehokas, liikaa tehoa"},{"id":"b86","cat":"ominaisuudet","t":"Auto ei tunnu tarpeeksi tehokkaalta.","m":"Ajettavuus tai suorituskyky jää vajaaksi.","a":"Ymmärrän — auton pitää tuntua varmalta etenkin ohituksissa ja kuormalla.","q":"Missä tilanteessa kaipaat enemmän suorituskykyä?","c":"Näytän vaihtoehdon, joka vastaa siihen.","k":"ei tarpeeksi tehokas, hidas, tehoton, vetää huonosti, ohitukset, heikko moottori"},{"id":"b87","cat":"ominaisuudet","t":"Varusteita puuttuu.","m":"Asiakas ei halua tinkiä arjen mukavuudesta.","a":"Hyvä, silloin tiedämme tarkasti mitä etsitään.","q":"Mitkä varusteet ovat sinulle pakollisia?","c":"Katson heti vastaavan yksilön niillä varusteilla.","k":"varusteita puuttuu, varusteet, puuttuu, vakionopeudensäädin, lisälämmitin, navigaattori, vetokoukku, peruutuskamera"},{"id":"b88","cat":"ominaisuudet","t":"Tässä on liikaa turhaa varustetta.","m":"Asiakas ei halua maksaa asioista, joita ei käytä.","a":"Ymmärrän. Silloin kannattaa löytää auto, jossa raha menee sinulle tärkeisiin ominaisuuksiin.","q":"Mistä varusteista maksaisit mielelläsi ja mistä et?","c":"Rajataan haku siihen varustetasoon.","k":"turhaa varustetta, turhat varusteet, ylivarusteltu, liikaa varusteita"},{"id":"b89","cat":"ominaisuudet","t":"Väri ei ole mieluinen.","m":"Omistamisen tunne ei synny.","a":"Väri on tärkeä — autoa katsotaan joka päivä.","q":"Mikä väri olisi sinulle oikea?","c":"Katson löytyykö sama malli toivotulla värillä.","k":"väri, väri ei mieluinen, en tykkää väristä, en pidä väristä, sävy, ruma väri, väri ei käy, eri väri"},{"id":"b90","cat":"ominaisuudet","t":"En halua dieseliä.","m":"Käyttöprofiili, maine tai tulevaisuus huolettaa.","a":"Ymmärrän. Valitaan käyttövoima sinun ajojesi perusteella.","q":"Mikä dieselissä arveluttaa eniten?","c":"Verrataan bensiini-, hybridi- tai sähkövaihtoehtoa samoilla kustannuksilla.","k":"en halua dieseliä, diesel, dieseli, käyttövoimavero"},{"id":"b91","cat":"ominaisuudet","t":"En halua bensa-autoa.","m":"Polttoainekulut tai ympäristöarvot.","a":"Ymmärrän. Silloin hybridin tai sähköauton soveltuvuus kannattaa selvittää.","q":"Onko tärkein syy kulutus, päästöt vai ajotuntuma?","c":"Katsotaan sinulle sopivampi käyttövoima.","k":"en halua bensaa, bensa, bensiini, polttomoottori, bensa-auto"},{"id":"b92","cat":"ominaisuudet","t":"En halua hybridiä.","m":"Tekniikka tuntuu monimutkaiselta tai epäilyttää.","a":"Selvä. Hybridi ei sovi kaikille käyttötavoille.","q":"Haluatko mieluummin selkeän bensiini- vai täyssähköauton?","c":"Rajataan vaihtoehdot siihen.","k":"en halua hybridiä, hybridi, lataushybridi, phev"},{"id":"b93","cat":"ominaisuudet","t":"En halua automaattia / manuaalia.","m":"Tottumus tai käyttötarve.","a":"Ymmärrän — voimansiirto vaikuttaa paljon ajotuntumaan.","q":"Onko kyse tottumuksesta vai tietystä käyttötarpeesta?","c":"Katsotaan sinulle sopiva vaihteisto.","k":"automaatti, manuaali, vaihteisto, käsivaihteet, automaattivaihteisto"},{"id":"b94","cat":"ominaisuudet","t":"En halua nelivetoista / etuvetoista autoa.","m":"Ajotapa tai talviolosuhteet.","a":"Hyvä rajaus. Vetotapa kannattaa valita sen mukaan, missä ja miten ajat.","q":"Onko sinulla paljon mökki-, lumi- tai vetokäyttöä?","c":"Näytän vaihtoehdon oikealla vetotavalla.","k":"neliveto, 4x4, awd, etuveto, takaveto, vetotapa"},{"id":"b95","cat":"hinta","t":"Vakuutukset pelottavat hinnan takia.","m":"Kokonaiskuukausikulu voi ylittää budjetin.","a":"Tuo kannattaa selvittää ennen päätöstä, ei jälkikäteen.","q":"Haluatko, että arvioidaan vakuutusluokka ja kokonaiskulut?","c":"Tehdään autosta kuukausitasoinen kokonaisbudjetti.","k":"vakuutus, vakuutukset kalliit, kasko, liikennevakuutus, vakuutusmaksu"},{"id":"b96","cat":"hinta","t":"Verot ja käyttökulut mietityttävät.","m":"Asiakas ei tiedä auton todellista kokonaiskustannusta.","a":"Hyvä, silloin lasketaan hankintahinnan lisäksi käyttö.","q":"Paljonko ajat vuodessa ja missä suhteessa kaupunkia sekä maantietä?","c":"Teen vertailun nykyiseen autoosi euroina.","k":"verot, vero, ajoneuvovero, käyttömaksu, käyttökulut, kokonaiskustannus"},{"id":"b97","cat":"hinta","t":"En tiedä paljonko huollot maksavat.","m":"Omistamisen riskit ovat epäselvät.","a":"Käydään läpi huolto-ohjelma ja todennäköiset kuluvat osat.","q":"Kuinka pitkään ajattelet pitää autoa?","c":"Arvioidaan kulut juuri sille omistusajalle.","k":"huollot, huoltokulut, huollon hinta, huoltomaksu, huolto kallis"},{"id":"b98","cat":"epaarointi","t":"En tiedä, milloin auton saisi luovutukseen.","m":"Aikataulu voi estää kaupan.","a":"Selvitän luovutusajan tarkasti ennen kuin sitoudut mihinkään.","q":"Mihin päivään mennessä tarvitset auton viimeistään?","c":"Sovitaan tähän aikatauluun sopiva ratkaisu.","k":"luovutus, toimitusaika, milloin saa, aikataulu, luovutusaika, kuinka nopeasti"},{"id":"b99","cat":"epaarointi","t":"En ole varma, onko nyt oikea aika ostaa auto.","m":"Asiakas pohtii taloutta, markkinaa tai elämäntilannetta.","a":"Ymmärrän. Oikea aika on silloin, kun auto ja kokonaisuus palvelevat arkea ilman että talous kiristyy liikaa.","q":"Mikä pitäisi muuttua, jotta ajankohta tuntuisi oikealta?","c":"Katsotaan, voidaanko tehdä ratkaisu, joka tuntuu turvalliselta jo nyt.","k":"oikea aika, ajankohta, onko nyt oikea aika, talous, taantuma, elämäntilanne"}];
@@ -4109,6 +5013,7 @@
   });
   document.getElementById("settingsBtn").addEventListener("click", openSettings);
   document.getElementById("guestEndBtn").addEventListener("click", endGuest);
+  document.getElementById("fabAdd").addEventListener("click", openQuickAdd);
   function navFade() {
     var tb = document.getElementById("tabbar"); if (!tb) return;
     var more = tb.scrollWidth - tb.clientWidth - tb.scrollLeft > 4;
