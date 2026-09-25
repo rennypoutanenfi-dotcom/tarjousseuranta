@@ -1123,6 +1123,19 @@
     main.view-home { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: start; gap: 18px; }
     main.view-home > .home-col { grid-column: auto; grid-row: auto; }
   }
+
+  /* ---------- Nuuskalaskuri ---------- */
+  .sn-row { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+  .sn-num { flex: 1; display: flex; align-items: baseline; justify-content: center; gap: 6px; }
+  .sn-num b { font-family: var(--font-display); font-size: 44px; font-weight: 600; line-height: 1; }
+  .sn-num span { font-size: 14px; color: var(--text-dim); }
+  .sn-plus, .sn-minus { border-radius: 14px; cursor: pointer; font-family: var(--font-body); font-weight: 700; touch-action: manipulation; }
+  .sn-plus { width: 96px; height: 64px; font-size: 22px; background: var(--accent-fill); color: var(--on-accent); border: none; box-shadow: 0 6px 18px -8px var(--accent-fill); }
+  .sn-plus:active { transform: scale(.95); }
+  .sn-minus { width: 48px; height: 48px; font-size: 22px; background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+  .sn-plus:disabled, .sn-minus:disabled { opacity: .4; cursor: default; box-shadow: none; }
+  .sn-stats { display: flex; gap: 18px; margin-top: 12px; font-size: 13px; color: var(--text-dim); }
+  .sn-stats b { color: var(--text); font-family: var(--font-display); font-size: 16px; font-weight: 600; margin-left: 3px; }
 </style>
 </head>
 <body>
@@ -1783,6 +1796,8 @@
     offerRefs().forEach(function (r) { if (r.o.ex && !dcache[r.o.id] && !dfail[r.o.id]) todo.push({ key: r.o.id, ex: r.o.ex }); });
     var months = (state.profile && state.profile.months) || {};
     Object.keys(months).forEach(function (mk) {
+      var snk = "sn:" + mk;
+      if (months[mk] && months[mk].sn && !dcache[snk] && !dfail[snk]) todo.push({ key: snk, ex: months[mk].sn });
       var vr = (months[mk] && months[mk].vr) || {};
       Object.keys(vr).forEach(function (dd) {
         var key = "vr:" + mk + ":" + dd;
@@ -2431,6 +2446,7 @@
     colA.appendChild(todoCard());
     colA.appendChild(rkHomeButton());
 
+    colB.appendChild(snusCard());
     colB.appendChild(vireCard());
     colB.appendChild(trendCard());
     colB.appendChild(sourceCard(stats, doc));
@@ -2548,6 +2564,72 @@
       });
     }
     draw();
+    return card;
+  }
+
+
+  // ---------- Nuuskalaskuri ----------
+  // Päiväkohtaiset määrät tallennetaan kuukauden tietoihin salattuna (sn), jotta ne eivät näy muille.
+  var snusTimer = null;
+  function snusDay(offset) {
+    var d = new Date(); d.setDate(d.getDate() - offset);
+    var mk = monthKeyOf(d), c = dcache["sn:" + mk];
+    return c && c.d && c.d[String(d.getDate())] !== undefined ? c.d[String(d.getDate())] : null;
+  }
+  function snusReady() {
+    var doc = curMonthDoc(), key = "sn:" + state.monthKey;
+    return !(doc && doc.sn && !dcache[key]);
+  }
+  function snusAdd(delta) {
+    var doc = curMonthDoc(); if (!doc) return false;
+    var key = "sn:" + state.monthKey;
+    if (!snusReady()) { showToast(dfail[key] ? "Laskurin tietoja ei saatu auki" : "Ladataan…"); return false; }
+    var m = Object.assign({}, (dcache[key] && dcache[key].d) || {});
+    var dd = String(new Date().getDate());
+    m[dd] = Math.max(0, (m[dd] || 0) + delta);
+    dcache[key] = { d: m };
+    clearTimeout(snusTimer);
+    snusTimer = setTimeout(saveSnus, 1200);
+    return true;
+  }
+  function saveSnus() {
+    snusTimer = null;
+    if (state.guest || !state.profile) return;
+    var mk = state.monthKey, c = dcache["sn:" + mk];
+    if (!c || !c.d) return;
+    encObj({ d: c.d }).then(function (sn) {
+      var months = Object.assign({}, state.profile.months);
+      months[mk] = Object.assign({}, months[mk], { sn: sn });
+      state.profile = Object.assign({}, state.profile, { months: months });
+      var patch = {}; patch[mk] = { sn: sn };
+      return queueSaveMonths(patch);
+    }).catch(function () { showToast("Nuuskalaskurin tallennus epäonnistui"); });
+  }
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden" && snusTimer) { clearTimeout(snusTimer); saveSnus(); }
+  });
+  function snusCard() {
+    var card = document.createElement("div");
+    card.className = "card snus-card";
+    var today = snusDay(0) || 0, yest = snusDay(1);
+    var prev = [];
+    for (var i = 1; i <= 7; i++) { var v = snusDay(i); if (v !== null) prev.push(v); }
+    var avg = prev.length ? prev.reduce(function (a, b) { return a + b; }, 0) / prev.length : null;
+    var ready = snusReady();
+    card.innerHTML = '<h2>Nuuskat tänään</h2>' +
+      '<div class="sn-row">' +
+        '<button type="button" class="sn-minus" aria-label="Vähennä yksi"' + (today > 0 && ready ? '' : ' disabled') + '>−</button>' +
+        '<div class="sn-num"><b>' + (ready ? today : '…') + '</b><span>' + (today === 1 ? 'pussi' : 'pussia') + '</span></div>' +
+        '<button type="button" class="sn-plus" aria-label="Lisää yksi"' + (ready ? '' : ' disabled') + '>+1</button>' +
+      '</div>' +
+      '<div class="sn-stats"><span>Eilen <b>' + (yest === null ? '–' : yest) + '</b></span>' +
+        '<span>7 pv ka <b>' + (avg === null ? '–' : avg.toFixed(1).replace('.', ',')) + '</b></span></div>';
+    card.querySelector(".sn-plus").addEventListener("click", function () {
+      if (snusAdd(1)) { var n = snusCard(); card.replaceWith(n); n.querySelector(".sn-plus").focus({ preventScroll: true }); }
+    });
+    card.querySelector(".sn-minus").addEventListener("click", function () {
+      if (snusAdd(-1)) card.replaceWith(snusCard());
+    });
     return card;
   }
 
