@@ -2383,7 +2383,7 @@
         { id: "p1-ensi-1", k: "tip", t: "Aloita puhelu positiivisella ja energisellä asenteella." },
         { id: "p1-ensi-2", k: "q", t: "Selvitä, mistä päin Suomea asiakas on. Onko kyseessä toimitus vai nouto?" },
         { id: "p1-ensi-3", k: "q", t: "Mitä huomioita asiakkaan asuinpaikkakunnasta? Onko se sinulle tuttu paikka? (small talk)" },
-        { id: "p1-ensi-4", k: "q", t: "Kerro, miten kaupanteko etenee tästä eteenpäin. Kerro asiakkaalle Sakan tapa tehdä kauppaa!" }
+        { id: "p1-ensi-4", k: "q", t: "Kerro, miten kaupanteko etenee tästä eteenpäin. Kerro asiakkaalle yrityksesi tapa tehdä kauppaa!" }
       ]},
       { id: "p1-tarve", title: "Tarvekartoitus", items: [
         { id: "p1-tarve-h1", k: "h", t: "Asiakkaan nykytila" },
@@ -2399,7 +2399,7 @@
       ]},
       { id: "p1-esit", title: "Myytävän tuotteen esittely ja hyväksyntä", items: [
         { id: "p1-esit-1", k: "tip", t: "Painota läpikäynnin yhteydessä asiakkaalle tärkeitä asioita, varusteita ja pointteja." },
-        { id: "p1-esit-2", k: "q", t: "Asiakkaan ostopäätöksen helpottaminen ja tukeminen → Onko auto vapaana? Esitä aidosti hetken aikaa, että auto olisi myytynä/varattuna." },
+        { id: "p1-esit-2", k: "q", t: "Asiakkaan ostopäätöksen helpottaminen ja tukeminen → Onko auto vapaana?" },
         { id: "p1-esit-3", k: "q", t: "Auton vanteiden ja renkaiden läpikäynti → tärkeimmät huomiot + hyväksytykset." },
         { id: "p1-esit-4", k: "q", t: "Auton korin kunnon läpikäynti: yleisilme + tärkeimmät huomiot + hyväksytykset → Miltä kuulostaa? Eikö vaikuta hyvältä?" },
         { id: "p1-esit-5", k: "q", t: "Auton sisustan läpikäynti + tärkeimmät huomiot + hyväksytykset → Miltä vaikuttaa, eikö kuulosta hyvältä?" },
@@ -2418,7 +2418,7 @@
         { id: "p1-vaihto-7", k: "q", t: "Milloin on tehty edellinen huolto?" },
         { id: "p1-vaihto-8", k: "q", t: "Milloin on seuraavan huollon aika? Mitä huoltoon kuuluu?" },
         { id: "p1-vaihto-9", k: "q", t: "Milloin jakopää on tehty? Onko tarvetta vaihtaa jakopää?" },
-        { id: "p1-vaihto-10", k: "q", t: "Onko auton katsastus ajankohtainen? (Varmista GT-X:stä)" },
+        { id: "p1-vaihto-10", k: "q", t: "Onko auton katsastus ajankohtainen? (Varmista Trafista)" },
         { id: "p1-vaihto-11", k: "q", t: "Onko auto teknisesti täysin myyntikunnossa? Onko jotain rikki?" },
         { id: "p1-vaihto-12", k: "q", t: "Oletko huomannut auton ajettavuudessa jotain poikkeamia?" },
         { id: "p1-vaihto-13", k: "q", t: "Tuleeko vielä jotain auton jälleenmyyntiin vaikuttavaa mieleen? Onko auto siinä kunnossa, että se voidaan sellaisenaan myydä seuraavalle asiakkaalle?" },
@@ -2439,7 +2439,7 @@
         { id: "p2-avaus-2", k: "q", t: "Luo tarjoukselle positiivinen alustus: oliko jotain selvitettäviä asioita, joihin kannattaa palata heti? (esim. onko meidän autossa jakopää tms. tehty)" }
       ]},
       { id: "p2-tarjous", title: "Tarjouksen ja ratkaisun esittäminen", items: [
-        { id: "p2-tarjous-1", k: "q", t: "Kertaus myytävästä autosta, välihyväksytys että tämä auto sopii asiakkaalle + Sakan tapa tehdä kauppaa -kertaus (jos tarve)." },
+        { id: "p2-tarjous-1", k: "q", t: "Kertaus myytävästä autosta, välihyväksytys että tämä auto sopii asiakkaalle + yrityksesi tapa tehdä kauppaa -kertaus (jos tarve)." },
         { id: "p2-tarjous-2", k: "kv", t: "Kuukausierä", v: "250–300 €/kk" },
         { id: "p2-tarjous-3", k: "kv", t: "Väliraha", v: "" },
         { id: "p2-tarjous-4", k: "kv", t: "Toimitusaikataulu", v: "" },
@@ -3504,7 +3504,7 @@
     if (a.katsastus === "Voimassa") r.strengths.push("Katsastus voimassa");
     if (a.katsastus === "Tulossa pian") { r.repairs.push("Katsastus tulossa pian"); yel("Katsastus edessä"); }
     if (a.katsastus === "Hylätty aiemmin") { r.history.push("Katsastus hylätty aiemmin, tarkista syy"); yel("Aiempi hylätty katsastus"); }
-    if (a.katsastus === "Ei tiedossa") unk("Katsastustilanne (tarkista GT-X:stä)");
+    if (a.katsastus === "Ei tiedossa") unk("Katsastustilanne (tarkista Trafista)");
     if (a.vauriot === "Ei tiedossa") r.strengths.push("Ei tiedossa olevia vaurioita");
     if (a.vauriot === "Pieniä vaurioita") { r.history.push("Pieniä vaurioita historiassa"); yel("Pieniä vaurioita historiassa"); }
     if (a.vauriot === "Merkittäviä vaurioita") { r.history.push("Merkittäviä vaurioita historiassa"); r.negatives.push("Merkittävä vauriohistoria"); red("Merkittävä vauriohistoria"); }
