@@ -1136,6 +1136,80 @@
   .sn-plus:disabled, .sn-minus:disabled { opacity: .4; cursor: default; box-shadow: none; }
   .sn-stats { display: flex; gap: 18px; margin-top: 12px; font-size: 13px; color: var(--text-dim); }
   .sn-stats b { color: var(--text); font-family: var(--font-display); font-size: 16px; font-weight: 600; margin-left: 3px; }
+
+  /* ---------- Treeni ---------- */
+  .tr-h1 { font-family: var(--font-display); font-size: 24px; font-weight: 600; line-height: 1.1; margin: 4px 0 4px; }
+  .tr-p { font-size: 13.5px; color: var(--text-dim); line-height: 1.45; margin: 0 0 8px; }
+  .tr-lbl { display: block; font-family: var(--font-display); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-dim); margin: 14px 0 6px; }
+  .tr-topics { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .tr-topic { text-align: left; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 12px; padding: 10px 11px; cursor: pointer; font-family: var(--font-body); display: flex; flex-direction: column; gap: 3px; }
+  .tr-topic b { font-size: 14px; font-weight: 600; }
+  .tr-topic span { font-size: 11.5px; color: var(--text-dim); line-height: 1.35; }
+  .tr-topic.on { border-color: var(--accent); background: var(--accent-dim); }
+  .tr-opts { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tr-opt { background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 999px; padding: 9px 13px; font-size: 13.5px; font-weight: 600; cursor: pointer; font-family: var(--font-body); }
+  .tr-opt.on { background: var(--accent-fill); border-color: var(--accent-fill); color: var(--on-accent); }
+  .tr-opt:disabled { opacity: .4; cursor: default; }
+  .tr-pill { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text-dim); font-family: var(--font-body); letter-spacing: 0; text-transform: none; }
+  .tr-pill.acc { background: var(--accent-dim); color: var(--accent); border-color: transparent; }
+  .tr-pill.gold { background: var(--gold-dim); color: var(--gold); border-color: transparent; }
+  .tr-top { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 4px; }
+  .tr-top h2 { margin: 0 4px 0 0; }
+  .tr-list { list-style: none; margin: 0; padding: 0; }
+  .tr-row { padding: 11px 0; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 6px; }
+  .tr-row:first-child { border-top: 0; }
+  .tr-l { font-family: var(--font-display); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-dim); display: flex; gap: 6px; align-items: center; }
+  .tr-v { font-size: 15.5px; line-height: 1.4; }
+  .tr-v.hid { color: var(--text-faint); font-style: italic; }
+  .tr-act { display: flex; gap: 6px; }
+  .tr-sb { background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 7px 12px; font-size: 12.5px; font-weight: 600; cursor: pointer; font-family: var(--font-body); }
+  .tr-sb.locked { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+  .tr-hint { font-size: 12px; color: var(--text-faint); margin-top: 8px; line-height: 1.4; }
+  .tr-ta { width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); font-family: var(--font-body); font-size: 16px; border-radius: 10px; padding: 10px 12px; resize: vertical; min-height: 70px; }
+  .tr-ta:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .tr-ta:disabled { opacity: .6; }
+  .tr-ins { border-radius: 10px; padding: 10px 12px; margin-top: 8px; font-size: 14px; line-height: 1.45; }
+  .tr-ins b { display: block; font-size: 13.5px; margin-bottom: 2px; }
+  .tr-ins.good { background: var(--good-dim); } .tr-ins.good b { color: var(--good); }
+  .tr-ins.bad { background: var(--bad-dim); } .tr-ins.bad b { color: var(--bad); }
+  .tr-ins.gold { background: var(--gold-dim); } .tr-ins.gold b { color: var(--gold); }
+  .tr-ins.neu { background: var(--surface-2); }
+  .tr-ins ul { margin: 2px 0 0; padding-left: 18px; }
+  .tr-cust { margin-top: 12px; border: 2px dashed var(--gold); border-radius: 12px; padding: 12px; }
+  .tr-cust h3 { margin: 0 0 4px; font-family: var(--font-display); font-size: 15px; color: var(--gold); font-weight: 600; }
+  .tr-cust dl { margin: 0; }
+  .tr-cust dt { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: .06em; margin-top: 9px; }
+  .tr-cust dd { margin: 2px 0 0; font-size: 14.5px; line-height: 1.4; }
+  .tr-cust i { color: var(--text-dim); }
+  .tr-btnrow { display: flex; gap: 8px; margin-top: 8px; }
+  .tr-btnrow .btn { flex: 1; }
+  .tr-model { margin: 10px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 12px; }
+  .tr-model b { display: block; font-size: 15px; }
+  .tr-model .d { display: block; font-size: 12.5px; color: var(--text-dim); }
+  .tr-model .tip { display: block; font-size: 14px; margin-top: 5px; padding-left: 10px; border-left: 3px solid var(--accent); line-height: 1.4; }
+  .tr-model .why { display: block; font-size: 12.5px; color: var(--text-dim); font-style: italic; margin-top: 4px; }
+  .tr-score { list-style: none; margin: 6px 0 0; padding: 0; }
+  .tr-score li { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--border); font-size: 14.5px; font-weight: 600; }
+  .tr-score li:first-child { border-top: 0; }
+  .tr-sc { display: flex; gap: 6px; flex-shrink: 0; }
+  .tr-sc button { width: 44px; height: 44px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); font-family: var(--font-display); font-size: 18px; font-weight: 600; cursor: pointer; }
+  .tr-sc button.on { background: var(--accent-fill); border-color: var(--accent-fill); color: var(--on-accent); }
+  .tr-sc button:disabled { cursor: default; }
+  .tr-total { display: flex; justify-content: space-between; align-items: baseline; border-top: 2px solid var(--text); padding: 10px 0; margin: 4px 0 10px; }
+  .tr-total b { font-family: var(--font-display); font-size: 26px; }
+  .tr-stats { display: flex; gap: 10px; margin: 8px 0 4px; }
+  .tr-bars { list-style: none; margin: 10px 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+  .tr-bars li { display: grid; grid-template-columns: minmax(0,1fr) 70px 28px; gap: 8px; align-items: center; font-size: 12.5px; }
+  .tr-bar { height: 8px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
+  .tr-bar i { display: block; height: 100%; background: var(--accent-fill); border-radius: 999px; }
+  .tr-bars li.weak .tr-bar i { background: var(--gold); }
+  .tr-bars .n { font-family: var(--font-display); text-align: right; }
+  .tr-hist { list-style: none; margin: 0; padding: 0; }
+  .tr-hist li { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-top: 1px solid var(--border); }
+  .tr-hist .m { flex: 1; min-width: 0; }
+  .tr-hist b { display: block; font-size: 14px; }
+  .tr-hist span { font-size: 11.5px; color: var(--text-dim); }
+  .tr-hist .s { font-family: var(--font-display); font-size: 17px; font-weight: 600; }
 </style>
 </head>
 <body>
@@ -1173,6 +1247,10 @@
     <button data-tab="vl">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-5A8 8 0 1 1 21 12Z"/><path d="M9.5 10a2.5 2.5 0 1 1 3.4 2.3c-.6.3-.9.8-.9 1.4V14"/><path d="M12 17h.01"/></svg>
       Vastalauseet
+    </button>
+    <button data-tab="treeni">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
+      Treeni
     </button>
     <button data-tab="vaihto">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3v-5l2-5h11l3 5h2v5h-2"/><circle cx="7.5" cy="17" r="2"/><circle cx="16.5" cy="17" r="2"/><path d="M9.5 17h5M5 12h14"/></svg>
@@ -1441,7 +1519,7 @@
     state.guest = true;
     guestMem = {};
     // Tyhjennä välimuistit, jotta vierailija ei näe aiemman käyttäjän laitteelle tallennettuja tietoja.
-    rf = null; vt.loaded = null; vt.a = {}; rk.overlay = null; vl.store = null; vl.index = null; lead.answers = {}; lead.target = null;
+    rf = null; vt.loaded = null; vt.a = {}; rk.overlay = null; vl.store = null; vl.index = null; lead.answers = {}; lead.target = null; T = null;
     dcache = {}; dfail = {}; cryptoKeyP = null;
     var mk = state.monthKey, months = {};
     months[mk] = { monthKey: mk, workDays: 20, targetOffers: 40, offers: [] };
@@ -2272,6 +2350,7 @@
     else if (state.tab === "runko") renderRunko(main);
     else if (state.tab === "liidi") renderLead(main);
     else if (state.tab === "vl") renderVl(main);
+    else if (state.tab === "treeni") renderTreeni(main);
     else if (state.tab === "vaihto") renderVt(main);
     else if (state.tab === "rahoitus") renderRf(main);
 
@@ -3588,6 +3667,7 @@
       { tab: "runko", t: "Myyntirunko", d: "Puhelu 1 ja 2 vaihe vaiheelta" },
       { tab: "liidi", t: "Kuuma liidi", d: "Pisteytä 0–100" },
       { tab: "vl", t: "Vastalauseet", d: "Mitä sanon nyt?" },
+      { tab: "treeni", t: "Treeni", d: "Case-harjoitus 7 vaiheella" },
       { tab: "vaihto", t: "Vaihtoauto", d: "Tarkastuslista ja arvio" },
       { tab: "rahoitus", t: "Rahoitus", d: "Vertaa kahden auton rahoitusta" }
     ];
@@ -5085,6 +5165,381 @@
     el.innerHTML = s + tip;
     el.querySelector("svg").__geom = { W: W, x0: x0, x1: x1, n: n };
   }
+
+  // ---------- Treeni ----------
+  const STEPS=[
+   {t:"Lämmin vastaanotto",d:"Tervehdys ja oma nimi, turvallinen fiilis, kerro miten edetään."},
+   {t:"Tarvekartoitus",d:"Avoimet kysymykset: käyttö, nykyinen auto, miksi vaihtaa."},
+   {t:"Ostopaine",d:"Aikataulu, miksi juuri nyt, kuka päättää, mitä muuta vertailee."},
+   {t:"Rehellinen sopivuusarvio",d:"Kerro suoraan, sopiiko auto tarpeeseen – myös silloin kun ei sovi."},
+   {t:"Välivahvistukset",d:"Vahvista erikseen auto, vaihtoauto ja rahoitus ennen hintaa."},
+   {t:"Selkeät vaihtoehdot",d:"Kaksi selkeää vaihtoehtoa (A/B), ei kymmentä."},
+   {t:"Suora klousaus",d:"Kysy kauppaa tai sitovaa seuraavaa askelta suoraan."}
+  ];
+  const DIFFS=[{v:1,l:"Aloittelija"},{v:2,l:"Kokenut"},{v:3,l:"Vaikea"}];
+  const MODES=[{v:"kortti",l:"Kortti + mallivastaus"},{v:"pari",l:"Pariharjoitus"}];
+  const DIFF_HUMAN={1:"Ole yhteistyöhaluinen, kerro salaisuus kun aiheesta kysytään.",2:"Kerro salaisuus vain suoraan kysyttäessä. Esitä yksi vastaväite.",3:"Ole vaikea: vähintään kaksi vastaväitettä, yritä saada alennus, kerro salaisuus vain tarkkaan kysymykseen."};
+  const TOPICS=[
+  {key:"liidi",title:"Netti- tai puhelinliidi",desc:"Asiakas otti itse yhteyttä. Tarve on olemassa – selvitä mikä se oikeasti on.",ch:"puhelimessa",els:[
+   {k:"e1",l:"Yhteydenotto",o:[
+    {t:"Nettiauto-yhteydenottopyyntö klo 21.40: ”Onko vielä myynnissä?”",tips:{1:"Soita seuraavana aamuna ennen klo 9 – nopeus voittaa.",2:"Älä vastaa pelkkään kysymykseen: ”On myynnissä – mikä siinä kiinnosti?”"}},
+    {t:"Asiakas soittaa ja kysyy heti: ”Mikä on alin hinta?”",lvl:2,tips:{2:"Älä anna hintaa tyhjiöön: ”Kerron mielelläni – kysyn ensin pari asiaa, niin tiedän mihin vertaat.”",5:"Hinta vasta, kun auto, vaihtoauto ja rahoitus on vahvistettu."}},
+    {t:"Chat-viesti: kysyy vaihtoauton hyvitystä ennen kuin on nähnyt auton",tips:{2:"Kerää vaihtoauton tiedot, mutta selvitä myös miksi hän vaihtaa.",5:"Älä lupaa hyvitystä ilman kuvia ja tietoja – anna haarukka ja sovi arviointi."}},
+    {t:"Rahoituslaskurin kautta tullut liidi: ”Mikä kk-erä tulisi?”",tips:{2:"Kk-erän kysyjälle budjetti on päätöksen ydin. Selvitä max-erä ja käsiraha heti.",6:"Tarjoa kaksi erää: A = pidempi laina-aika, B = viimeinen erä."}},
+    {t:"Sähköposti, jossa 8 tarkkaa kysymystä auton historiasta",tips:{1:"Vastaa, mutta ehdota puhelua: ”Käydään nämä läpi 5 minuutissa puhelimessa.”",4:"Kerro auton heikkoudet itse ennen kuin asiakas löytää ne."}}]},
+   {k:"e2",l:"Asiakas",o:[
+    {t:"Nuori pari, noin 28 v, ensimmäinen yhteinen auto",tips:{3:"Kaksi päättäjää – varmista, että molemmat ovat mukana koeajossa."}},
+    {t:"Kolmen lapsen isä, noin 42 v, puhuu autosta käsin",s:"Sinulla on kiire. Vastaat lyhyesti ja keskeytät pitkät selitykset.",tips:{1:"Kunnioita aikaa: ”Vien 3 minuuttia, sopiiko?”",6:"Yksi selkeä suositus ja yksi vaihtoehto riittää."}},
+    {t:"Eläkeläinen, noin 68 v, haluaa asioida kasvotusten",s:"Et halua päättää mitään puhelimessa.",tips:{1:"Kutsu myymälään ja lupaa kahvit – älä yritä tehdä kauppaa puhelimessa.",7:"Klousaus = sovittu käyntiaika."}},
+    {t:"Yrittäjä, noin 50 v, haluaa kaiken sähköpostilla",tips:{3:"Kysy, ostetaanko auto yritykselle vai yksityisesti – vaikuttaa rahoitukseen ja päättäjään.",5:"Vahvista sovittu kirjallisesti heti puhelun jälkeen."}},
+    {t:"Insinööri, noin 35 v, on lukenut kaikki arvostelut",lvl:2,s:"Tiedät tekniikasta paljon ja testaat myyjää tarkoilla kysymyksillä.",tips:{2:"Kysy mitä hän on jo vertaillut – hän on tehnyt pohjatyön.",4:"Älä bluffaa: ”En tiedä varmasti – tarkistan ja palaan 15 minuutissa.”"}}]},
+   {k:"e3",l:"Auto, josta kysyy",o:[
+    {t:"VW Golf Variant 1.5 TSI 2020, 74 tkm, 19 900 €"},
+    {t:"Toyota Corolla Touring Sports Hybrid 2021, 58 tkm, 24 900 €"},
+    {t:"Tesla Model 3 Long Range 2022, 61 tkm, 31 900 €",tips:{2:"Sähköautossa kysy kotilataus ja pisin tavallinen ajomatka."}},
+    {t:"Volvo XC60 T6 AWD Recharge 2021, 89 tkm, 39 900 €"},
+    {t:"Skoda Octavia Combi 2.0 TDI 2019, 132 tkm, 17 900 €",tips:{4:"Diesel ja 132 tkm: kysy vuosikilometrit, jotta suositus on rehellinen."}}]},
+   {k:"e4",l:"Piilotettu tieto",secret:1,o:[
+    {t:"Toinen lapsi on tulossa – kysytty auto on todellisuudessa liian pieni.",not:["e2c","e3d"],find:"Löysikö myyjä, että auto jää pieneksi perheen tarpeeseen?",reveal:"Kerro vauvasta vain, jos myyjä kysyy perheestä tai matkustajista.",tips:{2:"Kysy kuka autossa kulkee nyt ja vuoden päästä.",4:"Sano suoraan, jos auto jää pieneksi, ja ehdota isompaa."}},
+    {t:"Nykyinen auto hajosi viime viikolla – uusi tarvitaan alle viikossa.",find:"Löysikö myyjä kiireen syyn?",reveal:"Kerro vasta, kun myyjä kysyy aikataulusta tai miksi nyt.",tips:{3:"”Mikä sai liikkeelle juuri nyt?” paljastaa kiireen.",7:"Tarjoa luovutus tällä viikolla ja kysy kauppaa."}},
+    {t:"Puoliso haluaa sähköauton, asiakas itse epäilee – puoliso päättää.",find:"Selvittikö myyjä, kuka oikeasti päättää?",reveal:"Mainitse puoliso vain, jos myyjä kysyy kuka päättää tai kenen käyttöön auto tulee.",tips:{3:"Kysy aina: ”Kuka muu on mukana päätöksessä?”",7:"Klousaus = koeajo, jossa puoliso on mukana."}},
+    {t:"Kk-erä saa olla korkeintaan 350 €. Asiakas ei kerro sitä, ellei kysytä.",find:"Selvittikö myyjä kk-budjetin ennen hintaa?",reveal:"Kerro 350 €, jos myyjä kysyy budjetista tai kk-erästä suoraan.",tips:{5:"Kysy budjetti ennen kuin puhut hinnasta.",6:"Jos 350 €/kk ei riitä: A = edullisempi auto, B = pidempi laina-aika."}},
+    {t:"On jo koeajanut saman mallin kilpailijalla ja vertaa hintaa.",find:"Selvittikö myyjä kilpailevan vaihtoehdon?",reveal:"Kerro kilpailijasta, jos myyjä kysyy mitä muuta olet katsonut.",tips:{3:"”Mitä muita vaihtoehtoja olet katsonut?”",4:"Vertaa rehellisesti km, varustelu ja takuu – älä mollaa kilpailijaa."}}]},
+   {k:"e5",l:"Asenne",o:[
+    {t:"Ystävällinen ja avoin",s:"Olet ystävällinen ja vastaat mielelläsi."},
+    {t:"Kiireinen, vastaa lyhyesti",s:"Vastaat lyhyesti ja haluat nopeasti asiaan.",tips:{1:"Kysy lupa: ”Sopiiko 5 minuuttia nyt vai soitanko klo 17?”"}},
+    {t:"Epäluuloinen: ”Te myyjät yritätte aina myydä jotain.”",lvl:2,s:"Olet epäluuloinen myyjiä kohtaan. Pehmenet, jos myyjä on rehellinen eikä painosta.",tips:{1:"Myönnä asetelma: ”Totta, myyn autoja – siksi kysyn ensin, ettei myydä väärää.”",4:"Kerro auton heikkous itse – se purkaa epäluulon."}},
+    {t:"Kova tinkijä, avaa keskustelun hinnalla",lvl:2,s:"Yrität saada alennuksen heti etkä hyväksy ensimmäistä tarjousta.",tips:{5:"Ei alennusta ennen kuin muu on sovittu: ”Jos hinta sopii, teemmekö kaupan tänään?”",7:"Ehdollinen klousaus: alennus vain vastineeksi sitoumuksesta."}},
+    {t:"Kukaan ei soittanut takaisin – asiakas soittaa kaksi päivää myöhemmin ärtyneenä",lvl:3,s:"Olet ärtynyt, koska kukaan ei vastannut yhteydenottoosi. Rauhoitut, jos myyjä ei selittele.",tips:{1:"Pahoittele lyhyesti ilman selittelyä ja siirry asiaan."}}]}
+  ]},
+  {key:"myymala",title:"Myymäläkävijä",desc:"Asiakas tuli paikan päälle. Vastaanotto ja ensimmäiset 2 minuuttia ratkaisevat.",ch:"myymälässä kasvotusten",els:[
+   {k:"e1",l:"Tilanne",o:[
+    {t:"Lauantai klo 14, ruuhkaa – asiakas kiertelee pihalla yksin",tips:{1:"Tervehdi 30 sekunnissa, vaikka olisit kiireinen: ”Palvelen kohta – katsele rauhassa.”"}},
+    {t:"Arki-ilta, asiakas sanoo heti: ”Katselen vain.”",tips:{1:"Hyväksy ja avaa: ”Katsele rauhassa. Farmaria vai SUV:ta katsot?”"}},
+    {t:"Pariskunta, toinen selvästi innostuneempi",tips:{3:"Puhu molemmille. Hiljaisempi on usein se, joka päättää."}},
+    {t:"Asiakas toi auton huoltoon ja jäi katselemaan myyntiautoja",tips:{2:"Nykyinen auto on paras avaus: ”Mitä huollossa löytyi?”"}},
+    {t:"Asiakas tulee sisään kilpailijan tarjous kädessä",lvl:2,tips:{3:"Kiitä ja kysy: ”Mikä siinä tarjouksessa oli hyvää, mikä jäi puuttumaan?”",4:"Vertaa samoja asioita: km, varustelu, takuu, hyvitys."}}]},
+   {k:"e2",l:"Asiakas",o:[
+    {t:"Perheen äiti, noin 38 v, kaksi lasta mukana"},
+    {t:"Opiskelija, noin 22 v, ensimmäinen auto, isä mukana",tips:{3:"Selvitä kuka maksaa ja kuka päättää – älä sivuuta kumpaakaan."}},
+    {t:"Rakennusalan yrittäjä, noin 45 v",tips:{2:"Kysy vetopainot, kuorma ja ostetaanko yrityksen nimiin."}},
+    {t:"Pariskunta 60+, lapset muuttaneet pois",tips:{4:"Tarve usein pienenee – uskalla suositella pienempää autoa."}},
+    {t:"Tekniikkaintoilija, noin 30 v, kiinnostunut sähköautoista"}]},
+   {k:"e3",l:"Mitä katsoo",o:[
+    {t:"SUV, joka on budjetin yläpäässä",tips:{6:"A = toivottu SUV, B = vuotta vanhempi samasta mallista."}},
+    {t:"Pihan halvin auto",tips:{4:"Kerro rehellisesti, mitä halvimmassa jää puuttumaan ja mitä se voi maksaa myöhemmin."}},
+    {t:"Sähköauto, vaikka asuu kerrostalossa ilman latausta",tips:{4:"Selvitä lataus ennen kuin innostus kasvaa: ”Missä lataisit arjessa?” Harkitse hybridiä."}},
+    {t:"Ei tiedä mitä haluaa",tips:{2:"Tarvekartoitus ennen autoja: käyttö, matkustajat, budjetti."}},
+    {t:"Tietty väri ja varustelu, jota ei ole varastossa",tips:{6:"A = haetaan/tilataan toivottu, B = varastoauto heti ilman odotusta."}}]},
+   {k:"e4",l:"Piilotettu tieto",secret:1,o:[
+    {t:"Vaihtoautossa on enemmän velkaa kuin se on arvoltaan.",find:"Selvittikö myyjä vaihtoauton velan ennen hintaa?",reveal:"Kerro velasta vain, jos myyjä kysyy vaihtoauton rahoituksesta.",tips:{5:"Kysy aina: ”Onko autossa rahoitusta jäljellä?”",4:"Kerro avoimesti, miten negatiivinen pääoma nostaa erää."}},
+    {t:"Pankki on jo myöntänyt 20 000 € lainan – liikkeen rahoitusta ei tarvita.",find:"Selvittikö myyjä maksutavan ja rahoitustilanteen?",reveal:"Kerro pankin lainasta, kun myyjä kysyy maksutavasta.",tips:{5:"Vertaa pankin lainaa ja liikkeen rahoitusta avoimesti."}},
+    {t:"Isä maksaa osan ja tekee lopullisen päätöksen.",only:["e2b"],find:"Tunnistiko myyjä, että isä päättää?",reveal:"Isä puuttuu puheeseen, kun puhutaan rahasta.",tips:{3:"Ota isä mukaan rahakeskusteluun sivuuttamatta opiskelijaa."}},
+    {t:"Nykyinen auto on leasingilla ja sopimus päättyy 3 viikon päästä.",find:"Löysikö myyjä aikarajan?",reveal:"Kerro, kun myyjä kysyy aikataulusta tai nykyisestä autosta.",tips:{3:"Aikaraja = ostopaine. Sovi luovutus ennen leasingin loppua.",7:"”Jotta auto on valmiina ennen leasingin loppua, tehdään tilaus tänään.”"}},
+    {t:"Edellisestä liikkeestä ostettu auto hajosi 2 kk kaupan jälkeen – luottamus on heikko.",find:"Löysikö myyjä huonon kokemuksen ja vastasiko siihen?",reveal:"Kerro, jos myyjä kysyy aiemmista autokaupoista tai mikä on tärkeää.",tips:{2:"”Mikä on ollut tärkeintä, kun olet aiemmin ostanut auton?”",5:"Jatkoturva on tälle asiakkaalle ratkaisu, ei lisämyyntiä."}}]},
+   {k:"e5",l:"Komplikaatio",o:[
+    {t:"Lapset kärsimättömiä, aikaa 15 minuuttia",s:"Sinulla on kiire lasten takia. Jos keskustelu venyy, haluat lähteä.",tips:{7:"Jos aika loppuu, sovi seuraava käynti tarkalla ajalla ennen kuin asiakas lähtee."}},
+    {t:"Koeajon jälkeen: ”Mietitään kotona.”",s:"Koeajon jälkeen sanot, että haluat miettiä kotona.",tips:{7:"”Mitä erityisesti haluat miettiä?” – selvitä todellinen este."}},
+    {t:"Kysyy suoraan: ”Paljonko sinä tienaat tästä?”",lvl:2,s:"Kysyt myyjän provikasta ja katsot, meneekö hän hämilleen.",tips:{1:"Vastaa rauhallisesti ja rehellisesti ja käännä takaisin asiakkaan tarpeeseen."}},
+    {t:"Kilpailija maksaa vaihtoautosta 1 500 € enemmän",lvl:2,s:"Kerrot, että kilpailija maksaa vaihtoautostasi 1 500 € enemmän.",tips:{4:"Vertaa kokonaisuutta: auton hinta miinus hyvitys = väliraha.",6:"A = sama väliraha, B = kovempi hyvitys ilman kaupanpäällisiä."}},
+    {t:"Puoliso soittaa kesken keskustelun ja vastustaa kauppaa",lvl:3,s:"Kesken keskustelun puoliso soittaa ja vastustaa ostoa. Muutut epävarmaksi.",tips:{3:"Kysy mikä puolisoa huolettaa ja tarjoudu vastaamaan siihen suoraan."}}]}
+  ]},
+  {key:"oma",title:"Itse hankittu asiakas",desc:"Sinä otat yhteyttä. Tarve pitää herättää – tavoite on usein seuraava askel.",ch:"puhelimessa (myyjä soitti)",els:[
+   {k:"e1",l:"Syy soittaa",o:[
+    {t:"Vaihtosykli: asiakas osti auton meiltä 4 vuotta sitten",tips:{1:"Avaa suhteella: ”Ostit meiltä auton 2022 – miten se on palvellut?”"}},
+    {t:"Huollossa löytyi 1 800 € korjauslista",tips:{2:"”Kannattaako korjata vai vaihtaa? Katsotaan luvut yhdessä.”"}},
+    {t:"Auton takuu päättyy kuukauden päästä",tips:{3:"Takuun loppu on luonteva aikaraja – kerro mitä se tarkoittaa riskien kannalta."}},
+    {t:"Uusi malli tuli myyntiin ja sopii asiakkaan profiiliin",tips:{2:"Kerro miksi soitit juuri hänelle – yksilöllinen syy, ei massasoitto."}},
+    {t:"Asiakas pyysi tarjouksen vuosi sitten eikä ostanut",tips:{2:"Kysy mitä silloin tapahtui ja mikä on muuttunut."}}]},
+   {k:"e2",l:"Asiakas",o:[
+    {t:"Tyytyväinen kanta-asiakas, noin 55 v"},
+    {t:"Kiireinen asiantuntija, noin 45 v, puhelu kesken työpäivän",s:"Olet töissä ja sinulla on vain pari minuuttia.",tips:{1:"Kysy heti sopiiko hetki. Tavoite: sovi parempi aika, älä myy nyt."}},
+    {t:"Säästäväinen perhe, noin 40 v, ei ole ajatellut vaihtoa"},
+    {t:"Jäämässä eläkkeelle, noin 64 v",tips:{2:"Elämänmuutos = muuttuva tarve. Kysy tulevista suunnitelmista."}},
+    {t:"Nuori yrittäjä, noin 31 v, auto yrityksen nimissä",tips:{5:"Selvitä yrityksen rahoitus ja verotus – usein leasing tai yritysrahoitus."}}]},
+   {k:"e3",l:"Nykyinen auto",o:[
+    {t:"Skoda Superb 2.0 TDI 2018, 160 tkm"},
+    {t:"Toyota Auris Hybrid 2016, 120 tkm"},
+    {t:"Nissan Leaf 2019, akun kunto heikentynyt",tips:{2:"Kysy riittääkö toimintasäde talvella – yleinen kipupiste."}},
+    {t:"BMW 320d 2017, 190 tkm",tips:{3:"Korkeat kilometrit ja premium-merkki = kalliit korjaukset lähellä."}},
+    {t:"Kia Ceed SW 2020, 60 tkm, ei vikoja",tips:{4:"Jos tarvetta ei ole, sano se ja sovi seuranta – luottamus maksaa myöhemmin."}}]},
+   {k:"e4",l:"Piilotettu tieto",secret:1,o:[
+    {t:"Harkitsee jo vaihtoa, mutta aikoi ostaa yksityiseltä.",find:"Löysikö myyjä, että vaihto on jo mielessä?",reveal:"Kerro, jos myyjä kysyy onko vaihto käynyt mielessä.",tips:{4:"Kerro rehellisesti erot yksityiskauppaan: takuu, historia, vaihtoauto."}},
+    {t:"Taloudessa on tiukkaa – kk-erä ei saa nousta nykyisestä.",find:"Selvittikö myyjä budjettirajan hienotunteisesti?",reveal:"Kerro, jos myyjä kysyy kk-erästä tai budjetista.",tips:{5:"Kysy nykyinen erä ja rakenna vaihtoehto, jossa erä pysyy samana."}},
+    {t:"Muutto maalle tulossa – tarvitsee nelivedon ja vetokoukun.",find:"Löysikö myyjä tulevan elämänmuutoksen?",reveal:"Kerro muutosta, jos myyjä kysyy tulevista suunnitelmista tai käytöstä vuoden päästä.",tips:{2:"”Muuttuuko teillä jotain seuraavan vuoden aikana?”"}},
+    {t:"Ei oikeaa tarvetta nyt – paras lopputulos on sovittu seurantakontakti.",find:"Tunnistiko myyjä, ettei tarvetta ole, ja sopiko seurannan?",reveal:"Olet tyytyväinen autoosi. Myönnät tämän, jos myyjä kysyy suoraan.",tips:{4:"Älä pakota tarvetta.",7:"Klousaus = lupa soittaa esimerkiksi keväällä."}},
+    {t:"Puoliso ajaa nykyistä autoa, ja päätös tehdään yhdessä.",find:"Selvittikö myyjä, kuka päättää?",reveal:"Kerro, jos myyjä kysyy kuka autoa käyttää tai päättää.",tips:{3:"Kutsu molemmat koeajolle."}}]},
+   {k:"e5",l:"Reaktio",o:[
+    {t:"Yllättyy soitosta, mutta kuuntelee",s:"Olet yllättynyt, mutta kuuntelet."},
+    {t:"Kysyy heti: ”Mistä sait numeroni?”",lvl:2,s:"Olet hieman ärtynyt ja kysyt mistä myyjä sai numerosi.",tips:{1:"Kerro rehellisesti: asiakasrekisteristä, koska olet asiakkaamme."}},
+    {t:"Yrittää lopettaa: ”Laita vaan sähköpostia.”",lvl:2,s:"Yrität lopettaa puhelun pyytämällä sähköpostia.",tips:{7:"”Laitan – mitä haluat, että siinä on?” Sovi silti tarkka takaisinsoitto."}},
+    {t:"Innostuu heti ja kysyy hintaa",s:"Innostut ja kysyt heti hintaa.",tips:{5:"Älä hyppää hintaan – kartoita ensin, muuten tarjous osuu ohi."}},
+    {t:"Purkaa pitkään huonoa huoltokokemusta",lvl:3,s:"Olet pettynyt edelliseen huoltokäyntiin ja purat sitä myyjälle.",tips:{1:"Kuuntele loppuun, pahoittele ja lupaa selvittää – vasta sitten asiaan."}}]}
+  ]},
+  {key:"hankala",title:"Hankala tilanne",desc:"Paine päällä. Pidä prosessi, älä selittele äläkä anna periksi liian aikaisin.",ch:"kasvotusten",els:[
+   {k:"e1",l:"Tilanne",o:[
+    {t:"Auto ostettu 3 viikkoa sitten – moottorin vikavalo palaa",tips:{1:"Aloita kuuntelemalla, älä puolustautumalla.",5:"Vahvista mitä teet ja milloin: huoltoaika, sijaisauto."}},
+    {t:"Kilpailija tarjoaa samaa mallia 2 000 € halvemmalla",tips:{4:"Pyydä nähdä tarjous ja vertaa samoja asioita."}},
+    {t:"Kauppa sovittu, mutta rahoitus hylättiin",tips:{1:"Kerro asia itse, suoraan ja rauhallisesti.",6:"A = isompi käsiraha, B = edullisempi auto."}},
+    {t:"Päättäjä (puoliso) ei ole paikalla, eikä asiakas uskalla päättää",tips:{7:"Sovi yhteinen tapaaminen tai puhelu puolison kanssa tarkalla ajalla."}},
+    {t:"Asiakas vaatii 3 000 € alennusta tai lähtee",tips:{5:"Selvitä mistä summa tulee.",7:"Älä anna koko summaa – vastaa ehdolla ja kysy kauppaa."}}]},
+   {k:"e2",l:"Asiakas",o:[
+    {t:"Kiihtynyt ja äänekäs",s:"Olet kiihtynyt ja puhut kovaa. Rauhoitut, jos sinua kuunnellaan.",tips:{1:"Madalla omaa ääntä ja tempoa. Toista mitä kuulit."}},
+    {t:"Hiljainen ja pettynyt",s:"Olet hiljainen ja pettynyt, vastaat lyhyesti."},
+    {t:"Asiallinen mutta kova neuvottelija",s:"Olet asiallinen ja kova neuvottelemaan. Perustelet vaatimuksesi."},
+    {t:"Tuli tuttavan kautta: ”Pekka sanoi, että saan hyvän diilin.”",s:"Viittaat tuttavaasi ja odotat erityiskohtelua.",tips:{4:"Kiitä suosituksesta, mutta älä lupaa mitä et voi pitää."}},
+    {t:"Uhkaa kirjoittaa huonon arvostelun someen",lvl:2,s:"Uhkaat kirjoittaa arvostelun, jos et saa haluamaasi.",tips:{1:"Älä reagoi uhkaan – keskity ratkaisuun."}}]},
+   {k:"e3",l:"Auto",o:[
+    {t:"Audi A4 Avant 2018, 12 500 €"},
+    {t:"Uusi Toyota RAV4 Hybrid, 48 000 €"},
+    {t:"Hyundai Kona Electric 2020, 21 900 €"},
+    {t:"Ford Transit Custom, yrityksen pakettiauto, 29 000 €"},
+    {t:"Mercedes-Benz GLC 300e 2019, 36 900 €"}]},
+   {k:"e4",l:"Piilotettu tieto",secret:1,o:[
+    {t:"Asiakas on oikeastaan tyytyväinen autoon – hän haluaa tulla kuulluksi.",only:["e1a"],find:"Kuunteliko myyjä ennen ratkaisua?",reveal:"Rauhoitut, kun myyjä kuuntelee ja toistaa mitä sanoit.",tips:{2:"Kysy ja kuuntele ennen kuin tarjoat ratkaisua."}},
+    {t:"Kilpailijan tarjouksessa on heikompi varustelu ja 40 tkm enemmän ajoa.",only:["e1b","e1e"],find:"Tarkistiko myyjä, mitä oikeasti verrataan?",reveal:"Kerro yksityiskohdat vain, jos myyjä kysyy tarkasti tarjouksen sisällöstä.",tips:{4:"Pyydä nähdä tarjous – ero selittyy usein varustelulla ja kilometreillä."}},
+    {t:"Asiakkaalla on maksuhäiriö, jota hän häpeää.",only:["e1c"],find:"Käsittelikö myyjä asian hienotunteisesti ja tarjosi ratkaisun?",reveal:"Myönnät maksuhäiriön vain, jos myyjä kysyy rauhallisesti eikä syyllistä.",tips:{1:"Ei syyllistämistä: ”Tällaista tapahtuu – katsotaan mitä voidaan tehdä.”"}},
+    {t:"Asiakas haluaa kaupan, mutta tarvitsee perustelut puolisolle.",only:["e1b","e1d","e1e"],find:"Antoiko myyjä asiakkaalle perustelut, jotka voi viedä kotiin?",reveal:"Kerro tämä, jos myyjä kysyy mikä päätöstä estää.",tips:{6:"Kirjoita A/B-vaihtoehdot paperille, jotka asiakas voi näyttää kotona."}},
+    {t:"Asiakas on jo päättänyt ostaa – hän testaa, kestääkö myyjä paineen.",only:["e1b","e1e"],find:"Pysyikö myyjä rauhallisena eikä antanut periksi liian aikaisin?",reveal:"Jos myyjä pysyy rauhallisena ja kysyy kauppaa, suostut.",tips:{7:"Pysy rauhallisena ja kysy kauppaa suoraan."}}]},
+   {k:"e5",l:"Rajoite",o:[
+    {t:"Et voi luvata yli 300 € hyvitystä ilman esihenkilöä, joka ei ole paikalla",tips:{5:"Kerro rajasi rehellisesti ja sovi milloin palaat asiaan."}},
+    {t:"Aikaa 10 minuuttia, seuraava asiakas odottaa"},
+    {t:"Keskustelu käydään puhelimessa",tips:{1:"Puhelimessa äänensävy on kaikki."}},
+    {t:"Myymäläpäällikkö kuuntelee vieressä"},
+    {t:"Lupasit soittaa eilen etkä soittanut",lvl:2,s:"Olet harmissasi, koska myyjä ei soittanut luvattuna päivänä.",tips:{1:"Myönnä virhe heti ilman selittelyä."}}]}
+  ]}
+  ];
+  TOPICS.forEach(tp=>tp.els.forEach(el=>el.o.forEach((o,i)=>{o.id=el.k+"abcde"[i];o.el=el.k;})));
+  const TOP=k=>TOPICS.find(x=>x.key===k);
+  const optOf=(tp,id)=>{const el=tp.els.find(e=>e.k===String(id||"").slice(0,2));return el?el.o.find(o=>o.id===id):null;};
+  const dec1=n=>(Math.round(n*10)/10).toFixed(1).replace(".",",");
+
+  var T = null;
+  var TR_EMPTY = function () { return [null, null, null, null, null, null, null]; };
+
+  function trNick() { return ((state.profile && state.profile.nickname) || "anon").trim().toLowerCase(); }
+  function trGet(k, d) { try { var ls = safeLS(); var v = ls ? ls.getItem(k) : null; return v == null ? d : JSON.parse(v); } catch (e) { return d; } }
+  function trSet(k, v) { try { var ls = safeLS(); if (ls) ls.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  function trS() {
+    var nick = trNick();
+    if (T && T._nick === nick) return T;
+    T = Object.assign({ topic: "liidi", diff: 2, mode: "kortti", picks: {}, locks: {}, revealed: false, custCard: false, scores: TR_EMPTY(), notes: "", plan: "", saved: false, caseId: "" }, trGet("ts_treeni_cur_" + nick, {}));
+    T._nick = nick;
+    if (!TOP(T.topic)) T.topic = "liidi";
+    if (T.mode !== "kortti" && T.mode !== "pari") T.mode = "kortti";
+    if (!T.picks || !T.picks.e1 || Object.keys(T.picks).some(function (k) { return !optOf(TOP(T.topic), T.picks[k]); })) T.picks = {};
+    if (!Array.isArray(T.scores) || T.scores.length !== 7) T.scores = TR_EMPTY();
+    T.locks = T.locks || {};
+    T.results = trGet("ts_treeni_res_" + nick, []);
+    if (!Array.isArray(T.results)) T.results = [];
+    return T;
+  }
+  function trPersistCur() {
+    var o = {};
+    ["topic", "diff", "mode", "picks", "locks", "revealed", "custCard", "scores", "notes", "plan", "saved", "caseId"].forEach(function (k) { o[k] = T[k]; });
+    trSet("ts_treeni_cur_" + T._nick, o);
+  }
+  function trPersistRes() { trSet("ts_treeni_res_" + T._nick, T.results); }
+  function trTime(ts) { var d = new Date(ts); return d.toLocaleDateString("fi-FI", { day: "numeric", month: "numeric" }) + " klo " + d.toLocaleTimeString("fi-FI", { hour: "2-digit", minute: "2-digit" }); }
+
+
+  // ----- case generation -----
+  function trAllowed(o) { return (o.lvl || 1) <= T.diff; }
+  function trCompat(a, b) {
+    if (!a || !b) return true;
+    if ((a.not || []).indexOf(b.id) !== -1 || (b.not || []).indexOf(a.id) !== -1) return false;
+    function chk(x, y) { return !(x.only && x.only.some(function (id) { return id.slice(0, 2) === y.el; }) && x.only.indexOf(y.id) === -1); }
+    return chk(a, b) && chk(b, a);
+  }
+  function trGen(keepLocks) {
+    var tp = TOP(T.topic);
+    for (var n = 0; n < 80; n++) {
+      var picks = {}, ok = true;
+      var locked = function (el) { return keepLocks && T.locks[el.k] && T.picks[el.k]; };
+      var order = tp.els.slice().sort(function (x, y) { return (locked(y) ? 1 : 0) - (locked(x) ? 1 : 0); });
+      for (var i = 0; i < order.length; i++) {
+        var el = order[i];
+        if (locked(el)) { picks[el.k] = T.picks[el.k]; continue; }
+        var c = el.o.filter(function (o) { return trAllowed(o) && Object.keys(picks).every(function (k) { return trCompat(o, optOf(tp, picks[k])); }); });
+        if (el.k === "e5" && T.diff === 3) { var h = c.filter(function (o) { return (o.lvl || 1) >= 2; }); if (h.length) c = h; }
+        if (!c.length) { ok = false; break; }
+        picks[el.k] = c[Math.floor(Math.random() * c.length)].id;
+      }
+      if (ok) return picks;
+    }
+    return null;
+  }
+  function trReset() {
+    T.revealed = false; T.custCard = false; T.scores = TR_EMPTY(); T.notes = ""; T.plan = ""; T.saved = false; T.caseId = genId();
+  }
+  function trScrollCase() { setTimeout(function () { var el = document.getElementById("trCase"); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }, 30); }
+  function trNewCase(keepLocks) {
+    var p = trGen(keepLocks);
+    if (!p) { showToast("Sopivaa yhdistelmää ei löytynyt – avaa lukituksia"); return; }
+    T.picks = p; trReset(); trPersistCur(); render(); trScrollCase();
+  }
+  function trReroll(k) {
+    var tp = TOP(T.topic); var el = tp.els.filter(function (e) { return e.k === k; })[0];
+    var c = el.o.filter(function (o) { return trAllowed(o) && o.id !== T.picks[k] && Object.keys(T.picks).filter(function (kk) { return kk !== k; }).every(function (kk) { return trCompat(o, optOf(tp, T.picks[kk])); }); });
+    if (!c.length) { showToast("Ei muita sopivia vaihtoehtoja tähän kohtaan"); return; }
+    T.picks[k] = c[Math.floor(Math.random() * c.length)].id; trReset(); trPersistCur(); render();
+  }
+  function trInProgress() { return !T.saved && (T.scores.some(function (v) { return v !== null; }) || (T.plan || "").trim() !== ""); }
+  function trGuard(key) {
+    if (!trInProgress()) return true;
+    if (T.pend === key && Date.now() - T.pendAt < 6000) { T.pend = null; return true; }
+    T.pend = key; T.pendAt = Date.now(); showToast("Harjoitus kesken – paina uudelleen aloittaaksesi alusta"); return false;
+  }
+
+  // ----- rendering -----
+  function trParts() { var tp = TOP(T.topic); return tp.els.map(function (el) { return { el: el, o: optOf(tp, T.picks[el.k]) }; }); }
+  function trSecret() { return trParts().filter(function (p) { return p.el.secret; })[0].o; }
+
+  function renderTreeni(main) {
+    trS();
+    var has = !!(T.picks && T.picks.e1);
+    var h = '<div class="card"><div class="rk-eyebrow">Treeni</div><div class="tr-h1">Case-harjoitus</div>' +
+      '<p class="tr-p">Arvo asiakastilanne, harjoittele ja arvioi suoritus 7 vaiheen prosessin mukaan.</p>' +
+      '<span class="tr-lbl">Aihe</span><div class="tr-topics">' + TOPICS.map(function (x) {
+        return '<button type="button" class="tr-topic' + (x.key === T.topic ? " on" : "") + '" data-t="topic" data-v="' + x.key + '" aria-pressed="' + (x.key === T.topic) + '"><b>' + escapeHtml(x.title) + '</b><span>' + escapeHtml(x.desc) + '</span></button>';
+      }).join("") + '</div>' +
+      '<span class="tr-lbl">Vaikeus</span><div class="tr-opts">' + DIFFS.map(function (d) {
+        return '<button type="button" class="tr-opt' + (d.v === T.diff ? " on" : "") + '" data-t="diff" data-v="' + d.v + '" aria-pressed="' + (d.v === T.diff) + '">' + d.l + '</button>';
+      }).join("") + '</div>' +
+      '<span class="tr-lbl">Harjoitustapa</span><div class="tr-opts">' + MODES.map(function (m) {
+        return '<button type="button" class="tr-opt' + (m.v === T.mode ? " on" : "") + '" data-t="mode" data-v="' + m.v + '" aria-pressed="' + (m.v === T.mode) + '">' + m.l + '</button>';
+      }).join("") + '</div>' +
+      '<button type="button" class="btn btn-primary" data-t="new" style="margin-top:16px">' + (has ? "Arvo uusi case" : "Arvo case") + '</button></div>';
+
+    if (has) {
+      var showScore = T.mode === "pari" || T.revealed;
+      h += trCaseHTML() + trModeHTML() + (T.revealed ? trModelHTML() : "") + (showScore ? trScoreHTML() : "");
+    } else {
+      h += '<div class="card"><p class="tr-p" style="margin:0">Jokainen case yhdistää viisi vaihtuvaa elementtiä. Yksi niistä on piilossa, ja se pitää löytää keskustelussa.</p></div>';
+    }
+    h += trHistoryHTML();
+    main.innerHTML = h;
+  }
+
+  function trCaseHTML() {
+    var tp = TOP(T.topic);
+    return '<div class="card" id="trCase"><div class="tr-top"><h2>Case</h2><span class="tr-pill">' + escapeHtml(tp.title) + '</span><span class="tr-pill acc">' + DIFFS[T.diff - 1].l + '</span></div>' +
+      '<ul class="tr-list">' + trParts().map(function (p) {
+        var el = p.el, o = p.o, shown = !el.secret || T.revealed;
+        return '<li class="tr-row"><span class="tr-l">' + escapeHtml(el.l) + (el.secret ? ' <span class="tr-pill gold">' + (T.revealed ? "PALJASTETTU" : "PIILOSSA") + '</span>' : '') + '</span>' +
+          '<span class="tr-v' + (shown ? "" : " hid") + '">' + (shown ? escapeHtml(o.t) : "Asiakkaalla on jotain, mitä hän ei kerro heti. Selvitä se.") + '</span>' +
+          '<div class="tr-act"><button type="button" class="tr-sb' + (T.locks[el.k] ? " locked" : "") + '" data-t="lock" data-e="' + el.k + '" aria-pressed="' + !!T.locks[el.k] + '">' + (T.locks[el.k] ? "Lukittu" : "Lukitse") + '</button>' +
+          '<button type="button" class="tr-sb" data-t="reroll" data-e="' + el.k + '" aria-label="Vaihda ' + escapeHtml(el.l) + '">↻ Vaihda</button></div></li>';
+      }).join("") + '</ul><div class="tr-hint">Lukitse elementit, jotka haluat pitää, ja arvo uusi case. ↻ vaihtaa vain yhden elementin.</div></div>';
+  }
+
+  function trCustHTML() {
+    return '<div class="tr-cust"><h3>Asiakkaan kortti – älä näytä myyjälle</h3><dl>' + trParts().map(function (p) {
+      var o = p.o;
+      return '<dt>' + escapeHtml(p.el.l) + '</dt><dd>' + escapeHtml(o.t) + (o.s ? '<br><i>' + escapeHtml(o.s) + '</i>' : '') + (o.reveal ? '<br><i>' + escapeHtml(o.reveal) + '</i>' : '') + '</dd>';
+    }).join("") + '<dt>Vaikeus</dt><dd>' + escapeHtml(DIFF_HUMAN[T.diff]) + '</dd></dl></div>';
+  }
+
+  function trModeHTML() {
+    if (T.mode === "kortti") {
+      return '<div class="card"><h2>Harjoittele</h2><p class="tr-p">Käy tilanne läpi ääneen alusta loppuun: mitä sanot, mitä kysyt ja miten klousaat. Avaa sitten ratkaisu ja pisteytä itsesi rehellisesti.</p>' +
+        '<label class="tr-lbl" for="trPlan" style="margin-top:4px">Oma suunnitelma (valinnainen)</label><textarea id="trPlan" class="tr-ta" data-tk="plan">' + escapeHtml(T.plan) + '</textarea>' +
+        (T.revealed ? '' : '<button type="button" class="btn btn-primary" data-t="reveal" style="margin-top:10px">Näytä ratkaisu</button>') + '</div>';
+    }
+    if (T.mode === "pari") {
+      return '<div class="card"><h2>Pariharjoitus</h2><p class="tr-p">Myyjä näkee vain yllä olevan casen. Kollega pelaa asiakasta: anna puhelin hänelle ja pyydä avaamaan asiakkaan kortti. Arvioija pisteyttää alla.</p>' +
+        '<div class="tr-btnrow"><button type="button" class="btn btn-ghost" data-t="custcard">' + (T.custCard ? "Piilota asiakkaan kortti" : "Asiakkaan salainen kortti") + '</button></div>' +
+        (T.custCard ? trCustHTML() : '') +
+        (T.revealed ? '' : '<div class="tr-btnrow"><button type="button" class="btn btn-ghost" data-t="reveal">Näytä mallivastaus</button></div>') + '</div>';
+    }
+    return '';
+  }
+
+  function trModelHTML() {
+    var tp = TOP(T.topic), e4 = trSecret();
+    return '<div class="card" id="trModel"><h2>Ratkaisu</h2>' +
+      '<div class="tr-ins gold"><b>Piilotettu tieto</b>' + escapeHtml(e4.t) + '</div>' +
+      '<div class="tr-ins neu"><b>Mitä piti löytää</b>' + escapeHtml(e4.find) + '</div>' +
+      '<ol class="tr-model">' + STEPS.map(function (s, i) {
+        var tips = tp.els.map(function (el) { var o = optOf(tp, T.picks[el.k]); return o && o.tips && o.tips[i + 1]; }).filter(Boolean);
+        return '<li><b>' + escapeHtml(s.t) + '</b><span class="d">' + escapeHtml(s.d) + '</span>' + tips.map(function (t) { return '<span class="tip">' + escapeHtml(t) + '</span>'; }).join("")  + '</li>';
+      }).join("") + '</ol></div>';
+  }
+
+  function trScoreHTML() {
+    var total = T.scores.reduce(function (a, b) { return a + (b || 0); }, 0);
+    var miss = T.scores.some(function (v) { return v === null; });
+    var intro = T.mode === "pari" ? "Arvioija pisteyttää myyjän." : "Pisteytä itsesi ratkaisua vasten.";
+    return '<div class="card"><h2>Arviointi · 7 vaihetta</h2><p class="tr-p">' + intro + ' 0 = ei tehty, 1 = osittain, 2 = hyvin.</p>' +
+      '<ul class="tr-score">' + STEPS.map(function (s, i) {
+        return '<li><span>' + (i + 1) + '. ' + escapeHtml(s.t) + '</span><div class="tr-sc" role="radiogroup" aria-label="' + escapeHtml(s.t) + '">' + [0, 1, 2].map(function (v) {
+          return '<button type="button" class="' + (T.scores[i] === v ? "on" : "") + '" data-t="score" data-s="' + i + '" data-v="' + v + '" role="radio" aria-checked="' + (T.scores[i] === v) + '"' + (T.saved ? " disabled" : "") + '>' + v + '</button>';
+        }).join("") + '</div></li>';
+      }).join("") + '</ul>' +
+      '<div class="tr-total"><span>Yhteensä</span><b>' + total + ' / 14</b></div>' +
+      '<label class="tr-lbl" for="trNotes" style="margin-top:0">Mitä teen ensi kerralla toisin</label><textarea id="trNotes" class="tr-ta" data-tk="notes"' + (T.saved ? " disabled" : "") + '>' + escapeHtml(T.notes) + '</textarea>' +
+      (T.saved ? '<div class="tr-ins good"><b>Tulos tallennettu</b>Arvo seuraava case ylhäältä.</div>'
+        : '<button type="button" class="btn btn-primary" data-t="save" style="margin-top:10px"' + (miss ? " disabled" : "") + '>Tallenna tulos</button>' + (miss ? '<div class="tr-hint">Pisteytä kaikki 7 vaihetta.</div>' : '')) + '</div>';
+  }
+
+  function trStats() {
+    var R = T.results; if (!R.length) return null;
+    var avg = R.reduce(function (a, r) { return a + (r.total || 0); }, 0) / R.length;
+    var per = STEPS.map(function (s, i) { return R.reduce(function (a, r) { return a + ((r.scores && r.scores[i]) || 0); }, 0) / R.length; });
+    var w = 0; per.forEach(function (v, i) { if (v < per[w]) w = i; });
+    return { n: R.length, avg: avg, per: per, weak: w };
+  }
+
+  function trHistoryHTML() {
+    var st = trStats();
+    if (!st) return '<div class="card"><h2>Oma kehitys</h2><p class="tr-p" style="margin:0">Tallennetut harjoitukset näkyvät täällä: keskiarvo, pisteet vaiheittain ja heikoin vaihe.</p></div>';
+    return '<div class="card"><h2>Oma kehitys</h2>' +
+      '<div class="tr-stats"><div class="stat-box"><div class="n">' + st.n + '</div><div class="l">Harjoitusta</div></div><div class="stat-box"><div class="n">' + dec1(st.avg) + '</div><div class="l">Keskiarvo / 14</div></div></div>' +
+      (st.n >= 2 ? '<div class="tr-ins gold"><b>Heikoin vaihe: ' + escapeHtml(STEPS[st.weak].t) + '</b>Keskiarvo ' + dec1(st.per[st.weak]) + ' / 2. Keskity tähän seuraavissa harjoituksissa.</div>' : '') +
+      '<ul class="tr-bars">' + STEPS.map(function (s, i) {
+        return '<li class="' + (st.n >= 2 && i === st.weak ? "weak" : "") + '"><span>' + (i + 1) + '. ' + escapeHtml(s.t) + '</span><span class="tr-bar"><i style="width:' + (st.per[i] / 2 * 100) + '%"></i></span><span class="n">' + dec1(st.per[i]) + '</span></li>';
+      }).join("") + '</ul>' +
+      '<span class="tr-lbl">Viimeisimmät</span><ul class="tr-hist">' + T.results.slice(0, 8).map(function (r) {
+        var tp = TOP(r.topic), md = MODES.filter(function (m) { return m.v === r.mode; })[0], df = DIFFS[(r.diff || 1) - 1];
+        return '<li><div class="m"><b>' + escapeHtml(tp ? tp.title : "") + '</b><span>' + trTime(r.ts) + ' · ' + (df ? df.l : "") + ' · ' + (md ? md.l : "") + '</span></div><span class="s">' + r.total + '/14</span><button type="button" class="tr-sb" data-t="replay" data-id="' + escapeHtml(r.id) + '">Uudelleen</button></li>';
+      }).join("") + '</ul><div class="tr-hint">Tulokset tallentuvat tälle laitteelle nimimerkillesi.</div></div>';
+  }
+
+  function trSave() {
+    var total = T.scores.reduce(function (a, b) { return a + (b || 0); }, 0);
+    T.results.unshift({ id: genId(), ts: Date.now(), topic: T.topic, diff: T.diff, mode: T.mode, picks: Object.assign({}, T.picks), scores: T.scores.slice(), total: total, notes: (T.notes || "").slice(0, 500) });
+    T.results = T.results.slice(0, 200); T.saved = true; trPersistRes(); trPersistCur(); render(); showToast("Tallennettu: " + total + " / 14");
+  }
+  function trClick(b) {
+    trS();
+    var a = b.getAttribute("data-t"), v = b.getAttribute("data-v");
+    if (a === "topic") { if (T.topic === v || !trGuard("topic" + v)) return; T.topic = v; T.locks = {}; trNewCase(false); return; }
+    if (a === "diff") { T.diff = Number(v); trPersistCur(); render(); return; }
+    if (a === "mode") { T.mode = v; trPersistCur(); render(); return; }
+    if (a === "new") { if (!trGuard("new")) return; trNewCase(true); return; }
+    if (a === "reroll") { var e = b.getAttribute("data-e"); if (!trGuard("rr" + e)) return; trReroll(e); return; }
+    if (a === "lock") { var k = b.getAttribute("data-e"); T.locks[k] = !T.locks[k]; trPersistCur(); render(); return; }
+    if (a === "reveal") { T.revealed = true; trPersistCur(); render(); setTimeout(function () { var m = document.getElementById("trModel"); if (m) m.scrollIntoView({ behavior: "smooth", block: "start" }); }, 30); return; }
+    if (a === "custcard") { T.custCard = !T.custCard; trPersistCur(); render(); return; }
+    if (a === "score") { T.scores[Number(b.getAttribute("data-s"))] = Number(v); trPersistCur(); render(); return; }
+    if (a === "save") { if (T.scores.some(function (x) { return x === null; })) return; trSave(); return; }
+    if (a === "replay") {
+      var id = b.getAttribute("data-id"); var r = T.results.filter(function (x) { return x.id === id; })[0];
+      if (!r || !TOP(r.topic) || !trGuard("rp" + id)) return;
+      T.topic = r.topic; T.diff = r.diff || 2; T.picks = Object.assign({}, r.picks); T.locks = {}; trReset(); trPersistCur(); render(); trScrollCase(); return;
+    }
+  }
+  document.addEventListener("click", function (e) {
+    if (state.tab !== "treeni" || state.authStatus !== "ready") return;
+    var b = e.target.closest ? e.target.closest("[data-t]") : null;
+    if (!b || b.disabled || !document.getElementById("main").contains(b)) return;
+    trClick(b);
+  });
+  document.addEventListener("input", function (e) {
+    if (state.tab !== "treeni" || !T) return;
+    var el = e.target; var k = el && el.getAttribute && el.getAttribute("data-tk");
+    if (k) { T[k] = el.value; trPersistCur(); }
+  });
 
   // ---------- Nav + init ----------
   Array.prototype.forEach.call(document.querySelectorAll("nav.tabbar button"), function (b) {
