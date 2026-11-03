@@ -1210,6 +1210,38 @@
   .tr-hist b { display: block; font-size: 14px; }
   .tr-hist span { font-size: 11.5px; color: var(--text-dim); }
   .tr-hist .s { font-family: var(--font-display); font-size: 17px; font-weight: 600; }
+
+  /* ---------- Hävityt: kuukausiraportti ---------- */
+  .oe-lrn textarea { width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 10px; padding: 10px 11px; font-family: var(--font-body); font-size: 15px; resize: vertical; }
+  .oe-lrn textarea:focus { outline: none; border-color: var(--accent); }
+  .oe-lrn { margin-top: 10px; }
+  .lr-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  .lr-head h2 { margin: 0; }
+  .lr-sel { background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 9px; padding: 6px 8px; font-family: var(--font-body); font-size: 13px; text-transform: capitalize; }
+  .lr-empty { font-size: 13.5px; color: var(--text-dim); line-height: 1.45; margin: 8px 0 0; }
+  .lr-kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 10px; }
+  .lr-kpis > div { background: var(--surface-2); border-radius: 10px; padding: 9px 10px; }
+  .lr-kpis b { display: block; font-family: var(--font-display); font-size: 22px; font-weight: 600; }
+  .lr-kpis span { font-size: 11.5px; color: var(--text-dim); }
+  .lr-top { margin-top: 12px; padding: 12px 14px; border-radius: 12px; background: var(--accent-dim); border-left: 4px solid var(--accent-fill); display: flex; flex-direction: column; gap: 2px; }
+  .lr-top span { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); }
+  .lr-top b { font-family: var(--font-display); font-size: 22px; font-weight: 600; }
+  .lr-top em { font-style: normal; font-size: 12.5px; color: var(--text-dim); }
+  .lr-bars { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+  .lr-bars li { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) 26px; gap: 8px; align-items: center; font-size: 13px; }
+  .lr-bars b { font-family: var(--font-display); text-align: right; }
+  .lr-bar { height: 8px; background: var(--surface-2); border-radius: 99px; overflow: hidden; }
+  .lr-bar i { display: block; height: 100%; background: var(--accent-fill); border-radius: 99px; }
+  .lr-bars li.none { color: var(--text-dim); } .lr-bars li.none .lr-bar i { background: var(--text-faint); }
+  .lr-tip { margin-top: 14px; font-size: 14px; line-height: 1.45; background: var(--surface-2); border-radius: 10px; padding: 10px 12px; }
+  .lr-tip b { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-dim); margin-bottom: 3px; }
+  .lr-note { font-size: 12.5px; color: var(--text-faint); margin: 8px 0 0; }
+  .lr-notes { margin-top: 10px; display: flex; flex-direction: column; gap: 10px; }
+  .lr-l { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-dim); }
+  .lr-grp ul { list-style: none; margin: 5px 0 0; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+  .lr-grp li { font-size: 13.5px; line-height: 1.4; padding: 7px 10px; border-left: 3px solid var(--border); background: var(--surface-2); border-radius: 0 8px 8px 0; }
+  .lr-grp li b { display: block; font-size: 12px; color: var(--text-dim); }
+  .lost-card .lr-open { margin-top: 12px; }
 </style>
 </head>
 <body>
@@ -1699,7 +1731,11 @@
           monthKey: key, workDays: doc.workDays, targetOffers: doc.targetOffers,
           bySourceCounts: offersToCounts(doc.offers), offers: [],
           // Avoimet tarjoukset siirtyvät mukana, jotta niiden follow-up ei katoa kuun vaihtuessa.
-          carry: (doc.carry || []).concat(doc.offers.filter(function (o) { return isActive(o); }))
+          carry: (doc.carry || []).concat(doc.offers.filter(function (o) { return isActive(o); })),
+          // Päiväkohtainen aktiivisuus säilyy viikkovertailua varten.
+          days: offersToDays(doc.offers, key),
+          // Hävityt tarjoukset syineen säilyvät kuukausiraporttia varten.
+          lost: (doc.lost || []).concat(doc.offers.filter(function (o) { return ostat(o) === "l"; }).map(lostEntry))
         };
         changed = true;
       }
@@ -1708,7 +1744,27 @@
     var newMonths = Object.assign({}, months);
     Object.keys(patch).forEach(function (k) { newMonths[k] = Object.assign({}, newMonths[k], patch[k]); });
     state.profile = Object.assign({}, state.profile, { months: newMonths });
+    if (state.authStatus === "ready" && !document.querySelector(".ov-back")) { var y = window.scrollY; render(); window.scrollTo(0, y); }
     return queueSaveMonths(patch);
+  }
+
+  // Päiväkohtaiset määrät { "28": [tarjoukset, kaupat] } kuukaudelle mk.
+  function offersToDays(offers, mk) {
+    var m = {};
+    (offers || []).forEach(function (o) {
+      var d = new Date(o.ts);
+      if (monthKeyOf(d) === mk) { var k = String(d.getDate()); m[k] = m[k] || [0, 0]; m[k][0]++; }
+      if (o.closed && o.closedTs) {
+        var c = new Date(o.closedTs);
+        if (monthKeyOf(c) === mk) { var kc = String(c.getDate()); m[kc] = m[kc] || [0, 0]; m[kc][1]++; }
+      }
+    });
+    return m;
+  }
+  function lostEntry(o) {
+    var e = { id: o.id, ts: o.ts, source: o.source, lr: o.lr || null, lt: o.lt || o.ts, st: "l" };
+    if (o.ex) e.ex = o.ex;
+    return e;
   }
 
   function setLocalOffersOnProfile() {
@@ -1799,8 +1855,14 @@
   var ST_LABEL = { o: "Avoin", k: "Koeajo", r: "Rahoitus kesken", d: "Kauppa", l: "Hävitty" };
   var ST_ORDER = ["o", "k", "r", "d", "l"];
   var LOST_REASONS = [
-    { k: "hinta", t: "Hinta" }, { k: "rahoitus", t: "Rahoitus" }, { k: "vaihtoauto", t: "Vaihtoauto" },
-    { k: "eitav", t: "Ei tavoitettu" }, { k: "muualta", t: "Osti muualta" }, { k: "muu", t: "Muu" }
+    { k: "hinta", t: "Hinta", tip: "Arvo ei ehtinyt rakentua ennen hintaa. Vie tarvekartoitus ja välivahvistukset (auto, vaihtoauto, rahoitus) loppuun ennen hintakeskustelua. Harjoittele: Vastalauseet → Hinta ja Treeni vaiheet 2 ja 5." },
+    { k: "rahoitus", t: "Rahoitus", tip: "Selvitä kuukausibudjetti ja käsiraha heti alussa ja tarjoa kaksi erävaihtoehtoa (A/B), esim. pidempi laina-aika tai viimeinen erä. Käytä Rahoituslaskuria tarjouksessa." },
+    { k: "vaihtoauto", t: "Vaihtoauton hyvitys", tip: "Hyvitysodotus jäi auki. Kerää vaihtoauton tiedot ja kuvat ennen tarjousta ja perustele arvio markkinahinnoilla. Käytä Vaihtoauto-tarkastuslistaa." },
+    { k: "ajoitus", t: "Ajoitus / siirsi päätöstä", tip: "Ostopaine jäi selvittämättä. Kysy 'Mikä sai liikkeelle juuri nyt?' ja sovi sitova seuraava askel päivämäärällä ennen kuin lopetat keskustelun." },
+    { k: "auto", t: "Auto ei sopinut", tip: "Tarve ja auto eivät kohdanneet. Tee rehellinen sopivuusarvio ajoissa ja tarjoa vaihtoehtoinen auto heti, kun ensimmäinen ei sovi." },
+    { k: "muualta", t: "Osti muualta", tip: "Kilpailija voitti. Kysy aina, mitä muuta asiakas vertailee, ja vertaa samoja asioita: km, varustelu, takuu ja hyvitys." },
+    { k: "eitav", t: "Ei tavoitettu", tip: "Follow-up katkesi. Sovi seuraava yhteydenotto kellonajan kanssa jo tarjoustilanteessa ja kirjaa se tarjouskorttiin." },
+    { k: "muu", t: "Muu", tip: "Kirjoita syy omin sanoin, niin ensi kuun raportti kertoo enemmän." }
   ];
   var NEXT_ACTIONS = ["Soita", "Koeajo", "Rahoituspäätös", "Päivitä tarjous", "Vaihtoauton arvio"];
 
@@ -1874,6 +1936,7 @@
     offerRefs().forEach(function (r) { if (r.o.ex && !dcache[r.o.id] && !dfail[r.o.id]) todo.push({ key: r.o.id, ex: r.o.ex }); });
     var months = (state.profile && state.profile.months) || {};
     Object.keys(months).forEach(function (mk) {
+      ((months[mk] && months[mk].lost) || []).forEach(function (x) { if (x.ex && !dcache[x.id] && !dfail[x.id]) todo.push({ key: x.id, ex: x.ex }); });
       var snk = "sn:" + mk;
       if (months[mk] && months[mk].sn && !dcache[snk] && !dfail[snk]) todo.push({ key: snk, ex: months[mk].sn });
       var vr = (months[mk] && months[mk].vr) || {};
@@ -1914,16 +1977,31 @@
     if (i === -1) return Promise.resolve();
     var before = carry[i], after = Object.assign({}, before, changes);
     var counts = (doc.bySourceCounts || []).map(function (c) { return Object.assign({}, c); });
+    var p = {};
     if (!before.closed && after.closed) {
       var c = counts.filter(function (x) { return x.sourceId === after.source; })[0];
       if (c) c.dealCount++; else counts.push({ sourceId: after.source, offerCount: 1, dealCount: 1 });
+      // Kauppa näkyy viikkotrendissä sinä päivänä, kun se tehtiin.
+      var cur = curMonthDoc();
+      if (cur) {
+        var cd = Object.assign({}, cur.cd || {}), dk = String(new Date().getDate());
+        cd[dk] = (cd[dk] || 0) + 1;
+        months[state.monthKey] = Object.assign({}, months[state.monthKey], { cd: cd });
+        p[state.monthKey] = { cd: cd };
+      }
+    }
+    var lostArr = null;
+    if (ostat(after) === "l") {
+      lostArr = (doc.lost || []).filter(function (x) { return x.id !== after.id; }).concat([lostEntry(after)]);
+      doc.lost = lostArr;
     }
     if (isActive(after)) carry[i] = after; else carry.splice(i, 1);
     doc.carry = carry; doc.bySourceCounts = counts;
     months[mk] = doc;
     state.profile = Object.assign({}, state.profile, { months: months });
     render();
-    var p = {}; p[mk] = { carry: carry, bySourceCounts: counts };
+    p[mk] = { carry: carry, bySourceCounts: counts };
+    if (lostArr) p[mk].lost = lostArr;
     return queueSaveMonths(p);
   }
 
@@ -1950,7 +2028,7 @@
     var ch = { st: st };
     if (st === "d") { ch.closed = true; ch.closedTs = r.o.closedTs || new Date().toISOString(); }
     else { ch.closed = false; ch.closedTs = null; }
-    if (st !== "l") ch.lr = null;
+    if (st !== "l") { ch.lr = null; ch.lt = null; } else ch.lt = r.o.lt || new Date().toISOString();
     return patchOffer(mk, id, ch);
   }
 
@@ -2082,7 +2160,7 @@
     var r = findRef(mk, id); if (!r) return;
     var o = r.o, d = Object.assign({}, dcache[o.id] || {});
     var locked = o.ex && dfail[o.id];
-    var st = ostat(o), lr = o.lr || null, nd = o.nd || "", vo = o.vo || "", sc = (o.sc === 0 || o.sc) ? o.sc : "";
+    var st = (opts && opts.st) || ostat(o), lr = o.lr || null, nd = o.nd || "", vo = o.vo || "", sc = (o.sc === 0 || o.sc) ? o.sc : "";
     var ov = buildOverlay();
     ov.card.classList.add("oe-card");
     function field(id2, label, val, type, ph, extra) {
@@ -2100,7 +2178,9 @@
         }).join("") + '</div>' +
         (st === "l" ? '<div class="oe-sec">Hävityksen syy</div><div class="oe-chips" data-g="lr">' + LOST_REASONS.map(function (x) {
           return '<button type="button" data-v="' + x.k + '" class="' + (lr === x.k ? 'on' : '') + '">' + x.t + '</button>';
-        }).join("") + '</div>' : '') +
+        }).join("") + '</div>' +
+          '<div class="oe-f oe-lrn"><label for="oeLrn">Miksi tarjous hävittiin? (omin sanoin)</label>' +
+          '<textarea id="oeLrn" rows="3" maxlength="300" placeholder="esim. Kilpailija antoi 1 500 € enemmän vaihtoautosta, eikä asiakas halunnut odottaa koeajoa.">' + escapeHtml(d.lrn || "") + '</textarea></div>' : '') +
         '<div class="oe-grid">' +
           field("oeC", "Asiakas (tunniste)", d.c, "text", "esim. MK / Octavia-mies", ' maxlength="40" autocomplete="off"') +
           field("oeCar", "Kiinnostava auto", d.car, "text", "esim. Skoda Octavia 2021", ' maxlength="50" autocomplete="off"') +
@@ -2136,7 +2216,8 @@
     }
     function readInputs() {
       function v(sel) { var el = ov.card.querySelector(sel); return el ? el.value.trim() : undefined; }
-      var c = v("#oeC"), car = v("#oeCar"), sum = v("#oeSum"), kate = v("#oeKate"), na = v("#oeNa"), nd2 = v("#oeNd"), vo2 = v("#oeVo"), sc2 = v("#oeSc");
+      var c = v("#oeC"), car = v("#oeCar"), sum = v("#oeSum"), kate = v("#oeKate"), na = v("#oeNa"), nd2 = v("#oeNd"), vo2 = v("#oeVo"), sc2 = v("#oeSc"), lrn = v("#oeLrn");
+      if (lrn !== undefined) d.lrn = lrn;
       if (c !== undefined) d.c = c;
       if (car !== undefined) d.car = car;
       if (sum !== undefined) d.sum = sum === "" ? "" : Math.max(0, Math.round(+sum) || 0);
@@ -2185,7 +2266,9 @@
       });
     }
     function doSave(toast) {
-      var ch = { st: st, nd: (st === "d" || st === "l") ? null : (nd || null), vo: (st === "d" || st === "l") ? null : (vo || null), lr: st === "l" ? lr : null, sc: sc === "" ? null : sc };
+      var ch = { st: st, nd: (st === "d" || st === "l") ? null : (nd || null), vo: (st === "d" || st === "l") ? null : (vo || null), lr: st === "l" ? lr : null, sc: sc === "" ? null : sc,
+        lt: st === "l" ? (o.lt || new Date().toISOString()) : null };
+      if (st !== "l") d.lrn = "";
       if (st === "d") { ch.closed = true; ch.closedTs = o.closedTs || new Date().toISOString(); }
       else { ch.closed = false; ch.closedTs = null; }
       var p = locked && !hasDetails(d) ? patchOffer(mk, id, ch) : saveOfferDetails(mk, id, ch, d);
@@ -2206,24 +2289,42 @@
   function weekTrend() {
     var now = new Date();
     var ws = weekStart(now), lws = new Date(ws); lws.setDate(lws.getDate() - 7);
-    var sameOffset = now - ws; // viime viikko samaan hetkeen asti
-    var lwe = new Date(lws.getTime() + sameOffset);
-    var detailed = [];
+    var lwe = new Date(lws.getTime() + (now - ws)); // viime viikko samaan hetkeen asti
     var months = (state.profile && state.profile.months) || {};
-    Object.keys(months).forEach(function (mk) { (months[mk].offers || []).concat(mk === state.monthKey ? [] : (months[mk].carry || [])).forEach(function (o) { detailed.push(o); }); });
-    var seen = {};
-    detailed = detailed.filter(function (o) { if (seen[o.id]) return false; seen[o.id] = true; return true; });
-    function cnt(a, b) {
-      var of = detailed.filter(function (o) { var t = new Date(o.ts); return t >= a && t < b; }).length;
-      var dl = detailed.filter(function (o) { if (!o.closed || !o.closedTs) return false; var t = new Date(o.closedTs); return t >= a && t < b; }).length;
-      return { o: of, d: dl };
+    // Tarkat tapahtumat (aikaleimat) ja tiivistetyt päiväsummat.
+    var events = [], dayMap = {};
+    function addDay(key, o, d) { dayMap[key] = dayMap[key] || [0, 0]; dayMap[key][0] += o; dayMap[key][1] += d; }
+    Object.keys(months).forEach(function (mk) {
+      if (!/^\d{4}-\d{2}$/.test(mk)) return;
+      var doc = months[mk] || {};
+      (doc.offers || []).forEach(function (o) {
+        events.push({ t: new Date(o.ts), k: "o" });
+        if (o.closed && o.closedTs) events.push({ t: new Date(o.closedTs), k: "d" });
+      });
+      if (doc.days) Object.keys(doc.days).forEach(function (dd) { addDay(mk + "-" + String(dd).padStart(2, "0"), doc.days[dd][0] || 0, doc.days[dd][1] || 0); });
+      if (doc.cd) Object.keys(doc.cd).forEach(function (dd) { addDay(mk + "-" + String(dd).padStart(2, "0"), 0, doc.cd[dd] || 0); });
+      // Vanhat tiivistetyt kuukaudet ilman päiväsummia: siirtyneiden tarjousten luontiajat ovat ainoa tieto.
+      if (!doc.days && !(doc.offers && doc.offers.length)) (doc.carry || []).forEach(function (o) { events.push({ t: new Date(o.ts), k: "o" }); });
+    });
+    function covered(d) {
+      var mk = monthKeyOf(d), doc = months[mk];
+      return mk === state.monthKey || !!(doc && ((doc.offers && doc.offers.length) || doc.days));
     }
+    function cnt(a, b) {
+      var r = { o: 0, d: 0 };
+      events.forEach(function (e) { if (e.t >= a && e.t < b) r[e.k]++; });
+      // Päiväsummat lasketaan kokonaisina päivinä: viime viikolla vain päivät, jotka ovat kokonaan ennen vertailuhetkeä,
+      // sekä vertailupäivä mukaan, jos se on jo alkanut.
+      for (var d = new Date(a.getFullYear(), a.getMonth(), a.getDate()); d < b; d.setDate(d.getDate() + 1)) {
+        var v = dayMap[ymd(d)]; if (v) { r.o += v[0]; r.d += v[1]; }
+      }
+      return r;
+    }
+    var full = true;
+    for (var d = new Date(lws); d < lwe; d.setDate(d.getDate() + 1)) if (!covered(d)) { full = false; break; }
     var cur = cnt(ws, new Date(now.getTime() + 1));
     var prev = cnt(lws, lwe);
-    // Jos viime viikko osuu edelliseen kuuhun, jonka tarjoukset on jo tiivistetty, vertailua ei voi tehdä.
-    var pmk = monthKeyOf(lws), pdoc = months[pmk];
-    var comparable = pmk === state.monthKey || !!(pdoc && pdoc.offers && pdoc.offers.length);
-    return { cur: cur, prev: comparable ? prev : null };
+    return { cur: cur, prev: full ? prev : null };
   }
 
   // ---------- Päivän vire ----------
@@ -2525,6 +2626,13 @@
     colA.appendChild(todoCard());
     colA.appendChild(rkHomeButton());
 
+    // Kuun lopussa ja seuraavan kuun ensimmäisellä viikolla etusivulla näkyy raportin tiivistelmä.
+    var nowD = new Date(), lastD = new Date(nowD.getFullYear(), nowD.getMonth() + 1, 0).getDate();
+    if (nowD.getDate() >= lastD - 2 && lostForMonth(state.monthKey).length) colB.appendChild(lostReportCard(true, state.monthKey));
+    else if (nowD.getDate() <= 7) {
+      var pk = monthKeyOf(new Date(nowD.getFullYear(), nowD.getMonth() - 1, 1));
+      if (lostForMonth(pk).length) colB.appendChild(lostReportCard(true, pk));
+    }
     colB.appendChild(snusCard());
     colB.appendChild(vireCard());
     colB.appendChild(trendCard());
@@ -2590,7 +2698,7 @@
         '<div><span>Tarjoukset</span><b>' + w.cur.o + '</b>' + delta(w.cur.o, w.prev ? w.prev.o : null) + '</div>' +
         '<div><span>Kaupat</span><b>' + w.cur.d + '</b>' + delta(w.cur.d, w.prev ? w.prev.d : null) + '</div>' +
       '</div>' +
-      '<div class="tr-note">' + (w.prev ? 'Vertailu: viime viikko samaan hetkeen asti (' + w.prev.o + ' tarjousta, ' + w.prev.d + ' kauppaa).' : 'Viime viikon vertailutietoa ei ole (osuu edelliseen kuukauteen).') + '</div>';
+      '<div class="tr-note">' + (w.prev ? 'Vertailu: viime viikko samaan hetkeen asti (' + w.prev.o + (w.prev.o === 1 ? ' tarjous, ' : ' tarjousta, ') + w.prev.d + (w.prev.d === 1 ? ' kauppa).' : ' kauppaa).') : 'Viime viikon vertailutietoa ei ole kokonaan tallessa. Kuukauden vaihteen jälkeen vertailu toimii jatkossa automaattisesti.') + '</div>';
     return card;
   }
 
@@ -3323,7 +3431,94 @@
     return card;
   }
 
+
+  // ---------- Hävityt tarjoukset: kuukausiraportti ----------
+  function lostForMonth(mk) {
+    var months = (state.profile && state.profile.months) || {};
+    var seen = {}, out = [];
+    function add(o) {
+      if (seen[o.id]) return;
+      var when = monthKeyOf(new Date(o.lt || o.ts));
+      if (when !== mk) return;
+      seen[o.id] = true; out.push(o);
+    }
+    Object.keys(months).forEach(function (k) { ((months[k] && months[k].offers) || []).forEach(function (o) { if (ostat(o) === "l") add(o); }); });
+    Object.keys(months).forEach(function (k) { ((months[k] && months[k].lost) || []).forEach(add); });
+    return out;
+  }
+  function lostMonthsAvailable() {
+    var set = {}; set[state.monthKey] = true;
+    var months = (state.profile && state.profile.months) || {};
+    Object.keys(months).forEach(function (k) {
+      ((months[k] && months[k].lost) || []).concat(((months[k] && months[k].offers) || []).filter(function (o) { return ostat(o) === "l"; }))
+        .forEach(function (o) { set[monthKeyOf(new Date(o.lt || o.ts))] = true; });
+    });
+    return Object.keys(set).sort().reverse();
+  }
+  // Kuun ensimmäisellä viikolla näytetään oletuksena edellisen kuun raportti, muuten kuluvan kuun.
+  function defaultLostMonth() {
+    var now = new Date();
+    if (now.getDate() <= 7) {
+      var pk = monthKeyOf(new Date(now.getFullYear(), now.getMonth() - 1, 1));
+      if (lostForMonth(pk).length) return pk;
+    }
+    return state.monthKey;
+  }
+  function lostReport(mk) {
+    var list = lostForMonth(mk);
+    var by = {};
+    list.forEach(function (o) { var k = o.lr || "_none"; (by[k] = by[k] || []).push(o); });
+    var rows = Object.keys(by).filter(function (k) { return k !== "_none"; }).map(function (k) { return { k: k, n: by[k].length, items: by[k] }; })
+      .sort(function (a, b) { return b.n - a.n; });
+    var bySrc = {};
+    list.forEach(function (o) { bySrc[o.source] = (bySrc[o.source] || 0) + 1; });
+    var deals = monthTotals((state.profile.months || {})[mk]).closed;
+    return { list: list, rows: rows, none: by._none || [], deals: deals, bySrc: bySrc };
+  }
+  function lostReportCard(compact, forMonth) {
+    var card = document.createElement("div");
+    card.className = "card lost-card";
+    var avail = lostMonthsAvailable();
+    var mk = forMonth || (state.lostMonth && avail.indexOf(state.lostMonth) !== -1 ? state.lostMonth : defaultLostMonth());
+    if (avail.indexOf(mk) === -1) avail.unshift(mk);
+    var r = lostReport(mk);
+    var n = r.list.length, named = n - r.none.length;
+    var top = r.rows[0];
+    var head = '<div class="lr-head"><h2>Mikä haastoi · ' + monthDisplay(mk) + '</h2>' +
+      (avail.length > 1 && !compact ? '<select class="lr-sel" aria-label="Kuukausi">' + avail.map(function (k) { return '<option value="' + k + '"' + (k === mk ? ' selected' : '') + '>' + monthDisplay(k) + '</option>'; }).join("") + '</select>' : '') + '</div>';
+    if (!n) {
+      card.innerHTML = head + '<p class="lr-empty">Ei hävittyjä tarjouksia tältä kuulta. Kun suljet tarjouksen hävittynä, valitse syy ja kirjoita se omin sanoin, niin raportti kokoaa ne tähän.</p>';
+    } else {
+      var lossShare = (r.deals + n) > 0 ? Math.round(n / (r.deals + n) * 100) : 0;
+      card.innerHTML = head +
+        '<div class="lr-kpis"><div><b>' + n + '</b><span>hävittyä</span></div><div><b>' + r.deals + '</b><span>kauppaa</span></div><div><b>' + lossShare + ' %</b><span>suljetuista hävitty</span></div></div>' +
+        (top ? '<div class="lr-top"><span>Suurin haaste</span><b>' + escapeHtml(lostLabel(top.k)) + '</b><em>' + top.n + ' / ' + named + ' syyllistä (' + Math.round(top.n / named * 100) + ' %)</em></div>' : '') +
+        '<ul class="lr-bars">' + r.rows.map(function (x) {
+          return '<li><span>' + escapeHtml(lostLabel(x.k)) + '</span><span class="lr-bar"><i style="width:' + Math.round(x.n / r.rows[0].n * 100) + '%"></i></span><b>' + x.n + '</b></li>';
+        }).join("") + (r.none.length ? '<li class="none"><span>Syy puuttuu</span><span class="lr-bar"><i style="width:' + Math.round(r.none.length / Math.max(r.rows.length ? r.rows[0].n : 1, r.none.length) * 100) + '%"></i></span><b>' + r.none.length + '</b></li>' : '') + '</ul>' +
+        (compact ? '<button type="button" class="btn btn-ghost btn-sm lr-open">Avaa koko raportti</button>' :
+          (top ? '<div class="lr-tip"><b>Ehdotus ensi kuulle</b>' + escapeHtml((LOST_REASONS.filter(function (x) { return x.k === top.k; })[0] || {}).tip || "") + '</div>' : '') +
+          (r.rows.length > 1 && r.rows[1].n === top.n ? '<p class="lr-note">Kaksi syytä on yhtä yleisiä, joten suurinta haastetta ei voi nimetä yksiselitteisesti.</p>' : '') +
+          (named < 3 ? '<p class="lr-note">Otos on pieni (' + named + ' syytä). Johtopäätökset ovat suuntaa antavia.</p>' : '') +
+          '<div class="lr-notes">' + r.rows.concat(r.none.length ? [{ k: "_none", items: r.none }] : []).map(function (x) {
+            var notes = x.items.map(function (o) {
+              var dd = dcache[o.id] || {};
+              var who = dd.c ? escapeHtml(dd.c) : escapeHtml(sourceLabel(o.source));
+              return dd.lrn ? '<li><b>' + who + '</b>' + escapeHtml(dd.lrn) + '</li>' : '';
+            }).filter(Boolean);
+            if (!notes.length) return '';
+            return '<div class="lr-grp"><span class="lr-l">' + (x.k === "_none" ? "Syy puuttuu" : escapeHtml(lostLabel(x.k))) + '</span><ul>' + notes.join("") + '</ul></div>';
+          }).join("") + '</div>');
+    }
+    var sel = card.querySelector(".lr-sel");
+    if (sel) sel.addEventListener("change", function () { state.lostMonth = sel.value; render(); });
+    var op = card.querySelector(".lr-open");
+    if (op) op.addEventListener("click", function () { state.lostMonth = mk; state.tab = "history"; render(); window.scrollTo(0, 0); });
+    return card;
+  }
+
   function renderHistory(main) {
+    main.appendChild(lostReportCard(false));
     var addPastCard = document.createElement("div");
     addPastCard.className = "card";
     addPastCard.innerHTML = '<h2 style="color:var(--text);font-size:15px;font-weight:600;">Mennyt kuukausi puuttuu?</h2><p style="color:var(--text-dim);font-size:13px;margin:6px 0 12px;">Lisää ennen sovellusta tehdyt myynnit yhteenvetona, myös aiemmilta vuosilta.</p>';
