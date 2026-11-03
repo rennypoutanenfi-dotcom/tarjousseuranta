@@ -1242,6 +1242,25 @@
   .lr-grp li { font-size: 13.5px; line-height: 1.4; padding: 7px 10px; border-left: 3px solid var(--border); background: var(--surface-2); border-radius: 0 8px 8px 0; }
   .lr-grp li b { display: block; font-size: 12px; color: var(--text-dim); }
   .lost-card .lr-open { margin-top: 12px; }
+
+  /* ---------- Vuosittain-taulukko ---------- */
+  .hc-ytd:not(:empty) { display: block; }
+  table.hc-yt { color: var(--text); }
+  .hc-yh { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+  .hc-yh b { font-family: var(--font-display); font-size: 15px; font-weight: 600; }
+  .hy-seg.sm button { padding: 5px 10px; font-size: 12px; }
+  table.hc-yt { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  table.hc-yt th { text-align: right; font-size: 11px; font-weight: 500; color: var(--text-faint); text-transform: uppercase; letter-spacing: .04em; padding: 6px 4px; border-bottom: 1px solid var(--border); }
+  table.hc-yt th:first-child, table.hc-yt td:first-child { text-align: left; }
+  table.hc-yt td { text-align: right; padding: 9px 4px; border-bottom: 1px solid var(--border); font-size: 13px; vertical-align: top; }
+  table.hc-yt tr:last-child td { border-bottom: none; }
+  table.hc-yt td:first-child { font-family: var(--font-display); font-size: 16px; font-weight: 600; white-space: nowrap; }
+  table.hc-yt td:first-child small { display: block; font-family: var(--font-body); font-size: 10.5px; font-weight: 500; color: var(--text-faint); margin-left: 14px; }
+  table.hc-yt .yd { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: 2px; }
+  table.hc-yt strong { display: block; font-family: var(--font-display); font-size: 17px; font-weight: 600; }
+  table.hc-yt em { display: block; font-style: normal; font-size: 11.5px; font-weight: 700; white-space: nowrap; }
+  table.hc-yt em.up { color: var(--good); } table.hc-yt em.down { color: var(--bad); } table.hc-yt em.flat { color: var(--text-faint); }
+  .hc-yn { font-size: 12px; color: var(--text-faint); margin: 8px 0 0; line-height: 1.4; }
 </style>
 </head>
 <body>
@@ -3247,18 +3266,60 @@
       });
     });
 
-    // Kuluvan vuoden alusta (valmiit kuukaudet) verrattuna samoihin kuukausiin aiempina vuosina.
-    var latest = Math.max.apply(null, sel), lastFull = latest === cur.y ? cur.m - 1 : 11;
+    // Vuosivertailu: tarjoukset, kaupat ja hitrate jokaiselta vuodelta rinnakkain.
+    // "Sama jakso" vertaa kaikkia vuosia samoihin kuukausiin, joten kesken oleva vuosi on reilussa vertailussa.
+    var latest = Math.max.apply(null, sel);
     var ytd = body.querySelector(".hc-ytd");
-    if (sel.length > 1 && lastFull >= 0 && metric !== "h") {
-      var sumRange = function (y) { var t = 0, any = false; for (var m = 0; m <= lastFull; m++) { var v = val(y, m); if (v !== null) { t += v; any = true; } } return any ? t : null; };
-      var base = sumRange(latest);
-      var rows = sel.filter(function (y) { return y !== latest; }).sort(function (a, b) { return b - a; }).map(function (y) {
-        var o = sumRange(y); if (base === null || !o) return "";
-        var g = (base - o) / o * 100;
-        return '<span>' + latest + ' vs ' + y + ': <strong class="' + (g >= 0 ? "up" : "down") + '">' + (g >= 0 ? "▲ +" : "▼ ") + Math.round(g) + '%</strong> (' + Math.round(o) + ' → ' + Math.round(base) + ')</span>';
-      }).join("");
-      if (rows) ytd.innerHTML = '<b>' + mName + ' ' + MONTH_SHORT[0] + '–' + MONTH_SHORT[lastFull] + (latest === cur.y ? " (valmiit kuukaudet)" : "") + '</b>' + rows;
+    var span = state.histYearSpan || "sama";
+    var lastFull = cur.m - 1; // kuluvan vuoden viimeinen valmis kuukausi
+    if (lastFull < 0) span = "koko";
+    function yearTot(y) {
+      var end = span === "sama" ? lastFull : 11, o = 0, d = 0, n = 0;
+      for (var m = 0; m <= end; m++) {
+        if (y === cur.y && m > cur.m) break;
+        var k = y + "-" + String(m + 1).padStart(2, "0");
+        if (!months[k]) continue;
+        var t = monthTotals(months[k]);
+        if (!t.total) continue;
+        o += t.total; d += t.closed; n++;
+      }
+      return n ? { o: o, d: d, h: o ? d / o * 100 : 0, n: n } : null;
+    }
+    var yrows = all.map(function (y) { return { y: y, t: yearTot(y) }; }).filter(function (r) { return r.t; });
+    function dPct(a, b) {
+      if (b === null || b === undefined || !b) return "";
+      var g = Math.round((a - b) / b * 100);
+      if (!g) return '<em class="flat">±0 %</em>';
+      return '<em class="' + (g > 0 ? "up" : "down") + '">' + (g > 0 ? "▲ +" : "▼ ") + g + ' %</em>';
+    }
+    function dPts(a, b) {
+      if (b === null || b === undefined) return "";
+      var g = Math.round(a - b);
+      if (!g) return '<em class="flat">±0 %-yks.</em>';
+      return '<em class="' + (g > 0 ? "up" : "down") + '">' + (g > 0 ? "▲ +" : "▼ ") + g + ' %-yks.</em>';
+    }
+    if (yrows.length) {
+      var spanLbl = span === "sama" ? MONTH_SHORT[0] + "–" + MONTH_SHORT[lastFull] : "koko vuosi";
+      ytd.innerHTML =
+        '<div class="hc-yh"><b>Vuosittain · ' + spanLbl + '</b>' +
+          (lastFull >= 0 ? '<div class="hy-seg sm">' + [["sama", "Sama jakso"], ["koko", "Koko vuosi"]].map(function (x) {
+            return '<button type="button" data-span="' + x[0] + '" class="' + (span === x[0] ? "on" : "") + '">' + x[1] + '</button>';
+          }).join("") + '</div>' : '') + '</div>' +
+        '<table class="hc-yt"><thead><tr><th>Vuosi</th><th>Tarjoukset</th><th>Kaupat</th><th>Hitrate</th></tr></thead><tbody>' +
+        yrows.map(function (r, i) {
+          var p = yrows[i + 1] ? yrows[i + 1].t : null;
+          var partial = r.y === cur.y && span === "koko";
+          return '<tr><td><span class="yd" style="background:' + colorOf(r.y) + '"></span>' + r.y + (partial ? '<small>kesken</small>' : '') + '</td>' +
+            '<td><strong>' + r.t.o + '</strong>' + (p ? dPct(r.t.o, p.o) : '') + '</td>' +
+            '<td><strong>' + r.t.d + '</strong>' + (p ? dPct(r.t.d, p.d) : '') + '</td>' +
+            '<td><strong>' + Math.round(r.t.h) + ' %</strong>' + (p ? dPts(r.t.h, p.h) : '') + '</td></tr>';
+        }).join("") + '</tbody></table>' +
+        '<p class="hc-yn">' + (span === "sama"
+          ? 'Kaikki vuodet samalta jaksolta (' + spanLbl + '), joten kesken oleva vuosi on vertailukelpoinen. Muutos verrataan edelliseen vuoteen.'
+          : 'Kuluva vuosi on kesken, joten tarjousten ja kauppojen kokonaismäärät eivät ole vielä vertailukelpoisia. Hitrate on.') + '</p>';
+      Array.prototype.forEach.call(ytd.querySelectorAll("[data-span]"), function (b) {
+        b.addEventListener("click", function () { state.histYearSpan = b.getAttribute("data-span"); rer(); });
+      });
     }
 
     var plot = body.querySelector(".hc-plot"), tip = body.querySelector(".hy-tip"), hov = null;
