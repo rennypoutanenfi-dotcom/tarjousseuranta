@@ -1300,6 +1300,9 @@
   .rf-xlist .x em { grid-column: 1 / -1; font-style: normal; font-size: 12.5px; color: var(--text-dim); line-height: 1.4; }
   .rf-stats { grid-template-columns: 1fr !important; }
   @media (min-width: 1000px) { .rf-cars { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; } }
+
+  .rf-plot .endp { stroke: var(--surface); stroke-width: 2.5; }
+  .rf-tip small { font-size: 10.5px; color: var(--good); font-weight: 700; }
 </style>
 </head>
 <body>
@@ -5261,7 +5264,8 @@
     { k: "open", label: "Avausmaksu", min: 0, max: 600, step: 5, unit: "€" },
     { k: "fee", label: "Käsittelymaksu (kk)", min: 0, max: 20, step: 0.5, unit: "€" },
     { k: "down", label: "Vaihtoautohyvitys / Käteinen / Oma raha", min: 0, max: 100000, step: 100, unit: "€", maxOf: "price" },
-    { k: "balloon", label: "Viimeinen maksuerä (jäännöserä)", min: 0, max: 100000, step: 100, unit: "€", maxOf: "price" }
+    { k: "balloon", label: "Viimeinen maksuerä (jäännöserä)", min: 0, max: 100000, step: 100, unit: "€", maxOf: "price" },
+    { k: "term", label: "Laina-aika", min: 6, max: 120, step: 1, unit: "kk" }
   ];
   // Euribor-vaihtoehto: korko = viitekorko + marginaali. Oletusarvo 12 kk Euribor 5.11.2026.
   var RF_EURIBOR_DEFAULT = 3.28, RF_EURIBOR_NOTE = "12 kk Euribor 3,283 % (5.11.2026)";
@@ -5273,10 +5277,9 @@
   function rfEffRate(car) { return car.mode === "eur" ? Math.round(((+car.eur || 0) + (+car.marg || 0)) * 1000) / 1000 : +car.rate || 0; }
   function rfEff(car) { return Object.assign({}, car, { rate: Math.max(rfEffRate(car), 0) }); }
   var RF_DEFAULT = {
-    A: { price: 20000, rate: 6, open: 150, fee: 10, down: 0, balloon: 0 },
-    B: { price: 23000, rate: 3.5, open: 150, fee: 10, down: 0, balloon: 0 },
-    C: { price: 20000, mode: "eur", eur: RF_EURIBOR_DEFAULT, marg: 2.5, open: 150, fee: 10, down: 0, balloon: 0 },
-    term: 60
+    A: { price: 20000, rate: 6, open: 150, fee: 10, down: 0, balloon: 0, term: 60 },
+    B: { price: 23000, rate: 3.5, open: 150, fee: 10, down: 0, balloon: 0, term: 60 },
+    C: { price: 20000, mode: "eur", eur: RF_EURIBOR_DEFAULT, marg: 2.5, open: 150, fee: 10, down: 0, balloon: 0, term: 60 }
   };
   var RF_IDS = ["A", "B", "C"];
   var RF_NAME = { A: "Auto A", B: "Auto B", C: "Euribor" };
@@ -5289,9 +5292,11 @@
       if (raw) {
         var d = JSON.parse(raw);
         if (d && d.A && d.B) {
-          rf = { A: Object.assign({}, rf.A, d.A), B: Object.assign({}, rf.B, d.B), C: Object.assign({}, rf.C, d.C || {}), term: d.term || rf.term };
+          rf = { A: Object.assign({}, rf.A, d.A), B: Object.assign({}, rf.B, d.B), C: Object.assign({}, rf.C, d.C || {}) };
           // A ja B ovat aina kiinteäkorkoisia; Euribor on oma vaihtoehtonsa C.
           delete rf.A.mode; delete rf.B.mode; rf.C.mode = "eur";
+          // Vanha yhteinen laina-aika siirtyy jokaiselle vaihtoehdolle, jos omaa ei vielä ole.
+          RF_IDS.forEach(function (id) { if (!d[id] || !d[id].term) rf[id].term = d.term || 60; });
         }
       }
     } catch (e) {}
@@ -5338,8 +5343,7 @@
 
     var chartCard = document.createElement("div");
     chartCard.className = "card rf-chart-card";
-    chartCard.innerHTML = '<div class="rf-ch-head"><div><h3>Maksettu kokonaissumma ajan myötä</h3><p>Perustuu tavalliseen lyhennettävään lainaan valitulla laina-ajalla. Käyrä = maksetut erät, oma raha ja jäljellä oleva laina, eli mitä vaihtoehto on siihen mennessä maksanut, jos laina maksettaisiin pois.</p></div>' +
-      '<div class="rf-term"><label for="rfTerm">Laina-aika <b id="rfTermV"></b></label><input id="rfTerm" class="rf-range" type="range" min="12" max="120" step="1" value="' + rf.term + '"></div></div>' +
+    chartCard.innerHTML = '<div class="rf-ch-head"><div><h3>Maksettu kokonaissumma ajan myötä</h3><p>Perustuu tavalliseen lyhennettävään lainaan kunkin vaihtoehdon omalla laina-ajalla. Käyrä = maksetut erät, oma raha ja jäljellä oleva laina, eli mitä vaihtoehto on siihen mennessä maksanut, jos laina maksettaisiin pois. Kun laina on maksettu, käyrä jatkuu tasaisena loppusummassa (merkitty pallolla).</p></div></div>' +
       '<div class="rf-legend">' + RF_IDS.map(function (id) { return '<span class="' + id.toLowerCase() + '"><i></i><em id="rfLeg' + id + '"></em></span>'; }).join("") + '</div>' +
       '<div class="rf-plot" id="rfPlot"></div>';
     main.appendChild(chartCard);
@@ -5363,9 +5367,17 @@
 
     var hover = null;
     var PAIRS = [["A", "B"], ["A", "C"], ["B", "C"]];
+    // Lyhyemmän lainan käyrä jatkuu tasaisena loppuun, jotta eripituisia lainoja voi verrata samalla aikajanalla.
+    function rfPad(r, N) {
+      var c = r.cost.slice(), pd = r.paid.slice();
+      while (c.length < N + 1) { c.push(c[c.length - 1]); pd.push(pd[pd.length - 1]); }
+      return Object.assign({}, r, { cost: c, paid: pd, n: N, ownN: r.n });
+    }
     function update() {
-      var n = rf.term, res = {};
-      RF_IDS.forEach(function (id) { res[id] = rfCalc(rfEff(rf[id]), n); });
+      var res = {}, padded = {};
+      RF_IDS.forEach(function (id) { res[id] = rfCalc(rfEff(rf[id]), rf[id].term || 60); });
+      var n = Math.max.apply(null, RF_IDS.map(function (id) { return res[id].n; }));
+      RF_IDS.forEach(function (id) { padded[id] = rfPad(res[id], n); });
       RF_IDS.forEach(function (id) {
         var card = cars.querySelector(".rf-" + id.toLowerCase());
         card.querySelector('[data-o="pay"]').textContent = eur(res[id].pay, true);
@@ -5373,14 +5385,14 @@
         var effEl = card.querySelector('[data-o="eff"]');
         if (effEl) effEl.textContent = rfEffRate(rf[id]).toLocaleString("fi-FI", { maximumFractionDigits: 3 }) + " %" + (rfEffRate(rf[id]) < 0 ? " (lasketaan 0 %)" : "");
         var r = rfEffRate(rf[id]).toLocaleString("fi-FI", { maximumFractionDigits: 3 });
-        document.getElementById("rfLeg" + id).textContent = RF_NAME[id] + " (" + eur(rf[id].price) + " @ " + r + " %)";
+        document.getElementById("rfLeg" + id).textContent = RF_NAME[id] + " (" + eur(rf[id].price) + " @ " + r + " %, " + res[id].n + " kk)";
       });
-      document.getElementById("rfTermV").textContent = n + " kk";
 
       // Taulukko: halvin arvo korostetaan rivillä.
       function apr(x) { return x.apr === null ? null : x.apr; }
       var rows = [
         ["Auton hinta", function (id) { return rf[id].price; }, function (v) { return eur(v); }, false],
+        ["Laina-aika", function (id) { return res[id].n; }, function (v) { return v + " kk"; }, false],
         ["Korko", function (id) { return rfEffRate(rf[id]); }, function (v) { return v.toLocaleString("fi-FI", { maximumFractionDigits: 3 }) + " %"; }, true],
         ["Kuukausierä yhteensä", function (id) { return res[id].payTotal; }, function (v) { return eur(v, true); }, true],
         ["Korot ja kulut", function (id) { return res[id].costs; }, function (v) { return eur(v); }, true],
@@ -5401,7 +5413,7 @@
       // Tasapainopisteet jokaiselle parille
       var crosses = [];
       document.getElementById("rfCrossList").innerHTML = PAIRS.map(function (pq) {
-        var a = res[pq[0]], b = res[pq[1]], cr = rfCross(a, b);
+        var a = padded[pq[0]], b = padded[pq[1]], cr = rfCross(a, b);
         var nm = RF_NAME[pq[0]] + " – " + RF_NAME[pq[1]];
         if (cr) {
           crosses.push(cr);
@@ -5410,10 +5422,11 @@
           return '<div class="x hit"><span>' + nm + '</span><b>' + m + ' kk</b><em>Kohtaavat noin ' + eur(cr.value) + ' tasolla, sen jälkeen ' + RF_NAME[after] + ' on edullisempi.</em></div>';
         }
         var diff = a.cost[n] - b.cost[n];
-        return '<div class="x"><span>' + nm + '</span><b>Ei leikkaa</b><em>' + (Math.abs(diff) < 1 ? 'Maksavat yhtä paljon.' : RF_NAME[diff < 0 ? pq[0] : pq[1]] + ' on edullisempi koko laina-ajan, lopussa ' + eur(Math.abs(diff)) + ' halvempi.') + '</em></div>';
+        return '<div class="x"><span>' + nm + '</span><b>Ei leikkaa</b><em>' + (Math.abs(diff) < 1 ? 'Maksavat yhtä paljon.' : RF_NAME[diff < 0 ? pq[0] : pq[1]] + ' on edullisempi koko vertailun ajan, lopussa ' + eur(Math.abs(diff)) + ' halvempi.') + '</em></div>';
       }).join("");
 
-      rfDraw(document.getElementById("rfPlot"), RF_IDS.map(function (id) { return { id: id, r: res[id] }; }), crosses, hover);
+      if (hover !== null && hover > n) hover = n;
+      rfDraw(document.getElementById("rfPlot"), RF_IDS.map(function (id) { return { id: id, r: padded[id] }; }), crosses, hover);
       Array.prototype.forEach.call(main.querySelectorAll(".rf-range"), function (rg) {
         var mn = +rg.min, mx = +rg.max, v = +rg.value;
         rg.style.setProperty("--pct", (mx > mn ? (v - mn) / (mx - mn) * 100 : 0) + "%");
@@ -5425,7 +5438,7 @@
       var car = rf[id];
       v = Math.max(f.min, isNaN(v) ? 0 : v);
       if (f.maxOf) v = Math.min(v, rfFieldMax(f, car));
-      car[k] = Math.round(v * 100) / 100;
+      car[k] = k === "term" ? Math.min(Math.round(v), f.max) : Math.round(v * 100) / 100;
       if (k === "price") ["down", "balloon"].forEach(function (kk) {
         if (car[kk] > car.price) car[kk] = car.price;
         var rg = cars.querySelector('.rf-range[data-car="' + id + '"][data-k="' + kk + '"]');
@@ -5447,7 +5460,6 @@
       var el = e.target, id = el.getAttribute("data-car"), k = el.getAttribute("data-k");
       if (id && el.type === "text") el.value = numFi(rf[id][k]);
     });
-    document.getElementById("rfTerm").addEventListener("input", function (e) { rf.term = parseInt(e.target.value, 10); rfSave(); update(); });
     head.querySelector("#rfReset").addEventListener("click", function () { rf = JSON.parse(JSON.stringify(RF_DEFAULT)); rfSave(); render(); showToast("Oletukset palautettu"); });
 
     var plot = document.getElementById("rfPlot");
@@ -5498,7 +5510,10 @@
     if (n % xs) s += '<text class="ax" x="' + X(n) + '" y="' + (yb + 18) + '" text-anchor="end">' + n + '</text>';
     s += '<text class="ax" x="' + x1 + '" y="' + (H - 2) + '" text-anchor="end">kk</text>';
     s += '<line class="base" x1="' + x0 + '" x2="' + x1 + '" y1="' + yb + '" y2="' + yb + '"/>';
-    series.slice().reverse().forEach(function (sr) { s += '<path class="ln l' + sr.id.toLowerCase() + '" d="' + path(sr.r.cost) + '"/>'; });
+    series.slice().reverse().forEach(function (sr) {
+      s += '<path class="ln l' + sr.id.toLowerCase() + '" d="' + path(sr.r.cost) + '"/>';
+      if (sr.r.ownN && sr.r.ownN < n) s += '<circle class="endp d' + sr.id.toLowerCase() + '" cx="' + X(sr.r.ownN) + '" cy="' + Y(sr.r.cost[sr.r.ownN]) + '" r="4.5"/>';
+    });
     (crosses || []).forEach(function (cr) {
       s += '<circle class="crossp" cx="' + X(cr.month) + '" cy="' + Y(cr.value) + '" r="5"/>';
     });
@@ -5514,7 +5529,7 @@
       var gap = sorted[1].r.cost[hover] - sorted[0].r.cost[hover];
       var left = X(hover) / W * 100;
       tip = '<div class="rf-tip' + (W < 560 ? ' below' : '') + '" style="' + (W < 560 ? '' : (left > 55 ? 'right:' + (100 - left + 2) + '%' : 'left:' + (left + 2) + '%')) + '"><b>' + hover + ' kk</b>' +
-        series.map(function (sr) { return '<span class="' + sr.id.toLowerCase() + '"><i></i>' + RF_NAME[sr.id] + ' <strong>' + eur(sr.r.cost[hover]) + '</strong></span>'; }).join("") +
+        series.map(function (sr) { return '<span class="' + sr.id.toLowerCase() + '"><i></i>' + RF_NAME[sr.id] + (sr.r.ownN && hover >= sr.r.ownN ? ' <small>maksettu</small>' : '') + ' <strong>' + eur(sr.r.cost[hover]) + '</strong></span>'; }).join("") +
         '<span class="d">' + (gap < 1 ? 'Kaksi edullisinta yhtä paljon' : 'Edullisin: ' + RF_NAME[sorted[0].id] + ', ' + eur(gap) + ' seuraavaa halvempi') + '</span>' +
         '<span class="p">Maksettu tähän mennessä: ' + series.map(function (sr) { return sr.id + ' ' + eur(sr.r.paid[hover]); }).join(" · ") + '</span></div>';
     }
