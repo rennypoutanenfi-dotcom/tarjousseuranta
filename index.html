@@ -1261,6 +1261,15 @@
   table.hc-yt em { display: block; font-style: normal; font-size: 11.5px; font-weight: 700; white-space: nowrap; }
   table.hc-yt em.up { color: var(--good); } table.hc-yt em.down { color: var(--bad); } table.hc-yt em.flat { color: var(--text-faint); }
   .hc-yn { font-size: 12px; color: var(--text-faint); margin: 8px 0 0; line-height: 1.4; }
+
+  /* ---------- Rahoitus: Euribor ---------- */
+  .rf-mode { display: flex; gap: 4px; background: var(--surface-2); border-radius: 10px; padding: 3px; margin: 8px 0 2px; }
+  .rf-mode button { flex: 1; background: none; border: none; border-radius: 8px; padding: 8px 6px; font-family: var(--font-body); font-size: 12.5px; font-weight: 700; color: var(--text-dim); cursor: pointer; }
+  .rf-mode button.on { background: var(--surface); color: var(--text); box-shadow: inset 0 -2px 0 var(--ser), 0 1px 3px rgba(0,0,0,.15); }
+  .rf-eff { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 2px 2px; }
+  .rf-eff span { font-size: 13.5px; color: var(--text-dim); }
+  .rf-eff b { font-family: var(--font-display); font-size: 18px; font-weight: 600; }
+  .rf-eurnote { font-size: 11.5px; color: var(--text-faint); line-height: 1.4; margin: 2px 0 4px; }
 </style>
 </head>
 <body>
@@ -5224,7 +5233,16 @@
     { k: "down", label: "Vaihtoautohyvitys / Käteinen / Oma raha", min: 0, max: 100000, step: 100, unit: "€", maxOf: "price" },
     { k: "balloon", label: "Viimeinen maksuerä (jäännöserä)", min: 0, max: 100000, step: 100, unit: "€", maxOf: "price" }
   ];
-  var RF_DEFAULT = { A: { price: 20000, rate: 6, open: 150, fee: 10, down: 0, balloon: 0 }, B: { price: 23000, rate: 3.5, open: 150, fee: 10, down: 0, balloon: 0 }, term: 60 };
+  // Euribor-vaihtoehto: korko = viitekorko + marginaali. Oletusarvo 12 kk Euribor 5.11.2026.
+  var RF_EURIBOR_DEFAULT = 3.28, RF_EURIBOR_NOTE = "12 kk Euribor 3,283 % (5.11.2026)";
+  var RF_EXTRA = [
+    { k: "eur", label: "Euribor", min: -1, max: 6, step: 0.01, unit: "%", neg: true },
+    { k: "marg", label: "Marginaali", min: 0, max: 10, step: 0.05, unit: "%" }
+  ];
+  function rfFieldDef(k) { return RF_FIELDS.concat(RF_EXTRA).filter(function (x) { return x.k === k; })[0]; }
+  function rfEffRate(car) { return car.mode === "eur" ? Math.round(((+car.eur || 0) + (+car.marg || 0)) * 1000) / 1000 : +car.rate || 0; }
+  function rfEff(car) { return Object.assign({}, car, { rate: Math.max(rfEffRate(car), 0) }); }
+  var RF_DEFAULT = { A: { price: 20000, rate: 6, open: 150, fee: 10, down: 0, balloon: 0, mode: "fix", eur: RF_EURIBOR_DEFAULT, marg: 2.5 }, B: { price: 23000, rate: 3.5, open: 150, fee: 10, down: 0, balloon: 0, mode: "fix", eur: RF_EURIBOR_DEFAULT, marg: 2.5 }, term: 60 };
   var rf = null, rfRedraw = null;
   function rfLoad() {
     if (rf) return rf;
@@ -5252,12 +5270,24 @@
       var car = rf[id];
       var card = document.createElement("div");
       card.className = "card rf-car rf-" + id.toLowerCase();
+      function rowHtml(f) {
+        var mx = rfFieldMax(f, car);
+        return '<div class="rf-row"><div class="rf-lab"><label for="rf' + id + f.k + '">' + f.label + '</label>' +
+          '<span class="rf-num"><input id="rf' + id + f.k + '" type="text" inputmode="' + (f.neg ? 'text' : 'decimal') + '" data-car="' + id + '" data-k="' + f.k + '" value="' + numFi(car[f.k]) + '"><em>' + f.unit + '</em></span></div>' +
+          '<input type="range" class="rf-range" data-car="' + id + '" data-k="' + f.k + '" min="' + f.min + '" max="' + mx + '" step="' + f.step + '" value="' + Math.min(car[f.k], mx) + '" aria-label="' + f.label + ' Auto ' + id + '"></div>';
+      }
       card.innerHTML = '<div class="rf-ct"><span class="sw"></span>Auto ' + id + '</div>' +
         RF_FIELDS.map(function (f) {
-          var mx = rfFieldMax(f, car);
-          return '<div class="rf-row"><div class="rf-lab"><label for="rf' + id + f.k + '">' + f.label + '</label>' +
-            '<span class="rf-num"><input id="rf' + id + f.k + '" type="text" inputmode="decimal" data-car="' + id + '" data-k="' + f.k + '" value="' + numFi(car[f.k]) + '"><em>' + f.unit + '</em></span></div>' +
-            '<input type="range" class="rf-range" data-car="' + id + '" data-k="' + f.k + '" min="' + f.min + '" max="' + mx + '" step="' + f.step + '" value="' + Math.min(car[f.k], mx) + '" aria-label="' + f.label + ' Auto ' + id + '"></div>';
+          if (f.k !== "rate") return rowHtml(f);
+          return '<div class="rf-mode" role="group" aria-label="Korkotyyppi Auto ' + id + '">' +
+              '<button type="button" data-mode="fix" data-car="' + id + '" class="' + (car.mode !== "eur" ? 'on' : '') + '">Kiinteä korko</button>' +
+              '<button type="button" data-mode="eur" data-car="' + id + '" class="' + (car.mode === "eur" ? 'on' : '') + '">Euribor + marginaali</button>' +
+            '</div>' +
+            (car.mode === "eur"
+              ? rowHtml(RF_EXTRA[0]) + rowHtml(RF_EXTRA[1]) +
+                '<div class="rf-eff"><span>Korko yhteensä</span><b data-o="eff"></b></div>' +
+                '<p class="rf-eurnote">Oletus: ' + RF_EURIBOR_NOTE + '. Tarkista ajantasainen arvo. Euribor-sidonnaisen lainan korko muuttuu laina-aikana; laskelma olettaa sen pysyvän samana koko ajan.</p>'
+              : rowHtml(f));
         }).join("") +
         '<div class="rf-out"><div><span>Kuukausierä (laina)</span><b data-o="pay"></b></div><div class="tot"><span>Kuukausierä yhteensä (sis. käsittelymaksu)</span><b data-o="payTotal"></b></div></div>';
       cars.appendChild(card);
@@ -5288,18 +5318,22 @@
 
     var hover = null;
     function update() {
-      var n = rf.term, a = rfCalc(rf.A, n), b = rfCalc(rf.B, n), res = { A: a, B: b };
+      var n = rf.term, a = rfCalc(rfEff(rf.A), n), b = rfCalc(rfEff(rf.B), n), res = { A: a, B: b };
       ["A", "B"].forEach(function (id) {
         var card = cars.querySelector(".rf-" + id.toLowerCase());
         card.querySelector('[data-o="pay"]').textContent = eur(res[id].pay, true);
         card.querySelector('[data-o="payTotal"]').textContent = eur(res[id].payTotal, true);
+        var effEl = card.querySelector('[data-o="eff"]');
+        if (effEl) effEl.textContent = rfEffRate(rf[id]).toLocaleString("fi-FI", { maximumFractionDigits: 3 }) + " %" + (rfEffRate(rf[id]) < 0 ? " (lasketaan 0 %)" : "");
         stats.querySelector('[data-s="' + id + 'total"]').textContent = eur(res[id].total);
         stats.querySelector('[data-s="' + id + 'costs"]').textContent = eur(res[id].costs);
         stats.querySelector('[data-s="' + id + 'apr"]').textContent = res[id].apr === null ? "–" : res[id].apr.toLocaleString("fi-FI", { maximumFractionDigits: 2, minimumFractionDigits: 2 }) + " %";
       });
       document.getElementById("rfTermV").textContent = n + " kk";
-      document.getElementById("rfLegA").textContent = "Auto A (" + eur(rf.A.price) + " @ " + numFi(rf.A.rate) + " %)";
-      document.getElementById("rfLegB").textContent = "Auto B (" + eur(rf.B.price) + " @ " + numFi(rf.B.rate) + " %)";
+      ["A", "B"].forEach(function (id) {
+        var c = rf[id], r = rfEffRate(c).toLocaleString("fi-FI", { maximumFractionDigits: 3 });
+        document.getElementById("rfLeg" + id).textContent = "Auto " + id + " (" + eur(c.price) + " @ " + r + " %" + (c.mode === "eur" ? ", Euribor + marg." : "") + ")";
+      });
       var cr = rfCross(a, b), ce = document.getElementById("rfCross"), cs = document.getElementById("rfCrossS");
       if (cr) {
         var m = Math.max(1, Math.round(cr.month));
@@ -5320,7 +5354,7 @@
     }
 
     function setVal(id, k, v, fromRange) {
-      var f = RF_FIELDS.filter(function (x) { return x.k === k; })[0];
+      var f = rfFieldDef(k);
       var car = rf[id];
       v = Math.max(f.min, isNaN(v) ? 0 : v);
       if (f.maxOf) v = Math.min(v, rfFieldMax(f, car));
@@ -5336,11 +5370,19 @@
       else { var ri = cars.querySelector('.rf-range[data-car="' + id + '"][data-k="' + k + '"]'); if (ri) ri.value = car[k]; }
       rfSave(); update();
     }
+    cars.addEventListener("click", function (e) {
+      var b = e.target.closest ? e.target.closest("[data-mode]") : null;
+      if (!b) return;
+      var id = b.getAttribute("data-car"), md = b.getAttribute("data-mode");
+      if (rf[id].mode === md) return;
+      rf[id].mode = md; rfSave();
+      var y = window.scrollY; render(); window.scrollTo(0, y);
+    });
     cars.addEventListener("input", function (e) {
       var el = e.target, id = el.getAttribute("data-car"), k = el.getAttribute("data-k");
       if (!id) return;
       if (el.type === "range") setVal(id, k, parseFloat(el.value), true);
-      else { var v = parseFloat(String(el.value).replace(/\s/g, "").replace(",", ".")); if (!isNaN(v)) setVal(id, k, v, false); }
+      else { var v = parseFloat(String(el.value).replace(/\s/g, "").replace("−", "-").replace(",", ".")); if (!isNaN(v)) setVal(id, k, v, false); }
     });
     cars.addEventListener("change", function (e) {
       var el = e.target, id = el.getAttribute("data-car"), k = el.getAttribute("data-k");
