@@ -1263,13 +1263,43 @@
   .hc-yn { font-size: 12px; color: var(--text-faint); margin: 8px 0 0; line-height: 1.4; }
 
   /* ---------- Rahoitus: Euribor ---------- */
-  .rf-mode { display: flex; gap: 4px; background: var(--surface-2); border-radius: 10px; padding: 3px; margin: 8px 0 2px; }
-  .rf-mode button { flex: 1; background: none; border: none; border-radius: 8px; padding: 8px 6px; font-family: var(--font-body); font-size: 12.5px; font-weight: 700; color: var(--text-dim); cursor: pointer; }
-  .rf-mode button.on { background: var(--surface); color: var(--text); box-shadow: inset 0 -2px 0 var(--ser), 0 1px 3px rgba(0,0,0,.15); }
   .rf-eff { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 2px 2px; }
   .rf-eff span { font-size: 13.5px; color: var(--text-dim); }
   .rf-eff b { font-family: var(--font-display); font-size: 18px; font-weight: 600; }
   .rf-eurnote { font-size: 11.5px; color: var(--text-faint); line-height: 1.4; margin: 2px 0 4px; }
+
+  /* ---------- Rahoitus: kolme vaihtoehtoa ---------- */
+  :root { --ser-c: #199e70; }
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --ser-c: #1a9c6c; } }
+  :root[data-theme="light"] { --ser-c: #1a9c6c; }
+  :root[data-theme="dark"] { --ser-c: #199e70; }
+  .rf-c { --ser: var(--ser-c); }
+  .rf-ct small { font-family: var(--font-body); font-size: 11.5px; font-weight: 600; color: var(--text-faint); margin-left: auto; }
+  .rf-plot .lc { stroke: var(--ser-c); }
+  .rf-plot .dc { fill: var(--ser-c); }
+  .rf-legend .c i, .rf-tip .c i { background: var(--ser-c); }
+  .rf-plot .crossp { r: 5; }
+  .rf-cmp h3 { font-family: var(--font-display); font-size: 17px; font-weight: 600; margin: 0 0 8px; }
+  .rf-cmp-wrap { overflow-x: auto; }
+  .rf-cmp table { width: 100%; border-collapse: collapse; min-width: 320px; }
+  .rf-cmp th, .rf-cmp td { padding: 9px 6px; border-bottom: 1px solid var(--border); font-size: 13px; text-align: right; white-space: nowrap; }
+  .rf-cmp tbody th { text-align: left; font-weight: 500; color: var(--text-dim); white-space: normal; font-size: 12.5px; }
+  .rf-cmp thead th { font-family: var(--font-display); font-size: 14px; font-weight: 600; color: var(--text); }
+  .rf-cmp thead th i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: 1px; }
+  .rf-cmp thead .c-a i { background: var(--ser-a); } .rf-cmp thead .c-b i { background: var(--ser-b); } .rf-cmp thead .c-c i { background: var(--ser-c); }
+  .rf-cmp td { font-weight: 600; }
+  .rf-cmp td.best { color: var(--good); }
+  .rf-cmp td.best::before { content: "✓ "; font-size: 11px; }
+  .rf-cmp tr:last-child th, .rf-cmp tr:last-child td { border-bottom: none; }
+  .rf-xlist { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+  .rf-xlist .x { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; padding-top: 8px; border-top: 1px solid var(--border); }
+  .rf-xlist .x:first-child { border-top: none; padding-top: 0; }
+  .rf-xlist .x span { font-size: 13px; font-weight: 600; }
+  .rf-xlist .x b { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--text-dim); }
+  .rf-xlist .x.hit b { color: var(--good); }
+  .rf-xlist .x em { grid-column: 1 / -1; font-style: normal; font-size: 12.5px; color: var(--text-dim); line-height: 1.4; }
+  .rf-stats { grid-template-columns: 1fr !important; }
+  @media (min-width: 1000px) { .rf-cars { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; } }
 </style>
 </head>
 <body>
@@ -5242,12 +5272,29 @@
   function rfFieldDef(k) { return RF_FIELDS.concat(RF_EXTRA).filter(function (x) { return x.k === k; })[0]; }
   function rfEffRate(car) { return car.mode === "eur" ? Math.round(((+car.eur || 0) + (+car.marg || 0)) * 1000) / 1000 : +car.rate || 0; }
   function rfEff(car) { return Object.assign({}, car, { rate: Math.max(rfEffRate(car), 0) }); }
-  var RF_DEFAULT = { A: { price: 20000, rate: 6, open: 150, fee: 10, down: 0, balloon: 0, mode: "fix", eur: RF_EURIBOR_DEFAULT, marg: 2.5 }, B: { price: 23000, rate: 3.5, open: 150, fee: 10, down: 0, balloon: 0, mode: "fix", eur: RF_EURIBOR_DEFAULT, marg: 2.5 }, term: 60 };
+  var RF_DEFAULT = {
+    A: { price: 20000, rate: 6, open: 150, fee: 10, down: 0, balloon: 0 },
+    B: { price: 23000, rate: 3.5, open: 150, fee: 10, down: 0, balloon: 0 },
+    C: { price: 20000, mode: "eur", eur: RF_EURIBOR_DEFAULT, marg: 2.5, open: 150, fee: 10, down: 0, balloon: 0 },
+    term: 60
+  };
+  var RF_IDS = ["A", "B", "C"];
+  var RF_NAME = { A: "Auto A", B: "Auto B", C: "Euribor" };
   var rf = null, rfRedraw = null;
   function rfLoad() {
     if (rf) return rf;
     rf = JSON.parse(JSON.stringify(RF_DEFAULT));
-    try { var ls = safeLS(); var raw = ls ? ls.getItem("ts_rf") : null; if (raw) { var d = JSON.parse(raw); if (d && d.A && d.B) rf = { A: Object.assign({}, rf.A, d.A), B: Object.assign({}, rf.B, d.B), term: d.term || rf.term }; } } catch (e) {}
+    try {
+      var ls = safeLS(); var raw = ls ? ls.getItem("ts_rf") : null;
+      if (raw) {
+        var d = JSON.parse(raw);
+        if (d && d.A && d.B) {
+          rf = { A: Object.assign({}, rf.A, d.A), B: Object.assign({}, rf.B, d.B), C: Object.assign({}, rf.C, d.C || {}), term: d.term || rf.term };
+          // A ja B ovat aina kiinteäkorkoisia; Euribor on oma vaihtoehtonsa C.
+          delete rf.A.mode; delete rf.B.mode; rf.C.mode = "eur";
+        }
+      }
+    } catch (e) {}
     return rf;
   }
   function rfSave() { try { var ls = safeLS(); if (ls) ls.setItem("ts_rf", JSON.stringify(rf)); } catch (e) {} }
@@ -5260,34 +5307,29 @@
     main.classList.add("rf-main");
     var head = document.createElement("div");
     head.className = "rf-head";
-    head.innerHTML = '<div><h2>Rahoituslaskuri</h2><p>Vertaa kahta autoa ja rahoitusta. Löydä kohta, jossa halvempi auto korkeammalla korolla lakkaa olemasta parempi diili.</p></div>' +
+    head.innerHTML = '<div><h2>Rahoituslaskuri</h2><p>Vertaa kolmea vaihtoehtoa rinnakkain: kaksi autoa kiinteällä korolla ja Euribor-sidonnainen rahoitus. Löydä kohta, jossa vaihtoehdot kohtaavat.</p></div>' +
       '<button type="button" class="btn btn-ghost btn-sm" id="rfReset">Palauta oletukset</button>';
     main.appendChild(head);
 
     var cars = document.createElement("div");
     cars.className = "rf-cars";
-    ["A", "B"].forEach(function (id) {
+    RF_IDS.forEach(function (id) {
       var car = rf[id];
-      var card = document.createElement("div");
-      card.className = "card rf-car rf-" + id.toLowerCase();
       function rowHtml(f) {
         var mx = rfFieldMax(f, car);
         return '<div class="rf-row"><div class="rf-lab"><label for="rf' + id + f.k + '">' + f.label + '</label>' +
           '<span class="rf-num"><input id="rf' + id + f.k + '" type="text" inputmode="' + (f.neg ? 'text' : 'decimal') + '" data-car="' + id + '" data-k="' + f.k + '" value="' + numFi(car[f.k]) + '"><em>' + f.unit + '</em></span></div>' +
-          '<input type="range" class="rf-range" data-car="' + id + '" data-k="' + f.k + '" min="' + f.min + '" max="' + mx + '" step="' + f.step + '" value="' + Math.min(car[f.k], mx) + '" aria-label="' + f.label + ' Auto ' + id + '"></div>';
+          '<input type="range" class="rf-range" data-car="' + id + '" data-k="' + f.k + '" min="' + f.min + '" max="' + mx + '" step="' + f.step + '" value="' + Math.min(car[f.k], mx) + '" aria-label="' + f.label + ' ' + RF_NAME[id] + '"></div>';
       }
-      card.innerHTML = '<div class="rf-ct"><span class="sw"></span>Auto ' + id + '</div>' +
+      var card = document.createElement("div");
+      card.className = "card rf-car rf-" + id.toLowerCase();
+      card.innerHTML = '<div class="rf-ct"><span class="sw"></span>' + (id === "C" ? 'Euribor-rahoitus<small>Euribor + marginaali</small>' : RF_NAME[id] + '<small>Kiinteä korko</small>') + '</div>' +
         RF_FIELDS.map(function (f) {
           if (f.k !== "rate") return rowHtml(f);
-          return '<div class="rf-mode" role="group" aria-label="Korkotyyppi Auto ' + id + '">' +
-              '<button type="button" data-mode="fix" data-car="' + id + '" class="' + (car.mode !== "eur" ? 'on' : '') + '">Kiinteä korko</button>' +
-              '<button type="button" data-mode="eur" data-car="' + id + '" class="' + (car.mode === "eur" ? 'on' : '') + '">Euribor + marginaali</button>' +
-            '</div>' +
-            (car.mode === "eur"
-              ? rowHtml(RF_EXTRA[0]) + rowHtml(RF_EXTRA[1]) +
-                '<div class="rf-eff"><span>Korko yhteensä</span><b data-o="eff"></b></div>' +
-                '<p class="rf-eurnote">Oletus: ' + RF_EURIBOR_NOTE + '. Tarkista ajantasainen arvo. Euribor-sidonnaisen lainan korko muuttuu laina-aikana; laskelma olettaa sen pysyvän samana koko ajan.</p>'
-              : rowHtml(f));
+          if (id !== "C") return rowHtml(f);
+          return rowHtml(RF_EXTRA[0]) + rowHtml(RF_EXTRA[1]) +
+            '<div class="rf-eff"><span>Korko yhteensä</span><b data-o="eff"></b></div>' +
+            '<p class="rf-eurnote">Oletus: ' + RF_EURIBOR_NOTE + '. Tarkista ajantasainen arvo. Euribor-sidonnaisen lainan korko muuttuu laina-aikana; laskelma olettaa sen pysyvän samana koko ajan.</p>';
         }).join("") +
         '<div class="rf-out"><div><span>Kuukausierä (laina)</span><b data-o="pay"></b></div><div class="tot"><span>Kuukausierä yhteensä (sis. käsittelymaksu)</span><b data-o="payTotal"></b></div></div>';
       cars.appendChild(card);
@@ -5296,19 +5338,22 @@
 
     var chartCard = document.createElement("div");
     chartCard.className = "card rf-chart-card";
-    chartCard.innerHTML = '<div class="rf-ch-head"><div><h3>Maksettu kokonaissumma ajan myötä</h3><p>Perustuu tavalliseen lyhennettävään lainaan valitulla laina-ajalla. Käyrä = maksetut erät, oma raha ja jäljellä oleva laina, eli mitä auto on siihen mennessä maksanut, jos laina maksettaisiin pois.</p></div>' +
+    chartCard.innerHTML = '<div class="rf-ch-head"><div><h3>Maksettu kokonaissumma ajan myötä</h3><p>Perustuu tavalliseen lyhennettävään lainaan valitulla laina-ajalla. Käyrä = maksetut erät, oma raha ja jäljellä oleva laina, eli mitä vaihtoehto on siihen mennessä maksanut, jos laina maksettaisiin pois.</p></div>' +
       '<div class="rf-term"><label for="rfTerm">Laina-aika <b id="rfTermV"></b></label><input id="rfTerm" class="rf-range" type="range" min="12" max="120" step="1" value="' + rf.term + '"></div></div>' +
-      '<div class="rf-legend"><span class="a"><i></i><em id="rfLegA"></em></span><span class="b"><i></i><em id="rfLegB"></em></span></div>' +
+      '<div class="rf-legend">' + RF_IDS.map(function (id) { return '<span class="' + id.toLowerCase() + '"><i></i><em id="rfLeg' + id + '"></em></span>'; }).join("") + '</div>' +
       '<div class="rf-plot" id="rfPlot"></div>';
     main.appendChild(chartCard);
 
+    // Rinnakkainen vertailutaulukko
+    var table = document.createElement("div");
+    table.className = "card rf-cmp";
+    table.innerHTML = '<h3>Vertailu rinnakkain</h3><div class="rf-cmp-wrap"><table><thead><tr><th></th>' +
+      RF_IDS.map(function (id) { return '<th class="c-' + id.toLowerCase() + '"><i></i>' + RF_NAME[id] + '</th>'; }).join("") + '</tr></thead><tbody id="rfCmpBody"></tbody></table></div>';
+    main.appendChild(table);
+
     var stats = document.createElement("div");
     stats.className = "rf-stats";
-    stats.innerHTML = '<div class="card rf-stat cross"><span class="l">Tasapainopiste</span><b id="rfCross"></b><span class="s" id="rfCrossS"></span></div>' +
-      ["A", "B"].map(function (id) {
-        return '<div class="card rf-stat rf-' + id.toLowerCase() + '"><span class="l">Auto ' + id + ' laina-ajan lopussa eli luottohinta</span><b data-s="' + id + 'total"></b>' +
-          '<span class="s">Korot ja kulut: <strong data-s="' + id + 'costs"></strong></span><span class="s">Todellinen vuosikorko: <strong data-s="' + id + 'apr"></strong></span></div>';
-      }).join("");
+    stats.innerHTML = '<div class="card rf-stat cross"><span class="l">Tasapainopisteet</span><div id="rfCrossList" class="rf-xlist"></div></div>';
     main.appendChild(stats);
 
     var disc = document.createElement("div");
@@ -5317,36 +5362,58 @@
     main.appendChild(disc);
 
     var hover = null;
+    var PAIRS = [["A", "B"], ["A", "C"], ["B", "C"]];
     function update() {
-      var n = rf.term, a = rfCalc(rfEff(rf.A), n), b = rfCalc(rfEff(rf.B), n), res = { A: a, B: b };
-      ["A", "B"].forEach(function (id) {
+      var n = rf.term, res = {};
+      RF_IDS.forEach(function (id) { res[id] = rfCalc(rfEff(rf[id]), n); });
+      RF_IDS.forEach(function (id) {
         var card = cars.querySelector(".rf-" + id.toLowerCase());
         card.querySelector('[data-o="pay"]').textContent = eur(res[id].pay, true);
         card.querySelector('[data-o="payTotal"]').textContent = eur(res[id].payTotal, true);
         var effEl = card.querySelector('[data-o="eff"]');
         if (effEl) effEl.textContent = rfEffRate(rf[id]).toLocaleString("fi-FI", { maximumFractionDigits: 3 }) + " %" + (rfEffRate(rf[id]) < 0 ? " (lasketaan 0 %)" : "");
-        stats.querySelector('[data-s="' + id + 'total"]').textContent = eur(res[id].total);
-        stats.querySelector('[data-s="' + id + 'costs"]').textContent = eur(res[id].costs);
-        stats.querySelector('[data-s="' + id + 'apr"]').textContent = res[id].apr === null ? "–" : res[id].apr.toLocaleString("fi-FI", { maximumFractionDigits: 2, minimumFractionDigits: 2 }) + " %";
+        var r = rfEffRate(rf[id]).toLocaleString("fi-FI", { maximumFractionDigits: 3 });
+        document.getElementById("rfLeg" + id).textContent = RF_NAME[id] + " (" + eur(rf[id].price) + " @ " + r + " %)";
       });
       document.getElementById("rfTermV").textContent = n + " kk";
-      ["A", "B"].forEach(function (id) {
-        var c = rf[id], r = rfEffRate(c).toLocaleString("fi-FI", { maximumFractionDigits: 3 });
-        document.getElementById("rfLeg" + id).textContent = "Auto " + id + " (" + eur(c.price) + " @ " + r + " %" + (c.mode === "eur" ? ", Euribor + marg." : "") + ")";
-      });
-      var cr = rfCross(a, b), ce = document.getElementById("rfCross"), cs = document.getElementById("rfCrossS");
-      if (cr) {
-        var m = Math.max(1, Math.round(cr.month));
-        ce.textContent = m + " kk kohdalla";
-        ce.className = "hit";
-        cs.textContent = "Kustannukset kohtaavat noin " + eur(cr.value) + " tasolla. Tämän jälkeen Auto " + cr.cheaperAfter + " on kokonaisuutena edullisempi.";
-      } else {
+
+      // Taulukko: halvin arvo korostetaan rivillä.
+      function apr(x) { return x.apr === null ? null : x.apr; }
+      var rows = [
+        ["Auton hinta", function (id) { return rf[id].price; }, function (v) { return eur(v); }, false],
+        ["Korko", function (id) { return rfEffRate(rf[id]); }, function (v) { return v.toLocaleString("fi-FI", { maximumFractionDigits: 3 }) + " %"; }, true],
+        ["Kuukausierä yhteensä", function (id) { return res[id].payTotal; }, function (v) { return eur(v, true); }, true],
+        ["Korot ja kulut", function (id) { return res[id].costs; }, function (v) { return eur(v); }, true],
+        ["Luottohinta (kaikki yhteensä)", function (id) { return res[id].total; }, function (v) { return eur(v); }, true],
+        ["Todellinen vuosikorko", function (id) { return apr(res[id]); }, function (v) { return v === null ? "–" : v.toLocaleString("fi-FI", { maximumFractionDigits: 2, minimumFractionDigits: 2 }) + " %"; }, true]
+      ];
+      document.getElementById("rfCmpBody").innerHTML = rows.map(function (r) {
+        var vals = RF_IDS.map(function (id) { return r[1](id); });
+        var nums = vals.filter(function (v) { return v !== null; });
+        var best = r[3] && nums.length ? Math.min.apply(null, nums) : null;
+        var distinct = nums.some(function (v) { return Math.abs(v - nums[0]) > 0.005; });
+        return '<tr><th>' + r[0] + '</th>' + vals.map(function (v) {
+          var isBest = best !== null && distinct && v !== null && Math.abs(v - best) < 0.005;
+          return '<td class="' + (isBest ? 'best' : '') + '">' + r[2](v) + '</td>';
+        }).join("") + '</tr>';
+      }).join("");
+
+      // Tasapainopisteet jokaiselle parille
+      var crosses = [];
+      document.getElementById("rfCrossList").innerHTML = PAIRS.map(function (pq) {
+        var a = res[pq[0]], b = res[pq[1]], cr = rfCross(a, b);
+        var nm = RF_NAME[pq[0]] + " – " + RF_NAME[pq[1]];
+        if (cr) {
+          crosses.push(cr);
+          var m = Math.max(1, Math.round(cr.month));
+          var after = cr.cheaperAfter === "A" ? pq[0] : pq[1];
+          return '<div class="x hit"><span>' + nm + '</span><b>' + m + ' kk</b><em>Kohtaavat noin ' + eur(cr.value) + ' tasolla, sen jälkeen ' + RF_NAME[after] + ' on edullisempi.</em></div>';
+        }
         var diff = a.cost[n] - b.cost[n];
-        ce.textContent = "Ei leikkauspistettä";
-        ce.className = "";
-        cs.textContent = "valitulla laina-ajalla. " + (Math.abs(diff) < 1 ? "Autot maksavat yhtä paljon." : "Auto " + (diff < 0 ? "A" : "B") + " on edullisempi koko laina-ajan, lopussa " + eur(Math.abs(diff)) + " halvempi.");
-      }
-      rfDraw(document.getElementById("rfPlot"), a, b, cr, hover);
+        return '<div class="x"><span>' + nm + '</span><b>Ei leikkaa</b><em>' + (Math.abs(diff) < 1 ? 'Maksavat yhtä paljon.' : RF_NAME[diff < 0 ? pq[0] : pq[1]] + ' on edullisempi koko laina-ajan, lopussa ' + eur(Math.abs(diff)) + ' halvempi.') + '</em></div>';
+      }).join("");
+
+      rfDraw(document.getElementById("rfPlot"), RF_IDS.map(function (id) { return { id: id, r: res[id] }; }), crosses, hover);
       Array.prototype.forEach.call(main.querySelectorAll(".rf-range"), function (rg) {
         var mn = +rg.min, mx = +rg.max, v = +rg.value;
         rg.style.setProperty("--pct", (mx > mn ? (v - mn) / (mx - mn) * 100 : 0) + "%");
@@ -5370,14 +5437,6 @@
       else { var ri = cars.querySelector('.rf-range[data-car="' + id + '"][data-k="' + k + '"]'); if (ri) ri.value = car[k]; }
       rfSave(); update();
     }
-    cars.addEventListener("click", function (e) {
-      var b = e.target.closest ? e.target.closest("[data-mode]") : null;
-      if (!b) return;
-      var id = b.getAttribute("data-car"), md = b.getAttribute("data-mode");
-      if (rf[id].mode === md) return;
-      rf[id].mode = md; rfSave();
-      var y = window.scrollY; render(); window.scrollTo(0, y);
-    });
     cars.addEventListener("input", function (e) {
       var el = e.target, id = el.getAttribute("data-car"), k = el.getAttribute("data-k");
       if (!id) return;
@@ -5412,11 +5471,12 @@
     update();
   }
 
-  // SVG-kaavio: kaksi viivaa, kuukaudet x-akselilla, euroina y-akselilla.
-  function rfDraw(el, a, b, cr, hover) {
+  // SVG-kaavio: yksi viiva per vaihtoehto, kuukaudet x-akselilla, euroina y-akselilla.
+  function rfDraw(el, series, crosses, hover) {
     var W = Math.max(el.clientWidth, 280), H = W < 560 ? 260 : 340;
     var pl = W < 560 ? 44 : 56, pr = 14, pt = 12, pb = 34;
-    var n = a.n, all = a.cost.concat(b.cost);
+    var n = series[0].r.n, all = [];
+    series.forEach(function (sr) { all = all.concat(sr.r.cost); });
     var lo = Math.min.apply(null, all), hi = Math.max.apply(null, all);
     if (hi - lo < 1) { hi = lo + 1000; }
     var span = hi - lo, stepRaw = span / 4, mag = Math.pow(10, Math.floor(Math.log(stepRaw) / Math.LN10));
@@ -5428,7 +5488,7 @@
     function Y(v) { return yb - (yb - yt) * (v - y0v) / (y1v - y0v); }
     function path(arr) { return arr.map(function (v, t) { return (t ? "L" : "M") + X(t).toFixed(1) + " " + Y(v).toFixed(1); }).join(""); }
     function kfmt(v) { return v >= 1000 ? (Math.round(v / 100) / 10).toLocaleString("fi-FI") + "k" : Math.round(v); }
-    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" height="' + H + '" role="img" aria-label="Kustannus ajan myötä, Auto A ja Auto B">';
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" height="' + H + '" role="img" aria-label="Kustannus ajan myötä: ' + series.map(function (x) { return RF_NAME[x.id]; }).join(", ") + '">';
     for (var v = y0v; v <= y1v + 0.001; v += step) {
       s += '<line class="grid" x1="' + x0 + '" x2="' + x1 + '" y1="' + Y(v) + '" y2="' + Y(v) + '"/>';
       s += '<text class="ax" x="' + (x0 - 6) + '" y="' + (Y(v) + 4) + '" text-anchor="end">' + kfmt(v) + '</text>';
@@ -5438,27 +5498,25 @@
     if (n % xs) s += '<text class="ax" x="' + X(n) + '" y="' + (yb + 18) + '" text-anchor="end">' + n + '</text>';
     s += '<text class="ax" x="' + x1 + '" y="' + (H - 2) + '" text-anchor="end">kk</text>';
     s += '<line class="base" x1="' + x0 + '" x2="' + x1 + '" y1="' + yb + '" y2="' + yb + '"/>';
-    s += '<path class="ln lb" d="' + path(b.cost) + '"/><path class="ln la" d="' + path(a.cost) + '"/>';
-    if (cr) {
-      var cx = X(cr.month), cy = Y(cr.value);
-      s += '<line class="crossl" x1="' + cx + '" x2="' + cx + '" y1="' + yt + '" y2="' + yb + '"/>';
-      s += '<circle class="crossp" cx="' + cx + '" cy="' + cy + '" r="6"/>';
-    }
+    series.slice().reverse().forEach(function (sr) { s += '<path class="ln l' + sr.id.toLowerCase() + '" d="' + path(sr.r.cost) + '"/>'; });
+    (crosses || []).forEach(function (cr) {
+      s += '<circle class="crossp" cx="' + X(cr.month) + '" cy="' + Y(cr.value) + '" r="5"/>';
+    });
     if (hover !== null && hover !== undefined) {
-      var hx = X(hover), va = a.cost[hover], vb = b.cost[hover];
+      var hx = X(hover);
       s += '<line class="hl" x1="' + hx + '" x2="' + hx + '" y1="' + yt + '" y2="' + yb + '"/>';
-      s += '<circle class="dot da" cx="' + hx + '" cy="' + Y(va) + '" r="5"/><circle class="dot db" cx="' + hx + '" cy="' + Y(vb) + '" r="5"/>';
+      series.forEach(function (sr) { s += '<circle class="dot d' + sr.id.toLowerCase() + '" cx="' + hx + '" cy="' + Y(sr.r.cost[hover]) + '" r="5"/>'; });
     }
     s += '</svg>';
     var tip = "";
     if (hover !== null && hover !== undefined) {
-      var d = a.cost[hover] - b.cost[hover];
+      var sorted = series.slice().sort(function (p, q) { return p.r.cost[hover] - q.r.cost[hover]; });
+      var gap = sorted[1].r.cost[hover] - sorted[0].r.cost[hover];
       var left = X(hover) / W * 100;
       tip = '<div class="rf-tip' + (W < 560 ? ' below' : '') + '" style="' + (W < 560 ? '' : (left > 55 ? 'right:' + (100 - left + 2) + '%' : 'left:' + (left + 2) + '%')) + '"><b>' + hover + ' kk</b>' +
-        '<span class="a"><i></i>Auto A <strong>' + eur(a.cost[hover]) + '</strong></span>' +
-        '<span class="b"><i></i>Auto B <strong>' + eur(b.cost[hover]) + '</strong></span>' +
-        '<span class="d">' + (Math.abs(d) < 1 ? "Yhtä paljon" : "Auto " + (d < 0 ? "A" : "B") + " " + eur(Math.abs(d)) + " edullisempi") + '</span>' +
-        '<span class="p">Maksettu tähän mennessä: A ' + eur(a.paid[hover]) + ' · B ' + eur(b.paid[hover]) + '</span></div>';
+        series.map(function (sr) { return '<span class="' + sr.id.toLowerCase() + '"><i></i>' + RF_NAME[sr.id] + ' <strong>' + eur(sr.r.cost[hover]) + '</strong></span>'; }).join("") +
+        '<span class="d">' + (gap < 1 ? 'Kaksi edullisinta yhtä paljon' : 'Edullisin: ' + RF_NAME[sorted[0].id] + ', ' + eur(gap) + ' seuraavaa halvempi') + '</span>' +
+        '<span class="p">Maksettu tähän mennessä: ' + series.map(function (sr) { return sr.id + ' ' + eur(sr.r.paid[hover]); }).join(" · ") + '</span></div>';
     }
     el.innerHTML = s + tip;
     el.querySelector("svg").__geom = { W: W, x0: x0, x1: x1, n: n };
