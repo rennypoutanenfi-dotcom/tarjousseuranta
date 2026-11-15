@@ -1318,6 +1318,71 @@
   .rf-car.off .rf-offnote { display: inline; }
   .rf-car.off .sw { opacity: .4; }
   @media (min-width: 1000px) { .rf-cars { align-items: start; } .rf-ct small { display: none; } }
+
+  /* ---------- 75 Hard ---------- */
+  .h75-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .h75-head h2 { margin: 0; }
+  .h75-day { font-family: var(--font-display); font-size: 17px; font-weight: 600; color: var(--accent); white-space: nowrap; }
+  .h75-day.done { color: var(--good); } .h75-day.fail { color: var(--bad); }
+  .h75-sub { font-size: 13.5px; color: var(--text-dim); line-height: 1.45; margin: 8px 0 10px; }
+  .h75-sub b { color: var(--text); }
+  .h75-sub.warn { color: var(--bad); }
+  .h75-bar { height: 6px; background: var(--surface-2); border-radius: 99px; overflow: hidden; margin-top: 10px; }
+  .h75-bar.lg { height: 10px; margin: 12px 0; }
+  .h75-bar i { display: block; height: 100%; background: var(--accent-fill); border-radius: 99px; }
+  .h75-tasks { display: flex; flex-direction: column; gap: 6px; }
+  .h75-task { display: flex; align-items: flex-start; gap: 12px; padding: 11px 12px; border-radius: 12px; background: var(--surface-2); border: 1px solid transparent; cursor: pointer; position: relative; }
+  .h75-tasks.compact .h75-task { padding: 10px 12px; align-items: center; }
+  .h75-task input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .h75-task .bx { width: 24px; height: 24px; flex-shrink: 0; border-radius: 7px; border: 2px solid var(--border); background: var(--surface); display: inline-flex; align-items: center; justify-content: center; transition: background .15s ease, border-color .15s ease; }
+  .h75-task.on .bx, .h75-task input:checked + .bx { background: var(--good); border-color: var(--good); }
+  .h75-task input:checked + .bx::after { content: ""; width: 6px; height: 12px; border: solid #fff; border-width: 0 2.5px 2.5px 0; transform: rotate(45deg) translate(-1px, -1px); }
+  .h75-task input:focus-visible + .bx { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .h75-task .tx { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .h75-task .tx b { font-size: 14.5px; font-weight: 600; }
+  .h75-task .tx small { font-size: 12.5px; color: var(--text-dim); line-height: 1.4; }
+  .h75-task.on .tx b { color: var(--text-dim); text-decoration: line-through; text-decoration-color: var(--text-faint); }
+  .h75-task:has(input:checked) .tx b { color: var(--text-dim); text-decoration: line-through; text-decoration-color: var(--text-faint); }
+  .h75-task:not(:has(input:checked)) .tx b { color: var(--text); text-decoration: none; }
+  .h75-task:has(input:checked) .bx { background: var(--good); border-color: var(--good); }
+  .h75-task:not(:has(input:checked)) .bx { background: var(--surface); border-color: var(--border); }
+  .h75-more { background: none; border: none; color: var(--accent); font-weight: 700; font-size: 13px; padding: 10px 0 0; cursor: pointer; font-family: var(--font-body); }
+  .h75-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .h75-big span { display: block; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+  .h75-big b { font-family: var(--font-display); font-size: 34px; font-weight: 600; line-height: 1.1; }
+  .h75-kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  .h75-kpis > div { background: var(--surface-2); border-radius: 10px; padding: 9px 10px; min-width: 0; }
+  .h75-kpis b { display: block; font-family: var(--font-display); font-size: 20px; font-weight: 600; white-space: nowrap; }
+  .h75-kpis span { font-size: 11.5px; color: var(--text-dim); }
+  .h75-alert { margin-top: 12px; padding: 12px; border-radius: 12px; background: var(--bad-dim); font-size: 13.5px; line-height: 1.45; }
+  .h75-alert b { color: var(--bad); }
+  .h75-startrow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 6px; }
+  .h75-startrow label { font-size: 13px; color: var(--text-dim); }
+  .h75-startrow input { background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 10px; padding: 10px 11px; font-family: var(--font-body); font-size: 15px; }
+  .h75-startrow .btn { width: auto; padding: 11px 22px; }
+  .h75-dnav { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+  .h75-dnav > div { text-align: center; display: flex; flex-direction: column; }
+  .h75-dnav b { font-family: var(--font-display); font-size: 20px; font-weight: 600; }
+  .h75-dnav span { font-size: 12.5px; color: var(--text-dim); }
+  .h75-dnav .ov-x:disabled { opacity: .35; cursor: default; }
+  .h75-grid { display: grid; grid-template-columns: repeat(15, minmax(0, 1fr)); gap: 4px; margin-top: 10px; }
+  .h75-cell { aspect-ratio: 1; border-radius: 5px; border: 1px solid var(--border); background: var(--surface-2); color: var(--text-faint); font-family: var(--font-body); font-size: 9.5px; font-weight: 700; padding: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; min-width: 0; }
+  .h75-cell.ok { background: var(--good); border-color: var(--good); color: #fff; }
+  .h75-cell.part { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+  .h75-cell.miss { background: var(--bad-dim); border-color: var(--bad); color: var(--bad); }
+  .h75-cell.now { border-color: var(--accent); color: var(--accent); }
+  .h75-cell.fut { opacity: .45; cursor: default; }
+  .h75-cell.sel { outline: 2px solid var(--text); outline-offset: 1px; }
+  @media (max-width: 420px) { .h75-grid { grid-template-columns: repeat(10, minmax(0, 1fr)); } .h75-cell { font-size: 10px; } }
+  .h75-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: 12px; color: var(--text-dim); }
+  .h75-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; border: 1px solid var(--border); background: var(--surface-2); }
+  .h75-legend i.ok { background: var(--good); border-color: var(--good); } .h75-legend i.part { background: var(--gold-dim); border-color: var(--gold); }
+  .h75-legend i.miss { background: var(--bad-dim); border-color: var(--bad); } .h75-legend i.fut { opacity: .45; }
+  .h75-rules ol { margin: 8px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; line-height: 1.45; }
+  .h75-rules p { font-size: 13px; color: var(--text-dim); line-height: 1.45; margin: 10px 0 0; }
+  .h75-reset { display: flex; justify-content: center; }
+  #h75Re.confirm { background: var(--bad); color: #fff; border-color: var(--bad); }
+  @media (min-width: 900px) { main.h75-main { max-width: 760px; } }
 </style>
 </head>
 <body>
@@ -1359,6 +1424,10 @@
     <button data-tab="treeni">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
       Treeni
+    </button>
+    <button data-tab="h75">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/><path d="m9 15.5 2 2 4-4"/></svg>
+      75 Hard
     </button>
     <button data-tab="vaihto">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3v-5l2-5h11l3 5h2v5h-2"/><circle cx="7.5" cy="17" r="2"/><circle cx="16.5" cy="17" r="2"/><path d="M9.5 17h5M5 12h14"/></svg>
@@ -2013,6 +2082,8 @@
     var months = (state.profile && state.profile.months) || {};
     Object.keys(months).forEach(function (mk) {
       ((months[mk] && months[mk].lost) || []).forEach(function (x) { if (x.ex && !dcache[x.id] && !dfail[x.id]) todo.push({ key: x.id, ex: x.ex }); });
+      var hk = "h75:" + mk;
+      if (months[mk] && months[mk].h75 && !dcache[hk] && !dfail[hk]) todo.push({ key: hk, ex: months[mk].h75 });
       var snk = "sn:" + mk;
       if (months[mk] && months[mk].sn && !dcache[snk] && !dfail[snk]) todo.push({ key: snk, ex: months[mk].sn });
       var vr = (months[mk] && months[mk].vr) || {};
@@ -2528,6 +2599,7 @@
     else if (state.tab === "liidi") renderLead(main);
     else if (state.tab === "vl") renderVl(main);
     else if (state.tab === "treeni") renderTreeni(main);
+    else if (state.tab === "h75") renderH75(main);
     else if (state.tab === "vaihto") renderVt(main);
     else if (state.tab === "rahoitus") renderRf(main);
 
@@ -2700,6 +2772,7 @@
     watchBigAdd(addBtn);
 
     colA.appendChild(todoCard());
+    colA.appendChild(h75HomeCard());
     colA.appendChild(rkHomeButton());
 
     // Kuun lopussa ja seuraavan kuun ensimmäisellä viikolla etusivulla näkyy raportin tiivistelmä.
@@ -2830,6 +2903,243 @@
     return card;
   }
 
+
+  // ---------- 75 Hard ----------
+  // Tiedot tallennetaan kuukauden tietoihin salattuna (h75): { s: aloituspäivä?, d: { "15": bittimaski } }.
+  // Bittimaski: 1 ruokavalio, 2 treenit, 4 vesi, 8 lukeminen, 16 kuva. Kaikki tehty = 31.
+  var H75_TASKS = [
+    { t: "Ruokavalio", d: "Noudata valitsemaasi ruokavaliota. Ei poikkeusaterioita eikä alkoholia." },
+    { t: "Kaksi 45 min treeniä", d: "Vähintään toinen ulkona. Molemmat yhtäjaksoisesti ja väliin vähintään 3 tuntia. Kävelylenkki käy treeniksi." },
+    { t: "Vettä 3,8 l", d: "Vain maustamaton, hiilihapoton vesi lasketaan." },
+    { t: "10 sivua tietokirjaa", d: "Esim. itsensä kehittäminen, työ tai yrittäjyys. Vain itse luetut sivut." },
+    { t: "Seurantakuva", d: "Ota itsestäsi seurantakuva." }
+  ];
+  var H75_ALL = 31, H75_DAYS = 75;
+  var h75Timers = {};
+  function h75Cache(mk) { return dcache["h75:" + mk] || null; }
+  function h75Ready(mk) {
+    var doc = state.profile && state.profile.months && state.profile.months[mk];
+    var k = "h75:" + mk;
+    return !(doc && doc.h75 && !dcache[k] && !dfail[k]);
+  }
+  function h75AllReady() {
+    var months = (state.profile && state.profile.months) || {};
+    return Object.keys(months).every(function (mk) { return h75Ready(mk); });
+  }
+  function h75Start() {
+    var best = null;
+    Object.keys(dcache).forEach(function (k) {
+      if (k.indexOf("h75:") === 0 && dcache[k] && dcache[k].s && (!best || dcache[k].s > best)) best = dcache[k].s;
+    });
+    return best;
+  }
+  function h75Mask(ds) {
+    var c = h75Cache(ds.slice(0, 7));
+    return (c && c.d && c.d[String(+ds.slice(8))]) || 0;
+  }
+  function h75Edit(mk, fn) {
+    var c = Object.assign({ d: {} }, h75Cache(mk) || {});
+    c.d = Object.assign({}, c.d);
+    fn(c);
+    dcache["h75:" + mk] = c;
+    clearTimeout(h75Timers[mk]);
+    h75Timers[mk] = setTimeout(function () { h75Save(mk); }, 900);
+  }
+  function h75Save(mk) {
+    delete h75Timers[mk];
+    if (state.guest || !state.profile) return;
+    var c = h75Cache(mk); if (!c) return;
+    encObj(c).then(function (enc) {
+      var months = Object.assign({}, state.profile.months);
+      months[mk] = Object.assign({ monthKey: mk }, months[mk], { h75: enc });
+      state.profile = Object.assign({}, state.profile, { months: months });
+      var patch = {}; patch[mk] = { h75: enc };
+      return queueSaveMonths(patch);
+    }).catch(function () { showToast("75 Hard -tallennus epäonnistui"); });
+  }
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState !== "hidden") return;
+    Object.keys(h75Timers).forEach(function (mk) { clearTimeout(h75Timers[mk]); h75Save(mk); });
+  });
+  function h75SetTask(ds, bit, on) {
+    h75Edit(ds.slice(0, 7), function (c) {
+      var k = String(+ds.slice(8)), m = c.d[k] || 0;
+      m = on ? (m | bit) : (m & ~bit);
+      if (m) c.d[k] = m; else delete c.d[k];
+    });
+  }
+  function h75StartOn(ds) {
+    // Uusi aloitus: vanha aloitus ohitetaan, koska uusin aloituspäivä on voimassa.
+    Object.keys(dcache).forEach(function (k) {
+      if (k.indexOf("h75:") === 0 && dcache[k] && dcache[k].s && dcache[k].s > ds) {
+        var mk = k.slice(4);
+        h75Edit(mk, function (c) { delete c.s; });
+      }
+    });
+    h75Edit(ds.slice(0, 7), function (c) { c.s = ds; });
+  }
+  function addDaysTo(ds, n) { var d = ymdToDate(ds); d.setDate(d.getDate() + n); return ymd(d); }
+  function daysBetween(a, b) { return Math.round((ymdToDate(b) - ymdToDate(a)) / 86400000); }
+  // Haasteen tila tälle päivälle.
+  function h75Status() {
+    var s = h75Start(), t = todayYmd();
+    if (!s || s > t) return { started: false, start: s };
+    var day = daysBetween(s, t) + 1;
+    var lastDay = Math.min(day - 1, H75_DAYS); // edelliset päivät, joiden pitää olla valmiita
+    var failedAt = null, doneDays = 0;
+    for (var i = 0; i < lastDay; i++) {
+      var ds = addDaysTo(s, i);
+      if (h75Mask(ds) === H75_ALL) doneDays++;
+      else if (!failedAt) failedAt = ds;
+    }
+    var todayDone = day <= H75_DAYS && h75Mask(t) === H75_ALL;
+    if (todayDone) doneDays++;
+    var finished = !failedAt && doneDays >= H75_DAYS;
+    return { started: true, start: s, end: addDaysTo(s, H75_DAYS - 1), day: day, failedAt: failedAt, failedDay: failedAt ? daysBetween(s, failedAt) + 1 : null, doneDays: doneDays, todayDone: todayDone, finished: finished, over: day > H75_DAYS };
+  }
+  function bitCount(m) { var n = 0; for (var i = 0; i < 5; i++) if (m & (1 << i)) n++; return n; }
+
+  function h75TasksHtml(ds, compact) {
+    var m = h75Mask(ds);
+    return '<div class="h75-tasks' + (compact ? ' compact' : '') + '">' + H75_TASKS.map(function (x, i) {
+      var bit = 1 << i, on = !!(m & bit);
+      return '<label class="h75-task' + (on ? ' on' : '') + '"><input type="checkbox" data-h75="' + bit + '" data-ds="' + ds + '"' + (on ? ' checked' : '') + '>' +
+        '<span class="bx"></span><span class="tx"><b>' + x.t + '</b>' + (compact ? '' : '<small>' + x.d + '</small>') + '</span></label>';
+    }).join("") + '</div>';
+  }
+  function h75BindTasks(root, after) {
+    Array.prototype.forEach.call(root.querySelectorAll("input[data-h75]"), function (cb) {
+      cb.addEventListener("change", function () {
+        if (!h75AllReady()) { cb.checked = !cb.checked; showToast("Ladataan…"); return; }
+        var ds = cb.getAttribute("data-ds"), bit = +cb.getAttribute("data-h75");
+        h75SetTask(ds, bit, cb.checked);
+        if (cb.checked && h75Mask(ds) === H75_ALL) showToast(ds === todayYmd() ? "Päivä suoritettu" : "Päivä merkitty suoritetuksi");
+        after();
+      });
+    });
+  }
+
+  // Etusivun kortti
+  function h75HomeCard() {
+    var card = document.createElement("div");
+    card.className = "card h75-card";
+    function draw() {
+      var st = h75Status(), t = todayYmd();
+      if (!h75AllReady()) { card.innerHTML = '<h2>75 Hard</h2><p class="h75-sub">Ladataan…</p>'; return; }
+      if (!st.started) {
+        card.innerHTML = '<div class="h75-head"><h2>75 Hard</h2></div><p class="h75-sub">Haastetta ei ole aloitettu.' + (st.start ? ' Aloitus ' + fmtYmd(st.start) + '.' : '') + '</p>' +
+          '<button type="button" class="btn btn-ghost btn-sm" data-go="h75">Avaa 75 Hard</button>';
+      } else if (st.finished) {
+        card.innerHTML = '<div class="h75-head"><h2>75 Hard</h2><span class="h75-day done">75 / 75</span></div><p class="h75-sub"><b>Haaste suoritettu.</b> 75 päivää putkeen ' + fmtYmd(st.start) + '–' + fmtYmd(st.end) + '.</p>' +
+          '<button type="button" class="btn btn-ghost btn-sm" data-go="h75">Katso seuranta</button>';
+      } else if (st.failedAt) {
+        card.innerHTML = '<div class="h75-head"><h2>75 Hard</h2><span class="h75-day fail">Päivä ' + st.failedDay + '</span></div>' +
+          '<p class="h75-sub warn">Päivä ' + st.failedDay + ' (' + fmtYmd(st.failedAt) + ') jäi kesken. Jos teit tehtävät, merkitse ne. Muuten haaste alkaa alusta.</p>' +
+          '<div class="h75-btns"><button type="button" class="btn btn-ghost btn-sm" data-go="h75">Merkitse tai aloita alusta</button></div>';
+      } else {
+        var m = h75Mask(t), n = bitCount(m);
+        card.innerHTML = '<div class="h75-head"><h2>75 Hard</h2><span class="h75-day' + (st.todayDone ? ' done' : '') + '">Päivä ' + st.day + ' / 75</span></div>' +
+          '<div class="h75-bar"><i style="width:' + Math.round((st.day - (st.todayDone ? 0 : 1)) / H75_DAYS * 100) + '%"></i></div>' +
+          '<p class="h75-sub">' + (st.todayDone ? '<b>Tämä päivä on suoritettu.</b> ' + (H75_DAYS - st.day) + ' päivää jäljellä.' : 'Tänään tehty ' + n + ' / 5.') + '</p>' +
+          h75TasksHtml(t, true) +
+          '<button type="button" class="h75-more" data-go="h75">Seuranta ja säännöt ›</button>';
+        h75BindTasks(card, draw);
+      }
+      Array.prototype.forEach.call(card.querySelectorAll("[data-go]"), function (b) {
+        b.addEventListener("click", function () { state.tab = "h75"; state.h75Day = null; render(); window.scrollTo(0, 0); });
+      });
+    }
+    draw();
+    return card;
+  }
+
+  // Oma sivu
+  function renderH75(main) {
+    main.classList.add("h75-main");
+    if (!h75AllReady()) {
+      var l = document.createElement("div"); l.className = "card"; l.innerHTML = '<h2>75 Hard</h2><p class="h75-sub">Ladataan…</p>';
+      main.appendChild(l); return;
+    }
+    var st = h75Status(), t = todayYmd();
+    var head = document.createElement("div");
+    head.className = "card h75-hero";
+    if (!st.started) {
+      head.innerHTML = '<div class="h75-big"><span>75 Hard</span><b>Aloita haaste</b></div>' +
+        '<p class="h75-sub">Kaikki viisi tehtävää joka päivä, 75 päivää putkeen. Jos yksikin jää tekemättä, aloitat päivästä 1.</p>' +
+        '<div class="h75-startrow"><label for="h75Date">Aloituspäivä</label><input type="date" id="h75Date" value="' + t + '" max="' + t + '">' +
+        '<button type="button" class="btn btn-primary" id="h75Go">Aloita</button></div>';
+      main.appendChild(head);
+      head.querySelector("#h75Go").addEventListener("click", function () {
+        var v = head.querySelector("#h75Date").value || t;
+        if (v > t) v = t;
+        h75StartOn(v); state.h75Day = null; render(); showToast("75 Hard aloitettu");
+      });
+      main.appendChild(h75RulesCard());
+      return;
+    }
+    var sel = state.h75Day && state.h75Day >= st.start && state.h75Day <= t && daysBetween(st.start, state.h75Day) < H75_DAYS ? state.h75Day : (st.over ? st.end : t);
+    var pct = Math.round(st.doneDays / H75_DAYS * 100);
+    head.innerHTML =
+      '<div class="h75-big"><span>75 Hard</span><b>' + (st.finished ? 'Suoritettu' : 'Päivä ' + Math.min(st.day, H75_DAYS) + ' / 75') + '</b></div>' +
+      '<div class="h75-bar lg"><i style="width:' + pct + '%"></i></div>' +
+      '<div class="h75-kpis"><div><b>' + st.doneDays + '</b><span>suoritettua päivää</span></div><div><b>' + Math.max(H75_DAYS - st.doneDays, 0) + '</b><span>jäljellä</span></div><div><b>' + fmtYmd(st.end) + '</b><span>maali (alku ' + fmtYmd(st.start) + ')</span></div></div>' +
+      (st.failedAt ? '<div class="h75-alert"><b>Päivä ' + st.failedDay + ' (' + fmtYmd(st.failedAt) + ') jäi kesken.</b> Jos teit kaikki tehtävät mutta et merkinnyt niitä, merkitse ne alla. Muuten sääntöjen mukaan haaste alkaa alusta.' +
+        '<div class="h75-btns"><button type="button" class="btn btn-ghost btn-sm" id="h75Fix">Merkitse päivä ' + st.failedDay + '</button><button type="button" class="btn btn-primary btn-sm" id="h75Restart">Aloita alusta tänään</button></div></div>' : '');
+    main.appendChild(head);
+    var fx = head.querySelector("#h75Fix"); if (fx) fx.addEventListener("click", function () { state.h75Day = st.failedAt; render(); });
+    var rs = head.querySelector("#h75Restart"); if (rs) rs.addEventListener("click", function () { h75StartOn(t); state.h75Day = null; render(); showToast("Päivä 1 – uusi alku"); });
+
+    // Päivän tehtävät valitulle päivälle
+    var dayCard = document.createElement("div");
+    dayCard.className = "card h75-daycard";
+    var dn = daysBetween(st.start, sel) + 1;
+    var prev = sel > st.start ? addDaysTo(sel, -1) : null, next = sel < t && dn < H75_DAYS ? addDaysTo(sel, 1) : null;
+    dayCard.innerHTML = '<div class="h75-dnav"><button type="button" class="ov-x" id="h75Prev" aria-label="Edellinen päivä"' + (prev ? '' : ' disabled') + '>‹</button>' +
+      '<div><b>Päivä ' + dn + '</b><span>' + (sel === t ? 'Tänään, ' : '') + fmtYmd(sel) + '</span></div>' +
+      '<button type="button" class="ov-x" id="h75Next" aria-label="Seuraava päivä"' + (next ? '' : ' disabled') + '>›</button></div>' +
+      h75TasksHtml(sel, false);
+    main.appendChild(dayCard);
+    h75BindTasks(dayCard, function () { var y = window.scrollY; render(); window.scrollTo(0, y); });
+    dayCard.querySelector("#h75Prev").addEventListener("click", function () { if (prev) { state.h75Day = prev; render(); } });
+    dayCard.querySelector("#h75Next").addEventListener("click", function () { if (next) { state.h75Day = next; render(); } });
+
+    // Seurantaruudukko
+    var grid = document.createElement("div");
+    grid.className = "card h75-gridcard";
+    var cells = "";
+    for (var i = 0; i < H75_DAYS; i++) {
+      var ds = addDaysTo(st.start, i), m = h75Mask(ds), cls;
+      if (ds > t) cls = "fut";
+      else if (m === H75_ALL) cls = "ok";
+      else if (ds === t) cls = m ? "part" : "now";
+      else cls = m ? "miss part" : "miss";
+      cells += '<button type="button" class="h75-cell ' + cls + (ds === sel ? ' sel' : '') + '" data-ds="' + ds + '"' + (ds > t ? ' disabled' : '') + ' title="Päivä ' + (i + 1) + ', ' + fmtYmd(ds) + ' – ' + bitCount(m) + '/5"><span>' + (i + 1) + '</span></button>';
+    }
+    grid.innerHTML = '<h2>Seuranta</h2><div class="h75-grid">' + cells + '</div>' +
+      '<div class="h75-legend"><span><i class="ok"></i>Suoritettu</span><span><i class="part"></i>Kesken</span><span><i class="miss"></i>Jäi tekemättä</span><span><i class="fut"></i>Tulossa</span></div>';
+    main.appendChild(grid);
+    Array.prototype.forEach.call(grid.querySelectorAll(".h75-cell:not([disabled])"), function (c) {
+      c.addEventListener("click", function () { state.h75Day = c.getAttribute("data-ds"); var y = window.scrollY; render(); window.scrollTo(0, y); });
+    });
+
+    main.appendChild(h75RulesCard());
+    var reset = document.createElement("div");
+    reset.className = "h75-reset";
+    reset.innerHTML = '<button type="button" class="btn btn-ghost btn-sm" id="h75Re">Aloita haaste alusta</button>';
+    main.appendChild(reset);
+    reset.querySelector("#h75Re").addEventListener("click", function () {
+      var b = reset.querySelector("#h75Re");
+      if (!b.classList.contains("confirm")) { b.classList.add("confirm"); b.textContent = "Vahvista: aloita päivästä 1 tänään"; return; }
+      h75StartOn(t); state.h75Day = null; render(); window.scrollTo(0, 0); showToast("Päivä 1 – uusi alku");
+    });
+  }
+  function h75RulesCard() {
+    var c = document.createElement("div");
+    c.className = "card h75-rules";
+    c.innerHTML = '<h2>Säännöt</h2><ol>' + H75_TASKS.map(function (x) { return '<li><b>' + x.t + '.</b> ' + x.d + '</li>'; }).join("") + '</ol>' +
+      '<p>Tee kaikki viisi 75 päivää putkeen. Päivä lasketaan heräämisestä nukkumaanmenoon. Jos yksikin tehtävä jää tekemättä, aloitat päivästä 1.</p>';
+    return c;
+  }
 
   // ---------- Nuuskalaskuri ----------
   // Päiväkohtaiset määrät tallennetaan kuukauden tietoihin salattuna (sn), jotta ne eivät näy muille.
@@ -3981,6 +4291,7 @@
       { tab: "liidi", t: "Kuuma liidi", d: "Pisteytä 0–100" },
       { tab: "vl", t: "Vastalauseet", d: "Mitä sanon nyt?" },
       { tab: "treeni", t: "Treeni", d: "Case-harjoitus 7 vaiheella" },
+      { tab: "h75", t: "75 Hard", d: "Päivän tehtävät ja seuranta" },
       { tab: "vaihto", t: "Vaihtoauto", d: "Tarkastuslista ja arvio" },
       { tab: "rahoitus", t: "Rahoitus", d: "Vertaa kahden auton rahoitusta" }
     ];
