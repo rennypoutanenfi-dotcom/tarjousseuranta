@@ -1383,6 +1383,102 @@
   .h75-reset { display: flex; justify-content: center; }
   #h75Re.confirm { background: var(--bad); color: #fff; border-color: var(--bad); }
   @media (min-width: 900px) { main.h75-main { max-width: 760px; } }
+
+  /* ---------- Myyntitie ---------- */
+  .rd-top { align-items: center; }
+  .rd-pick { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 4px 6px 4px 12px; }
+  .rd-pick span { font-size: 12px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: .05em; }
+  .rd-pick select { flex: 1; min-width: 0; background: transparent; border: none; color: var(--text); font-family: var(--font-body); font-size: 15px; font-weight: 600; padding: 8px 4px; }
+  .rd-pick select option { background: var(--surface); color: var(--text); }
+  .rd-road { padding: 14px 16px 12px; }
+  .rd-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+  .rd-call { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
+  .rd-stage { font-family: var(--font-display); font-size: 22px; font-weight: 600; }
+  .rd-meta { font-size: 12px; color: var(--text-dim); white-space: nowrap; }
+  .rd-track { position: relative; padding-top: 30px; }
+  .rd-segs { display: flex; gap: 3px; position: relative; }
+  .rd-seg { position: relative; min-width: 0; cursor: pointer; }
+  .rd-seg.p2 { margin-left: 8px; }
+  .rd-seg.p2::before { content: "Puhelu 2"; white-space: nowrap; position: absolute; left: -7px; top: -28px; font-size: 9.5px; font-weight: 700; color: var(--text-faint); letter-spacing: .05em; text-transform: uppercase; border-left: 2px dashed var(--border); padding-left: 4px; height: 44px; }
+  .rd-dots { height: 14px; border-radius: 4px; background: var(--surface-2); display: flex; align-items: center; justify-content: space-around; padding: 0 1px; border-top: 2px solid var(--border); border-bottom: 2px solid var(--border); }
+  .rd-seg.k-close .rd-dots { border-color: var(--accent); }
+  .rd-seg.cur .rd-dots { background: var(--accent-dim); }
+  .rd-dots i { width: 4px; height: 4px; border-radius: 50%; background: var(--text-faint); opacity: .45; flex-shrink: 0; }
+  .rd-dots i.past { background: var(--text); opacity: .8; }
+  .rd-dots i.now { background: var(--accent); opacity: 1; width: 6px; height: 6px; }
+  .rd-dots i.acc { background: var(--good); opacity: 1; }
+  .rd-lab { display: none; font-size: 10.5px; color: var(--text-faint); margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rd-seg.cur .rd-lab { color: var(--accent); font-weight: 700; }
+  .rd-seg.done .rd-lab { color: var(--text-dim); }
+  .rd-car { position: absolute; top: 0; width: 46px; margin-left: -23px; transition: left .7s cubic-bezier(.4, .1, .2, 1); pointer-events: none; }
+  .rd-car svg { width: 46px; height: 22px; display: block; }
+  .rd-car .body { fill: var(--accent-fill); }
+  .rd-car .win { fill: var(--surface); opacity: .85; }
+  .rd-car .whl { fill: var(--text); } .rd-car .hub { fill: var(--surface-2); }
+  .rd-car.rev svg { transform: scaleX(-1); }
+  .rd-card { position: relative; }
+  .rd-eyebrow { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--text-dim); font-weight: 600; margin-bottom: 8px; }
+  .rd-skip { background: none; border: 1px solid var(--border); color: var(--text-dim); border-radius: 999px; padding: 4px 10px; font-family: var(--font-body); font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+  .rd-item .rk-q { font-size: 19px; line-height: 1.45; border: none; padding: 4px 0; }
+  .rd-item .rk-say, .rd-item .rk-tip { font-size: 17px; }
+  .rd-ans { display: flex; flex-direction: column; gap: 5px; margin-top: 12px; }
+  .rd-ans span { font-size: 12px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: .05em; }
+  .rd-ans textarea, .rd-in { width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 10px; padding: 10px 12px; font-family: var(--font-body); font-size: 15px; resize: vertical; }
+  .rd-ans textarea:focus, .rd-in:focus { outline: none; border-color: var(--accent); }
+  .rd-acc { margin-top: 14px; width: 100%; padding: 13px; border-radius: 12px; border: 2px dashed var(--good); background: transparent; color: var(--good); font-family: var(--font-body); font-size: 15px; font-weight: 700; cursor: pointer; }
+  .rd-acc.on { background: var(--good); border-style: solid; color: #fff; }
+  .rd-close { margin-top: 14px; display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--border); padding-top: 14px; }
+  .rd-ask { display: flex; align-items: center; gap: 12px; }
+  .rd-ask .btn { flex: 1; }
+  .rd-askc { display: flex; flex-direction: column; align-items: flex-end; min-width: 92px; }
+  .rd-askc b { font-family: var(--font-display); font-size: 26px; line-height: 1; }
+  .rd-askc span { font-size: 11.5px; color: var(--text-dim); }
+  .rd-askd { display: flex; gap: 3px; margin-top: 4px; }
+  .rd-askd i { width: 12px; height: 6px; border-radius: 3px; background: var(--surface-2); border: 1px solid var(--border); }
+  .rd-askd i.on { background: var(--accent-fill); border-color: var(--accent-fill); }
+  .rd-outs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .rd-outs #rdObj { grid-column: 1 / -1; }
+  .rd-deal { background: var(--good); color: #fff; }
+  .rd-objbox { background: var(--surface-2); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .rd-nh { font-size: 12px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; }
+  .rd-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .rd-chips button { background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 999px; padding: 7px 12px; font-family: var(--font-body); font-size: 13px; font-weight: 600; cursor: pointer; }
+  .rd-objbox .rd-chips button { background: var(--surface); }
+  .rd-chips button.on { background: var(--accent-fill); border-color: var(--accent-fill); color: var(--on-accent); }
+  .rd-chips button.ok { background: var(--good-dim); border-color: var(--good); color: var(--good); }
+  .rd-chips button[disabled] { cursor: default; opacity: 1; }
+  .rd-side { display: flex; flex-direction: column; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; }
+  .rd-side .rd-in { margin-top: 8px; }
+  .rd-nt { font-size: 13.5px; margin: 8px 0 0; padding: 7px 10px; border-left: 3px solid var(--accent-fill); background: var(--surface-2); border-radius: 0 8px 8px 0; }
+  .rd-tn summary { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--text-dim); }
+  .rd-tn ul, .rd-objs ul { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .rd-tn li { font-size: 13px; display: flex; flex-direction: column; gap: 1px; }
+  .rd-tn li span { color: var(--text-dim); font-size: 12px; }
+  .rd-objs li { font-size: 13px; line-height: 1.4; }
+  .rd-hint { font-size: 13px; color: var(--text-dim); line-height: 1.45; margin: 10px 0 0; }
+  .rd-done { margin-top: 14px; padding: 12px; border-radius: 12px; background: var(--good-dim); color: var(--good); font-weight: 700; font-size: 14px; }
+  .rd-report h3 { font-size: 13px; font-weight: 700; margin: 14px 0 0; }
+  .rd-rep { display: grid; grid-template-columns: 1fr; gap: 4px; }
+  .rk-fwd.end { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+  .oe-road { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 13.5px; color: var(--text-dim); }
+  .oe-road b { color: var(--text); }
+  .rp-chip { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 6px; background: var(--accent-dim); color: var(--accent); }
+  main.rk-viewing.rd-mode { padding-bottom: 150px; }
+  @media (min-width: 700px) {
+    .rd-lab { display: block; }
+    .rd-dots i { width: 5px; height: 5px; }
+    .rd-dots i.now { width: 8px; height: 8px; }
+  }
+  @media (min-width: 900px) {
+    main.rk-viewing.rd-mode { display: grid; grid-template-columns: minmax(0, 1fr) 320px; grid-template-areas: "top top" "road road" "card side" "rep rep"; align-items: start; gap: 14px; padding-bottom: 130px; }
+    main.rk-viewing.rd-mode > .rd-top { grid-area: top; }
+    main.rk-viewing.rd-mode > .rd-road { grid-area: road; }
+    main.rk-viewing.rd-mode > .rd-card { grid-area: card; }
+    main.rk-viewing.rd-mode > .rd-side { grid-area: side; position: sticky; top: 20px; }
+    main.rk-viewing.rd-mode > .rd-report { grid-area: rep; }
+    .rd-rep { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+    .rd-item .rk-q { font-size: 21px; }
+  }
 </style>
 </head>
 <body>
@@ -1696,7 +1792,7 @@
     state.guest = true;
     guestMem = {};
     // Tyhjennä välimuistit, jotta vierailija ei näe aiemman käyttäjän laitteelle tallennettuja tietoja.
-    rf = null; vt.loaded = null; vt.a = {}; rk.overlay = null; vl.store = null; vl.index = null; lead.answers = {}; lead.target = null; T = null;
+    rf = null; vt.loaded = null; vt.a = {}; rk.overlay = null; vl.store = null; vl.index = null; lead.answers = {}; lead.target = null; T = null; rd.bound = null; rd.idx = 0;
     dcache = {}; dfail = {}; cryptoKeyP = null;
     var mk = state.monthKey, months = {};
     months[mk] = { monthKey: mk, workDays: 20, targetOffers: 40, offers: [] };
@@ -1880,7 +1976,9 @@
           // Päiväkohtainen aktiivisuus säilyy viikkovertailua varten.
           days: offersToDays(doc.offers, key),
           // Hävityt tarjoukset syineen säilyvät kuukausiraporttia varten.
-          lost: (doc.lost || []).concat(doc.offers.filter(function (o) { return ostat(o) === "l"; }).map(lostEntry))
+          lost: (doc.lost || []).concat(doc.offers.filter(function (o) { return ostat(o) === "l"; }).map(lostEntry)),
+          // Myyntitien tiedot kaupoista raporttia varten.
+          rsum: doc.offers.filter(function (o) { return o.closed && o.rp; }).reduce(function (acc, o) { return rsumAdd(acc, o); }, doc.rsum || null)
         };
         changed = true;
       }
@@ -1909,7 +2007,16 @@
   function lostEntry(o) {
     var e = { id: o.id, ts: o.ts, source: o.source, lr: o.lr || null, lt: o.lt || o.ts, st: "l" };
     if (o.ex) e.ex = o.ex;
+    if (o.rp) e.rp = { s: o.rp.s, l: o.rp.l || 0, a: o.rp.a || 0, o: o.rp.o || [] };
     return e;
+  }
+  // Myyntitien yhteenveto kaupoista, jotka tiivistetään kuukauden vaihtuessa: kysytyt kerrat ja vastaväitteet.
+  function rsumAdd(rsum, o) {
+    var r = { d: ((rsum && rsum.d) || []).slice(), o: Object.assign({}, (rsum && rsum.o) || {}) };
+    if (!o.rp) return r;
+    r.d.push(o.rp.a || 0);
+    (o.rp.o || []).forEach(function (k) { r.o[k] = (r.o[k] || 0) + 1; });
+    return r;
   }
 
   function setLocalOffersOnProfile() {
@@ -2105,7 +2212,8 @@
   }
 
   // Päivitä yksi tarjous (kuluva kuu tai siirtynyt) ja tallenna.
-  function patchOffer(mk, id, changes) {
+  function patchOffer(mk, id, changes, opts) {
+    var quiet = !!(opts && opts.quiet);
     if (mk === state.monthKey) {
       if (!localOffers) localOffers = (curMonthDoc() && curMonthDoc().offers) ? curMonthDoc().offers.slice() : [];
       var idx = localOffers.findIndex(function (o) { return o.id === id; });
@@ -2113,7 +2221,7 @@
       localOffers = localOffers.slice();
       localOffers[idx] = Object.assign({}, localOffers[idx], changes);
       setLocalOffersOnProfile();
-      render();
+      if (!quiet) render();
       var patch = {}; patch[state.monthKey] = { offers: localOffers.slice() };
       return queueSaveMonths(patch);
     }
@@ -2137,6 +2245,7 @@
         p[state.monthKey] = { cd: cd };
       }
     }
+    if (!before.closed && after.closed && after.rp) doc.rsum = rsumAdd(doc.rsum, after);
     var lostArr = null;
     if (ostat(after) === "l") {
       lostArr = (doc.lost || []).filter(function (x) { return x.id !== after.id; }).concat([lostEntry(after)]);
@@ -2146,9 +2255,10 @@
     doc.carry = carry; doc.bySourceCounts = counts;
     months[mk] = doc;
     state.profile = Object.assign({}, state.profile, { months: months });
-    render();
+    if (!quiet) render();
     p[mk] = { carry: carry, bySourceCounts: counts };
     if (lostArr) p[mk].lost = lostArr;
+    if (doc.rsum) p[mk].rsum = doc.rsum;
     return queueSaveMonths(p);
   }
 
@@ -2180,14 +2290,14 @@
   }
 
   // Tallenna lisätiedot: salaa ja päivitä samalla muut kentät.
-  function saveOfferDetails(mk, id, changes, details) {
+  function saveOfferDetails(mk, id, changes, details, opts) {
     var d = {};
     Object.keys(details || {}).forEach(function (k) { if (details[k] !== "" && details[k] !== null && details[k] !== undefined) d[k] = details[k]; });
     dcache[id] = d; delete dfail[id];
-    if (!hasDetails(d)) return patchOffer(mk, id, Object.assign({}, changes, { ex: null }));
-    if (state.guest) return patchOffer(mk, id, changes);
+    if (!hasDetails(d)) return patchOffer(mk, id, Object.assign({}, changes, { ex: null }), opts);
+    if (state.guest) return patchOffer(mk, id, changes, opts);
     return encObj(d).then(function (ex) {
-      return patchOffer(mk, id, Object.assign({}, changes, { ex: ex }));
+      return patchOffer(mk, id, Object.assign({}, changes, { ex: ex }), opts);
     });
   }
 
@@ -2256,6 +2366,7 @@
     var bits = [];
     var s = ostat(o);
     bits.push('<span class="st-chip st-' + s + '">' + ST_LABEL[s] + (s === "l" && o.lr ? ": " + lostLabel(o.lr) : "") + '</span>');
+    if (isActive(o) && o.rp && o.rp.s) { var rst = rdStageOfItem(o.rp.s); if (rst) bits.push('<span class="rp-chip">Tie: ' + escapeHtml(rdStageName(rst)) + (o.rp.l ? ' (' + (o.rp.l + 1) + '.)' : '') + '</span>'); }
     if (d.car) bits.push('<span>' + escapeHtml(d.car) + '</span>');
     if (isActive(o) && o.nd) bits.push('<span class="nd' + (o.nd < todayYmd() ? ' late' : o.nd === todayYmd() ? ' today' : '') + '">' + escapeHtml((d.na ? d.na + " · " : "") + relDay(o.nd)) + '</span>');
     else if (isActive(o) && !(opts && opts.noStepHint === false)) bits.push('<span class="nd none">Ei seuraavaa askelta</span>');
@@ -2355,6 +2466,11 @@
         '<div class="oe-score">' + field("oeSc", "Pisteet 0–100", sc, "number", "", ' inputmode="numeric" min="0" max="100" step="5"') +
           '<div class="oe-sb">' + scoreBadge(sc === "" ? null : +sc) + '</div>' +
           '<button type="button" class="btn btn-ghost btn-sm" id="oeLead">Pisteytä testillä</button></div>' +
+        (function () {
+          var rpp = o.rp, stg = rpp && rpp.s ? rdStageOfItem(rpp.s) : null;
+          return '<div class="oe-sec">Myyntitie</div><div class="oe-road"><span>' + (stg ? 'Vaihe: <b>' + escapeHtml(rdStageName(stg)) + '</b>' + (rpp.l ? ' · kierros ' + (rpp.l + 1) : '') + ' · kauppaa kysytty ' + (rpp.a || 0) + '/5' : 'Ei vielä aloitettu.') + '</span>' +
+            '<button type="button" class="btn btn-ghost btn-sm" id="oeRoad">' + (stg ? 'Jatka myyntitiellä' : 'Aloita myyntitie') + '</button></div>';
+        })() +
         '<div class="oe-actions">' +
           '<button type="button" class="btn btn-primary" id="oeSave">Tallenna</button>' +
           '<button type="button" class="btn btn-ghost" id="oeDel">Poista tarjous</button>' +
@@ -2399,6 +2515,14 @@
           lead.target = { mk: mk, id: id };
           lead.answers = {};
           state.tab = "liidi"; render(); window.scrollTo(0, 0);
+        });
+      });
+      ov.card.querySelector("#oeRoad").addEventListener("click", function () {
+        readInputs();
+        doSave(false).then(function () {
+          closeOverlay(ov);
+          rd.bound = { mk: mk, id: id }; rd.objOpen = false; rk.editing = false;
+          state.tab = "runko"; render(); window.scrollTo(0, 0);
         });
       });
       ov.card.querySelector("#oeSave").addEventListener("click", function () {
@@ -4287,7 +4411,7 @@
   // Etusivun pikapainikkeet työkaluihin. Ikonit otetaan alavalikosta, jotta ne pysyvät samoina.
   function rkHomeButton() {
     var tools = [
-      { tab: "runko", t: "Myyntirunko", d: "Puhelu 1 ja 2 vaihe vaiheelta" },
+      { tab: "runko", t: "Myyntitie", d: "Runko kohta kohdalta asiakkaalle" },
       { tab: "liidi", t: "Kuuma liidi", d: "Pisteytä 0–100" },
       { tab: "vl", t: "Vastalauseet", d: "Mitä sanon nyt?" },
       { tab: "treeni", t: "Treeni", d: "Case-harjoitus 7 vaiheella" },
@@ -4311,84 +4435,410 @@
     return wrap;
   }
 
+  // ---------- Myyntitie ----------
+  // Runko kuljetetaan kohta kohdalta vasemmalta oikealle. Tarjoukseen kytkettynä sijainti ja hyväksynnät
+  // tallentuvat tarjoukselle (rp, selväkielinen), asiakkaan vastaukset ja tarpeet salattuina lisätietoihin (rd).
+  //   rp = { s: kohdan id, l: kierrokset, a: kysytty kauppaa, o: [vastaväitteet], acc: [hyväksytyt kohdat], ok: [hyväksytetyt tarpeet] }
+  //   rd = { n: { kohdan id: vastaus }, nd: [tarpeet], nt: vapaa teksti, ot: [{ k, t }] }
+  var RD_SHORT = { "p1-valm": "Valmistelu", "p1-ensi": "Kohtaaminen", "p1-tarve": "Tarvekartoitus", "p1-esit": "Esittely", "p1-vaihto": "Vaihtoauto",
+    "p1-paketti": "Tarjouspaketti", "p2-avaus": "Avaus", "p2-tarjous": "Tarjous", "p2-vasta": "Klousaus" };
+  var RD_NEEDS = [
+    { k: "kk", t: "Kuukausierä" }, { k: "kasi", t: "Käsiraha / väliraha" }, { k: "vaihto", t: "Vaihtoauton hyvitys" },
+    { k: "var", t: "Varusteet" }, { k: "tila", t: "Tila / koko" }, { k: "turva", t: "Turvallisuus" },
+    { k: "kulutus", t: "Kulutus / käyttövoima" }, { k: "luot", t: "Luotettavuus / huoltohistoria" }, { k: "takuu", t: "Takuu / jatkoturva" },
+    { k: "toim", t: "Toimitus / nouto" }, { k: "aika", t: "Ostoaikataulu" }, { k: "kunto", t: "Kunto / ulkonäkö" }
+  ];
+  var RD_OBJ = [
+    { k: "hinta", t: "Hinta", q: "hinta" }, { k: "kkera", t: "Kuukausierä liian iso", q: "kuukausierä" }, { k: "vaihto", t: "Vaihtoauton hyvitys", q: "vaihtoauto" },
+    { k: "miettia", t: "Pitää miettiä", q: "pitää miettiä" }, { k: "puoliso", t: "Pitää kysyä puolisolta", q: "puoliso" }, { k: "vertailu", t: "Vertailee muita", q: "vertailen" },
+    { k: "auto", t: "Auto / varustelu", q: "varusteet" }, { k: "ajoitus", t: "Ei kiire / ajoitus", q: "ei kiire" }, { k: "muu", t: "Muu", q: "" }
+  ];
+  var rd = { idx: 0, bound: null, objOpen: false, saveT: null };
+
+  function rdStageKind(st) { return st.id === "p2-vasta" ? "close" : (st.id === "p1-esit" || st.id === "p2-tarjous") ? "acc" : "ask"; }
+  function rdStageName(st) { return RD_SHORT[st.id] || st.title; }
+  function rdSteps() {
+    var out = [];
+    ["p1", "p2"].forEach(function (c) {
+      rkVisible(c).forEach(function (st) {
+        var hdr = null, n = 0;
+        st.items.forEach(function (it) {
+          if (it.k === "h") { hdr = it.t; return; }
+          out.push({ call: c, stage: st, item: it, hdr: hdr }); n++;
+        });
+        if (!n) out.push({ call: c, stage: st, item: { id: st.id + "-tyhja", k: "tip", t: "Ei kohtia tässä vaiheessa." }, hdr: null });
+      });
+    });
+    return out;
+  }
+  function rdStageOfItem(itemId) {
+    var st = rdSteps().filter(function (x) { return x.item.id === itemId; })[0];
+    return st ? st.stage : null;
+  }
+  function rdTarveIndex(steps) {
+    var i = steps.findIndex(function (x) { return x.stage.id === "p1-tarve"; });
+    return i === -1 ? 0 : i;
+  }
+  function rdRef() {
+    if (!rd.bound) return null;
+    var r = findRef(rd.bound.mk, rd.bound.id);
+    if (!r) rd.bound = null;
+    return r;
+  }
+  function rdRp(r) { return Object.assign({ s: null, l: 0, a: 0, o: [], acc: [], ok: [] }, (r && r.o.rp) || {}); }
+  function rdDet(r) {
+    var d = (r && dcache[r.o.id] && dcache[r.o.id].rd) || {};
+    return { n: Object.assign({}, d.n || {}), nd: (d.nd || []).slice(), nt: d.nt || "", ot: (d.ot || []).slice() };
+  }
+  function rdLocked(r) { return !!(r && r.o.ex && dfail[r.o.id]); }
+  function rdSaveRp(r, rp) { return patchOffer(r.mk, r.o.id, { rp: rp }, { quiet: true }); }
+  function rdSaveDet(r, det, now) {
+    if (rdLocked(r)) return;
+    var all = Object.assign({}, dcache[r.o.id] || {}, { rd: det });
+    dcache[r.o.id] = all;
+    clearTimeout(rd.saveT);
+    var go = function () { saveOfferDetails(r.mk, r.o.id, {}, all, { quiet: true }).catch(function () { showToast("Tallennus epäonnistui"); }); };
+    if (now) go(); else rd.saveT = setTimeout(go, 900);
+  }
+
+  // Pieni sivuprofiiliauto, osoittaa oikealle.
+  var RD_CAR = '<svg viewBox="0 0 64 30" aria-hidden="true"><path class="body" d="M4 21c0-3 1-5 4-6l8-2 8-7c2-1.6 4-2 7-2h10c3 0 5 1 7 3l6 6 5 1c2 .5 3 2 3 4v3c0 1-1 2-2 2H6c-1 0-2-1-2-2z"/>' +
+    '<path class="win" d="M26 7.5c1.4-1 2.8-1.5 5-1.5h4v7H20zM38 6h4c2 0 3.4.6 4.7 2l4.8 5H38z"/>' +
+    '<circle class="whl" cx="17" cy="23" r="5"/><circle class="hub" cx="17" cy="23" r="2"/><circle class="whl" cx="49" cy="23" r="5"/><circle class="hub" cx="49" cy="23" r="2"/></svg>';
+
   function renderRunko(main) {
-    main.className = "runko-main view-runko " + (rk.editing ? "rk-editing" : "rk-viewing");
+    main.className = "runko-main view-runko " + (rk.editing ? "rk-editing" : "rk-viewing rd-mode");
     if (rk.editing) { renderRunkoEdit(main); return; }
+    var steps = rdSteps();
+    var N = steps.length;
+    var r = rdRef();
 
-    var steps = rkVisible(rk.call);
-    if (rk.pos[rk.call] >= steps.length) rk.pos[rk.call] = Math.max(steps.length - 1, 0);
-    var idx = rk.pos[rk.call];
-
+    // Yläpalkki: asiakkaan valinta + muokkaus
     var top = document.createElement("div");
-    top.className = "rk-top";
-    top.innerHTML =
-      '<div class="rk-seg">' + RUNKO_TEMPLATE.map(function (c) {
-        return '<button type="button" data-call="' + c.id + '" class="' + (c.id === rk.call ? "active" : "") + '">' + escapeHtml(c.title) + '</button>';
-      }).join("") + '</div>' +
+    top.className = "rk-top rd-top";
+    var act = offerRefs().filter(function (x) { return isActive(x.o); }).sort(function (a, b) { return new Date(b.o.ts) - new Date(a.o.ts); });
+    if (r && !isActive(r.o) && act.indexOf(r) === -1) act.unshift(r);
+    top.innerHTML = '<label class="rd-pick"><span>Asiakas</span><select id="rdSel"><option value="">Harjoittelu (ei tarjousta)</option>' +
+      act.map(function (x) {
+        var stg = x.o.rp && x.o.rp.s ? rdStageOfItem(x.o.rp.s) : null;
+        return '<option value="' + x.mk + '|' + x.o.id + '"' + (r && r.o.id === x.o.id ? ' selected' : '') + '>' + escapeHtml(offerTitle(x.o)) + (stg ? ' · ' + escapeHtml(rdStageName(stg)) : '') + '</option>';
+      }).join("") + '</select></label>' +
       '<button type="button" class="rk-editbtn" id="rkEditBtn">' + RK_ICON.pen + 'Muokkaa</button>';
-    Array.prototype.forEach.call(top.querySelectorAll(".rk-seg button"), function (b) {
-      b.addEventListener("click", function () { rk.call = b.getAttribute("data-call"); render(); window.scrollTo(0, 0); });
+    main.appendChild(top);
+    top.querySelector("#rdSel").addEventListener("change", function (e) {
+      var v = e.target.value;
+      rd.bound = v ? { mk: v.split("|")[0], id: v.split("|")[1] } : null;
+      rd.objOpen = false; render(); window.scrollTo(0, 0);
     });
     top.querySelector("#rkEditBtn").addEventListener("click", function () { rk.editing = true; rk.editStep = null; rk.resetArmed = false; render(); window.scrollTo(0, 0); });
-    main.appendChild(top);
 
-    if (steps.length === 0) {
-      var empty = document.createElement("div");
-      empty.className = "card";
-      empty.innerHTML = '<p style="color:var(--text-dim);font-size:14px;margin:0;">Kaikki vaiheet on piilotettu. Palauta niitä kohdasta Muokkaa.</p>';
-      main.appendChild(empty);
-      return;
+    if (!N) {
+      var empty = document.createElement("div"); empty.className = "card";
+      empty.innerHTML = '<p class="rd-hint">Kaikki vaiheet on piilotettu. Palauta niitä kohdasta Muokkaa.</p>';
+      main.appendChild(empty); return;
     }
 
-    var chips = document.createElement("div");
-    chips.className = "rk-steps";
-    chips.innerHTML = steps.map(function (s, i) {
-      return '<button type="button" class="rk-chip' + (i === idx ? " on" : (i < idx ? " done" : "")) + '" data-i="' + i + '"><span class="n">' + (i + 1) + '</span>' + escapeHtml(s.title) + '</button>';
-    }).join("");
-    Array.prototype.forEach.call(chips.querySelectorAll(".rk-chip"), function (b) {
-      b.addEventListener("click", function () { rkGo(parseInt(b.getAttribute("data-i"), 10)); });
+    var rp = rdRp(r), det = rdDet(r);
+    var pos = r ? Math.max(steps.findIndex(function (x) { return x.item.id === rp.s; }), 0) : Math.min(rd.idx, N - 1);
+    var done = r && r.o.closed;
+
+    // Tie
+    var road = document.createElement("div");
+    road.className = "card rd-road";
+    var stages = [];
+    steps.forEach(function (x, i) {
+      var last = stages[stages.length - 1];
+      if (!last || last.st.id !== x.stage.id) stages.push({ st: x.stage, call: x.call, from: i, n: 1 }); else last.n++;
     });
-    main.appendChild(chips);
+    road.innerHTML =
+      '<div class="rd-head"><div><span class="rd-call"></span><b class="rd-stage"></b></div><span class="rd-meta"></span></div>' +
+      '<div class="rd-track">' +
+        '<div class="rd-segs">' + stages.map(function (sg, si) {
+          var p2 = sg.call === "p2" && (si === 0 || stages[si - 1].call !== "p2");
+          return '<div class="rd-seg k-' + rdStageKind(sg.st) + (p2 ? ' p2' : '') + '" style="flex:' + sg.n + '" data-from="' + sg.from + '">' +
+            '<div class="rd-dots">' + Array.apply(null, Array(sg.n)).map(function (_, j) { return '<i data-i="' + (sg.from + j) + '"></i>'; }).join("") + '</div>' +
+            '<span class="rd-lab">' + escapeHtml(rdStageName(sg.st)) + '</span></div>';
+        }).join("") + '</div>' +
+        '<div class="rd-car">' + RD_CAR + '</div>' +
+      '</div>';
+    main.appendChild(road);
+    Array.prototype.forEach.call(road.querySelectorAll(".rd-seg"), function (sg) {
+      sg.addEventListener("click", function () { go(+sg.getAttribute("data-from")); });
+    });
 
-    var s = steps[idx];
     var card = document.createElement("div");
-    card.className = "card rk-card";
-    card.innerHTML =
-      '<div class="rk-eyebrow">' + escapeHtml(rkCallTitle(rk.call)) + ' · Vaihe ' + (idx + 1) + ' / ' + steps.length + '</div>' +
-      '<div class="rk-title">' + escapeHtml(s.title) + (s.custom ? '<span class="rk-own">OMA</span>' : '') + '</div>' +
-      (s.sub ? '<div class="rk-sub">' + escapeHtml(s.sub) + '</div>' : '') +
-      '<div class="rk-items">' + (s.items.length ? s.items.map(rkItemHtml).join("") : '<div class="rk-sub">Ei kohtia. Lisää niitä kohdasta Muokkaa.</div>') + '</div>' +
-      '<div class="rk-keys">Vinkki: vaihda vaihetta nuolinäppäimillä <kbd>←</kbd> <kbd>→</kbd></div>';
-    rkSwipe(card, steps.length);
+    card.className = "card rk-card rd-card";
     main.appendChild(card);
+    (function () {
+      var sx = null, sy = null;
+      card.addEventListener("touchstart", function (e) { var t = e.touches[0]; sx = t.clientX; sy = t.clientY; }, { passive: true });
+      card.addEventListener("touchend", function (e) {
+        if (sx === null) return;
+        var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy; sx = null;
+        if (Math.abs(dx) < 70 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+        if (e.target.closest && e.target.closest("textarea, input")) return;
+        if (dx < 0 && pos < N - 1) go(pos + 1); else if (dx > 0 && pos > 0) go(pos - 1);
+      }, { passive: true });
+    })();
+    var side = document.createElement("div");
+    side.className = "rd-side";
+    main.appendChild(side);
 
-    // Bottom bar: back + forward, forward shows the next step's title.
     var bar = document.createElement("div");
     bar.className = "rk-next";
-    var nextLabel, nextTitle, nextAction, isEnd = false;
-    if (idx < steps.length - 1) {
-      nextLabel = "Seuraavaksi"; nextTitle = steps[idx + 1].title;
-      nextAction = function () { rkGo(idx + 1); };
-    } else if (rkOtherCall(rk.call) && rkVisible(rkOtherCall(rk.call)).length) {
-      var oc = rkOtherCall(rk.call);
-      nextLabel = "Seuraavaksi · " + rkCallTitle(oc); nextTitle = rkVisible(oc)[0].title;
-      nextAction = function () { rk.call = oc; rk.pos[oc] = 0; render(); window.scrollTo(0, 0); };
-    } else {
-      isEnd = true; nextLabel = "Runko käyty läpi"; nextTitle = "Takaisin alkuun";
-      nextAction = function () { rk.call = "p1"; rk.pos.p1 = 0; rk.pos.p2 = 0; render(); window.scrollTo(0, 0); };
-    }
-    bar.innerHTML =
-      '<div class="rk-next-inner">' +
-        '<button type="button" class="rk-prev" aria-label="Edellinen vaihe"' + (idx === 0 ? " disabled" : "") + '>' + RK_ICON.left + '</button>' +
-        '<button type="button" class="rk-fwd' + (isEnd ? " end" : "") + '"><span class="t"><span class="l">' + escapeHtml(nextLabel) + '</span><span class="s">' + escapeHtml(nextTitle) + '</span></span>' + RK_ICON.right + '</button>' +
-      '</div>';
-    bar.querySelector(".rk-prev").addEventListener("click", function () { if (idx > 0) rkGo(idx - 1); });
-    bar.querySelector(".rk-fwd").addEventListener("click", nextAction);
+    bar.innerHTML = '<div class="rk-next-inner"><button type="button" class="rk-prev" aria-label="Edellinen kohta">' + RK_ICON.left + '</button>' +
+      '<button type="button" class="rk-fwd"><span class="t"><span class="l"></span><span class="s"></span></span>' + RK_ICON.right + '</button></div>';
     main.appendChild(bar);
+    bar.querySelector(".rk-prev").addEventListener("click", function () { if (pos > 0) go(pos - 1); });
+    bar.querySelector(".rk-fwd").addEventListener("click", function () {
+      if (pos < N - 1) go(pos + 1);
+      else if (!r) go(0);
+    });
 
-    rkPlaceBar();
-    var onChip = chips.querySelector(".rk-chip.on");
-    if (onChip) chips.scrollLeft = Math.max(onChip.offsetLeft - 16, 0);
+    var report = rdReportCard();
+    main.appendChild(report);
+
+    function persistPos() {
+      if (!r) { rd.idx = pos; return; }
+      rp.s = steps[pos].item.id;
+      rdSaveRp(r, Object.assign({}, rp));
+    }
+    function go(i, back) {
+      var from = pos;
+      pos = Math.max(0, Math.min(N - 1, i));
+      persistPos();
+      rd.objOpen = false;
+      paint(back || pos < from);
+      window.scrollTo({ top: 0, behavior: back ? "smooth" : "auto" });
+    }
+
+    function needsHtml(editable, checkable) {
+      var sel = det.nd;
+      if (!editable && !sel.length && !det.nt) return '';
+      var list = editable ? RD_NEEDS : RD_NEEDS.filter(function (x) { return sel.indexOf(x.k) !== -1; });
+      return '<div class="rd-needs' + (checkable ? ' chk' : '') + '"><div class="rd-nh">' + (editable ? 'Tärkeää tälle asiakkaalle' : checkable ? 'Hyväksytä asiakkaalle tärkeät asiat' : 'Muista painottaa') + '</div>' +
+        '<div class="rd-chips">' + list.map(function (x) {
+          var on = sel.indexOf(x.k) !== -1, ok = rp.ok.indexOf(x.k) !== -1;
+          return '<button type="button" class="' + (editable ? (on ? 'on' : '') : checkable ? (ok ? 'ok' : '') : 'on') + '" data-need="' + x.k + '"' + (!editable && !checkable ? ' disabled' : '') + '>' + (checkable ? (ok ? '✓ ' : '○ ') : '') + x.t + '</button>';
+        }).join("") + '</div>' +
+        (editable ? '<input type="text" class="rd-in" id="rdNt" maxlength="140" placeholder="Muu tärkeä asia omin sanoin (esim. vetokoukku, 7-paikkainen)" value="' + escapeHtml(det.nt) + '">' :
+          det.nt ? '<p class="rd-nt">' + escapeHtml(det.nt) + '</p>' : '') + '</div>';
+    }
+    function tarveNotesHtml() {
+      var rows = steps.filter(function (x) { return x.stage.id === "p1-tarve" && det.n[x.item.id]; });
+      if (!rows.length) return '';
+      return '<details class="rd-tn"><summary>Tarvekartoituksen vastaukset (' + rows.length + ')</summary><ul>' + rows.map(function (x) {
+        return '<li><span>' + escapeHtml(x.item.t.length > 70 ? x.item.t.slice(0, 68) + '…' : x.item.t) + '</span><b>' + escapeHtml(det.n[x.item.id]) + '</b></li>';
+      }).join("") + '</ul></details>';
+    }
+
+    function paint(back) {
+      var x = steps[pos], kind = rdStageKind(x.stage), stageIdx = stages.findIndex(function (sg) { return sg.st.id === x.stage.id; });
+      var sg = stages[stageIdx];
+      // Tie ja auto
+      road.querySelector(".rd-call").textContent = rkCallTitle(x.call);
+      road.querySelector(".rd-stage").textContent = rdStageName(x.stage);
+      road.querySelector(".rd-meta").textContent = 'Kohta ' + (pos + 1) + ' / ' + N + (r && rp.l ? ' · Kierros ' + (rp.l + 1) : '');
+      Array.prototype.forEach.call(road.querySelectorAll(".rd-dots i"), function (d) {
+        var i = +d.getAttribute("data-i");
+        d.className = (i < pos ? 'past' : i === pos ? 'now' : '') + (rp.acc.indexOf(steps[i].item.id) !== -1 ? ' acc' : '');
+      });
+      Array.prototype.forEach.call(road.querySelectorAll(".rd-seg"), function (s, si) { s.classList.toggle("cur", si === stageIdx); s.classList.toggle("done", si < stageIdx); });
+      var car = road.querySelector(".rd-car");
+      car.classList.toggle("rev", !!back);
+      car.style.left = ((pos + 0.5) / N * 100) + "%";
+      clearTimeout(car._t); car._t = setTimeout(function () { car.classList.remove("rev"); }, 750);
+
+      // Kohtakortti
+      var it = x.item, accd = rp.acc.indexOf(it.id) !== -1;
+      var nextStage = stages[stageIdx + 1];
+      var h = '<div class="rd-eyebrow"><span>' + escapeHtml(rkCallTitle(x.call)) + ' · ' + escapeHtml(x.stage.title) + ' · ' + (pos - sg.from + 1) + '/' + sg.n + '</span>' +
+        (nextStage ? '<button type="button" class="rd-skip" data-go="' + nextStage.from + '">' + escapeHtml(rdStageName(nextStage.st)) + ' ›</button>' : '') + '</div>' +
+        (x.hdr ? '<div class="rk-h">' + escapeHtml(x.hdr) + '</div>' : '') +
+        '<div class="rd-item">' + rkItemHtml(it) + '</div>';
+      if (r && !done) {
+        if (kind === "ask" && it.k === "q") {
+          h += rdLocked(r) ? '<p class="rd-hint">Lisätietoja ei saatu auki tällä PIN-koodilla, joten vastauksia ei voi tallentaa.</p>' :
+            '<label class="rd-ans"><span>Asiakkaan vastaus</span><textarea id="rdAns" rows="2" maxlength="200" placeholder="Kirjaa lyhyesti">' + escapeHtml(det.n[it.id] || "") + '</textarea></label>';
+        }
+        if ((kind === "acc" || kind === "close") && it.k !== "tip") {
+          h += '<button type="button" class="rd-acc' + (accd ? ' on' : '') + '" id="rdAcc">' + (accd ? '✓ Asiakas hyväksyi' : 'Asiakas hyväksyi tämän') + '</button>';
+        }
+        if (kind === "acc" || kind === "close") h += rdClosePanel(kind);
+      } else if (r && done) {
+        h += '<div class="rd-done">✓ Kauppa tehty. Runko on käyty läpi' + (rp.l ? ' ' + (rp.l + 1) + ' kierroksella' : '') + ', kauppaa kysyttiin ' + rp.a + ' kertaa.</div>';
+      } else if (!r && pos === 0) {
+        h += '<p class="rd-hint">Harjoittelutila. Valitse yläpuolelta asiakas, niin sijainti tiellä, vastaukset ja hyväksynnät tallentuvat tarjoukselle.</p>';
+      }
+      card.innerHTML = h;
+      bindCard(kind);
+
+      // Sivupaneeli: asiakkaalle tärkeät asiat
+      var sh = '';
+      if (r) {
+        if (x.stage.id === "p1-tarve" && !done) sh += needsHtml(true, false);
+        else if (kind === "close" && !done) sh += needsHtml(false, true) + tarveNotesHtml();
+        else sh += needsHtml(false, false) + tarveNotesHtml();
+        if (rp.o.length) sh += '<div class="rd-objs"><div class="rd-nh">Vastaväitteet tähän mennessä</div><ul>' + rp.o.map(function (k, i) {
+          var t = (RD_OBJ.filter(function (y) { return y.k === k; })[0] || { t: k }).t, note = det.ot[i] && det.ot[i].t;
+          return '<li><b>' + (i + 1) + '. kierros:</b> ' + escapeHtml(t) + (note ? ' – ' + escapeHtml(note) : '') + '</li>';
+        }).join("") + '</ul></div>';
+      }
+      side.innerHTML = sh;
+      side.style.display = sh ? "" : "none";
+      bindSide();
+
+      // Alapalkki
+      var fl = bar.querySelector(".rk-fwd .l"), fs = bar.querySelector(".rk-fwd .s");
+      bar.querySelector(".rk-prev").disabled = pos === 0;
+      if (pos < N - 1) {
+        var nx = steps[pos + 1];
+        fl.textContent = "Seuraavaksi · " + rdStageName(nx.stage);
+        fs.textContent = nx.item.t;
+        bar.querySelector(".rk-fwd").classList.remove("end");
+      } else {
+        fl.textContent = r ? "Runko käyty läpi" : "Harjoitus valmis";
+        fs.textContent = r ? (done ? "Kauppa tehty" : "Kysy kauppaa tai kirjaa vastaväite") : "Takaisin alkuun";
+        bar.querySelector(".rk-fwd").classList.add("end");
+      }
+      rkPlaceBar();
+    }
+
+    function rdClosePanel(kind) {
+      var asks = rp.a || 0;
+      var dots = '';
+      for (var i = 1; i <= 5; i++) dots += '<i class="' + (i <= asks ? 'on' : '') + '"></i>';
+      return '<div class="rd-close">' +
+        '<div class="rd-ask"><button type="button" class="btn btn-primary" id="rdAsk">Kysyin kauppaa</button>' +
+          '<div class="rd-askc"><b>' + asks + '</b><span>/ 5 kertaa</span><div class="rd-askd">' + dots + '</div></div></div>' +
+        '<div class="rd-outs"><button type="button" class="btn btn-ghost" id="rdObj">Vastaväite → takaisin tarvekartoitukseen</button>' +
+        '<button type="button" class="btn rd-deal" id="rdDeal">✓ Kauppa</button>' +
+        '<button type="button" class="btn btn-ghost" id="rdLater">Ei kauppaa nyt</button></div>' +
+        (rd.objOpen ? '<div class="rd-objbox"><div class="rd-nh">Mikä vastaväite?</div><div class="rd-chips">' + RD_OBJ.map(function (o) {
+          return '<button type="button" data-obj="' + o.k + '">' + o.t + '</button>';
+        }).join("") + '</div><input type="text" class="rd-in" id="rdObjT" maxlength="140" placeholder="Asiakkaan sanoin (valinnainen)">' +
+          '<p class="rd-hint">Valitse vastaväite, niin auto ajaa takaisin tarvekartoitukseen. Selvitä, mikä tarve jäi auki, ja hyväksytä se matkalla takaisin klousaukseen.</p></div>' : '') +
+      '</div>';
+    }
+
+    function bindCard(kind) {
+      var sk = card.querySelector(".rd-skip"); if (sk) sk.addEventListener("click", function () { go(+sk.getAttribute("data-go")); });
+      var ans = card.querySelector("#rdAns");
+      if (ans) ans.addEventListener("input", function () { det.n[steps[pos].item.id] = ans.value; if (!ans.value) delete det.n[steps[pos].item.id]; rdSaveDet(r, det); });
+      var acc = card.querySelector("#rdAcc");
+      if (acc) acc.addEventListener("click", function () {
+        var id = steps[pos].item.id, i = rp.acc.indexOf(id);
+        if (i === -1) rp.acc.push(id); else rp.acc.splice(i, 1);
+        rdSaveRp(r, Object.assign({}, rp));
+        if (i === -1 && pos < N - 1 && rdStageKind(steps[pos].stage) === "acc") { setTimeout(function () { go(pos + 1); }, 220); paint(); } else paint();
+      });
+      var ask = card.querySelector("#rdAsk");
+      if (ask) ask.addEventListener("click", function () {
+        rp.a = (rp.a || 0) + 1; rdSaveRp(r, Object.assign({}, rp)); paint();
+        showToast(rp.a < 5 ? "Kysytty " + rp.a + "/5. Jatka!" : "Kysytty " + rp.a + " kertaa");
+      });
+      var ob = card.querySelector("#rdObj");
+      if (ob) ob.addEventListener("click", function () { rd.objOpen = !rd.objOpen; paint(); var b = card.querySelector(".rd-objbox"); if (b) b.scrollIntoView({ block: "nearest", behavior: "smooth" }); });
+      Array.prototype.forEach.call(card.querySelectorAll("[data-obj]"), function (b) {
+        b.addEventListener("click", function () {
+          var k = b.getAttribute("data-obj"), t = (card.querySelector("#rdObjT").value || "").trim();
+          rp.o = rp.o.concat([k]); rp.l = (rp.l || 0) + 1; rp.ok = [];
+          det.ot = det.ot.concat([{ k: k, t: t }]);
+          rdSaveDet(r, det, true);
+          var to = rdTarveIndex(steps);
+          showToast("Takaisin tarvekartoitukseen: " + (RD_OBJ.filter(function (y) { return y.k === k; })[0] || {}).t);
+          go(to, true);
+        });
+      });
+      var dl = card.querySelector("#rdDeal");
+      if (dl) dl.addEventListener("click", function () {
+        rdSaveRp(r, Object.assign({}, rp));
+        setOfferStatus(r.mk, r.o.id, "d").then(function () { showToast("Kauppa merkitty"); });
+      });
+      var lt = card.querySelector("#rdLater");
+      if (lt) lt.addEventListener("click", function () { openOfferEditor(r.mk, r.o.id); });
+    }
+    function bindSide() {
+      Array.prototype.forEach.call(side.querySelectorAll("[data-need]:not([disabled])"), function (b) {
+        b.addEventListener("click", function () {
+          var k = b.getAttribute("data-need");
+          if (steps[pos].stage.id === "p1-tarve") {
+            var i = det.nd.indexOf(k); if (i === -1) det.nd.push(k); else det.nd.splice(i, 1);
+            rdSaveDet(r, det, true);
+          } else {
+            var j = rp.ok.indexOf(k); if (j === -1) rp.ok.push(k); else rp.ok.splice(j, 1);
+            rdSaveRp(r, Object.assign({}, rp));
+          }
+          paint();
+        });
+      });
+      var nt = side.querySelector("#rdNt");
+      if (nt) nt.addEventListener("input", function () { det.nt = nt.value; rdSaveDet(r, det); });
+    }
+
+    // Ensimmäinen piirto ilman animaatiota
+    road.querySelector(".rd-car").style.transition = "none";
+    paint(false);
+    requestAnimationFrame(function () { var c = road.querySelector(".rd-car"); if (c) c.style.transition = ""; });
+  }
+
+  // ---------- Myyntitien analyysi ----------
+  function rdReportData() {
+    var months = (state.profile && state.profile.months) || {};
+    var lost = [], deals = [], obj = {}, dealAsks = [], lostAsks = [];
+    var seen = {};
+    function addObj(list) { (list || []).forEach(function (k) { obj[k] = (obj[k] || 0) + 1; }); }
+    // Elävät tarjoukset (kuluva kuu + siirtyneet)
+    offerRefs().forEach(function (x) {
+      var o = x.o; if (!o.rp || seen[o.id]) return; seen[o.id] = true;
+      addObj(o.rp.o);
+      if (o.closed) dealAsks.push(o.rp.a || 0);
+      else if (ostat(o) === "l") { lost.push(o); lostAsks.push(o.rp.a || 0); }
+    });
+    // Tiivistetyt kuukaudet
+    Object.keys(months).forEach(function (mk) {
+      var doc = months[mk] || {};
+      if (doc.rsum) { dealAsks = dealAsks.concat(doc.rsum.d || []); Object.keys(doc.rsum.o || {}).forEach(function (k) { obj[k] = (obj[k] || 0) + doc.rsum.o[k]; }); }
+      (doc.lost || []).forEach(function (e) {
+        if (!e.rp || seen[e.id]) return; seen[e.id] = true;
+        lost.push(e); lostAsks.push(e.rp.a || 0); addObj(e.rp.o);
+      });
+    });
+    var stageCount = {};
+    lost.forEach(function (o) {
+      var st = o.rp.s ? rdStageOfItem(o.rp.s) : null;
+      var k = st ? rdStageName(st) : "Tuntematon";
+      stageCount[k] = (stageCount[k] || 0) + 1;
+    });
+    return { lost: lost, stageCount: stageCount, obj: obj, dealAsks: dealAsks, lostAsks: lostAsks };
+  }
+  function rdReportCard() {
+    var d = rdReportData();
+    var card = document.createElement("div");
+    card.className = "card rd-report";
+    function bars(map, labelOf) {
+      var ks = Object.keys(map).sort(function (a, b) { return map[b] - map[a]; });
+      if (!ks.length) return '<p class="rd-hint">Ei vielä dataa.</p>';
+      var mx = map[ks[0]];
+      return '<ul class="lr-bars">' + ks.slice(0, 6).map(function (k) {
+        return '<li><span>' + escapeHtml(labelOf ? labelOf(k) : k) + '</span><span class="lr-bar"><i style="width:' + Math.round(map[k] / mx * 100) + '%"></i></span><b>' + map[k] + '</b></li>';
+      }).join("") + '</ul>';
+    }
+    function avg(a) { return a.length ? a.reduce(function (x, y) { return x + y; }, 0) / a.length : null; }
+    var ad = avg(d.dealAsks), al = avg(d.lostAsks);
+    var five = d.dealAsks.length ? Math.round(d.dealAsks.filter(function (n) { return n >= 5; }).length / d.dealAsks.length * 100) : null;
+    var fmt = function (v) { return v === null ? '–' : v.toFixed(1).replace(".", ","); };
+    var total = d.dealAsks.length + d.lostAsks.length;
+    card.innerHTML = '<h2>Myyntitien analyysi</h2>' +
+      (total < 3 ? '<p class="rd-hint">Analyysi täydentyy, kun tarjouksia on kuljetettu tiellä loppuun asti (kauppa tai hävitty). Nyt ' + total + ' kpl.</p>' : '') +
+      '<div class="rd-rep"><div><h3>Missä vaiheessa hävityt jäivät</h3>' + bars(d.stageCount) + '</div>' +
+      '<div><h3>Yleisimmät vastaväitteet</h3>' + bars(d.obj, function (k) { return (RD_OBJ.filter(function (y) { return y.k === k; })[0] || { t: k }).t; }) + '</div>' +
+      '<div><h3>Kaupan kysyminen</h3><div class="lr-kpis"><div><b>' + fmt(ad) + '</b><span>Ø kertaa kaupoissa (' + d.dealAsks.length + ')</span></div>' +
+        '<div><b>' + fmt(al) + '</b><span>Ø kertaa hävityissä (' + d.lostAsks.length + ')</span></div>' +
+        '<div><b>' + (five === null ? '–' : five + ' %') + '</b><span>kaupoista kysytty 5+ kertaa</span></div></div>' +
+        (ad !== null && al !== null && d.dealAsks.length >= 3 && d.lostAsks.length >= 3 ? '<p class="rd-hint">' + (ad > al ? 'Kaupoissa kauppaa kysyttiin keskimäärin enemmän kuin hävityissä.' : 'Hävityissä kauppaa kysyttiin yhtä paljon tai enemmän kuin kaupoissa, joten kysymisen määrä ei yksin selitä eroa.') + ' Otos on pieni, joten tämä on suuntaa antava.</p>' : '') +
+      '</div></div>';
+    return card;
   }
 
   // Tietokoneella alapalkki on kiinteästi ruudun alareunassa vaihekortin levyisenä,
