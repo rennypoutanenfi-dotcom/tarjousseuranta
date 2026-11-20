@@ -80,7 +80,7 @@ function context(sheetsObj, opts) {
     }
   };
   vm.createContext(ctx);
-  if (!opts.noLegacy) vm.runInContext(LEGACY, ctx, { filename: "Koodi.gs" });
+  if (!opts.noLegacy) vm.runInContext(LEGACY_SRC, ctx, { filename: "Koodi.gs" });
   vm.runInContext(GS, ctx, { filename: "Myyntimonopoli.gs" });
   ctx.__triggers = triggers;
   return ctx;
@@ -95,11 +95,12 @@ function find_(key) { var sh = sellers_(), v = sh.getDataRange().getValues(); fo
 function doPost(e) {
   var mm = mmRoute(e); if (mm) return mm;
   var b = JSON.parse(e.postData.contents), key = String(b.nickname || "").trim().toLowerCase(), sh = sellers_();
-  if (b.action === "register") { if (find_(key)) return out_({ ok: false, error: "taken" }); sh.appendRow([key, b.nickname, b.company, sha_(String(b.pin)), "{}", new Date().toISOString()]); return out_({ ok: true }); }
+  if (b.action === "register") { if (find_(key)) return out_({ error: "taken" }); sh.appendRow([key, b.nickname, b.company, sha_(String(b.pin)), "{}", new Date().toISOString()]); return out_({ ok: true }); }
   if (b.action === "leaderboard") { var v = sh.getDataRange().getValues().slice(1); return out_({ ok: true, sellers: v.map(function (r) { return { nickname: r[1], company: r[2], months: JSON.parse(r[4] || "{}") }; }) }); }
+  if (b.action !== "login" && b.action !== "saveMonths") return out_({ error: "unknown_action" });
   var f = find_(key);
-  if (!f) return out_({ ok: false, error: "not_found" });
-  if (f.v[3] !== sha_(String(b.pin))) return out_({ ok: false, error: "bad_pin" });
+  if (!f) return out_({ error: "not_found" });
+  if (f.v[3] !== sha_(String(b.pin))) return out_({ error: "bad_pin" });
   var months = JSON.parse(f.v[4] || "{}");
   if (b.action === "login") return out_({ ok: true, profile: { nickname: f.v[1], company: f.v[2], months: months } });
   if (b.action === "saveMonths") {
@@ -107,8 +108,13 @@ function doPost(e) {
     sh.getRange(f.row, 5, 1, 2).setValues([["'" + JSON.stringify(months), new Date().toISOString()]]);
     return out_({ ok: true, profile: { nickname: f.v[1], company: f.v[2], months: months } });
   }
-  return out_({ ok: false, error: "unknown_action" });
+  return out_({ error: "unknown_action" });
 }`;
+// Oikea Koodi.gs voidaan antaa ympäristömuuttujalla MM_KOODI; asennusrivi lisätään doPostin alkuun kuten ohjeessa.
+const LEGACY_SRC = process.env.MM_KOODI
+  ? fs.readFileSync(process.env.MM_KOODI, "utf8").replace("function doPost(e) {", "function doPost(e) {\n  var mm = mmRoute(e); if (mm) return mm;")
+  : LEGACY;
+if (process.env.MM_KOODI) assert.ok(LEGACY_SRC.indexOf("var mm = mmRoute(e); if (mm) return mm;") > 0, "asennusrivin lisäys epäonnistui");
 
 function post(ctx, body) { return JSON.parse(ctx.doPost({ postData: { contents: JSON.stringify(body) } }).getContent()); }
 
@@ -199,4 +205,14 @@ test("Satunnaisuus on tasainen myös pienillä n-arvoilla", () => {
   const c3 = [0, 0, 0];
   for (let i = 0; i < 30000; i++) c3[vm.runInContext("mmRng_(3)", ctx)]++;
   c3.forEach((c) => assert.ok(Math.abs(c - 10000) < 450, String(c3)));
+});
+
+test("Ennen asennusta nykyinen tausta vastaa pelin pyyntöön tuntemattomalla toiminnolla", () => {
+  const sh = makeSheets();
+  const ctx = context(sh);
+  // poistetaan reititys: simuloi tilannetta ennen asennusriviä
+  vm.runInContext("mmRoute = function () { return null; };", ctx);
+  const r = post(ctx, { action: "mm_state", nickname: "x", pin: "1234" });
+  assert.equal(r.error, "unknown_action");
+  assert.equal(r.ok, undefined); // sovellus tunnistaa puuttuvan palvelinosan error-kentästä
 });

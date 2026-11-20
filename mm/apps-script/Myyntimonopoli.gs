@@ -1461,6 +1461,7 @@ function mmReadSellers_() {
 // Ensisijaisesti nykyinen login-toiminto, jolloin PIN-tarkistus on sama kuin tarjousseurannassa.
 // Varalla suora vertailu Sellers-välilehden pin_hash-sarakkeeseen yleisillä SHA-256-muodoilla.
 function mmAuth_(nick, pin) {
+  nick = String(nick || "").trim(); pin = String(pin || "").trim();
   if (!nick || !pin) return { ok: false, error: "auth" };
   if (typeof doPost === "function") {
     try {

@@ -2161,7 +2161,7 @@
     return queueSaveMonths(patch);
   }
   // Poistettujen tarjousten tunnisteet: Myyntimonopoli korjaa niistä annetut työpalkkiot.
-  function delListAdd(list, id) { return (list || []).filter(function (x) { return x !== id; }).concat([id]).slice(-400); }
+  function delListAdd(list, id) { return (list || []).filter(function (x) { return x !== id; }).concat([id]).slice(-100); }
   function setMonthField(mk, field, value) {
     var months = Object.assign({}, (state.profile && state.profile.months) || {});
     var d = Object.assign({ monthKey: mk }, months[mk]); d[field] = value; months[mk] = d;
@@ -2229,7 +2229,7 @@
     var months = (state.profile && state.profile.months) || {};
     var patch = {};
     var changed = false;
-    var oldCut = monthKeyOf(new Date(new Date().getFullYear(), new Date().getMonth() - 4, 1));
+    var oldCut = monthKeyOf(new Date(new Date().getFullYear(), new Date().getMonth() - 3, 1));
     Object.keys(months).forEach(function (key) {
       if (key === state.monthKey) return;
       var doc = months[key];
@@ -2253,8 +2253,8 @@
         // Luovutettu tai yli 45 päivää vanha kauppa poistuu siirtyneistä tiivistettyihin tapauksiin.
         patch[key] = { carry: doc.carry.filter(keepInCarry), cases: (doc.cases || []).concat(doc.carry.filter(function (o) { return !keepInCarry(o); }).map(caseEntry)) };
         changed = true;
-      } else if (doc && doc.cases && doc.cases.length && key < oldCut) {
-        patch[key] = { cases: null }; // yli neljä kuukautta vanhat tapaukset eivät enää vaikuta
+      } else if (doc && ((doc.cases && doc.cases.length) || (doc.del && doc.del.length)) && key < oldCut) {
+        patch[key] = { cases: null, del: null }; // yli kolme kuukautta vanhat tapaukset eivät enää vaikuta (palvelin on jo tallentanut ne)
         changed = true;
       }
     });
@@ -7210,7 +7210,7 @@
     if (state.guest) return Promise.resolve({ ok: false, error: "guest" });
     return apiCall(action, Object.assign({ nickname: state.profile.nickname, pin: state.pin }, payload || {}));
   }
-  var MM_KNOWN_ERR = { bad_pin: 1, not_found: 1, no_company: 1, busy: 1, server_error: 1, idem_required: 1, auth: 1, guest: 1 };
+  var MM_KNOWN_ERR = { bad_pin: 1, not_found: 1, no_company: 1, busy: 1, server_busy: 1, server_error: 1, idem_required: 1, auth: 1, auth_error: 1, guest: 1 };
   function mmAccept(res) {
     if (res && res.board) {
       mm.view = res; mm.error = null; mm.notInstalled = false;
@@ -7220,7 +7220,8 @@
       return true;
     }
     mm.error = (res && res.error) || "net"; mm.errMsg = (res && res.message) || "";
-    mm.notInstalled = !!(res && res.ok === false && !MM_KNOWN_ERR[res.error]);
+    // Nykyinen tausta vastaa tuntemattomaan toimintoon { error: "unknown_action" } (ilman ok-kenttää).
+    mm.notInstalled = !!(res && res.error && !MM_KNOWN_ERR[res.error]);
     return false;
   }
   function mmRefresh(quiet) {
@@ -7249,7 +7250,7 @@
     return attempt(1).then(function (res) {
       mm.busy = false;
       mmAccept(res);
-      if (res && res.ok === false) showToast(res.message || "Toiminto ei onnistunut.");
+      if (res && (res.ok === false || (res.error && !res.board))) showToast(res.message || "Toiminto ei onnistunut.");
       mmRender();
       return res;
     }, function () {
