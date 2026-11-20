@@ -419,8 +419,8 @@ var MMEngine = (function () {
     var bp = s.players[buyer], sp = s.players[seller];
     if (!placed && !bp.recv) { placed = { t: "recv" }; bp.recv = pick.id; }
     var name = clsName(s, pick.cls).toLowerCase();
-    feed(s, now, buyer, "forced", bp.name + " osui " + sp.name + ":n autoliikkeeseen ja osti arvotun auton (" + name + ") " + fmtEur(price) + ":lla." +
-      (margin > 0 ? " " + sp.name + " sai katetta " + fmtEur(margin) + "." : " Katetta ei syntynyt.") + " Autosta ei voi tehdä uutta katetta.", res);
+    feed(s, now, buyer, "forced", bp.name + " osui tontille " + BOARD[idx].name + " (omistaja " + sp.name + ") ja osti arvotun auton (" + name + ") " + fmtEur(price) + ":lla." +
+      (margin > 0 ? " Myyjän kate " + fmtEur(margin) + "." : " Katetta ei syntynyt.") + " Autosta ei voi tehdä uutta katetta.", res);
     if (newDebt > 0) feed(s, now, buyer, "debt", "Kassa ei riittänyt pakolliseen ostoon. Pelivelkaa syntyi " + fmtEur(newDebt) + ".", { debt: newDebt, before: debtBefore });
     if (placed) {
       pick.loc = placed;
@@ -650,7 +650,7 @@ var MMEngine = (function () {
         var t = stage === "offer" ? c.f : stage === "deal" ? c.d : c.h;
         var ex = findAward(stage, c.id);
         if (c.del) {
-          if (ex && ex.a.status !== "void") { voidAward(ex.s, ctx.now, ex.a.key); ops.push({ op: "void", key: ex.a.key, season: ex.s.id }); }
+          if (ex && ex.a.status !== "void") { var wasActive = ex.a.status === "active"; voidAward(ex.s, ctx.now, ex.a.key); ops.push({ op: "void", key: ex.a.key, season: ex.s.id, stage: stage, cents: wasActive ? -ex.a.cents : 0, q: -ex.a.q }); }
           return;
         }
         if (t) {
@@ -659,12 +659,12 @@ var MMEngine = (function () {
             if (!s) return;
             var m = stage === "deal" ? ctx.multFor(nick, t) : { mult: null, snap: null };
             var a = grantAward(s, ctx.now, nick, stage, c.id, t, m.mult, m.snap);
-            if (a) { remember(a.key, s); ops.push({ op: "grant", key: a.key, season: s.id, cents: a.cents, q: a.q, late: s.state === "closed" }); }
+            if (a) { remember(a.key, s); ops.push({ op: "grant", key: a.key, season: s.id, stage: stage, cents: a.cents, q: a.q, mult: a.mult, late: s.state === "closed" }); }
           } else if (ex.a.status === "reversed") {
-            restoreAward(ex.s, ctx.now, ex.a.key); ops.push({ op: "restore", key: ex.a.key, season: ex.s.id });
+            restoreAward(ex.s, ctx.now, ex.a.key); ops.push({ op: "restore", key: ex.a.key, season: ex.s.id, stage: stage, cents: ex.a.cents, q: 0 });
           }
         } else if (stage !== "offer" && ex && ex.a.status === "active") {
-          reverseAward(ex.s, ctx.now, ex.a.key); ops.push({ op: "reverse", key: ex.a.key, season: ex.s.id });
+          reverseAward(ex.s, ctx.now, ex.a.key); ops.push({ op: "reverse", key: ex.a.key, season: ex.s.id, stage: stage, cents: -ex.a.cents, q: 0 });
         }
       });
     });

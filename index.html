@@ -1071,7 +1071,8 @@
   .offer-row .meta .date { font-size: 11.5px; color: var(--text-faint); }
   .offer-row.is-lost .meta .src { color: var(--text-dim); }
   .del-btn.confirm { width: auto; padding: 0 10px; color: var(--on-accent); background: var(--bad); border-color: var(--bad); font-size: 12px; font-weight: 700; font-family: var(--font-body); }
-  .deal-btn .short { display: none; }
+  .deal-btn .short, .of-seg .short { display: none; }
+  @media (max-width: 420px) { .of-seg .long { display: none; } .of-seg .short { display: inline; } .of-seg button { padding: 8px 2px; font-size: 12px; } }
   @media (max-width: 400px) { .deal-btn .long { display: none; } .deal-btn .short { display: inline; } .deal-btn { padding: 0 10px; } }
   body.fab-on #toast { bottom: calc(150px + env(safe-area-inset-bottom)); }
   #fabAdd.away { opacity: 0; pointer-events: none; transform: translateY(12px); }
@@ -1462,6 +1463,16 @@
   .rk-fwd.end { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
   .oe-road { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 13.5px; color: var(--text-dim); }
   .oe-road b { color: var(--text); }
+  .lv-chip { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 6px; background: var(--surface); border: 1px dashed var(--gold); color: var(--gold); }
+  .lv-chip.done { border-style: solid; border-color: transparent; background: var(--good-dim); color: var(--good); }
+  .lv-list { display: grid; gap: 6px; }
+  .lv-it { display: flex; align-items: center; gap: 10px; text-align: left; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 10px; padding: 10px 12px; font-family: var(--font-body); font-size: 14px; font-weight: 600; cursor: pointer; min-height: 44px; }
+  .lv-it .bx { flex: none; width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--border); display: grid; place-items: center; font-size: 13px; font-weight: 800; }
+  .lv-it.on { border-color: var(--good); }
+  .lv-it.on .bx { background: var(--good); border-color: var(--good); color: #fff; }
+  .lv-n { color: var(--accent); margin-left: 4px; }
+  .lv-self { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-dim); margin: 10px 0 6px; cursor: pointer; }
+  .lv-self input { width: 18px; height: 18px; accent-color: var(--accent-fill); }
   .rp-chip { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 6px; background: var(--accent-dim); color: var(--accent); }
   main.rk-viewing.rd-mode { padding-bottom: 150px; }
   @media (min-width: 700px) {
@@ -1532,6 +1543,173 @@
   .rd-x { background: none; border: none; color: var(--text-dim); font-size: 15px; width: 30px; height: 30px; border-radius: 8px; cursor: pointer; flex-shrink: 0; }
   .rd-nok #rdLoop:disabled { opacity: .45; }
   .rk-fwd .s { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  /* ---------- Myyntimonopoli ---------- */
+  .mm { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+  .mm h1 { font-family: var(--font-display); font-size: 22px; font-weight: 600; margin: 0; letter-spacing: .01em; }
+  .mm .card h2 { margin-bottom: 8px; }
+  .mm p { margin: 0 0 10px; line-height: 1.45; font-size: 14px; }
+  .mm-dim { color: var(--text-dim); }
+  .mm p.mm-dim, .mm .mm-dim { font-size: 13px; }
+  .mm-small { font-size: 12px !important; }
+  .mm-mt { margin-top: 10px !important; }
+  .mm-head { padding: 14px 16px; }
+  .mm-ttl { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .mm-sub { font-size: 13px; color: var(--text-dim); margin-top: 2px; }
+  .mm-seg { margin: 12px 0 0; }
+  .mm-spin { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); border-top-color: var(--accent); animation: mmspin .8s linear infinite; flex: none; }
+  @keyframes mmspin { to { transform: rotate(360deg); } }
+  .mm-demo { margin-top: 12px; padding: 10px 12px; border-radius: 10px; background: var(--gold-dim); border: 1px dashed var(--gold); font-size: 13px; line-height: 1.4; }
+  .mm-demo b { color: var(--gold); letter-spacing: .05em; }
+  .mm-demo-btns { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .mm-intro p { font-size: 14px; }
+  .mm-btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .mm-btn-row .btn { flex: 1 1 140px; }
+  .mm-input { width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); font-family: var(--font-body); font-size: 16px; border-radius: 10px; padding: 11px 12px; }
+  .mm-list { display: flex; flex-direction: column; gap: 2px; }
+  .mm-li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .mm-li:last-child { border-bottom: none; }
+  .mm-li-btn { background: none; border: none; border-bottom: 1px solid var(--border); color: var(--text); text-align: left; font: inherit; cursor: pointer; width: 100%; }
+  .mm-tag { font-size: 11px; font-weight: 700; padding: 1px 6px; border-radius: 6px; background: var(--gold-dim); color: var(--gold); }
+  .mm-stat { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  .mm-stat > div { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 9px 10px; min-width: 0; }
+  .mm-stat span { display: block; font-size: 11px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mm-stat b { display: block; font-family: var(--font-display); font-size: 16px; font-weight: 600; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mm-stat .good b { color: var(--good); }
+  .mm-stat .bad b { color: var(--bad); }
+  .mm-grid { display: flex; flex-direction: column; gap: 14px; }
+  .mm-col-a, .mm-col-b { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .mm-board-card { padding: 8px; }
+  .mm-board { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); grid-template-rows: repeat(7, minmax(0, 1fr)); aspect-ratio: 1 / 1; gap: 2px; width: 100%; max-width: 560px; margin: 0 auto; }
+  .mm-sq { position: relative; background: var(--surface-2); border: none; border-radius: 5px; padding: 3px 1px 2px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; color: var(--text); font-family: var(--font-body); cursor: pointer; min-width: 0; min-height: 0; overflow: hidden; }
+  .mm-sq:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; z-index: 2; }
+  .mm-sq.corner { background: var(--surface); border: 1px solid var(--border); }
+  .mm-sq .band { position: absolute; background: var(--gc); }
+  .mm-sq.s-b .band { top: 0; left: 0; right: 0; height: 4px; }
+  .mm-sq.s-t .band { bottom: 0; left: 0; right: 0; height: 4px; }
+  .mm-sq.s-l .band { right: 0; top: 0; bottom: 0; width: 4px; }
+  .mm-sq.s-r .band { left: 0; top: 0; bottom: 0; width: 4px; }
+  .mm-sq.owned { box-shadow: inset 0 0 0 2px var(--oc); }
+  .mm-sq.mine { background: color-mix(in srgb, var(--oc) 14%, var(--surface-2)); }
+  .mm-sq .nm { font-size: 8.5px; font-weight: 700; line-height: 1.05; text-align: center; margin-top: 3px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 1px; }
+  .mm-sq .ic { color: var(--text-dim); line-height: 0; margin-top: 2px; }
+  .mm-sq .ic svg { width: 14px; height: 14px; }
+  .mm-sq.k-auction .ic { color: var(--warm); }
+  .mm-sq.k-autovex .ic { color: var(--ser-b); }
+  .mm-sq.k-start .ic { color: var(--accent); }
+  .mm-sq .slots { display: flex; gap: 2px; }
+  .car { display: inline-block; width: 7px; height: 5px; border-radius: 1.5px; flex: none; }
+  .car.e { background: transparent; border: 1px solid var(--border); }
+  .car.c-DIESEL { background: #8b919c; }
+  .car.c-PETROL_HYBRID { background: #3a8fd6; }
+  .car.c-ELECTRIC { background: #22b36b; }
+  .car.lst { outline: 1.5px dashed var(--gold); outline-offset: 1px; }
+  .car.big { width: 30px; height: 18px; border-radius: 5px; }
+  .mm-sq .pawns { display: flex; flex-wrap: wrap; justify-content: center; gap: 1px; min-height: 9px; }
+  .pawn { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--surface); display: inline-block; }
+  .pawn.me { box-shadow: 0 0 0 1.5px var(--text); }
+  .mm-center { grid-row: 2 / 7; grid-column: 2 / 7; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 10px; text-align: center; border-radius: 10px;
+    background: radial-gradient(circle at 50% 35%, var(--brand-glow), transparent 70%); }
+  .mm-dice { display: flex; gap: 10px; }
+  .mm-die { width: 40px; height: 40px; border-radius: 9px; background: var(--surface); border: 1px solid var(--border); display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); padding: 6px; box-shadow: 0 2px 6px rgba(0,0,0,.25); }
+  .mm-die i { width: 7px; height: 7px; border-radius: 50%; justify-self: center; align-self: center; }
+  .mm-die i.on { background: var(--text); }
+  .mm-dice.idle .mm-die { opacity: .45; }
+  .mm-dice.rolling .mm-die { animation: mmshake .14s linear infinite; }
+  @keyframes mmshake { 0% { transform: rotate(-8deg); } 50% { transform: rotate(8deg) translateY(-2px); } 100% { transform: rotate(-8deg); } }
+  .mm-roll { width: auto; padding: 12px 22px; font-size: 15px; }
+  .mm-cen-sub { font-size: 12px; color: var(--text-dim); line-height: 1.3; }
+  .mm-cen-sub b { color: var(--text); }
+  .mm-turn .mm-lead { font-size: 15px; }
+  .mm-forced { background: var(--accent-dim); border-left: 3px solid var(--accent-fill); padding: 10px 12px; border-radius: 8px; font-size: 14px; line-height: 1.45; }
+  .mm-sec { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-dim); margin: 14px 0 8px; }
+  .mm-sec .mm-dim { text-transform: none; letter-spacing: 0; font-weight: 500; }
+  .mm-acts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  .mm-acts.col { grid-template-columns: 1fr; }
+  .mm-acts .btn { padding: 11px 10px; font-size: 13.5px; min-height: 44px; }
+  .mm-acts .btn:disabled, .mm .btn-ghost:disabled { opacity: .45; cursor: default; }
+  .mm-why { font-size: 12px; color: var(--text-dim); margin: 6px 0 0 !important; }
+  .mm-end { margin-top: 10px; }
+  .mm-turn .btn-primary { margin-top: 10px; }
+  .mm-turns { display: flex; align-items: baseline; gap: 8px; }
+  .mm-turns b { font-family: var(--font-display); font-size: 34px; font-weight: 600; color: var(--accent); line-height: 1; }
+  .mm-turns span { font-size: 14px; color: var(--text-dim); }
+  .mm-bar { height: 8px; background: var(--surface-2); border-radius: 99px; overflow: hidden; margin: 10px 0 6px; }
+  .mm-bar i { display: block; height: 100%; background: var(--accent-fill); border-radius: 99px; transition: width .4s; }
+  .mm-next { font-size: 13px !important; color: var(--text-dim); }
+  .mm-next b { color: var(--text); }
+  .mm-kv { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 13.5px; }
+  .mm-kv:last-child { border-bottom: none; }
+  .mm-kv span { color: var(--text-dim); }
+  .mm-kv b { text-align: right; font-weight: 700; }
+  .mm-boost { margin-top: 12px; padding: 10px 12px; border-radius: 10px; background: var(--surface-2); }
+  .mm-boost > div { display: flex; justify-content: space-between; align-items: baseline; }
+  .mm-boost > div span { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--text-dim); }
+  .mm-boost > div b { font-family: var(--font-display); font-size: 22px; color: var(--gold); }
+  .mm-boost p { font-size: 12px !important; color: var(--text-dim); margin: 4px 0 0 !important; }
+  .mm-aw { list-style: none; margin: 0; padding: 0; }
+  .mm-aw li { display: flex; justify-content: space-between; font-size: 13px; padding: 5px 0; border-bottom: 1px solid var(--border); }
+  .mm-aw li:last-child { border-bottom: none; }
+  .mm-aw li.reversed, .mm-aw li.void { color: var(--text-faint); }
+  .mm-car { display: flex; align-items: center; gap: 10px; width: 100%; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 9px 11px; margin-bottom: 6px; color: var(--text); font-family: var(--font-body); text-align: left; cursor: pointer; min-height: 48px; }
+  .mm-car.empty { cursor: default; color: var(--text-faint); font-size: 13px; background: transparent; border-style: dashed; }
+  .mm-car.confirm { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .mm-car .car { width: 22px; height: 13px; border-radius: 4px; }
+  .mm-car span { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+  .mm-car span b { font-size: 14px; }
+  .mm-car small { font-size: 12px; color: var(--text-dim); }
+  .mm-car .r { flex: none; text-align: right; align-items: flex-end; }
+  .mm-avx { margin-top: 10px; padding: 10px 12px; border-radius: 10px; border: 1px dashed var(--gold); font-size: 13px; line-height: 1.45; }
+  .mm-link { background: none; border: none; color: var(--accent); font: inherit; font-weight: 700; padding: 0; cursor: pointer; text-decoration: underline; }
+  .mm-feed ul { list-style: none; margin: 0; padding: 0; max-height: 360px; overflow-y: auto; }
+  .mm-feed li { display: grid; grid-template-columns: 8px 1fr auto; gap: 8px; align-items: start; font-size: 13px; line-height: 1.4; padding: 7px 0; border-bottom: 1px solid var(--border); }
+  .mm-feed li i { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; }
+  .mm-feed li.mine span { font-weight: 600; }
+  .mm-feed time { font-size: 11px; color: var(--text-faint); white-space: nowrap; }
+  .mm-tbl td, .mm-tbl th { vertical-align: top; }
+  .mm-tbl td:nth-child(2), .mm-tbl th:nth-child(2) { text-align: left !important; }
+  .mm-tbl tr.me td { background: var(--accent-dim); }
+  .mm-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
+  .mm-rules .mm-kv b { font-weight: 600; font-size: 13px; }
+  .mm-rin input { width: 110px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 6px 8px; font-family: var(--font-body); font-size: 14px; text-align: right; }
+  .mm-rulestext ol, .mm-onb { padding-left: 20px; margin: 0 0 12px; }
+  .mm-rulestext li, .mm-onb li { font-size: 14px; line-height: 1.45; margin-bottom: 8px; }
+  .mm-sheet p { font-size: 14px; line-height: 1.45; }
+  .mm-sheet .mm-dim { color: var(--text-dim); font-size: 13px; }
+  .mm-sheet .btn { margin-top: 6px; }
+  .mm-carhead { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .mm-ch td:not(:first-child), .mm-ch th:not(:first-child) { text-align: right; white-space: nowrap; }
+  .mm-loss { color: var(--bad); }
+  .mm-danger { color: var(--bad) !important; }
+  .mm-danger.confirm { background: var(--bad) !important; color: #fff !important; border-color: var(--bad) !important; }
+  .mm-cls { justify-content: flex-start !important; gap: 10px !important; text-align: left; }
+  .mm-cls .car { width: 22px; height: 13px; border-radius: 4px; }
+  .mm-cls span:not(.r) { flex: 1; }
+  .mm-cls .r { display: flex; flex-direction: column; align-items: flex-end; }
+  .mm-cls .r small { font-size: 11px; color: var(--text-dim); font-weight: 500; }
+  .mm-cls.on { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .mm-confirm-note { font-size: 13px; font-weight: 600; color: var(--accent); }
+  @media (min-width: 400px) {
+    .mm-sq .nm { font-size: 9.5px; }
+    .car { width: 8px; height: 6px; }
+    .pawn { width: 10px; height: 10px; }
+  }
+  @media (min-width: 640px) {
+    .mm-stat { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+    .mm-sq .nm { font-size: 11px; }
+    .mm-sq .ic svg { width: 18px; height: 18px; }
+    .car { width: 11px; height: 7px; }
+    .pawn { width: 13px; height: 13px; }
+    .mm-die { width: 52px; height: 52px; padding: 8px; }
+    .mm-die i { width: 9px; height: 9px; }
+  }
+  @media (min-width: 1000px) {
+    main.view-mm { max-width: 1180px; width: 100%; margin: 0 auto; }
+    .mm-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: start; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mm-spin, .mm-dice.rolling .mm-die { animation: none; }
+    .mm-bar i { transition: none; }
+  }
 </style>
 </head>
 <body>
@@ -1557,6 +1735,10 @@
     <button data-tab="home" class="active">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
       Etusivu
+    </button>
+    <button data-tab="mm">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>
+      Myyntimonopoli
     </button>
     <button data-tab="runko">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
@@ -1847,6 +2029,7 @@
     // Tyhjennä välimuistit, jotta vierailija ei näe aiemman käyttäjän laitteelle tallennettuja tietoja.
     rf = null; vt.loaded = null; vt.a = {}; rk.overlay = null; vl.store = null; vl.index = null; lead.answers = {}; lead.target = null; T = null; rd.bound = null; rd.idx = 0;
     dcache = {}; dfail = {}; cryptoKeyP = null;
+    mm.view = null; mm.demo = null; mm.error = null;
     var mk = state.monthKey, months = {};
     months[mk] = { monthKey: mk, workDays: 20, targetOffers: 40, offers: [] };
     state.profile = { nickname: "Vierailija", company: "Kokeilutila", months: months };
@@ -1870,6 +2053,7 @@
     localOffers = null;
     dcache = {}; dfail = {}; cryptoKeyP = null; lead.target = null;
     deletedIds = {};
+    mmSetJoined(false); mm.view = null; mm.demo = null; mm.error = null;
     state.authMode = "login";
     state.authError = "";
     state.authStatus = "need-auth";
@@ -1882,6 +2066,8 @@
         if (!res || !res.ok) {
           throw new Error((res && (res.message || res.error)) || "save_failed");
         }
+        // Myyntimonopoli: palvelin täsmäyttää työpalkkiot tallennetusta datasta (ei vaikuta tallennukseen).
+        try { mmPokeSoon(); } catch (e) {}
         return res;
       });
     });
@@ -1967,11 +2153,36 @@
     var idx = localOffers.findIndex(function (o) { return o.id === offerId; });
     if (idx === -1) return Promise.resolve();
     localOffers = localOffers.slice();
-    localOffers.splice(idx, 1);
+    var gone = localOffers.splice(idx, 1)[0];
     setLocalOffersOnProfile();
-    render();
     var patch = {}; patch[state.monthKey] = { offers: localOffers.slice() };
+    if (gone && !gone.bk) patch[state.monthKey].del = setMonthField(state.monthKey, "del", delListAdd((curMonthDoc() || {}).del, offerId));
+    render();
     return queueSaveMonths(patch);
+  }
+  // Poistettujen tarjousten tunnisteet: Myyntimonopoli korjaa niistä annetut työpalkkiot.
+  function delListAdd(list, id) { return (list || []).filter(function (x) { return x !== id; }).concat([id]).slice(-400); }
+  function setMonthField(mk, field, value) {
+    var months = Object.assign({}, (state.profile && state.profile.months) || {});
+    var d = Object.assign({ monthKey: mk }, months[mk]); d[field] = value; months[mk] = d;
+    state.profile = Object.assign({}, state.profile, { months: months });
+    return value;
+  }
+  // ---------- Luovutus ja tapausten säilytys ----------
+  // Luovutuksen tarkistuslista kaupalle: lv = { c: bittimaski, ts: valmistumisaika, x: 1 jos kollega hoiti }
+  var LV_ITEMS = ["Auto pesty ja tankattu/ladattu", "Kauppapaperit allekirjoitettu", "Avaimet ja ohjeet luovutettu",
+    "Rekisteröinti ja vakuutus kunnossa", "Asiakas opastettu autoon", "Jatkoyhteydenotto sovittu"];
+  var LV_ALL = (1 << LV_ITEMS.length) - 1, LV_KEEP_DAYS = 45;
+  function lvCount(o) { var c = (o && o.lv && o.lv.c) || 0, n = 0; for (var i = 0; i < LV_ITEMS.length; i++) if (c & (1 << i)) n++; return n; }
+  function lvDone(o) { return !!(o && o.lv && o.lv.ts && ((o.lv.c | 0) & LV_ALL) === LV_ALL); }
+  function lvClosedOut(o) { return lvDone(o) || !!(o && o.lv && o.lv.x); }
+  // Kauppa odottaa luovutusta: pysyy näkyvissä (myös kuukauden vaihtuessa) enintään 45 päivää.
+  function lvPending(o) { return !!(o && o.closed && !lvClosedOut(o) && o.closedTs && (Date.now() - new Date(o.closedTs).getTime()) < LV_KEEP_DAYS * 86400000); }
+  function keepInCarry(o) { return isActive(o) || lvPending(o); }
+  // Päättynyt tapaus tiiviisti: [id, tarjous, kauppa, luovutus] minuutteina (Myyntimonopolin hitrate ja palkkiot).
+  function caseEntry(o) {
+    function m(iso) { var t = iso ? new Date(iso).getTime() : 0; return t ? Math.floor(t / 60000) : 0; }
+    return [o.id, m(o.ts), o.closed ? m(o.closedTs) : 0, o.closed && lvDone(o) && !o.lv.x ? m(o.lv.ts) : 0];
   }
 
   // Bulk-enter a past month's results as per-source offer/deal counts.
@@ -1994,7 +2205,8 @@
           ts.setMinutes(ts.getMinutes() + i * 7);
           offers.push({
             id: genId(), ts: ts.toISOString(), source: sc.sourceId,
-            closed: closed, closedTs: closed ? ts.toISOString() : null
+            closed: closed, closedTs: closed ? ts.toISOString() : null,
+            bk: 1 // massakirjaus: ei yksittäinen työsuoritus (Myyntimonopoli ei palkitse)
           });
           i++;
         }
@@ -2017,6 +2229,7 @@
     var months = (state.profile && state.profile.months) || {};
     var patch = {};
     var changed = false;
+    var oldCut = monthKeyOf(new Date(new Date().getFullYear(), new Date().getMonth() - 4, 1));
     Object.keys(months).forEach(function (key) {
       if (key === state.monthKey) return;
       var doc = months[key];
@@ -2024,8 +2237,10 @@
         patch[key] = {
           monthKey: key, workDays: doc.workDays, targetOffers: doc.targetOffers,
           bySourceCounts: offersToCounts(doc.offers), offers: [],
-          // Avoimet tarjoukset siirtyvät mukana, jotta niiden follow-up ei katoa kuun vaihtuessa.
-          carry: (doc.carry || []).concat(doc.offers.filter(function (o) { return isActive(o); })),
+          // Avoimet tarjoukset ja luovutusta odottavat kaupat siirtyvät mukana, jotta follow-up ja luovutus eivät katoa kuun vaihtuessa.
+          carry: (doc.carry || []).concat(doc.offers.filter(keepInCarry)),
+          // Päättyneet tapaukset tiiviisti (Myyntimonopolin hitrate ja työpalkkioiden oikaisut).
+          cases: (doc.cases || []).concat(doc.offers.filter(function (o) { return !keepInCarry(o) && !o.bk; }).map(caseEntry)),
           // Päiväkohtainen aktiivisuus säilyy viikkovertailua varten.
           days: offersToDays(doc.offers, key),
           // Hävityt tarjoukset syineen säilyvät kuukausiraporttia varten.
@@ -2033,6 +2248,13 @@
           // Myyntitien tiedot kaupoista raporttia varten.
           rsum: doc.offers.filter(function (o) { return o.closed && o.rp; }).reduce(function (acc, o) { return rsumAdd(acc, o); }, doc.rsum || null)
         };
+        changed = true;
+      } else if (doc && doc.carry && doc.carry.some(function (o) { return o.closed && !keepInCarry(o); })) {
+        // Luovutettu tai yli 45 päivää vanha kauppa poistuu siirtyneistä tiivistettyihin tapauksiin.
+        patch[key] = { carry: doc.carry.filter(keepInCarry), cases: (doc.cases || []).concat(doc.carry.filter(function (o) { return !keepInCarry(o); }).map(caseEntry)) };
+        changed = true;
+      } else if (doc && doc.cases && doc.cases.length && key < oldCut) {
+        patch[key] = { cases: null }; // yli neljä kuukautta vanhat tapaukset eivät enää vaikuta
         changed = true;
       }
     });
@@ -2298,18 +2520,32 @@
         p[state.monthKey] = { cd: cd };
       }
     }
+    if (before.closed && !after.closed) {
+      // siirtyneen kaupan peruminen
+      var c2 = counts.filter(function (x) { return x.sourceId === after.source; })[0];
+      if (c2) c2.dealCount = Math.max(0, c2.dealCount - 1);
+      var cur2 = curMonthDoc(), bd = before.closedTs ? new Date(before.closedTs) : null;
+      if (cur2 && bd && monthKeyOf(bd) === state.monthKey && cur2.cd && cur2.cd[String(bd.getDate())]) {
+        var cd2 = Object.assign({}, cur2.cd); cd2[String(bd.getDate())] = Math.max(0, cd2[String(bd.getDate())] - 1);
+        months[state.monthKey] = Object.assign({}, months[state.monthKey], { cd: cd2 });
+        p[state.monthKey] = Object.assign({}, p[state.monthKey] || {}, { cd: cd2 });
+      }
+    }
     if (!before.closed && after.closed && after.rp) doc.rsum = rsumAdd(doc.rsum, after);
     var lostArr = null;
     if (ostat(after) === "l") {
       lostArr = (doc.lost || []).filter(function (x) { return x.id !== after.id; }).concat([lostEntry(after)]);
       doc.lost = lostArr;
     }
-    if (isActive(after)) carry[i] = after; else carry.splice(i, 1);
+    var casesChanged = false;
+    if (keepInCarry(after)) carry[i] = after;
+    else { carry.splice(i, 1); doc.cases = (doc.cases || []).filter(function (x) { return x[0] !== after.id; }).concat([caseEntry(after)]); casesChanged = true; }
     doc.carry = carry; doc.bySourceCounts = counts;
     months[mk] = doc;
     state.profile = Object.assign({}, state.profile, { months: months });
     if (!quiet) render();
     p[mk] = { carry: carry, bySourceCounts: counts };
+    if (casesChanged) p[mk].cases = doc.cases;
     if (lostArr) p[mk].lost = lostArr;
     if (doc.rsum) p[mk].rsum = doc.rsum;
     return queueSaveMonths(p);
@@ -2326,10 +2562,10 @@
     var counts = (doc.bySourceCounts || []).map(function (c) { return Object.assign({}, c); });
     var c = counts.filter(function (x) { return x.sourceId === o.source; })[0];
     if (c) { c.offerCount = Math.max(0, c.offerCount - 1); if (o.closed) c.dealCount = Math.max(0, c.dealCount - 1); }
-    doc.carry = carry; doc.bySourceCounts = counts; months[mk] = doc;
+    doc.carry = carry; doc.bySourceCounts = counts; doc.del = delListAdd(doc.del, id); months[mk] = doc;
     state.profile = Object.assign({}, state.profile, { months: months });
     render();
-    var p = {}; p[mk] = { carry: carry, bySourceCounts: counts };
+    var p = {}; p[mk] = { carry: carry, bySourceCounts: counts, del: doc.del };
     return queueSaveMonths(p);
   }
 
@@ -2419,6 +2655,7 @@
     var bits = [];
     var s = ostat(o);
     bits.push('<span class="st-chip st-' + s + '">' + ST_LABEL[s] + (s === "l" && o.lr ? ": " + lostLabel(o.lr) : "") + '</span>');
+    if (o.closed) bits.push(lvClosedOut(o) ? '<span class="lv-chip done">' + (o.lv && o.lv.x && !lvDone(o) ? 'Kollega luovutti' : 'Luovutettu ✓') + '</span>' : '<span class="lv-chip">Luovutus ' + lvCount(o) + '/' + LV_ITEMS.length + '</span>');
     if (isActive(o) && o.rp && o.rp.s) { var rst = rdStageOfItem(o.rp.s); if (rst) bits.push('<span class="rp-chip">Tie: ' + escapeHtml(rdStageName(rst)) + (o.rp.l ? ' (' + (o.rp.l + 1) + '.)' : '') + '</span>'); }
     if (d.car) bits.push('<span>' + escapeHtml(d.car) + '</span>');
     if (isActive(o) && o.nd) bits.push('<span class="nd' + (o.nd < todayYmd() ? ' late' : o.nd === todayYmd() ? ' today' : '') + '">' + escapeHtml((d.na ? d.na + " · " : "") + relDay(o.nd)) + '</span>');
@@ -2472,6 +2709,7 @@
     var o = r.o, d = Object.assign({}, dcache[o.id] || {});
     var locked = o.ex && dfail[o.id];
     var st = (opts && opts.st) || ostat(o), lr = o.lr || null, nd = o.nd || "", vo = o.vo || "", sc = (o.sc === 0 || o.sc) ? o.sc : "";
+    var lvc = (o.lv && o.lv.c) || 0, lvx = !!(o.lv && o.lv.x);
     var ov = buildOverlay();
     ov.card.classList.add("oe-card");
     function field(id2, label, val, type, ph, extra) {
@@ -2492,6 +2730,15 @@
         }).join("") + '</div>' +
           '<div class="oe-f oe-lrn"><label for="oeLrn">Miksi tarjous hävittiin? (omin sanoin)</label>' +
           '<textarea id="oeLrn" rows="3" maxlength="300" placeholder="esim. Kilpailija antoi 1 500 € enemmän vaihtoautosta, eikä asiakas halunnut odottaa koeajoa.">' + escapeHtml(d.lrn || "") + '</textarea></div>' : '') +
+        (st === "d" ? (function () {
+          var n = 0; for (var i = 0; i < LV_ITEMS.length; i++) if (lvc & (1 << i)) n++;
+          return '<div class="oe-sec">Luovutus <span class="lv-n">' + n + '/' + LV_ITEMS.length + '</span></div><div class="lv-list">' + LV_ITEMS.map(function (t, i) {
+            var on = !!(lvc & (1 << i));
+            return '<button type="button" class="lv-it' + (on ? ' on' : '') + '" data-i="' + i + '" aria-pressed="' + on + '"><span class="bx" aria-hidden="true">' + (on ? '✓' : '') + '</span>' + escapeHtml(t) + '</button>';
+          }).join("") + '</div>' +
+          '<label class="lv-self"><input type="checkbox" id="oeLvX"' + (lvx ? ' checked' : '') + '> Kollega hoiti luovutuksen</label>' +
+          '<p class="oe-hint">Kun kaikki kohdat on tehty, luovutus on valmis' + (mmJoined() ? ' ja Myyntimonopoliin tulee +100 € ja +0,25 työpistettä (vain itse hoidetusta luovutuksesta)' : '') + '.</p>';
+        })() : '') +
         '<div class="oe-grid">' +
           field("oeC", "Asiakas (tunniste)", d.c, "text", "esim. MK / Octavia-mies", ' maxlength="40" autocomplete="off"') +
           field("oeCar", "Kiinnostava auto", d.car, "text", "esim. Skoda Octavia 2021", ' maxlength="50" autocomplete="off"') +
@@ -2556,6 +2803,15 @@
           var y = ov.card.scrollTop; draw(); ov.card.scrollTop = y;
         });
       });
+      Array.prototype.forEach.call(ov.card.querySelectorAll(".lv-it"), function (b) {
+        b.addEventListener("click", function () {
+          readInputs();
+          lvc ^= (1 << (+b.getAttribute("data-i")));
+          var y = ov.card.scrollTop; draw(); ov.card.scrollTop = y;
+        });
+      });
+      var lvxIn = ov.card.querySelector("#oeLvX");
+      if (lvxIn) lvxIn.addEventListener("change", function () { lvx = lvxIn.checked; });
       var scIn = ov.card.querySelector("#oeSc");
       scIn.addEventListener("input", function () {
         var n = scIn.value === "" ? null : Math.max(0, Math.min(100, Math.round(+scIn.value) || 0));
@@ -2595,8 +2851,14 @@
       if (st !== "l") d.lrn = "";
       if (st === "d") { ch.closed = true; ch.closedTs = o.closedTs || new Date().toISOString(); }
       else { ch.closed = false; ch.closedTs = null; }
+      var lvNow = false;
+      if (st === "d") {
+        var wasDone = lvDone(o);
+        ch.lv = (lvc || lvx) ? { c: lvc, ts: lvc === LV_ALL ? (wasDone ? o.lv.ts : new Date().toISOString()) : null, x: lvx ? 1 : 0 } : null;
+        lvNow = !wasDone && lvc === LV_ALL;
+      }
       var p = locked && !hasDetails(d) ? patchOffer(mk, id, ch) : saveOfferDetails(mk, id, ch, d);
-      return p.then(function () { if (toast) showToast(st === "d" ? "Kauppa merkitty" : "Tallennettu"); },
+      return p.then(function () { if (toast) showToast(lvNow ? "Luovutus hoidettu ✓" : st === "d" ? "Kauppa merkitty" : "Tallennettu"); },
         function () { showToast("Tallennus epäonnistui"); });
     }
     draw();
@@ -2779,6 +3041,7 @@
     else if (state.tab === "h75") renderH75(main);
     else if (state.tab === "vaihto") renderVt(main);
     else if (state.tab === "rahoitus") renderRf(main);
+    else if (state.tab === "mm") renderMM(main);
 
     Array.prototype.forEach.call(document.querySelectorAll("nav.tabbar button"), function (b) {
       b.classList.toggle("active", b.getAttribute("data-tab") === state.tab);
@@ -3454,7 +3717,9 @@
       if (an !== bn) return an < bn ? -1 : 1;
       return new Date(b.o.ts) - new Date(a.o.ts);
     });
+    else if (f === "luov") list = refs.filter(function (r) { return r.o.closed && !lvClosedOut(r.o); }).sort(function (a, b) { return new Date(b.o.closedTs || b.o.ts) - new Date(a.o.closedTs || a.o.ts); });
     else list = refs.filter(function (r) { return r.mk === state.monthKey; }).sort(function (a, b) { return new Date(b.o.ts) - new Date(a.o.ts); });
+    var lvN = refs.filter(function (r) { return r.o.closed && !lvClosedOut(r.o); }).length;
 
     var dealsN = offers.filter(function (o) { return o.closed; }).length;
     var activeN = refs.filter(function (r) { return isActive(r.o); }).length;
@@ -3464,8 +3729,9 @@
     allCard.innerHTML = '<div class="add-head"><h2>Tarjoukset</h2>' +
       '<span class="add-count">Tässä kuussa ' + offers.length + (offers.length === 1 ? ' tarjous' : ' tarjousta') + ' · ' + dealsN + (dealsN === 1 ? ' kauppa' : ' kauppaa') + '</span></div>' +
       '<div class="of-seg">' +
-        '<button type="button" data-f="hoida" class="' + (f === "hoida" ? 'on' : '') + '">Hoida tänään' + (dueN ? ' <b>' + dueN + '</b>' : '') + '</button>' +
+        '<button type="button" data-f="hoida" class="' + (f === "hoida" ? 'on' : '') + '"><span class="long">Hoida tänään</span><span class="short">Tänään</span>' + (dueN ? ' <b>' + dueN + '</b>' : '') + '</button>' +
         '<button type="button" data-f="avoimet" class="' + (f === "avoimet" ? 'on' : '') + '">Avoimet <b>' + activeN + '</b></button>' +
+        '<button type="button" data-f="luov" class="' + (f === "luov" ? 'on' : '') + '"><span class="long">Luovutukset</span><span class="short">Luovutus</span>' + (lvN ? ' <b>' + lvN + '</b>' : '') + '</button>' +
         '<button type="button" data-f="kk" class="' + (f === "kk" ? 'on' : '') + '">Kuukausi</button>' +
       '</div>';
     Array.prototype.forEach.call(allCard.querySelectorAll(".of-seg button"), function (b) {
@@ -3475,7 +3741,7 @@
     allList.className = "offer-list";
     var TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>';
     if (list.length === 0) {
-      allList.innerHTML = '<div class="empty-note">' + (f === "hoida" ? 'Ei tälle päivälle sovittuja tai myöhässä olevia. Hyvä tilanne.' : f === "avoimet" ? 'Ei avoimia tarjouksia.' : 'Ei vielä tarjouksia. Kirjaa ensimmäinen yllä.') + '</div>';
+      allList.innerHTML = '<div class="empty-note">' + (f === "hoida" ? 'Ei tälle päivälle sovittuja tai myöhässä olevia. Hyvä tilanne.' : f === "avoimet" ? 'Ei avoimia tarjouksia.' : f === "luov" ? 'Ei luovutusta odottavia kauppoja. Luovutuksen tarkistuslista löytyy kaupan tarjouskortista.' : 'Ei vielä tarjouksia. Kirjaa ensimmäinen yllä.') + '</div>';
     } else {
       list.forEach(function (r) {
         var o = r.o;
@@ -4464,6 +4730,7 @@
   // Etusivun pikapainikkeet työkaluihin. Ikonit otetaan alavalikosta, jotta ne pysyvät samoina.
   function rkHomeButton() {
     var tools = [
+      { tab: "mm", t: "Myyntimonopoli", d: "Kuukauden autoliikepeli: oikea työ tuo vuoroja" },
       { tab: "runko", t: "Myyntitie", d: "Runko kohta kohdalta asiakkaalle" },
       { tab: "liidi", t: "Kuuma liidi", d: "Pisteytä 0–100" },
       { tab: "vl", t: "Vastalauseet", d: "Mitä sanon nyt?" },
@@ -4967,6 +5234,7 @@
     // Elävät tarjoukset (kuluva kuu + siirtyneet)
     offerRefs().forEach(function (x) {
       var o = x.o; if (!o.rp || seen[o.id]) return; seen[o.id] = true;
+      if (o.closed && x.mk !== state.monthKey) return; // siirtynyt kauppa on jo kuukauden yhteenvedossa
       addObj(o.rp.o);
       if (o.closed) dealAsks.push(o.rp.a || 0);
       else if (ostat(o) === "l") { lost.push(o); lostAsks.push(o.rp.a || 0); }
@@ -6879,6 +7147,755 @@
     if (k) { T[k] = el.value; trPersistCur(); }
   });
 
+  // ---------- Myyntimonopoli ----------
+  // Pelin käyttöliittymä. Pelitila, nopat, arvonnat ja kaikki rahalaskenta ovat palvelimella
+  // (Apps Script, Myyntimonopoli.gs). Selain näyttää palvelimen tilan, lähettää komennot
+  // idempotenssiavaimella ja vain animoi tallennetut tulokset. Demotila ajaa saman palvelinytimen
+  // selaimen muistissa (mm/demo.js) eikä koske oikeaan huoneeseen tai työpalkkioihin.
+  var MM_LS_JOINED = "ts_mm_joined", MM_LS_ONB = "ts_mm_onb", MM_LS_RM = "ts_mm_rm";
+  var MM_SHORT = ["Lähtö", "Liidi", "Tarjous", "Koeajo", "Huuto", "Vaihto", "Autovex", "Hybridi", "Sähkö", "Katsaus", "Perhe", "Neliveto",
+    "Varikko", "Rahoitus", "Sopimus", "Huuto", "Avaimet", "Luovutus", "Autovex", "Premium", "Urheilu", "Varikko", "Aukio", "Autotalo"];
+  var MM_PCOL = ["#e0202a", "#2f7dd1", "#199e70", "#e0a31a", "#8a5cd6"];
+  var MM_GCOL = { 1: "#c0504d", 2: "#d9822b", 3: "#c9a227", 4: "#4f9a5b", 5: "#3a8fb7", 6: "#5b6fd6", 7: "#a24fb0" };
+  var MM_CLS = { DIESEL: "Diesel", PETROL_HYBRID: "Bensa/hybridi", ELECTRIC: "Sähköauto" };
+  var MM_ICON = {
+    start: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>',
+    auction: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14 4 6 6M11 7l6 6M4 20l7-7M9 9l6-6 6 6-6 6z"/></svg>',
+    autovex: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>',
+    market: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M6 16l4-5 3 3 5-7"/></svg>',
+    pit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg>'
+  };
+  var mm = { view: null, loading: false, error: null, errMsg: "", demo: null, sub: "peli", busy: false, anim: null, wrap: null, timer: null, poke: null, skew: 0 };
+
+  function mmLS() { try { return safeLS(); } catch (e) { return null; } }
+  function mmJoined() { if (state.guest) return false; var ls = mmLS(); return !!(ls && ls.getItem(MM_LS_JOINED) === "1"); }
+  function mmSetJoined(v) { var ls = mmLS(); if (!ls) return; try { if (v) ls.setItem(MM_LS_JOINED, "1"); else ls.removeItem(MM_LS_JOINED); } catch (e) {} }
+  function mmReduced() {
+    var ls = mmLS(), v = ls ? ls.getItem(MM_LS_RM) : null;
+    if (v === "1") return true; if (v === "0") return false;
+    return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }
+  function mmEur(c) {
+    var neg = c < 0; c = Math.abs(Math.round(c || 0));
+    var e = Math.floor(c / 100), s = c % 100;
+    return (neg ? "−" : "") + String(e).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + (s ? "," + (s < 10 ? "0" : "") + s : "") + " €";
+  }
+  function mmSigned(c) { return (c > 0 ? "+" : "") + mmEur(c); }
+  function mmPts(q) { var a = Math.abs(q || 0), w = Math.floor(a / 4), r = a % 4; return (q < 0 ? "−" : "") + w + (r ? "," + ["", "25", "5", "75"][r] : ""); }
+  function mmPtsWord(q) { return mmPts(q) + (q === 4 ? " työpiste" : " työpistettä"); }
+  function mmMult(m) { return (m / 10000).toFixed(2).replace(".", ","); }
+  function mmPct(bp) { var v = Math.round(bp / 10) / 10; return String(v).replace(".", ",") + " %"; }
+  function mmNow() { return Date.now() + mm.skew; }
+  function mmLeft(end) {
+    var d = end - mmNow(); if (d <= 0) return "päättynyt";
+    var days = Math.floor(d / 86400000), h = Math.floor(d % 86400000 / 3600000), mi = Math.floor(d % 3600000 / 60000);
+    return days ? days + " pv " + h + " h" : h ? h + " h " + mi + " min" : mi + " min";
+  }
+  function mmClock(ms) { var d = new Date(ms); return d.getDate() + "." + (d.getMonth() + 1) + ". klo " + d.getHours() + "." + String(d.getMinutes()).padStart(2, "0"); }
+  function mmFeedTime(ms) {
+    var d = new Date(ms), n = new Date(mmNow());
+    var t = d.getHours() + "." + String(d.getMinutes()).padStart(2, "0");
+    return d.toDateString() === n.toDateString() ? t : d.getDate() + "." + (d.getMonth() + 1) + ". " + t;
+  }
+  function mmSeasonLabel(id) { var t = monthDisplay(id); return t.charAt(0).toUpperCase() + t.slice(1); }
+  function mmName(sv, nick) { var p = (sv.players || []).filter(function (x) { return x.nick === nick; })[0]; return p ? p.name : nick; }
+  function mmColor(sv, nick) { var p = (sv.players || []).filter(function (x) { return x.nick === nick; })[0]; return p ? MM_PCOL[p.color % MM_PCOL.length] : "#888"; }
+
+  // ---------- Palvelinyhteys ----------
+  function mmApi(action, payload) {
+    if (mm.demo) {
+      var d = mm.demo;
+      return new Promise(function (res) { setTimeout(function () { res(d.handle(Object.assign({ action: action }, payload || {}))); }, 60); });
+    }
+    if (state.guest) return Promise.resolve({ ok: false, error: "guest" });
+    return apiCall(action, Object.assign({ nickname: state.profile.nickname, pin: state.pin }, payload || {}));
+  }
+  var MM_KNOWN_ERR = { bad_pin: 1, not_found: 1, no_company: 1, busy: 1, server_error: 1, idem_required: 1, auth: 1, guest: 1 };
+  function mmAccept(res) {
+    if (res && res.board) {
+      mm.view = res; mm.error = null; mm.notInstalled = false;
+      if (typeof res.now === "number") mm.skew = res.now - Date.now();
+      if (!mm.demo) mmSetJoined(!!res.room);
+      mmOps(res.ops);
+      return true;
+    }
+    mm.error = (res && res.error) || "net"; mm.errMsg = (res && res.message) || "";
+    mm.notInstalled = !!(res && res.ok === false && !MM_KNOWN_ERR[res.error]);
+    return false;
+  }
+  function mmRefresh(quiet) {
+    if (mm.loading) return Promise.resolve();
+    mm.loading = true;
+    if (!quiet) mmRender();
+    var demo = mm.demo;
+    return mmApi("mm_state").then(function (res) {
+      mm.loading = false;
+      if (demo !== mm.demo) return;
+      mmAccept(res);
+      mmRender();
+    }, function () {
+      mm.loading = false;
+      if (!mm.view) { mm.error = "net"; mm.notInstalled = true; }
+      mmRender();
+    });
+  }
+  // Rahaa, vuoroja tai omistuksia muuttava komento: yksilöllinen avain, uusinta samalla avaimella.
+  function mmCmd(action, payload) {
+    if (mm.busy) return Promise.resolve(null);
+    mm.busy = true; mmRender();
+    var sv = mm.view && mm.view.season;
+    var body = Object.assign({ idem: genId(), seasonId: sv ? sv.id : undefined }, payload || {});
+    function attempt(n) { return mmApi(action, body).catch(function (e) { if (n > 0) return attempt(n - 1); throw e; }); }
+    return attempt(1).then(function (res) {
+      mm.busy = false;
+      mmAccept(res);
+      if (res && res.ok === false) showToast(res.message || "Toiminto ei onnistunut.");
+      mmRender();
+      return res;
+    }, function () {
+      mm.busy = false;
+      showToast("Ei yhteyttä palvelimeen. Yritä uudelleen – samaa toimintoa ei tehdä kahdesti.");
+      mmRender();
+      return null;
+    });
+  }
+  // Työpalkkioiden ilmoitukset: palvelin kertoo, mitä tarjousseurannan tallennuksista syntyi.
+  function mmOps(ops) {
+    if (!ops || !ops.length) return;
+    var label = { offer: "Aito tarjous", deal: "Oikea kauppa", handover: "Luovutus hoidettu" };
+    var msgs = ops.map(function (o) {
+      var st = o.stage || String(o.key || "").split("|")[1];
+      if (o.op === "grant") return label[st] + ": " + mmSigned(o.cents) + " ja +" + mmPtsWord(o.q) + "." + (o.late ? " (Korjaus edelliselle kaudelle.)" : "");
+      if (o.op === "reverse") return (st === "deal" ? "Kauppa peruuntui" : "Luovutusmerkintä poistui") + ": " + mmEur(o.cents) + ". Työpisteet säilyvät.";
+      if (o.op === "restore") return (st === "deal" ? "Kauppa palautui voimaan" : "Luovutus palautui") + ": " + mmSigned(o.cents) + ".";
+      if (o.op === "void") return "Työmerkintä korjattiin: " + (o.cents ? mmEur(o.cents) + " ja " : "") + mmPts(o.q) + " pistettä.";
+      return "";
+    }).filter(Boolean);
+    if (msgs.length === 1) showToast("Myyntimonopoli · " + msgs[0]);
+    else {
+      var c = 0, q = 0; ops.forEach(function (o) { c += o.cents || 0; q += o.q || 0; });
+      showToast("Myyntimonopoli · " + ops.length + " työvaihetta: " + mmSigned(c) + ", " + (q >= 0 ? "+" : "") + mmPts(q) + " pistettä.");
+    }
+  }
+  // Tarjousseurannan tallennuksen jälkeen palvelin täsmäyttää työn heti (palkkiot lasketaan palvelimella).
+  function mmPokeSoon() {
+    if (!mmJoined() || mm.demo) return;
+    clearTimeout(mm.poke);
+    mm.poke = setTimeout(function () {
+      mmApi("mm_sync").then(function (res) { if (mmAccept(res) && state.tab === "mm") mmRender(); }, function () {});
+    }, 1500);
+  }
+  function mmLoadScripts(list) {
+    return list.reduce(function (p, src) {
+      return p.then(function () {
+        if (document.querySelector('script[data-mm="' + src + '"]')) return;
+        return new Promise(function (res, rej) {
+          var s = document.createElement("script"); s.src = src; s.setAttribute("data-mm", src);
+          s.onload = res; s.onerror = function () { rej(new Error(src)); };
+          document.head.appendChild(s);
+        });
+      });
+    }, Promise.resolve());
+  }
+  function mmStartDemo() {
+    mmLoadScripts(["mm/engine.js", "mm/adapter.js", "mm/server.js", "mm/demo.js"]).then(function () {
+      mm.demo = MMDemo.create({ you: ((state.profile && state.profile.nickname) || "Pelaaja") + " (demo)" });
+      mm.view = null; mm.error = null; mm.sub = "peli";
+      mmRefresh();
+      showToast("Demotila: kuvitteelliset pelaajat, mitään ei tallenneta");
+    }, function () { showToast("Demotilan lataus epäonnistui."); });
+  }
+  function mmStopDemo() { mm.demo = null; mm.view = null; mm.error = null; mm.anim = null; mmRefresh(); }
+
+  // ---------- Näkymä ----------
+  function renderMM(main) {
+    var wrap = document.createElement("div");
+    wrap.className = "mm";
+    main.appendChild(wrap);
+    mm.wrap = wrap;
+    wrap.addEventListener("click", mmClick);
+    wrap.addEventListener("change", mmChange);
+    if (mm.wantDemo && !mm.demo) { mm.wantDemo = false; mmStartDemo(); }
+    else if (!mm.view && !mm.loading) {
+      if (state.guest && !mm.demo) { mm.error = "guest"; }
+      else mmRefresh(true);
+    }
+    mmRender();
+    mmStartPoll();
+  }
+  function mmStartPoll() {
+    clearInterval(mm.timer);
+    mm.timer = setInterval(function () {
+      if (state.tab !== "mm") { clearInterval(mm.timer); return; }
+      if (document.hidden || mm.busy || mm.anim || mm.loading) return;
+      if (state.guest && !mm.demo) return;
+      mmRefresh(true);
+    }, mm.demo ? 15000 : 10000);
+  }
+  function mmRender() {
+    if (state.tab !== "mm" || !mm.wrap || !mm.wrap.isConnected) return;
+    var v = mm.view, h = "";
+    h += mmHeadHtml(v);
+    if (!v) h += mmNoViewHtml();
+    else if (!v.room) h += mmNoRoomHtml(v);
+    else if (mm.sub === "tulokset") h += mmResultsHtml(v);
+    else if (mm.sub === "huone") h += mmRoomHtml(v);
+    else if (mm.sub === "saannot") h += mmRulesHtml(v);
+    else if (!v.season) h += mmWaitingHtml(v);
+    else h += mmGameHtml(v);
+    mm.wrap.innerHTML = h;
+    if (v && v.season && v.season.me && mm.sub === "peli") mmMaybeOnboard();
+  }
+  function mmHeadHtml(v) {
+    var sv = v && v.season;
+    var sub = sv ? mmSeasonLabel(sv.id) + " · " + (sv.state === "active" ? "jäljellä " + mmLeft(sv.endAt) : "päättynyt") : v && v.room ? v.room.name : "Kuukauden autoliikepeli";
+    var tabs = v && v.room ? [["peli", "Peli"], ["tulokset", "Tulokset"], ["huone", "Huone"], ["saannot", "Säännöt"]] : [];
+    return '<div class="card mm-head">' +
+      '<div class="mm-ttl"><div><h1>Myyntimonopoli</h1><div class="mm-sub">' + escapeHtml(sub) + (v && v.room && sv ? ' · ' + escapeHtml(v.room.name) : '') + '</div></div>' +
+        (mm.busy || mm.loading ? '<span class="mm-spin" aria-label="Ladataan"></span>' : '') + '</div>' +
+      (mm.demo ? '<div class="mm-demo"><b>DEMOTILA</b> – kuvitteelliset pelaajat ja simuloitu työ. Ei oikeaa huonetta, ei tallennusta.' +
+        '<div class="mm-demo-btns"><button type="button" class="btn btn-ghost btn-sm" data-a="demo-work">Simuloi työpäivä</button>' +
+        '<button type="button" class="btn btn-ghost btn-sm" data-a="demo-bots">Kilpailijat pelaavat</button>' +
+        '<button type="button" class="btn btn-ghost btn-sm" data-a="demo-stop">Poistu demosta</button></div></div>' : '') +
+      (tabs.length ? '<div class="of-seg mm-seg" role="tablist">' + tabs.map(function (t) {
+        return '<button type="button" role="tab" aria-selected="' + (mm.sub === t[0]) + '" data-a="sub" data-v="' + t[0] + '" class="' + (mm.sub === t[0] ? 'on' : '') + '">' + t[1] + '</button>';
+      }).join("") + '</div>' : '') +
+    '</div>';
+  }
+  function mmNoViewHtml() {
+    if (mm.error === "guest") return '<div class="card mm-intro"><h2>Vierailijatila</h2><p>Myyntimonopolia pelataan omalla profiililla työkavereiden kanssa. Voit kokeilla peliä demotilassa kuvitteellisilla pelaajilla.</p>' +
+      '<button type="button" class="btn btn-primary" data-a="demo-start">Avaa demotila</button></div>';
+    if (mm.loading || !mm.error) return '<div class="card mm-intro"><p class="mm-dim">Ladataan pelitilannetta…</p></div>';
+    if (mm.error === "no_company") return '<div class="card mm-intro"><h2>Yritys puuttuu</h2><p>Pelihuoneet muodostetaan saman yrityksen myyjistä. Lisää yrityksesi nimi asetuksista (etusivun ratas), niin näet työkavereiden huoneet.</p>' +
+      '<button type="button" class="btn btn-ghost" data-a="demo-start">Kokeile demotilassa</button></div>';
+    if (mm.notInstalled) return '<div class="card mm-intro"><h2>Pelin palvelinosa puuttuu vielä</h2>' +
+      '<p>Myyntimonopolin pelitila tallennetaan samaan Google Sheets -taustaan kuin tarjoukset. Palvelinosa (Myyntimonopoli.gs) pitää lisätä Apps Scriptiin kerran, ennen kuin yhteinen peli toimii. Ohje: MYYNTIMONOPOLI.md.</p>' +
+      '<p class="mm-dim">Tarjousseuranta toimii normaalisti tästä riippumatta.</p>' +
+      '<div class="mm-btn-row"><button type="button" class="btn btn-primary" data-a="demo-start">Kokeile demotilassa</button><button type="button" class="btn btn-ghost" data-a="retry">Yritä uudelleen</button></div></div>';
+    return '<div class="card mm-intro"><h2>Yhteys ei onnistunut</h2><p>' + escapeHtml(mm.errMsg || "Palvelimeen ei saatu yhteyttä.") + '</p><button type="button" class="btn btn-ghost" data-a="retry">Yritä uudelleen</button></div>';
+  }
+  function mmNoRoomHtml(v) {
+    var rooms = v.rooms || [];
+    return '<div class="card mm-intro"><h2>Pelaa työkavereiden kanssa</h2>' +
+      '<p>Oikea työ tuo pelirahaa ja vuoroja: aito tarjous <b>+500 €</b> ja 1 piste, oikea kauppa <b>+5 000 €</b> (hitrate-boostilla jopa 6 250 €) ja 4 pistettä, hoidettu luovutus <b>+100 €</b> ja 0,25 pistettä. Viisi pistettä on yksi vuoro. Mitään ei tarvitse kirjata peliin erikseen.</p>' +
+      '<p class="mm-dim">Huoneessa on 2–5 saman yrityksen (' + escapeHtml(v.me.orgName) + ') myyjää. Kausi on kalenterikuukausi.</p></div>' +
+      (rooms.length ? '<div class="card"><h2>Liity huoneeseen</h2><div class="mm-list">' + rooms.map(function (r) {
+        return '<div class="mm-li"><div><b>' + escapeHtml(r.name) + '</b><div class="mm-dim">' + escapeHtml(r.members.join(", ")) + (r.active ? ' · kausi käynnissä, pelaat seuraavalla kaudella' : '') + '</div></div>' +
+          (r.full ? '<span class="mm-dim">Täynnä</span>' : '<button type="button" class="btn btn-primary btn-sm" data-a="join" data-v="' + escapeHtml(r.id) + '">Liity</button>') + '</div>';
+      }).join("") + '</div></div>' : '') +
+      '<div class="card"><h2>Luo uusi huone</h2><div class="field"><label for="mmRoomName">Huoneen nimi</label><input id="mmRoomName" class="mm-input" maxlength="40" placeholder="esim. Nummelan myyjät"></div>' +
+      '<button type="button" class="btn btn-primary" data-a="create">Luo huone</button>' +
+      '<p class="mm-dim mm-mt">Luojasta tulee huoneen ylläpitäjä: hän aloittaa ensimmäisen kauden ja voi muuttaa seuraavan kauden sääntöjä.</p></div>' +
+      '<div class="card"><h2>Kokeile ensin</h2><p class="mm-dim">Demotilassa pelaat kolmea kuvitteellista myyjää vastaan simuloidulla työllä.</p><button type="button" class="btn btn-ghost" data-a="demo-start">Avaa demotila</button></div>';
+  }
+  function mmWaitingHtml(v) {
+    var r = v.room, n = r.members.filter(function (m) { return !m.leaving; }).length;
+    return '<div class="card"><h2>' + escapeHtml(r.name) + '</h2>' +
+      '<p>Kausi ei ole vielä alkanut. Seuraavan kauden osallistujat: <b>' + escapeHtml(r.next.participants.join(", ")) + '</b>.</p>' +
+      (r.isAdmin ? (n >= r.minPlayers ? '<button type="button" class="btn btn-primary" data-a="start">Aloita kausi nyt</button><p class="mm-dim mm-mt">Ensimmäinen kausi alkaa kaikille samalla hetkellä ja päättyy kuun lopussa. Ennen alkua tehdyistä töistä ei tule pelirahaa.</p>'
+        : '<p class="mm-dim">Tarvitaan vähintään ' + r.minPlayers + ' pelaajaa. Pyydä työkavereita avaamaan Myyntimonopoli ja liittymään huoneeseen ”' + escapeHtml(r.name) + '”.</p>')
+        : '<p class="mm-dim">Ylläpitäjä ' + escapeHtml(r.adminName) + ' aloittaa kauden.</p>') + '</div>';
+  }
+
+  // ---------- Pelinäkymä ----------
+  function mmGameHtml(v) {
+    var sv = v.season, me = sv.me;
+    if (!me) {
+      return '<div class="card"><p>Liityit huoneeseen kesken kauden. Pelaat seuraavalla kaudella (' + escapeHtml(mmSeasonLabel(v.room.next.id)) + '). Voit seurata peliä alla.</p></div>' +
+        '<div class="mm-grid"><div class="mm-col-a"><div class="card mm-board-card">' + mmBoardHtml(sv, null) + '</div></div><div class="mm-col-b">' + mmFeedHtml(sv) + '</div></div>';
+    }
+    return mmStatusHtml(sv) + '<div class="mm-grid"><div class="mm-col-a"><div class="card mm-board-card">' + mmBoardHtml(sv, mm.anim && mm.anim.pos) + '</div>' + mmTurnHtml(sv) + '</div>' +
+      '<div class="mm-col-b">' + mmWorkHtml(v) + mmStockHtml(sv) + mmFeedHtml(sv) + '</div></div>';
+  }
+  function mmStatusHtml(sv) {
+    var w = sv.me.worth, res = w.result;
+    return '<div class="mm-stat">' +
+      '<div><span>Kassa</span><b>' + mmEur(w.cash) + '</b></div>' +
+      '<div><span>Varastossa</span><b>' + mmEur(w.stock) + '</b></div>' +
+      '<div><span>Tontit</span><b>' + mmEur(w.tiles) + '</b></div>' +
+      (w.debt ? '<div class="bad"><span>Pelivelka</span><b>' + mmEur(w.debt) + '</b></div>' : '') +
+      '<div><span>Nettovarallisuus</span><b>' + mmEur(w.nw) + '</b></div>' +
+      '<div class="' + (res > 0 ? 'good' : res < 0 ? 'bad' : '') + '"><span>Tulos</span><b>' + mmSigned(res) + '</b></div>' +
+    '</div>';
+  }
+  function mmCell(i) { if (i <= 6) return [7, 7 - i]; if (i <= 12) return [7 - (i - 6), 1]; if (i <= 18) return [1, 1 + (i - 12)]; return [1 + (i - 18), 7]; }
+  function mmBoardHtml(sv, posOverride) {
+    var me = sv.me ? sv.me.nick : null, carsAt = {}, pawnsAt = {};
+    sv.cars.forEach(function (c) { if (c.loc && c.loc.t === "tile") (carsAt[c.loc.tile] = carsAt[c.loc.tile] || [])[c.loc.slot] = c; });
+    sv.players.forEach(function (p) { var pos = posOverride && posOverride[p.nick] !== undefined ? posOverride[p.nick] : p.pos; (pawnsAt[pos] = pawnsAt[pos] || []).push(p); });
+    var h = '<div class="mm-board">';
+    sv.board.forEach(function (sq, i) {
+      var rc = mmCell(i), owner = sv.tiles[i], side = i <= 6 ? "b" : i <= 12 ? "l" : i <= 18 ? "t" : "r";
+      var cars = carsAt[i] || [], pawns = pawnsAt[i] || [];
+      var nCars = cars.filter(Boolean).length;
+      var label = sq.name + (sq.kind === "tile" ? (owner ? ", omistaja " + mmName(sv, owner) + ", " + nCars + "/3 autoa" : ", vapaa tontti") : "") +
+        (pawns.length ? ", täällä: " + pawns.map(function (p) { return p.nick === me ? "sinä" : p.name; }).join(", ") : "");
+      h += '<button type="button" class="mm-sq k-' + sq.kind + ' s-' + side + (owner ? ' owned' : '') + (owner && owner === me ? ' mine' : '') + (i === 0 || i === 6 || i === 12 || i === 18 ? ' corner' : '') + '"' +
+        ' style="grid-row:' + rc[0] + ';grid-column:' + rc[1] + ';' + (owner ? '--oc:' + mmColor(sv, owner) + ';' : '') + (sq.group ? '--gc:' + MM_GCOL[sq.group] + ';' : '') + '"' +
+        ' data-a="sq" data-i="' + i + '" aria-label="' + escapeHtml(label) + '">' +
+        (sq.group ? '<i class="band"></i>' : '') +
+        (sq.kind !== "tile" ? '<span class="ic">' + (MM_ICON[sq.kind] || '') + '</span>' : '') +
+        '<span class="nm">' + MM_SHORT[i] + '</span>' +
+        (sq.kind === "tile" ? '<span class="slots">' + [0, 1, 2].map(function (s) { var c = cars[s]; return '<i class="car ' + (c ? 'c-' + c.cls + (c.st === "listed" ? ' lst' : '') : 'e') + '"></i>'; }).join("") + '</span>' : '') +
+        '<span class="pawns">' + pawns.map(function (p) { return '<i class="pawn' + (p.nick === me ? ' me' : '') + '" style="background:' + MM_PCOL[p.color % MM_PCOL.length] + '"></i>'; }).join("") + '</span>' +
+      '</button>';
+    });
+    h += '<div class="mm-center">' + mmCenterHtml(sv) + '</div></div>';
+    return h;
+  }
+  function mmDie(n) {
+    var P = { 1: [5], 2: [1, 9], 3: [1, 5, 9], 4: [1, 3, 7, 9], 5: [1, 3, 5, 7, 9], 6: [1, 3, 4, 6, 7, 9] }[n] || [];
+    var h = '<span class="mm-die" aria-hidden="true">';
+    for (var i = 1; i <= 9; i++) h += '<i' + (P.indexOf(i) !== -1 ? ' class="on"' : '') + '></i>';
+    return h + '</span>';
+  }
+  function mmCenterHtml(sv) {
+    var me = sv.me;
+    if (!me) return '<div class="mm-cen-sub">Seuraat peliä</div>';
+    if (sv.state !== "active") return '<div class="mm-cen-sub">Kausi on päättynyt.</div>';
+    var t = me.openTurn || me.lastTurn;
+    var dice = mm.anim && mm.anim.dice ? mm.anim.dice : t ? [t.d1, t.d2] : [5, 5];
+    var avail = me.work.avail;
+    var can = avail > 0 && !mm.busy && !mm.anim;
+    return '<div class="mm-dice' + (mm.anim && mm.anim.rolling ? ' rolling' : '') + (!t && !mm.anim ? ' idle' : '') + '" aria-label="' + (t ? 'Viimeisin heitto ' + dice[0] + ' ja ' + dice[1] : 'Ei vielä heittoja') + '">' + mmDie(dice[0]) + mmDie(dice[1]) + '</div>' +
+      '<button type="button" class="btn btn-primary mm-roll" data-a="roll"' + (can ? '' : ' disabled') + '>' + (avail > 0 ? 'Heitä noppaa' : 'Ei vuoroja') + '</button>' +
+      '<div class="mm-cen-sub">' + (avail > 0 ? '<b>' + avail + '</b> ' + (avail === 1 ? 'vuoro' : 'vuoroa') + ' käytettävissä' : 'Vielä ' + mmPts(me.work.toNext) + ' pistettä seuraavaan vuoroon') + '</div>';
+  }
+  function mmForcedText(sv, f, mine) {
+    if (!f) return "";
+    if (f.none) return mine ? "Kilpailijan tontilla ei ollut myyntikelpoisia autoja, joten kauppaa ei syntynyt." : "";
+    var cls = (MM_CLS[f.cls] || "auto").toLowerCase();
+    var s = "Ostit kilpailijalta (" + mmName(sv, f.seller) + ") arvotun auton: " + cls + " " + mmEur(f.price) + ":lla. Autosta ei voi tehdä uutta katetta.";
+    if (f.newDebt) s += " Kassasi ei riittänyt pakolliseen ostoon. Pelivelkaa syntyi " + mmEur(f.newDebt) + ".";
+    if (f.wholesale) s += " Autolle ei ollut tilaa, joten tukkuri osti sen heti: sait " + mmEur(f.wholesale.price) + ", tappio " + mmEur(f.wholesale.loss) + ".";
+    else if (f.placed && f.placed.t === "recv") s += " Auto siirtyi vastaanottopaikalle.";
+    else if (f.placed) s += " Auto siirtyi tontillesi " + sv.board[f.placed.tile].name + ".";
+    return s;
+  }
+  function mmTurnHtml(sv) {
+    var me = sv.me, t = me.openTurn;
+    if (sv.state !== "active") return "";
+    if (!t) {
+      var lt = me.lastTurn;
+      if (!lt) return '<div class="card mm-turn"><h2>Vuoro</h2><p class="mm-dim">' + (me.work.avail > 0 ? 'Heitä noppaa laudan keskeltä.' : 'Vuoroja syntyy tarjousseurannan oikeasta työstä: 5 työpistettä = 1 vuoro.') + '</p></div>';
+      return '<div class="card mm-turn"><h2>Edellinen vuoro</h2><p>' + lt.d1 + ' + ' + lt.d2 + ' → ' + escapeHtml(sv.board[lt.to].name) + '.' +
+        (lt.avx ? ' Autovex-kauppa toteutui: sait ' + mmEur(lt.avx.price) + ', tappio ' + mmEur(lt.avx.loss) + '.' : lt.avxWait ? ' Autovex-listaus odottaa uutta, listauksen jälkeen ansaittua vuoroa.' : '') + '</p></div>';
+    }
+    var sq = sv.board[t.to], owner = sv.tiles[t.to], h = '<div class="card mm-turn"><h2>Vuoro käynnissä</h2>';
+    h += '<p class="mm-lead">Heitit <b>' + t.d1 + ' + ' + t.d2 + '</b> ja etenit ruutuun <b>' + escapeHtml(sq.name) + '</b>.</p>';
+    if (t.forced) h += '<p class="mm-forced">' + escapeHtml(mmForcedText(sv, t.forced, true)) + '</p>';
+    if (sq.kind === "auction") h += '<p class="mm-dim">Huutokauppa: voit myydä yhden auton 90 %:lla omasta hankintahinnastasi.</p>';
+    else if (sq.kind === "autovex") h += '<p class="mm-dim">Autovex-ruutu. Listauksen voi tehdä millä tahansa vuorolla varastotoimena.</p>';
+    else if (sq.kind === "start" || sq.kind === "market" || sq.kind === "pit") h += '<p class="mm-dim">' + escapeHtml(sq.name) + ' ei muuta rahaa eikä vuoroja.</p>';
+    var acts = [];
+    if (sq.kind === "tile" && !owner && !t.tileBought) {
+      var tp = sv.rules.tilePrice, reason = me.tiles.length >= sv.rules.maxTiles ? "Sinulla on jo " + sv.rules.maxTiles + " tonttia." : me.debt > 0 ? "Pelivelka estää vapaaehtoiset ostot." : me.cash < tp ? "Kassa ei riitä." : "";
+      acts.push('<button type="button" class="btn btn-primary" data-a="buytile"' + (reason || mm.busy ? ' disabled' : '') + '>Osta tontti ' + escapeHtml(sq.name) + ' · ' + mmEur(tp) + '</button>' + (reason ? '<p class="mm-why">' + reason + '</p>' : ''));
+    } else if (sq.kind === "tile" && owner === me.nick) h += '<p class="mm-dim">Oma tonttisi: voit myydä yhden auton pankkiasiakkaalle hankintahintaan (kate 0 €).</p>';
+    if (!t.actionUsed) {
+      var my = sv.cars.filter(function (c) { return c.owner === me.nick; });
+      var stock = my.filter(function (c) { return c.st === "stock"; });
+      var freeTile = me.tiles.some(function (ti) { return mmFree(sv, ti) > 0; });
+      var canMove = stock.some(function (c) { return (c.loc.t === "tile" && !me.recv) || me.tiles.some(function (ti) { return mmFree(sv, ti) > 0 && !(c.loc.t === "tile" && c.loc.tile === ti); }); });
+      var b = [];
+      b.push(['bank', 'Hanki auto pankilta', !freeTile ? 'Ei vapaata autopaikkaa omilla tonteilla.' : me.debt > 0 ? 'Pelivelka estää.' : '']);
+      b.push(['move', 'Siirrä auto', !stock.length ? 'Ei siirrettäviä autoja.' : canMove ? '' : 'Ei vapaata paikkaa, johon siirtää.']);
+      b.push(['list', 'Listaa Autovexiin', me.listing ? 'Sinulla on jo listaus.' : stock.length ? '' : 'Ei listattavia autoja.']);
+      if (owner === me.nick) b.push(['sellbank', 'Myy pankkiasiakkaalle', stock.length ? '' : 'Ei myytäviä autoja.']);
+      if (sq.kind === "auction") b.push(['sellauction', 'Myy huutokaupassa', stock.length ? '' : 'Ei myytäviä autoja.']);
+      h += '<div class="mm-sec">Varastotoimi <span class="mm-dim">(yksi tällä vuorolla)</span></div><div class="mm-acts">' + b.map(function (x) {
+        return '<button type="button" class="btn btn-ghost" data-a="' + x[0] + '"' + (x[2] || mm.busy ? ' disabled title="' + escapeHtml(x[2]) + '"' : '') + '>' + x[1] + '</button>';
+      }).join("") + '</div>';
+    } else h += '<p class="mm-dim">Tämän vuoron varastotoimi on käytetty.</p>';
+    h += acts.join("");
+    h += '<button type="button" class="btn btn-ghost mm-end" data-a="end"' + (mm.busy ? ' disabled' : '') + '>Päätä vuoro</button>';
+    if (me.listing) h += '<p class="mm-dim mm-mt">Autovex-listaus selviää, kun päätät vuoron, joka on ansaittu listauksen jälkeen tehdyllä työllä.</p>';
+    return h + '</div>';
+  }
+  function mmFree(sv, ti) { var n = sv.cars.filter(function (c) { return c.loc && c.loc.t === "tile" && c.loc.tile === ti; }).length; return sv.rules.slotsPerTile - n; }
+  function mmWorkHtml(v) {
+    var sv = v.season, w = sv.me.work, hit = sv.me.hit, per = sv.rules.qPerTurn;
+    var into = w.deficit > 0 ? 0 : (w.q % per), pct = Math.round(into / per * 100);
+    var h = '<div class="card mm-work"><h2>Työn eteneminen</h2>' +
+      '<div class="mm-turns"><b>' + w.avail + '</b><span>' + (w.avail === 1 ? 'vuoro' : 'vuoroa') + ' käytettävissä</span></div>' +
+      '<div class="mm-bar" role="progressbar" aria-valuemin="0" aria-valuemax="' + per + '" aria-valuenow="' + into + '"><i style="width:' + pct + '%"></i></div>' +
+      '<p class="mm-next">' + (w.deficit > 0 ? 'Korjattu työmerkintä: uudet ' + mmPts(w.deficit) + ' pistettä kuittaavat ensin jo pelatun vuoron, sitten vielä ' + mmPts(per) + ' pistettä seuraavaan.' : 'Vielä <b>' + mmPts(w.toNext) + '</b> pistettä seuraavaan vuoroon.') + '</p>' +
+      '<div class="mm-kv"><span>Tänään ansaittu</span><b>' + mmEur(w.today) + '</b></div>' +
+      '<div class="mm-kv"><span>Kauden työpisteet</span><b>' + mmPts(w.q) + '</b></div>' +
+      '<div class="mm-kv"><span>Tarjoukset · kaupat · luovutukset</span><b>' + w.offers + ' · ' + w.dealsValid + ' · ' + w.handovers + '</b></div>';
+    if (sv.me.goal) h += '<div class="mm-kv"><span>Kuukauden tarjoustavoite</span><b>' + sv.me.goal.target + '</b></div>';
+    if (hit) {
+      h += '<div class="mm-boost"><div><span>Tämän viikon boosti</span><b>' + mmMult(hit.mult) + '</b></div><p>' +
+        (hit.n >= hit.minSample ? 'Hitrate ' + mmPct(hit.rateBp) + ' (' + hit.k + '/' + hit.n + ' tapausta).' : 'Otos ' + hit.n + ' tapausta – alle ' + hit.minSample + ':llä kerroin on 1,00.') +
+        ' Lasketaan tarjouksista, joiden ensimmäinen tarjous on 7–60 päivää vanha; kaupaksi luetaan snapshot-hetkeen mennessä vahvistetut. Koskee vain kauppapalkkiota. Päivittyy ' + mmClock(hit.nextAt) + '.</p></div>';
+    }
+    if (sv.me.awards && sv.me.awards.length) {
+      var lab = { offer: "Aito tarjous", deal: "Oikea kauppa", handover: "Luovutus" };
+      h += '<div class="mm-sec">Viimeisimmät työpalkkiot</div><ul class="mm-aw">' + sv.me.awards.slice(0, 6).map(function (a) {
+        return '<li class="' + a.status + '"><span>' + lab[a.stage] + (a.status === "reversed" ? ' (peruuntunut)' : a.status === "void" ? ' (korjattu)' : '') + '</span><b>' + (a.status === "active" ? mmSigned(a.cents) : '0 €') + ' · ' + (a.status === "void" ? '0' : '+' + mmPts(a.q)) + ' p</b></li>';
+      }).join("") + '</ul>';
+    }
+    return h + '</div>';
+  }
+  function mmCarLine(sv, c) {
+    var where = c.loc.t === "recv" ? "Vastaanottopaikka" : sv.board[c.loc.tile].name;
+    return '<button type="button" class="mm-car" data-a="car" data-v="' + c.id + '"><i class="car c-' + c.cls + '"></i><span><b>' + MM_CLS[c.cls] + '</b><small>' + escapeHtml(where) +
+      (c.st === "listed" ? ' · Autovexissä' : '') + '</small></span><span class="r"><b>' + mmEur(c.acq) + '</b><small>' + (c.right ? 'kate +' + mmEur(c.margin) : 'ei katetta') + '</small></span></button>';
+  }
+  function mmStockHtml(sv) {
+    var me = sv.me, my = sv.cars.filter(function (c) { return c.owner === me.nick; });
+    var h = '<div class="card mm-stock"><h2>Oma varasto</h2>';
+    if (!me.tiles.length && !my.length) return h + '<p class="mm-dim">Ei vielä tontteja. Osu vapaalle tontille ja osta se (' + mmEur(sv.rules.tilePrice) + '). Voit omistaa enintään ' + sv.rules.maxTiles + ' tonttia.</p></div>';
+    me.tiles.forEach(function (ti) {
+      h += '<div class="mm-sec">' + escapeHtml(sv.board[ti].name) + ' <span class="mm-dim">' + (sv.rules.slotsPerTile - mmFree(sv, ti)) + '/' + sv.rules.slotsPerTile + ' paikkaa</span></div>';
+      var cs = my.filter(function (c) { return c.loc.t === "tile" && c.loc.tile === ti; });
+      h += cs.length ? cs.map(function (c) { return mmCarLine(sv, c); }).join("") : '<p class="mm-dim mm-small">Tyhjä tontti.</p>';
+    });
+    var rc = my.filter(function (c) { return c.loc.t === "recv"; });
+    h += '<div class="mm-sec">Vastaanottopaikka <span class="mm-dim">' + rc.length + '/1 · ei osallistu myyntiarvontaan</span></div>' + (rc.length ? rc.map(function (c) { return mmCarLine(sv, c); }).join("") : '<p class="mm-dim mm-small">Vapaa.</p>');
+    if (me.listing) {
+      var lc = my.filter(function (c) { return c.id === me.listing.carId; })[0];
+      h += '<div class="mm-avx"><b>Autovex-listaus:</b> ' + (lc ? MM_CLS[lc.cls].toLowerCase() : 'auto') + ', saat ' + mmEur(me.listing.price) + ' (tappio ' + mmEur(me.listing.acq - me.listing.price) + '). ' +
+        (me.listing.waiting ? 'Odottaa: kauppa selviää vuorolla, joka on ansaittu listauksen jälkeen tehdyllä työllä.' : 'Seuraava vuorosi on ansaittu listauksen jälkeen: kauppa selviää, kun päätät sen.') +
+        ' <button type="button" class="mm-link" data-a="cancellist">Peru listaus</button></div>';
+    }
+    return h + '</div>';
+  }
+  function mmFeedHtml(sv) {
+    var items = (sv.feed || []).slice(-30).reverse();
+    var me = sv.me ? sv.me.nick : null;
+    return '<div class="card mm-feed"><h2>Tapahtumat</h2>' + (items.length ? '<ul>' + items.map(function (f) {
+      return '<li class="' + (f.nick && f.nick === me ? 'mine' : '') + '"><i style="background:' + (f.nick ? mmColor(sv, f.nick) : 'var(--text-faint)') + '"></i><span>' + escapeHtml(f.msg) + '</span><time>' + mmFeedTime(f.t) + '</time></li>';
+    }).join("") + '</ul>' : '<p class="mm-dim">Ei vielä tapahtumia.</p>') + '</div>';
+  }
+
+  // ---------- Tulokset, huone ja säännöt ----------
+  function mmStandingsTable(sv, rows) {
+    return '<table class="src mm-tbl"><thead><tr><th>#</th><th>Pelaaja</th><th>Tulos</th><th>Työ</th></tr></thead><tbody>' + rows.map(function (r) {
+      return '<tr class="' + (sv.me && r.nick === sv.me.nick ? 'me' : '') + '"><td>' + r.rank + '.</td><td><i class="mm-dot" style="background:' + mmColor(sv, r.nick) + '"></i>' + escapeHtml(r.name) +
+        '<div class="mm-dim mm-small">Nettovarallisuus ' + mmEur(r.nw) + '</div></td><td class="' + (r.result > 0 ? 'hr-good' : '') + '">' + mmSigned(r.result) + '</td><td><span class="mm-small">' + r.offers + ' / ' + r.deals + ' / ' + r.handovers + '</span><div class="mm-dim mm-small">' + mmEur(r.workNet) + '</div></td></tr>';
+    }).join("") + '</tbody></table>';
+  }
+  function mmResultsHtml(v) {
+    var sv = v.season, h = '';
+    if (sv) {
+      h += '<div class="card"><h2>Tulostaulu · ' + escapeHtml(mmSeasonLabel(sv.id)) + '</h2><p class="mm-dim">' + (sv.state === "active" ? 'Kautta jäljellä ' + mmLeft(sv.endAt) + '. Käyttämättömät vuorot raukeavat kauden lopussa.' : 'Kausi päättyi.') + '</p>' +
+        mmStandingsTable(sv, sv.standings) +
+        '<p class="mm-dim mm-small mm-mt">Tulos = nettovarallisuus − ' + mmEur(sv.rules.startCash) + '. Nettovarallisuus = kassa + tontit + autot omaan hankintahintaan − pelivelka. Tasatilanteessa ratkaisee oikeasta työstä ansaittu peliraha, sitten voimassa olevat kaupat. Työ = tarjoukset / kaupat / luovutukset ja niistä ansaittu peliraha.</p></div>';
+    }
+    var arch = v.room.archive || [];
+    h += '<div class="card"><h2>Kausiarkisto</h2>' + (arch.length ? '<div class="mm-list">' + arch.map(function (a) {
+      var top = a.top && a.top[0];
+      return '<button type="button" class="mm-li mm-li-btn" data-a="archive" data-v="' + a.id + '"><div><b>' + escapeHtml(mmSeasonLabel(a.id)) + '</b>' + (a.corrected ? ' <span class="mm-tag">korjattu</span>' : '') +
+        '<div class="mm-dim">' + (top ? 'Voittaja ' + escapeHtml(top.name) + ' ' + mmSigned(top.result) : '') + '</div></div><span class="mm-dim">›</span></button>';
+    }).join("") + '</div>' : '<p class="mm-dim">Päättyneet kaudet tallentuvat tähän tuloksineen.</p>') + '</div>';
+    return h;
+  }
+  function mmRoomHtml(v) {
+    var r = v.room, sv = v.season, rn = r.rulesNext;
+    var meM = r.members.filter(function (m) { return m.key === v.me.key; })[0] || {};
+    var h = '<div class="card"><h2>' + escapeHtml(r.name) + '</h2><p class="mm-dim">' + escapeHtml(r.orgName) + ' · ylläpitäjä ' + escapeHtml(r.adminName) + ' · ' + r.members.length + '/' + r.maxPlayers + ' jäsentä</p><div class="mm-list">' +
+      r.members.map(function (m) {
+        return '<div class="mm-li"><div><b>' + escapeHtml(m.name) + '</b><div class="mm-dim">' + (m.playing ? 'Pelaa tällä kaudella' : 'Pelaa seuraavalla kaudella') + (m.leaving ? ' · poistuu kauden lopussa' : '') + '</div></div>' +
+          (r.isAdmin && m.key !== v.me.key ? '<button type="button" class="btn btn-ghost btn-sm" data-a="remove" data-v="' + escapeHtml(m.key) + '">' + (m.playing ? 'Poista kauden lopussa' : 'Poista') + '</button>' : '') + '</div>';
+      }).join("") + '</div>' +
+      '<p class="mm-dim mm-mt">Seuraava kausi ' + escapeHtml(mmSeasonLabel(r.next.id)) + (r.next.startAt ? ' alkaa ' + mmClock(r.next.startAt) : '') + '. Osallistujat: ' + escapeHtml(r.next.participants.join(", ")) + '. Työkaverit liittyvät avaamalla Myyntimonopolin omalla profiilillaan (sama yritys).</p>' +
+      (!sv && r.isAdmin ? '<button type="button" class="btn btn-primary" data-a="start">Aloita kausi nyt</button>' : '') +
+      '<button type="button" class="btn btn-ghost mm-mt" data-a="leave">' + (meM.playing ? (meM.leaving ? 'Peru poistuminen' : 'Poistu huoneesta kauden lopussa') : 'Poistu huoneesta') + '</button></div>';
+    h += '<div class="card"><h2>Seuraavan kauden säännöt</h2><p class="mm-dim">Muutokset koskevat vasta seuraavaa kautta. Käynnissä olevan kauden säännöt on lukittu kauden alussa.</p>' +
+      '<div class="mm-rules">' +
+        mmRuleRow("Alkukassa", mmEur(rn.startCash), "startCash", rn.startCash / 100, r.isAdmin) +
+        mmRuleRow("Tontin hinta", mmEur(rn.tilePrice), "tilePrice", rn.tilePrice / 100, r.isAdmin) +
+        mmRuleRow("Aito tarjous", mmEur(rn.work.offer.cents) + " · " + mmPts(rn.work.offer.q) + " p", "w_offer", rn.work.offer.cents / 100, r.isAdmin) +
+        mmRuleRow("Oikea kauppa (ennen boostia)", mmEur(rn.work.deal.cents) + " · " + mmPts(rn.work.deal.q) + " p", "w_deal", rn.work.deal.cents / 100, r.isAdmin) +
+        mmRuleRow("Luovutus", mmEur(rn.work.handover.cents) + " · " + mmPts(rn.work.handover.q) + " p", "w_handover", rn.work.handover.cents / 100, r.isAdmin) +
+        ["DIESEL", "PETROL_HYBRID", "ELECTRIC"].map(function (c) { return mmRuleRow(MM_CLS[c] + " (hinta / kate)", mmEur(rn.classes[c].buy) + " / " + mmEur(rn.classes[c].margin), null, null, false); }).join("") +
+        mmRuleRow("Kanavat", "pankki " + rn.channels.bank / 100 + " %, huutokauppa " + rn.channels.auction / 100 + " %, Autovex " + rn.channels.autovex / 100 + " %, tukkuri " + rn.channels.wholesale / 100 + " %", null, null, false) +
+        mmRuleRow("Boosti", rn.boost.map(function (b) { return "≥ " + b.min / 100 + " % → " + mmMult(b.mult); }).join(", "), null, null, false) +
+      '</div>' +
+      (r.isAdmin ? '<div class="mm-btn-row"><button type="button" class="btn btn-primary btn-sm" data-a="rules-save">Tallenna seuraavalle kaudelle</button><button type="button" class="btn btn-ghost btn-sm" data-a="rules-reset">Palauta oletukset</button></div>' : '') +
+    '</div>';
+    return h;
+  }
+  function mmRuleRow(label, val, key, num, edit) {
+    return '<div class="mm-kv"><span>' + label + '</span>' + (edit && key ? '<label class="mm-rin"><input type="number" inputmode="numeric" min="0" step="1" data-rule="' + key + '" value="' + num + '"> €</label>' : '<b>' + escapeHtml(val) + '</b>') + '</div>';
+  }
+  function mmRulesHtml(v) {
+    var rm = mmReduced();
+    return '<div class="card mm-rulestext"><h2>Pelisäännöt lyhyesti</h2><ol>' +
+      '<li><b>Oikea työ tuo rahaa ja vuoroja.</b> Aito tarjous +500 € ja 1 piste, oikea kauppa +5 000 € (hitrate-boostilla 1,10–1,25) ja 4 pistettä, hoidettu luovutus +100 € ja 0,25 pistettä. 5 pistettä = 1 vuoro. Palkkiot syntyvät palvelimella tarjousseurannan tallennuksista: tarjous kirjataan, kauppa merkitään ja luovutuksen tarkistuslista täytetään kuten ennenkin.</li>' +
+      '<li><b>Vuoro:</b> kaksi noppaa, eteneminen summan verran, saapumisruudun seuraukset, mahdollinen tonttiosto ja enintään yksi varastotoimi. Tuplat eivät anna lisäheittoa.</li>' +
+      '<li><b>Tontit ja autot:</b> tontti 50 000 € (enintään 3), tontilla 3 autopaikkaa. Pankilta: diesel 10 000 €, bensa/hybridi 25 000 €, sähköauto 60 000 €.</li>' +
+      '<li><b>Pakollinen autokauppa:</b> kun osut kilpailijan tontille, palvelin arpoo yhden myyntikelpoisen auton ja ostat sen koko hinnalla. Pankista hankitun auton ensimmäinen myynti tuottaa myyjälle katteen (500 / 2 000 / 6 000 €). Kilpailijalta ostettu auto myydään eteenpäin vain hankintahintaan.</li>' +
+      '<li><b>Raha loppuu?</b> Kassa käytetään ja puuttuva osa tulee korottomaksi pelivelaksi. Uudet tulot kuittaavat velan ensin. Velkaisena et voi tehdä vapaaehtoisia ostoja.</li>' +
+      '<li><b>Tila loppuu?</b> Ostettu auto menee ensin omalle tontille, sitten vastaanottopaikalle (1 auto). Jos kumpaakaan ei ole, tukkuri ostaa sen heti 85 %:lla ja tappio näytetään.</li>' +
+      '<li><b>Myyntikanavat</b> omasta hankintahinnasta: pankkiasiakas 100 % (omalla tontilla), huutokauppa 90 % (huutokaupparuudussa), Autovex 95 % (yksi listaus, selviää listauksen jälkeen ansaitulla vuorolla), tukkuri 85 % (heti, myös vuorojen välissä).</li>' +
+      '<li><b>Kausi</b> on kalenterikuukausi Suomen aikaa. Käyttämättömät vuorot raukeavat, keskeneräinen Autovex-listaus perutaan. Voittaja: suurin tulos = nettovarallisuus − 500 000 €.</li>' +
+      '</ol><p class="mm-dim mm-small">Kaikki eurot ovat pelirahaa. Autovex on pelin kuvitteellinen kanava. Pelissä ei näytetä asiakastietoja.</p>' +
+      '<label class="lv-self"><input type="checkbox" data-a="rm"' + (rm ? ' checked' : '') + '> Vähennä animaatioita</label>' +
+      '<button type="button" class="btn btn-ghost btn-sm" data-a="onboard">Näytä aloitusopas</button></div>';
+  }
+
+  // ---------- Toiminnot ----------
+  function mmChange(e) {
+    var el = e.target;
+    if (el.getAttribute("data-a") === "rm") { var ls = mmLS(); if (ls) ls.setItem(MM_LS_RM, el.checked ? "1" : "0"); }
+  }
+  function mmClick(e) {
+    var b = e.target.closest("[data-a]"); if (!b || b.disabled || !mm.wrap.contains(b)) return;
+    var a = b.getAttribute("data-a"), val = b.getAttribute("data-v"), v = mm.view, sv = v && v.season;
+    if (a === "rm") return;
+    if (a === "sub") { mm.sub = val; mmRender(); return; }
+    if (a === "retry") { mm.error = null; mmRefresh(); return; }
+    if (a === "demo-start") { mmStartDemo(); return; }
+    if (a === "demo-stop") { mmStopDemo(); return; }
+    if (a === "demo-work") { if (mm.demo) { mm.demo.simulateWork(); mmApi("mm_sync").then(function (r) { mmAccept(r); mmRender(); }); } return; }
+    if (a === "demo-bots") { if (mm.demo) { var n = mm.demo.botsPlay(); showToast(n ? "Kilpailijat pelasivat " + n + " vuoroa" : "Kilpailijoilla ei ollut vuoroja – simuloi työpäivä"); mmRefresh(true); } return; }
+    if (a === "create") { var nm = (document.getElementById("mmRoomName") || {}).value || ""; mmCmd("mm_room_create", { name: nm }).then(function (r) { if (r && r.ok) showToast("Huone luotu. Pyydä työkaverit liittymään."); }); return; }
+    if (a === "join") { mmCmd("mm_room_join", { roomId: val }).then(function (r) { if (r && r.ok) showToast(r.result && r.result.waitsNext ? "Liityit. Pelaat seuraavalla kaudella." : "Liityit huoneeseen."); }); return; }
+    if (a === "start") { mmCmd("mm_room_start", {}).then(function (r) { if (r && r.ok) { mm.sub = "peli"; showToast("Kausi alkoi!"); mmRender(); } }); return; }
+    if (a === "leave") { mmConfirm("Poistutaanko huoneesta?", "Jos pelaat käynnissä olevalla kaudella, poistut vasta kauden lopussa. Voit perua sen ennen kauden vaihtumista.", "Poistu", function () { mmCmd("mm_room_leave", {}); }); return; }
+    if (a === "remove") { mmConfirm("Poistetaanko jäsen?", "Kesken kauden pelaava jäsen poistuu kauden lopussa.", "Poista", function () { mmCmd("mm_room_remove", { member: val }); }); return; }
+    if (a === "rules-save" || a === "rules-reset") { mmSaveRules(a === "rules-reset"); return; }
+    if (a === "archive") { mmOpenArchive(val); return; }
+    if (a === "onboard") { mmOnboard(true); return; }
+    if (!sv || !sv.me) { if (a === "sq" && sv) mmTileSheet(sv, +b.getAttribute("data-i")); return; }
+    var t = sv.me.openTurn;
+    if (a === "roll") { mmRoll(); return; }
+    if (a === "sq") { mmTileSheet(sv, +b.getAttribute("data-i")); return; }
+    if (a === "car") { mmCarSheet(sv, val); return; }
+    if (a === "end") { mmCmd("mm_end_turn", { turnId: t && t.id }).then(function (r) { if (r && r.ok && r.result.turn && r.result.turn.avx) showToast("Autovex-kauppa toteutui: " + mmEur(r.result.turn.avx.price)); }); return; }
+    if (a === "buytile") { mmCmd("mm_buy_tile", { turnId: t && t.id }).then(function (r) { if (r && r.ok) showToast("Tontti ostettu. Voit vielä hankkia sille auton."); }); return; }
+    if (a === "bank") { mmBankSheet(sv); return; }
+    if (a === "move" || a === "list" || a === "sellbank" || a === "sellauction") { mmPickCarSheet(sv, a); return; }
+    if (a === "cancellist") { mmConfirm("Perutaanko Autovex-listaus?", "Auto vapautuu, mutta listaukseen käytetty varastotoimi ei palaudu eikä listauksesta tule rahaa.", "Peru listaus", function () { mmCmd("mm_cancel_list", {}); }); return; }
+  }
+  function mmSaveRules(reset) {
+    if (reset) { mmCmd("mm_room_rules", { reset: true }).then(function (r) { if (r && r.ok) showToast("Seuraavan kauden säännöt palautettiin oletuksiin."); }); return; }
+    var g = function (k) { var el = mm.wrap.querySelector('[data-rule="' + k + '"]'); return el ? Math.round(+el.value * 100) : null; };
+    var rn = mm.view.room.rulesNext;
+    var rules = { startCash: g("startCash"), tilePrice: g("tilePrice"), work: {
+      offer: { cents: g("w_offer"), q: rn.work.offer.q }, deal: { cents: g("w_deal"), q: rn.work.deal.q }, handover: { cents: g("w_handover"), q: rn.work.handover.q } } };
+    mmCmd("mm_room_rules", { rules: rules }).then(function (r) { if (r && r.ok) showToast("Tallennettu. Muutokset koskevat seuraavaa kautta."); });
+  }
+  function mmSheet(html, onAct) {
+    var ov = buildOverlay();
+    ov.card.classList.add("mm-sheet");
+    ov.card.innerHTML = '<div class="qa-head"><h3></h3><button type="button" class="ov-x" aria-label="Sulje">✕</button></div>' + html;
+    ov.card.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-a]");
+      if (e.target.closest(".ov-x")) { closeOverlay(ov); return; }
+      if (b && !b.disabled && onAct) onAct(b.getAttribute("data-a"), b, ov);
+    });
+    var x = ov.card.querySelector(".ov-x"); if (x) x.focus();
+    return ov;
+  }
+  function mmTitle(ov, t) { ov.card.querySelector(".qa-head h3").textContent = t; }
+  function mmConfirm(title, text, okLabel, fn) {
+    var ov = mmSheet('<p>' + escapeHtml(text) + '</p><div class="mm-btn-row"><button type="button" class="btn btn-primary" data-a="ok">' + escapeHtml(okLabel) + '</button><button type="button" class="btn btn-ghost" data-a="no">Peruuta</button></div>',
+      function (a, b, o) { closeOverlay(o); if (a === "ok") fn(); });
+    mmTitle(ov, title);
+  }
+  function mmPriceRows(c) {
+    return '<table class="src mm-ch"><thead><tr><th>Kanava</th><th>Saat</th><th>Tappio</th></tr></thead><tbody>' +
+      [["Pankkiasiakas 100 %", "bank", "omalla tontilla"], ["Huutokauppa 90 %", "auction", "huutokaupparuudussa"], ["Autovex 95 %", "autovex", "listaus, selviää myöhemmin"], ["Tukkuri 85 %", "wholesale", "heti"]].map(function (x) {
+        return '<tr><td>' + x[0] + '<div class="mm-dim mm-small">' + x[2] + '</div></td><td>' + mmEur(c.prices[x[1]]) + '</td><td class="' + (c.losses[x[1]] ? 'mm-loss' : '') + '">' + (c.losses[x[1]] ? '−' + mmEur(c.losses[x[1]]) : '0 €') + '</td></tr>';
+      }).join("") + '</tbody></table>';
+  }
+  function mmCarSheet(sv, id) {
+    var c = sv.cars.filter(function (x) { return x.id === id; })[0]; if (!c) return;
+    var me = sv.me, mine = me && c.owner === me.nick, t = me && me.openTurn;
+    var where = c.loc.t === "recv" ? "Vastaanottopaikka (ei osallistu myyntiarvontaan)" : sv.board[c.loc.tile].name + ", paikka " + (c.loc.slot + 1);
+    var h = '<div class="mm-carhead"><i class="car big c-' + c.cls + '"></i><div><b>' + MM_CLS[c.cls] + '</b><div class="mm-dim">' + escapeHtml(where) + (c.st === "listed" ? ' · Autovexissä' : '') + '</div></div></div>' +
+      '<div class="mm-kv"><span>' + (mine ? 'Oma hankintahinta' : 'Omistajan hankintahinta') + '</span><b>' + mmEur(c.acq) + '</b></div>' +
+      '<div class="mm-kv"><span>Pakko-ostohinta kilpailijalle</span><b>' + mmEur(c.forcedPrice) + '</b></div>' +
+      '<p class="mm-dim">' + (c.right ? 'Katteellinen myynti käytettävissä: kun kilpailija osuu tontille ja arvonta osuu tähän autoon, ' + (mine ? 'saat' : 'omistaja saa') + ' katetta ' + mmEur(c.margin) + '. Oikeus kuluu ensimmäisessä myynnissä.' : 'Ei uutta katetta: auto on jo myyty kerran pelaajalta toiselle, joten se myydään eteenpäin vain hankintahintaan.') + '</p>';
+    if (mine) {
+      h += '<div class="mm-sec">Myyntikanavat</div>' + mmPriceRows(c);
+      var acts = [], used = !t || t.actionUsed, free = c.st === "stock";
+      if (free && t && !used && sv.tiles[t.to] === me.nick) acts.push('<button type="button" class="btn btn-ghost" data-a="sellbank">Myy pankkiasiakkaalle · ' + mmEur(c.prices.bank) + '</button>');
+      if (free && t && !used && sv.board[t.to].kind === "auction") acts.push('<button type="button" class="btn btn-ghost" data-a="sellauction">Myy huutokaupassa · ' + mmEur(c.prices.auction) + ' (tappio ' + mmEur(c.losses.auction) + ')</button>');
+      if (free && t && !used && !me.listing) acts.push('<button type="button" class="btn btn-ghost" data-a="list">Listaa Autovexiin · ' + mmEur(c.prices.autovex) + '</button>');
+      if (free && t && !used) acts.push('<button type="button" class="btn btn-ghost" data-a="move">Siirrä…</button>');
+      if (free) acts.push('<button type="button" class="btn btn-ghost mm-danger" data-a="wholesale">Myy tukkurille heti · saat ' + mmEur(c.prices.wholesale) + ', tappio ' + mmEur(c.losses.wholesale) + '</button>');
+      if (c.st === "listed") acts.push('<button type="button" class="btn btn-ghost" data-a="cancellist">Peru Autovex-listaus</button>');
+      if (!t && free) h += '<p class="mm-dim mm-small">Pankki-, huutokauppa-, Autovex- ja siirtotoimet tehdään oman vuoron aikana. Tukkurimyynti onnistuu aina.</p>';
+      h += '<div class="mm-acts col">' + acts.join("") + '</div>';
+    }
+    var ov = mmSheet(h, function (a, b, o) {
+      if (a === "wholesale") {
+        if (!b.classList.contains("confirm")) { b.classList.add("confirm"); b.textContent = "Vahvista: saat " + mmEur(c.prices.wholesale) + ", tappio " + mmEur(c.losses.wholesale); return; }
+        closeOverlay(o); mmCmd("mm_wholesale", { carId: c.id }).then(function (r) { if (r && r.ok) showToast("Tukkurimyynti: saat " + mmEur(r.result.price) + ", tappio " + mmEur(r.result.loss) + "."); });
+        return;
+      }
+      closeOverlay(o);
+      if (a === "sellbank") mmCmd("mm_sell_bank", { turnId: t.id, carId: c.id }).then(function (r) { if (r && r.ok) showToast("Myit pankkiasiakkaalle " + mmEur(r.result.price) + ". Kate 0 €."); });
+      if (a === "sellauction") mmCmd("mm_sell_auction", { turnId: t.id, carId: c.id }).then(function (r) { if (r && r.ok) showToast("Huutokauppa: saat " + mmEur(r.result.price) + ", tappio " + mmEur(r.result.loss) + "."); });
+      if (a === "list") mmCmd("mm_list", { turnId: t.id, carId: c.id }).then(function (r) { if (r && r.ok) showToast("Listattu Autovexiin."); });
+      if (a === "move") mmMoveSheet(mm.view.season, c.id);
+      if (a === "cancellist") mmCmd("mm_cancel_list", {});
+    });
+    mmTitle(ov, MM_CLS[c.cls] + (mine ? "" : " · " + mmName(sv, c.owner)));
+  }
+  function mmTileSheet(sv, i) {
+    var sq = sv.board[i], owner = sv.tiles[i], me = sv.me && sv.me.nick;
+    var h = '';
+    if (sq.kind === "tile") {
+      h += '<div class="mm-kv"><span>Omistaja</span><b>' + (owner ? '<i class="mm-dot" style="background:' + mmColor(sv, owner) + '"></i>' + escapeHtml(owner === me ? "Sinä" : mmName(sv, owner)) : 'Vapaa') + '</b></div>' +
+        '<div class="mm-kv"><span>Tontin hinta</span><b>' + mmEur(sv.rules.tilePrice) + '</b></div>';
+      var cars = sv.cars.filter(function (c) { return c.loc && c.loc.t === "tile" && c.loc.tile === i; }).sort(function (a, b) { return a.loc.slot - b.loc.slot; });
+      h += '<div class="mm-sec">Autopaikat ' + cars.length + '/' + sv.rules.slotsPerTile + '</div>';
+      for (var s = 0; s < sv.rules.slotsPerTile; s++) {
+        var c = cars.filter(function (x) { return x.loc.slot === s; })[0];
+        h += c ? '<button type="button" class="mm-car" data-a="car" data-v="' + c.id + '"><i class="car c-' + c.cls + '"></i><span><b>' + MM_CLS[c.cls] + '</b><small>hankinta ' + mmEur(c.acq) + (c.st === "listed" ? ' · Autovexissä, ei arvonnassa' : '') + '</small></span><span class="r"><b>' + mmEur(c.forcedPrice) + '</b><small>pakko-osto</small></span></button>'
+          : '<div class="mm-car empty"><i class="car e"></i><span>Vapaa paikka</span></div>';
+      }
+      if (owner && owner !== me) h += '<p class="mm-dim">Jos osut tähän, palvelin arpoo yhden myyntikelpoisen auton ja ostat sen koko hinnalla. Autovexiin listatut autot eivät ole mukana.</p>';
+      if (!owner) h += '<p class="mm-dim">Vapaan tontin voi ostaa vain osuessaan siihen oman vuoron aikana.</p>';
+    } else {
+      var txt = { start: "Lähtö ei maksa eikä vähennä mitään. Ohitus ei maksa vuokria.", auction: "Huutokauppa: osuessasi voit myydä yhden auton 90 %:lla hankintahinnastasi (varastotoimi).",
+        autovex: "Autovex-ruutu. Autovex-listauksen voi tehdä millä tahansa vuorolla varastotoimena: hinta 95 %, selviää listauksen jälkeen ansaitulla vuorolla.",
+        market: "Markkinakatsaus: ei vaikuta rahaan tai heittoihin.", pit: "Varikko: ei vaikuta rahaan tai heittoihin." }[sq.kind];
+      h += '<p>' + txt + '</p>';
+      if (sv.me && (sq.kind === "market" || sq.kind === "pit" || sq.kind === "start")) {
+        var w = sv.me.worth;
+        h += '<div class="mm-kv"><span>Kassa</span><b>' + mmEur(w.cash) + '</b></div><div class="mm-kv"><span>Varastossa</span><b>' + mmEur(w.stock) + '</b></div><div class="mm-kv"><span>Tulos</span><b>' + mmSigned(w.result) + '</b></div>';
+      }
+    }
+    var here = sv.players.filter(function (p) { return p.pos === i; });
+    if (here.length) h += '<p class="mm-dim">Ruudussa: ' + here.map(function (p) { return escapeHtml(p.nick === me ? "sinä" : p.name); }).join(", ") + '</p>';
+    var ov = mmSheet(h, function (a, b, o) { if (a === "car") { closeOverlay(o); mmCarSheet(mm.view.season, b.getAttribute("data-v")); } });
+    mmTitle(ov, sq.name);
+  }
+  function mmBankSheet(sv) {
+    var me = sv.me, t = me.openTurn, tiles = me.tiles.filter(function (ti) { return mmFree(sv, ti) > 0; });
+    var sel = { tile: tiles[0], cls: null };
+    function draw(ov) {
+      var h = '<p class="mm-dim">Uusi auto pankilta omalle tontille. Kassa ' + mmEur(me.cash) + '.</p>';
+      if (tiles.length > 1) h += '<div class="mm-sec">Tontti</div><div class="oe-chips">' + tiles.map(function (ti) { return '<button type="button" data-a="tile" data-v="' + ti + '" class="' + (sel.tile === ti ? 'on' : '') + '">' + escapeHtml(sv.board[ti].name) + ' (' + mmFree(sv, ti) + ' vapaana)</button>'; }).join("") + '</div>';
+      h += '<div class="mm-sec">Autoluokka</div><div class="mm-acts col">' + ["DIESEL", "PETROL_HYBRID", "ELECTRIC"].map(function (c) {
+        var k = sv.rules.classes[c], ok = me.cash >= k.buy;
+        return '<button type="button" class="btn btn-ghost mm-cls' + (sel.cls === c ? ' on' : '') + '" data-a="cls" data-v="' + c + '"' + (ok ? '' : ' disabled') + '><i class="car c-' + c + '"></i><span>' + MM_CLS[c] + '</span><span class="r">' + mmEur(k.buy) + '<small>kate kilpailijalle +' + mmEur(k.margin) + '</small></span></button>';
+      }).join("") + '</div>';
+      if (sel.cls) h += '<p class="mm-dim">Kassa jälkeen ' + mmEur(me.cash - sv.rules.classes[sel.cls].buy) + '. Nettovarallisuus ei muutu: raha muuttuu autoksi.</p>';
+      h += '<button type="button" class="btn btn-primary" data-a="ok"' + (sel.cls ? '' : ' disabled') + '>Hanki auto</button>';
+      ov.card.querySelector(".mm-body").innerHTML = h;
+    }
+    var ov = mmSheet('<div class="mm-body"></div>', function (a, b, o) {
+      if (a === "tile") { sel.tile = +b.getAttribute("data-v"); draw(o); }
+      else if (a === "cls") { sel.cls = b.getAttribute("data-v"); draw(o); }
+      else if (a === "ok") { closeOverlay(o); mmCmd("mm_bank_buy", { turnId: t.id, tile: sel.tile, cls: sel.cls }).then(function (r) { if (r && r.ok) showToast(MM_CLS[sel.cls] + " hankittu tontille " + sv.board[sel.tile].name + "."); }); }
+    });
+    mmTitle(ov, "Hanki auto pankilta");
+    draw(ov);
+  }
+  function mmPickCarSheet(sv, kind) {
+    var me = sv.me, cars = sv.cars.filter(function (c) { return c.owner === me.nick && c.st === "stock"; });
+    var title = { move: "Siirrä auto", list: "Listaa Autovexiin", sellbank: "Myy pankkiasiakkaalle", sellauction: "Myy huutokaupassa" }[kind];
+    var ch = { list: "autovex", sellbank: "bank", sellauction: "auction" }[kind];
+    var info = { move: "Valitse siirrettävä auto. Siirto ei muuta hankintahintaa eikä kateoikeutta.", list: "Auto pysyy paikallaan, mutta lukittuu: sitä ei arvota pakko-ostoon eikä voi siirtää. Kauppa 95 %:lla selviää, kun päätät vuoron, joka on ansaittu listauksen jälkeen tehdyllä työllä. Kauden lopussa keskeneräinen listaus perutaan.",
+      sellbank: "Pankkiasiakas maksaa hankintahintasi: kate 0 €, tappio 0 €.", sellauction: "Huutokauppa maksaa 90 % hankintahinnastasi." }[kind];
+    var h = '<p class="mm-dim">' + info + '</p>' + cars.map(function (c) {
+      var where = c.loc.t === "recv" ? "Vastaanottopaikka" : sv.board[c.loc.tile].name;
+      return '<button type="button" class="mm-car" data-a="pick" data-v="' + c.id + '"><i class="car c-' + c.cls + '"></i><span><b>' + MM_CLS[c.cls] + '</b><small>' + escapeHtml(where) + ' · hankinta ' + mmEur(c.acq) + '</small></span>' +
+        (ch ? '<span class="r"><b>' + mmEur(c.prices[ch]) + '</b><small>' + (c.losses[ch] ? 'tappio ' + mmEur(c.losses[ch]) : 'ei tappiota') + '</small></span>' : '<span class="r">›</span>') + '</button>';
+    }).join("");
+    var ov = mmSheet(h, function (a, b, o) {
+      if (a !== "pick") return;
+      var id = b.getAttribute("data-v"), t = me.openTurn;
+      if (kind === "move") { closeOverlay(o); mmMoveSheet(sv, id); return; }
+      var c = cars.filter(function (x) { return x.id === id; })[0];
+      if (!b.classList.contains("confirm")) {
+        Array.prototype.forEach.call(o.card.querySelectorAll(".mm-car.confirm"), function (x) { x.classList.remove("confirm"); });
+        b.classList.add("confirm");
+        var n = o.card.querySelector(".mm-confirm-note"); if (!n) { n = document.createElement("p"); n.className = "mm-confirm-note"; o.card.appendChild(n); }
+        n.textContent = "Vahvista napauttamalla autoa uudelleen: saat " + mmEur(c.prices[ch]) + (c.losses[ch] ? ", tappio " + mmEur(c.losses[ch]) : "") + (kind === "list" ? " (kun kauppa selviää)" : "") + ".";
+        return;
+      }
+      closeOverlay(o);
+      var act = { list: "mm_list", sellbank: "mm_sell_bank", sellauction: "mm_sell_auction" }[kind];
+      mmCmd(act, { turnId: t.id, carId: id }).then(function (r) {
+        if (!r || !r.ok) return;
+        showToast(kind === "list" ? "Listattu Autovexiin." : "Myyty: saat " + mmEur(r.result.price) + (r.result.loss ? ", tappio " + mmEur(r.result.loss) : ", kate 0 €") + ".");
+      });
+    });
+    mmTitle(ov, title);
+  }
+  function mmMoveSheet(sv, carId) {
+    var me = sv.me, t = me.openTurn, c = sv.cars.filter(function (x) { return x.id === carId; })[0];
+    var opts = me.tiles.filter(function (ti) { return !(c.loc.t === "tile" && c.loc.tile === ti) && mmFree(sv, ti) > 0; }).map(function (ti) { return [String(ti), sv.board[ti].name + " (" + mmFree(sv, ti) + " vapaana)"]; });
+    if (c.loc.t !== "recv" && !me.recv) opts.push(["recv", "Vastaanottopaikka (ei myyntiarvonnassa)"]);
+    var h = '<p class="mm-dim">' + MM_CLS[c.cls] + ', nyt ' + escapeHtml(c.loc.t === "recv" ? "vastaanottopaikalla" : sv.board[c.loc.tile].name) + '.</p>' +
+      (opts.length ? '<div class="mm-acts col">' + opts.map(function (x) { return '<button type="button" class="btn btn-ghost" data-a="dest" data-v="' + x[0] + '">' + escapeHtml(x[1]) + '</button>'; }).join("") + '</div>' : '<p>Ei vapaata paikkaa, johon siirtää.</p>');
+    var ov = mmSheet(h, function (a, b, o) {
+      if (a !== "dest") return;
+      closeOverlay(o);
+      var d = b.getAttribute("data-v");
+      mmCmd("mm_move", { turnId: t.id, carId: carId, dest: d === "recv" ? "recv" : +d }).then(function (r) { if (r && r.ok) showToast("Auto siirretty."); });
+    });
+    mmTitle(ov, "Siirrä auto");
+  }
+  function mmOpenArchive(sid) {
+    mmApi("mm_archive", { seasonId: sid }).then(function (r) {
+      if (!r || !r.ok || !r.result) { showToast((r && r.message) || "Arkistoa ei saatu."); return; }
+      var a = r.result.archive, me = a.me;
+      var h = '<p class="mm-dim">' + (a.corrected ? 'Tulosta on korjattu myöhemmin saapuneella työtapahtumalla. ' : '') + 'Päättyi ' + mmClock(a.endAt) + '.</p>' + mmStandingsTable(a, a.standings);
+      if (me) h += '<div class="mm-sec">Oma kausi</div><div class="mm-kv"><span>Tulos</span><b>' + mmSigned(me.worth.result) + '</b></div><div class="mm-kv"><span>Tarjoukset · kaupat · luovutukset</span><b>' + me.work.offers + ' · ' + me.work.dealsValid + ' · ' + me.work.handovers + '</b></div><div class="mm-kv"><span>Rauenneet vuorot</span><b>' + me.expired + '</b></div>';
+      var ov = mmSheet(h, null);
+      mmTitle(ov, "Kausi " + mmSeasonLabel(sid));
+    }, function () { showToast("Ei yhteyttä palvelimeen."); });
+  }
+  function mmMaybeOnboard() {
+    var ls = mmLS(); if (ls && ls.getItem(MM_LS_ONB) === "1") return;
+    if (document.querySelector(".ov-back")) return;
+    mmOnboard(false);
+  }
+  function mmOnboard(force) {
+    var ls = mmLS(); if (ls) try { ls.setItem(MM_LS_ONB, "1"); } catch (e) {}
+    var ov = mmSheet('<ol class="mm-onb">' +
+      '<li><b>Työ = vuorot.</b> Tarjous 1 piste, kauppa 4, luovutus 0,25. 5 pistettä on yksi vuoro. Palkkiot tulevat tarjousseurannasta automaattisesti.</li>' +
+      '<li><b>Rakenna liike.</b> Osta tontti osuessasi siihen (50 000 €, max 3) ja hanki autoja pankilta (max 3 tontilla).</li>' +
+      '<li><b>Pakko-osto.</b> Kilpailijan tontilla ostat arvotun auton koko hinnalla. Jos kassa ei riitä, puuttuva osa on korotonta pelivelkaa.</li>' +
+      '<li><b>Tila.</b> Ostettu auto menee omalle tontille, sitten vastaanottopaikalle. Jos tilaa ei ole, tukkuri ostaa sen heti 85 %:lla ja tappio näytetään. Voit myydä autoja tukkurille etukäteen.</li>' +
+      '<li><b>Kate kerran.</b> Pankkiauton ensimmäinen myynti kilpailijalle tuottaa katteen. Sen jälkeen auto liikkuu vain hankintahintaan.</li>' +
+      '<li><b>Kuukausi ratkaisee.</b> Voittaja on se, jonka nettovarallisuus kasvoi eniten. Käyttämättömät vuorot raukeavat kuun lopussa.</li>' +
+      '</ol><button type="button" class="btn btn-primary" data-a="ok">Selvä, pelataan</button>', function (a, b, o) { if (a === "ok") closeOverlay(o); });
+    mmTitle(ov, "Näin Myyntimonopoli toimii");
+  }
+  // Heitto: palvelin arpoo nopat ja mahdollisen auton. Selain vain animoi tallennetun tuloksen.
+  function mmRoll() {
+    var sv0 = mm.view.season, from = sv0.me.pos, nick = sv0.me.nick;
+    mmCmd("mm_roll", {}).then(function (r) {
+      if (!r || !r.ok || !r.result || !r.result.turn) return;
+      var t = r.result.turn, steps = (t.to - t.from + 24) % 24 || 24;
+      function done() {
+        mm.anim = null; mmRender();
+        if (t.forced && !t.forced.none) {
+          var ov = mmSheet('<p class="mm-forced">' + escapeHtml(mmForcedText(r.season, t.forced, true)) + '</p>' +
+            (t.forced.sellerMargin ? '<p class="mm-dim">Myyjän kate ' + mmEur(t.forced.sellerMargin) + '. Arvonnassa oli ' + t.forced.candidates.length + ' myyntikelpoista autoa.</p>' : '<p class="mm-dim">Arvonnassa oli ' + t.forced.candidates.length + ' myyntikelpoista autoa.</p>') +
+            '<button type="button" class="btn btn-primary" data-a="ok">Selvä</button>', function (a, b, o) { closeOverlay(o); });
+          mmTitle(ov, "Pakollinen autokauppa");
+        }
+      }
+      if (mmReduced() || r.replay) { done(); return; }
+      var pos = {}; pos[nick] = from;
+      mm.anim = { rolling: true, dice: [1, 1], pos: pos };
+      var f = 0;
+      var roll = setInterval(function () {
+        f++; mm.anim.dice = [((f + t.d1) % 6) + 1, ((f * 2 + t.d2) % 6) + 1]; mmRender();
+        if (f >= 6) {
+          clearInterval(roll);
+          mm.anim.rolling = false; mm.anim.dice = [t.d1, t.d2];
+          var k = 0;
+          var step = setInterval(function () {
+            k++; mm.anim.pos[nick] = (from + k) % 24; mmRender();
+            if (k >= steps) { clearInterval(step); setTimeout(done, 250); }
+          }, 140);
+        }
+      }, 70);
+    });
+  }
+
   // ---------- Nav + init ----------
   Array.prototype.forEach.call(document.querySelectorAll("nav.tabbar button"), function (b) {
     b.addEventListener("click", function () {
@@ -6948,6 +7965,7 @@
     }
   }, 60000);
 
+  try { if (new URLSearchParams(window.location.search).get("mmdemo") === "1") { state.tab = "mm"; mm.wantDemo = true; } } catch (e) {}
   render();
   initAuth();
 })();
