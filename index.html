@@ -2177,7 +2177,7 @@
   function lvDone(o) { return !!(o && o.lv && o.lv.ts && ((o.lv.c | 0) & LV_ALL) === LV_ALL); }
   function lvClosedOut(o) { return lvDone(o) || !!(o && o.lv && o.lv.x); }
   // Kauppa odottaa luovutusta: pysyy näkyvissä (myös kuukauden vaihtuessa) enintään 45 päivää.
-  function lvPending(o) { return !!(o && o.closed && !lvClosedOut(o) && o.closedTs && (Date.now() - new Date(o.closedTs).getTime()) < LV_KEEP_DAYS * 86400000); }
+  function lvPending(o) { return !!(o && o.closed && !o.bk && !lvClosedOut(o) && o.closedTs && (Date.now() - new Date(o.closedTs).getTime()) < LV_KEEP_DAYS * 86400000); }
   function keepInCarry(o) { return isActive(o) || lvPending(o); }
   // Päättynyt tapaus tiiviisti: [id, tarjous, kauppa, luovutus] minuutteina (Myyntimonopolin hitrate ja palkkiot).
   function caseEntry(o) {
@@ -2655,7 +2655,7 @@
     var bits = [];
     var s = ostat(o);
     bits.push('<span class="st-chip st-' + s + '">' + ST_LABEL[s] + (s === "l" && o.lr ? ": " + lostLabel(o.lr) : "") + '</span>');
-    if (o.closed) bits.push(lvClosedOut(o) ? '<span class="lv-chip done">' + (o.lv && o.lv.x && !lvDone(o) ? 'Kollega luovutti' : 'Luovutettu ✓') + '</span>' : '<span class="lv-chip">Luovutus ' + lvCount(o) + '/' + LV_ITEMS.length + '</span>');
+    if (o.closed && !o.bk) bits.push(lvClosedOut(o) ? '<span class="lv-chip done">' + (o.lv && o.lv.x && !lvDone(o) ? 'Kollega luovutti' : 'Luovutettu ✓') + '</span>' : '<span class="lv-chip">Luovutus ' + lvCount(o) + '/' + LV_ITEMS.length + '</span>');
     if (isActive(o) && o.rp && o.rp.s) { var rst = rdStageOfItem(o.rp.s); if (rst) bits.push('<span class="rp-chip">Tie: ' + escapeHtml(rdStageName(rst)) + (o.rp.l ? ' (' + (o.rp.l + 1) + '.)' : '') + '</span>'); }
     if (d.car) bits.push('<span>' + escapeHtml(d.car) + '</span>');
     if (isActive(o) && o.nd) bits.push('<span class="nd' + (o.nd < todayYmd() ? ' late' : o.nd === todayYmd() ? ' today' : '') + '">' + escapeHtml((d.na ? d.na + " · " : "") + relDay(o.nd)) + '</span>');
@@ -3717,9 +3717,9 @@
       if (an !== bn) return an < bn ? -1 : 1;
       return new Date(b.o.ts) - new Date(a.o.ts);
     });
-    else if (f === "luov") list = refs.filter(function (r) { return r.o.closed && !lvClosedOut(r.o); }).sort(function (a, b) { return new Date(b.o.closedTs || b.o.ts) - new Date(a.o.closedTs || a.o.ts); });
+    else if (f === "luov") list = refs.filter(function (r) { return r.o.closed && !r.o.bk && !lvClosedOut(r.o); }).sort(function (a, b) { return new Date(b.o.closedTs || b.o.ts) - new Date(a.o.closedTs || a.o.ts); });
     else list = refs.filter(function (r) { return r.mk === state.monthKey; }).sort(function (a, b) { return new Date(b.o.ts) - new Date(a.o.ts); });
-    var lvN = refs.filter(function (r) { return r.o.closed && !lvClosedOut(r.o); }).length;
+    var lvN = refs.filter(function (r) { return r.o.closed && !r.o.bk && !lvClosedOut(r.o); }).length;
 
     var dealsN = offers.filter(function (o) { return o.closed; }).length;
     var activeN = refs.filter(function (r) { return isActive(r.o); }).length;
