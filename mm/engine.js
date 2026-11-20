@@ -181,7 +181,7 @@ var MMEngine = (function () {
       startAt: o.startAt || b.start, endAt: b.end, closedAt: null,
       players: {}, order: [], tiles: {}, cars: {}, listings: {},
       awards: {}, ledger: [], feed: [], seq: { car: 0, turn: 0, led: 0, feed: 0 },
-      results: null, corrected: false
+      results: null, corrected: false, turns: []
     };
     (o.participants || []).forEach(function (p) { addPlayer(s, p.nick, p.joinedAt || s.startAt, p.name); });
     return s;
@@ -385,10 +385,13 @@ var MMEngine = (function () {
     var t = { id: "T" + s.seq.turn, nick: nick, at: now, rightIdx: p.used - 1, rightAt: rightAt, d1: d1, d2: d2, from: from, to: to,
       tileBought: false, actionUsed: false, forced: null, ended: null };
     p.openTurn = t;
+    (s.turns || (s.turns = [])).push({ id: t.id, n: nick, at: now, ra: rightAt, d: [d1, d2], fr: from, to: to });
     var sq = BOARD[to];
     feed(s, now, nick, "roll", p.name + " heitti " + d1 + " + " + d2 + " ja eteni ruutuun " + sq.name + ".", { turn: t.id, d1: d1, d2: d2, from: from, to: to });
     if (sq.kind === "tile" && s.tiles[to] && s.tiles[to] !== nick) {
       t.forced = forcedPurchase(s, nick, s.tiles[to], to, now, rng, t.id);
+      var tl = s.turns[s.turns.length - 1];
+      tl.fc = t.forced.carId || null; tl.fp = t.forced.price || 0; tl.fs = t.forced.seller || s.tiles[to];
     }
     return t;
   }
@@ -571,7 +574,7 @@ var MMEngine = (function () {
   function standings(s, now) {
     var rows = s.order.map(function (nick) {
       var w = netWorth(s, nick), ws = workStatus(s, nick, now || s.endAt);
-      return { nick: nick, name: s.players[nick].name, nw: w.nw, result: w.result, workNet: ws.workNet, deals: ws.dealsValid };
+      return { nick: nick, name: s.players[nick].name, nw: w.nw, result: w.result, workNet: ws.workNet, deals: ws.dealsValid, offers: ws.offers, handovers: ws.handovers };
     });
     rows.sort(function (a, b) { return b.result - a.result || b.workNet - a.workNet || b.deals - a.deals; });
     var rank = 0;
@@ -582,7 +585,11 @@ var MMEngine = (function () {
     });
     return rows;
   }
-  function recomputeResults(s) { if (s.results) s.results.rows = standings(s, s.closedAt); }
+  function recomputeResults(s) {
+    if (!s.results) return;
+    s.order.forEach(function (nick) { var p = s.players[nick]; p.expired = Math.max(0, rights(s, nick).earned - p.used); });
+    s.results.rows = standings(s, s.closedAt);
+  }
 
   // ---------- Kauden sulku ----------
   function closeSeason(s, now) {
