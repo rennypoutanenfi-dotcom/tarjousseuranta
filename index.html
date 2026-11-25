@@ -1407,6 +1407,39 @@
   .kv-tr input { width: 100%; min-width: 0; box-sizing: border-box; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 7px 6px; font-size: 15px; text-align: center; font-family: var(--font-body); }
   .kv-tr input.unk { border-color: var(--bad); background: var(--bad-dim); }
   .kv-tr input:disabled { opacity: .4; }
+  /* ---------- Myyntitie: kiinteä vaihepalkki ja paluu ---------- */
+  .rk-stagebar { display: flex; gap: 8px; margin-bottom: 8px; }
+  .rk-back { flex-shrink: 0; background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 10px; padding: 0 14px; height: 40px; font: 700 13.5px var(--font-body); cursor: pointer; }
+  .rk-back span { margin-left: 2px; }
+  .rk-nstage { flex: 1; min-width: 0; height: 40px; display: flex; align-items: center; justify-content: space-between; gap: 8px; background: var(--surface); border: 1px solid var(--accent); color: var(--accent); border-radius: 10px; padding: 0 12px; font: 700 14px var(--font-body); cursor: pointer; text-align: left; }
+  .rk-nstage .tx { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rk-nstage small { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--text-dim); margin-right: 8px; }
+  .rk-nstage svg { width: 18px; height: 18px; flex-shrink: 0; }
+  main.runko-main.rk-viewing.rd-mode { padding-bottom: 200px; }
+  /* Sama korkeus joka kohdassa, jotta painikkeet eivät liiku. */
+  .rk-next .rk-fwd { height: 56px; box-sizing: border-box; }
+  .rk-next .rk-fwd .s { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; -webkit-line-clamp: unset; }
+  .rk-next .rk-fwd .l { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  body.rk-on #toast { bottom: calc(190px + env(safe-area-inset-bottom)); }
+  .rd-backq { margin: 12px 0 4px; }
+  .rd-backq-b { display: flex; gap: 6px; margin-top: 6px; }
+  .rd-backq-b button { flex: 1 1 0; min-width: 0; height: 40px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 10px; font: 700 13px var(--font-body); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 8px; }
+  .rd-backq-b button:first-child { flex-grow: 1.7; border-color: var(--accent); color: var(--accent); }
+  .rk-bm-quick { display: flex; gap: 8px; margin: 6px 0 14px; }
+  .rk-bm-quick .btn { flex: 1; }
+  .rk-bm { display: flex; flex-direction: column; gap: 6px; }
+  .rk-bm-h { font-family: var(--font-display); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-dim); margin: 8px 0 2px; }
+  .rk-bm-i { display: flex; align-items: center; gap: 10px; width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 10px; padding: 11px 12px; font: 600 15px var(--font-body); cursor: pointer; text-align: left; }
+  .rk-bm-i .m { width: 16px; color: var(--text-faint); }
+  .rk-bm-i.past .m { color: var(--good); }
+  .rk-bm-i.cur { border-color: var(--accent); background: var(--accent-dim); }
+  .rk-bm-i.cur .m { color: var(--accent); }
+  .rk-bm-i .tx { flex: 1; }
+  .rk-bm-i em { font-style: normal; font-size: 11.5px; font-weight: 700; color: var(--accent); }
+  @media (min-width: 900px) {
+    main.runko-main.rk-viewing.rd-mode { padding-bottom: 180px; }
+    body.rk-on #toast { bottom: 150px; }
+  }
 </style>
 </head>
 <body>
@@ -4306,14 +4339,48 @@
 
     var bar = document.createElement("div");
     bar.className = "rk-next";
-    bar.innerHTML = '<div class="rk-next-inner"><button type="button" class="rk-prev" aria-label="Edellinen kohta">' + RK_ICON.left + '</button>' +
+    // Alapalkki pysyy aina samassa kohdassa: ylärivillä paluu ja seuraava vaihe, alarivillä seuraava kohta.
+    bar.innerHTML = '<div class="rk-stagebar"><button type="button" class="rk-back" aria-label="Palaa aiempaan vaiheeseen">↺ <span>Palaa</span></button>' +
+      '<button type="button" class="rk-nstage"><span class="tx"></span>' + RK_ICON.right + '</button></div>' +
+      '<div class="rk-next-inner"><button type="button" class="rk-prev" aria-label="Edellinen kohta">' + RK_ICON.left + '</button>' +
       '<button type="button" class="rk-fwd"><span class="t"><span class="l"></span><span class="s"></span></span>' + RK_ICON.right + '</button></div>';
     main.appendChild(bar);
     bar.querySelector(".rk-prev").addEventListener("click", function () { if (pos > 0) go(pos - 1); });
     bar.querySelector(".rk-fwd").addEventListener("click", function () {
       if (pos < N - 1) go(pos + 1);
       else if (!r) go(0);
+      else openBackMenu();
     });
+    bar.querySelector(".rk-back").addEventListener("click", openBackMenu);
+    bar.querySelector(".rk-nstage").addEventListener("click", function () {
+      var si = stages.findIndex(function (sg) { return sg.st.id === steps[pos].stage.id; });
+      if (stages[si + 1]) go(stages[si + 1].from);
+    });
+    // Paluu: jos lopputuloksessa on listattu vastaväitteitä, ne otetaan mukaan uudelle kierrokselle.
+    function goBackTo(i) {
+      if (r && !done && rdStageKind(steps[pos].stage) === "end" && rd.pending.length) {
+        var n = rd.pending.length;
+        commitPending(); rp.l = (rp.l || 0) + 1; rp.ok = [];
+        showToast(n + (n === 1 ? " vastaväite" : " vastaväitettä") + " mukana uudella kierroksella");
+      }
+      go(i, true);
+    }
+    function openBackMenu() {
+      var ov = buildOverlay(), cur = stages.findIndex(function (sg) { return sg.st.id === steps[pos].stage.id; });
+      var tI = rdTarveIndex(steps);
+      ov.card.innerHTML = '<div class="qa-head"><h3>Palaa vaiheeseen</h3><button type="button" class="ov-x" aria-label="Sulje">✕</button></div>' +
+        '<div class="rk-bm-quick"><button type="button" class="btn btn-primary" data-bm="' + tI + '">↺ Tarvekartoitus uudelleen</button>' +
+        '<button type="button" class="btn btn-ghost" data-bm="0">Alkuun</button></div>' +
+        '<div class="rk-bm">' + stages.map(function (sg, si) {
+          var head = si === 0 || stages[si - 1].call !== sg.call ? '<div class="rk-bm-h">' + escapeHtml(sg.st.id === "rd-loppu" ? "Lopputulos" : rkCallTitle(sg.call)) + '</div>' : '';
+          return head + '<button type="button" class="rk-bm-i' + (si === cur ? ' cur' : si < cur ? ' past' : '') + '" data-bm="' + sg.from + '"><span class="m">' + (si < cur ? '✓' : si === cur ? '▶' : '○') + '</span>' +
+            '<span class="tx">' + escapeHtml(rdStageName(sg.st)) + '</span>' + (si === cur ? '<em>Nyt</em>' : '') + '</button>';
+        }).join("") + '</div>';
+      ov.card.querySelector(".ov-x").addEventListener("click", function () { closeOverlay(ov); });
+      Array.prototype.forEach.call(ov.card.querySelectorAll("[data-bm]"), function (b) {
+        b.addEventListener("click", function () { closeOverlay(ov); var i = +b.getAttribute("data-bm"); if (i < pos) goBackTo(i); else go(i); });
+      });
+    }
 
     main.appendChild(rdReportCard());
 
@@ -4401,7 +4468,7 @@
       var it = x.item, accd = rp.acc.indexOf(it.id) !== -1;
       var nextStage = stages[stageIdx + 1];
       var h = '<div class="rd-eyebrow"><span>' + escapeHtml(x.stage.id === "rd-loppu" ? "Lopputulos" : rkCallTitle(x.call) + ' · ' + x.stage.title + ' · ' + (pos - sg.from + 1) + '/' + sg.n) + '</span>' +
-        (nextStage ? '<button type="button" class="rd-skip" data-go="' + nextStage.from + '">' + escapeHtml(rdStageName(nextStage.st)) + ' ›</button>' : '') + '</div>' +
+        '</div>' +
         (x.hdr ? '<div class="rk-h">' + escapeHtml(x.hdr) + '</div>' : '') +
         '<div class="rd-item' + (full ? ' full' : '') + '">' + rdItemHtml(it, full) + '</div>';
       if (kind === "end") h += endHtml();
@@ -4436,6 +4503,10 @@
       bindSide();
 
       // Alapalkki: seuraava kohta näkyy aina
+      var ns = bar.querySelector(".rk-nstage");
+      if (nextStage) { ns.style.visibility = ""; ns.querySelector(".tx").innerHTML = '<small>Seuraava vaihe</small>' + escapeHtml(nextStage.st.id === "rd-loppu" ? "Lopputulos" : rdStageName(nextStage.st)); }
+      else ns.style.visibility = "hidden";
+      bar.querySelector(".rk-back").style.visibility = pos === 0 ? "hidden" : "";
       var fl = bar.querySelector(".rk-fwd .l"), fs = bar.querySelector(".rk-fwd .s");
       bar.querySelector(".rk-prev").disabled = pos === 0;
       if (pos < N - 1) {
@@ -4444,8 +4515,8 @@
         fs.textContent = rdText(nx.item, false);
         bar.querySelector(".rk-fwd").classList.remove("end");
       } else {
-        fl.textContent = r ? (done ? "Kauppa tehty" : "Lopputulos") : "Harjoitus valmis";
-        fs.textContent = r ? (done ? "Runko käyty läpi" : "Kauppa tai vastaväitteet yllä") : "Takaisin alkuun";
+        fl.textContent = r ? (done ? "Kauppa tehty" : "Ei vielä kauppaa?") : "Harjoitus valmis";
+        fs.textContent = r ? "↺ Palaa taaksepäin" : "Takaisin alkuun";
         bar.querySelector(".rk-fwd").classList.add("end");
       }
       rkPlaceBar();
@@ -4467,6 +4538,10 @@
       var pend = rd.pending;
       return askHtml(false) +
         '<button type="button" class="btn rd-deal" id="rdDeal">✓ Kauppa</button>' +
+        '<div class="rd-backq"><span class="rd-nh">Käydäänkö jotain uudelleen?</span>' +
+          '<div class="rd-backq-b"><button type="button" data-back="' + rdTarveIndex(steps) + '">↺ Tarvekartoitus</button>' +
+          '<button type="button" data-back="0">↺ Alkuun</button>' +
+          '<button type="button" data-backmenu="1">Muu vaihe…</button></div></div>' +
         (open.length ? '<div class="rd-warn">Edelliseltä kierrokselta kumoamatta: ' + open.map(function (i) { return escapeHtml((det.ot[i] && det.ot[i].t) || rdObjLabel(rp.o[i])); }).join(", ") + '. Kuittaa ne kumotuiksi, jos ne on käsitelty.</div>' + objsHtml() : '') +
         '<div class="rd-nok"><div class="rd-nh">Ei kauppaa – asiakkaan vastaväitteet</div>' +
           '<div class="rd-chips">' + RD_OBJ.map(function (o) { return '<button type="button" data-obj="' + o.k + '">+ ' + o.t + '</button>'; }).join("") + '</div>' +
@@ -4506,6 +4581,8 @@
         showToast(rp.a < 5 ? "Kysytty " + rp.a + "/5. Jatka!" : "Kysytty " + rp.a + " kertaa");
       });
       var te = card.querySelector("#rdToEnd"); if (te) te.addEventListener("click", function () { go(N - 1); });
+      Array.prototype.forEach.call(card.querySelectorAll("[data-back]"), function (b) { b.addEventListener("click", function () { goBackTo(+b.getAttribute("data-back")); }); });
+      var bmb = card.querySelector("[data-backmenu]"); if (bmb) bmb.addEventListener("click", openBackMenu);
       Array.prototype.forEach.call(card.querySelectorAll("[data-obj]"), function (b) {
         b.addEventListener("click", function () {
           var inp = card.querySelector("#rdObjT"), t = (inp.value || "").trim();
