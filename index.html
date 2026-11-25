@@ -1382,6 +1382,31 @@
     main.vr-main .vr-head { grid-column: 1 / -1; }
     main.vr-main .vr-track { grid-column: 1; grid-row: 2 / span 2; }
   }
+  /* ---------- Tuo kuvasta ---------- */
+  .kv-box .btn.kv-btn { width: 100%; margin-top: 12px; }
+  .kv-sums { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
+  .kv-sum { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 10px; text-align: center; min-width: 0; }
+  .kv-sum b { display: block; font-family: var(--font-display); font-size: 24px; font-weight: 600; line-height: 1.1; }
+  .kv-sum span { display: block; font-size: 11px; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; }
+  .kv-sum em { display: block; font-style: normal; font-size: 10.5px; color: var(--good); margin-top: 3px; }
+  .kv-sum.bad { border-color: var(--bad); }
+  .kv-sum.bad em { color: var(--bad); }
+  .kv-meta { font-size: 12.5px; color: var(--text-dim); margin: 8px 0 0; }
+  @media (hover: none) { .kv-paste { display: none; } }
+  .kv-p { font-size: 14px; color: var(--text-dim); margin: 6px 0; }
+  .kv-p b { color: var(--text); }
+  .kv-warn { font-size: 13.5px; color: var(--bad); background: var(--bad-dim); border-radius: 10px; padding: 8px 10px; margin: 8px 0; }
+  .kv-hint { font-size: 12.5px; color: var(--text-dim); margin: 12px 0 4px; }
+  .kv-busy { display: flex; align-items: center; gap: 12px; padding: 18px 0; font-size: 14px; color: var(--text-dim); }
+  .kv-spin { width: 22px; height: 22px; border-radius: 50%; border: 3px solid var(--border); border-top-color: var(--accent); animation: kvspin .8s linear infinite; flex-shrink: 0; }
+  @keyframes kvspin { to { transform: rotate(360deg); } }
+  .kv-tbl { margin-top: 12px; display: flex; flex-direction: column; gap: 4px; }
+  .kv-tr { display: grid; grid-template-columns: 1.2fr repeat(3, minmax(0, 1fr)); gap: 6px; align-items: center; }
+  .kv-th span { font-size: 11.5px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: .04em; }
+  .kv-tr > span { font-size: 13.5px; }
+  .kv-tr input { width: 100%; min-width: 0; box-sizing: border-box; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 7px 6px; font-size: 15px; text-align: center; font-family: var(--font-body); }
+  .kv-tr input.unk { border-color: var(--bad); background: var(--bad-dim); }
+  .kv-tr input:disabled { opacity: .4; }
 </style>
 </head>
 <body>
@@ -1516,7 +1541,7 @@
   }
   function sourceLabel(id) {
     var s = SOURCES.find(function (s) { return s.id === id; });
-    return s ? s.label : "Muu";
+    return s ? s.label : id === 0 ? "Kuvasta tuotu" : "Muu";
   }
   function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
   function escapeHtml(s) {
@@ -1828,8 +1853,8 @@
   function lvDone(o) { return !!(o && o.lv && o.lv.ts && ((o.lv.c | 0) & LV_ALL) === LV_ALL); }
   function lvClosedOut(o) { return lvDone(o) || !!(o && o.lv && o.lv.x); }
   // Kauppa odottaa luovutusta: pysyy näkyvissä (myös kuukauden vaihtuessa) enintään 45 päivää.
-  function lvPending(o) { return !!(o && o.closed && !o.bk && !lvClosedOut(o) && o.closedTs && (Date.now() - new Date(o.closedTs).getTime()) < LV_KEEP_DAYS * 86400000); }
-  function keepInCarry(o) { return isActive(o) || lvPending(o); }
+  function lvPending(o) { return !!(o && o.closed && !o.bk && !o.im && !lvClosedOut(o) && o.closedTs && (Date.now() - new Date(o.closedTs).getTime()) < LV_KEEP_DAYS * 86400000); }
+  function keepInCarry(o) { return !o.im && (isActive(o) || lvPending(o)); }
 
   // Bulk-enter a past month's results as per-source offer/deal counts.
   // Stored compactly (just the counts) rather than as exploded per-offer
@@ -2091,7 +2116,7 @@
     Object.keys(months).forEach(function (mk) {
       if (!/^\d{4}-\d{2}$/.test(mk)) return;
       var doc = months[mk] || {};
-      if (mk === state.monthKey) (doc.offers || []).forEach(function (o) { out.push({ o: o, mk: mk }); });
+      if (mk === state.monthKey) (doc.offers || []).forEach(function (o) { if (!o.im) out.push({ o: o, mk: mk }); });
       else (doc.carry || []).forEach(function (o) { out.push({ o: o, mk: mk }); });
     });
     return out;
@@ -3039,6 +3064,7 @@
     });
     addCard.appendChild(grid);
     main.appendChild(addCard);
+    main.appendChild(kvCard());
 
     var f = state.offerFilter || "avoimet";
     var refs = offerRefs();
@@ -5917,6 +5943,413 @@
     if (state.tab !== "treeni" || !T) return;
     var el = e.target; var k = el && el.getAttribute && el.getAttribute("data-tk");
     if (k) { T[k] = el.value; trPersistCur(); }
+  });
+
+  // ---------- Tuo kuvasta ----------
+  // Kuvakaappaus tilastotaulukosta (päivät sarakkeina, rivit Tarjoukset / Tilaussopimukset / Laskutus ...).
+  // Teksti luetaan selaimessa Tesseract-tekstintunnistuksella: ensin koko kuvasta päivien sarakkeet ja rivien nimet,
+  // sitten jokainen solu, jossa on mustetta, erikseen numerona. Kuva ei lähde mihinkään palvelimelle.
+  // Tallennus: kuukauden tietoihin kv = { ts, d: { "5": [tarjoukset, tilaussopimukset, laskutus] } } ja puuttuva määrä
+  // tarjouksia/kauppoja lisätään merkinnällä im: 1, jotta tilastot, tulostaulu ja Viikkoralli vastaavat kuvan lukuja.
+  // Itse kirjatut tarjoukset säilyvät; uusi tuonti korvaa edellisen tuonnin.
+  var KV_ROWS = [
+    { k: "t", t: "Tarjoukset", re: /tarj/i },
+    { k: "s", t: "Tilaussopimukset", re: /tilaus|sopim/i },
+    { k: "l", t: "Laskutus", re: /lasku/i }
+  ];
+  var KV_MONTHS = ["tammi", "helmi", "maalis", "huhti", "touko", "kes", "hein", "elo", "syys", "loka", "marras", "joulu"];
+  var KV_CDN = "https://cdn.jsdelivr.net/npm/";
+  var kvWorkerP = null;
+  function kvLoadScript(src) {
+    return new Promise(function (res, rej) {
+      if (window.Tesseract) return res();
+      var s = document.createElement("script"); s.src = src; s.async = true;
+      s.onload = function () { res(); }; s.onerror = function () { rej(new Error("script")); };
+      document.head.appendChild(s);
+    });
+  }
+  function kvWorker() {
+    if (!kvWorkerP) {
+      kvWorkerP = kvLoadScript(KV_CDN + "tesseract.js@5.1.1/dist/tesseract.min.js").then(function () {
+        return window.Tesseract.createWorker("eng", 1, {
+          workerPath: KV_CDN + "tesseract.js@5.1.1/dist/worker.min.js",
+          corePath: KV_CDN + "tesseract.js-core@5.1.1",
+          langPath: KV_CDN + "@tesseract.js-data/eng@1.0.0/4.0.0_best_int"
+        });
+      });
+      kvWorkerP.catch(function () { kvWorkerP = null; });
+    }
+    return kvWorkerP;
+  }
+  function kvLoadImage(file) {
+    return new Promise(function (res, rej) {
+      var url = URL.createObjectURL(file), img = new Image();
+      img.onload = function () { URL.revokeObjectURL(url); res(img); };
+      img.onerror = function () { URL.revokeObjectURL(url); rej(new Error("image")); };
+      img.src = url;
+    });
+  }
+  function kvMedian(a) { if (!a.length) return 0; var s = a.slice().sort(function (x, y) { return x - y; }); return s[Math.floor(s.length / 2)]; }
+  function kvLines(words) {
+    // Ryhmittelee sanat riveiksi pystykeskipisteen mukaan.
+    var ws = words.slice().sort(function (a, b) { return a.cy - b.cy; }), lines = [];
+    ws.forEach(function (w) {
+      var l = lines[lines.length - 1];
+      if (l && Math.abs(w.cy - l.cy) < Math.max(6, w.h * 0.6)) { l.words.push(w); l.cy = (l.cy * (l.words.length - 1) + w.cy) / l.words.length; }
+      else lines.push({ cy: w.cy, words: [w] });
+    });
+    lines.forEach(function (l) { l.words.sort(function (a, b) { return a.cx - b.cx; }); l.text = l.words.map(function (w) { return w.text; }).join(" "); });
+    return lines;
+  }
+  function kvMonthFrom(text) {
+    var t = String(text || "").toLowerCase(), y = (t.match(/20\d\d/) || [])[0], m = -1;
+    KV_MONTHS.forEach(function (stem, i) { if (m < 0 && t.indexOf(stem + "kuu") !== -1) m = i; });
+    if (m < 0) KV_MONTHS.forEach(function (stem, i) { if (m < 0 && stem.length >= 4 && t.indexOf(stem) !== -1) m = i; });
+    if (m < 0) return null;
+    return (y || String(new Date().getFullYear())) + "-" + String(m + 1).padStart(2, "0");
+  }
+  // Leikkaa alueen, muuttaa musteen mustaksi ja taustan valkoiseksi ja suurentaa tekstintunnistusta varten.
+  function kvCrop(src, x0, y0, w, h, scale) {
+    var c = document.createElement("canvas"), pad = 20;
+    var cw = Math.max(1, Math.round(w * scale)), ch = Math.max(1, Math.round(h * scale));
+    c.width = cw + pad * 2; c.height = ch + pad * 2;
+    var g = c.getContext("2d");
+    g.fillStyle = "#fff"; g.fillRect(0, 0, c.width, c.height);
+    g.imageSmoothingEnabled = true;
+    g.drawImage(src, x0, y0, w, h, pad, pad, cw, ch);
+    var id = g.getImageData(0, 0, c.width, c.height), d = id.data, W = c.width, H = c.height;
+    var on = new Uint8Array(W * H);
+    for (var i = 0, q = 0; i < d.length; i += 4, q++) {
+      var r = d[i], gg = d[i + 1], b = d[i + 2], lum = 0.3 * r + 0.59 * gg + 0.11 * b;
+      on[q] = (lum < 150 || (b - r > 70 && b > 110)) ? 1 : 0;
+    }
+    // Ruudukkoviivat pois: pysty- tai vaakajuova, joka kulkee lähes koko solun läpi, ei ole numero.
+    var x, y;
+    for (x = 0; x < W; x++) { var cc = 0; for (y = 0; y < H; y++) cc += on[y * W + x]; if (cc > ch * 0.75) for (y = 0; y < H; y++) on[y * W + x] = 0; }
+    for (y = 0; y < H; y++) { var rc = 0; for (x = 0; x < W; x++) rc += on[y * W + x]; if (rc > cw * 0.75) for (x = 0; x < W; x++) on[y * W + x] = 0; }
+    // Reunojen ohuet jäänteet pois: musteen pitää olla vähintään kolmanneksen solun korkuinen pystysuunnassa.
+    var ink = 0, bx0 = Infinity, by0 = Infinity, bx1 = -1, by1 = -1;
+    for (y = 0; y < H; y++) for (x = 0; x < W; x++) if (on[y * W + x]) { ink++; if (x < bx0) bx0 = x; if (x > bx1) bx1 = x; if (y < by0) by0 = y; if (y > by1) by1 = y; }
+    for (var p2 = 0; p2 < on.length; p2++) { var v = on[p2] ? 0 : 255; d[p2 * 4] = d[p2 * 4 + 1] = d[p2 * 4 + 2] = v; d[p2 * 4 + 3] = 255; }
+    g.putImageData(id, 0, 0);
+    var box = ink && (by1 - by0 + 1) >= ch * 0.3 ? { x: bx0, y: by0, w: bx1 - bx0 + 1, h: by1 - by0 + 1 } : null;
+    return { canvas: c, ink: box ? ink : 0, box: box, on: on, W: W, H: H };
+  }
+  function kvRead(file, progress) {
+    var img, worker, cv;
+    progress("Ladataan tekstintunnistusta…");
+    return Promise.all([kvLoadImage(file), kvWorker()]).then(function (r) {
+      img = r[0]; worker = r[1];
+      // Pieni kuva suurennetaan ja iso pienennetään, jotta numerot ovat tunnistukselle sopivan kokoisia.
+      var sc = img.naturalWidth < 1400 ? 2 : img.naturalWidth > 2800 ? 2800 / img.naturalWidth : 1;
+      cv = document.createElement("canvas"); cv.width = Math.round(img.naturalWidth * sc); cv.height = Math.round(img.naturalHeight * sc);
+      var g = cv.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0, 0, cv.width, cv.height); g.drawImage(img, 0, 0, cv.width, cv.height);
+      progress("Luetaan taulukon rakennetta…");
+      return worker.setParameters({ tessedit_pageseg_mode: "11", tessedit_char_whitelist: "" }).then(function () { return worker.recognize(cv); });
+    }).then(function (res) {
+      var words = (res.data.words || []).map(function (w) {
+        var b = w.bbox; return { text: (w.text || "").trim(), x0: b.x0, x1: b.x1, y0: b.y0, y1: b.y1, cx: (b.x0 + b.x1) / 2, cy: (b.y0 + b.y1) / 2, h: b.y1 - b.y0 };
+      }).filter(function (w) { return w.text; });
+      var lines = kvLines(words);
+      // Otsikkorivi: eniten päivänumeroita (1–31) samalla rivillä.
+      var head = null, best = 0;
+      lines.forEach(function (l) {
+        var nums = l.words.filter(function (w) { return /^\d{1,2}$/.test(w.text) && +w.text >= 1 && +w.text <= 31; });
+        if (!nums.length) return;
+        // Päivärivillä ei ole rivin nimeä vasemmalla (toisin kuin esim. Tarjoukset-rivillä), ja numerot kasvavat.
+        var named = l.words.some(function (w) { return w.x1 < nums[0].x0 && /[a-zåäö]{3,}/i.test(w.text); });
+        var inc = 0; for (var q = 1; q < nums.length; q++) if (+nums[q].text > +nums[q - 1].text) inc++;
+        if (named || inc < (nums.length - 1) * 0.8) return;
+        if (nums.length > best) { best = nums.length; head = { line: l, nums: nums }; }
+      });
+      if (!head || best < 5) throw new Error("Päivänumeroita ei löytynyt kuvasta. Ota kuva niin, että päivärivi (01, 02, …) näkyy.");
+      var nums = head.nums.map(function (w) { return { n: +w.text, x: w.cx }; });
+      // Pidä vain kasvava jono ja täydennä puuttuvat päivät sarakevälin perusteella.
+      nums = nums.filter(function (v, i) { return i === 0 || v.n > nums[i - 1].n; });
+      var gaps = []; for (var i = 1; i < nums.length; i++) gaps.push((nums[i].x - nums[i - 1].x) / (nums[i].n - nums[i - 1].n));
+      var sp = kvMedian(gaps);
+      var cols = {};
+      for (var j = 0; j < nums.length; j++) {
+        cols[nums[j].n] = nums[j].x;
+        if (j + 1 < nums.length) for (var k = nums[j].n + 1; k < nums[j + 1].n; k++) cols[k] = nums[j].x + (k - nums[j].n) * sp;
+      }
+      var first = nums[0], last = nums[nums.length - 1];
+      for (var k2 = first.n - 1; k2 >= 1 && first.x - (first.n - k2) * sp > sp * 2; k2--) cols[k2] = first.x - (first.n - k2) * sp;
+      var yht = head.line.words.filter(function (w) { return /^yht/i.test(w.text); })[0];
+      var lastDay = last.n;
+      var limit = yht ? yht.x0 : Infinity;
+      for (var k3 = last.n + 1; k3 <= 31 && last.x + (k3 - last.n) * sp + sp / 2 < limit; k3++) { cols[k3] = last.x + (k3 - last.n) * sp; lastDay = k3; }
+      var totalX = yht ? yht.cx : null;
+      var leftEdge = cols[Math.min.apply(null, Object.keys(cols).map(Number))] - sp / 2;
+      // Rivien nimet vasemmasta sarakkeesta.
+      var labels = kvLines(words.filter(function (w) { return w.x1 < leftEdge && w.cy > head.line.cy + 4 && /[a-zåäö]{3,}/i.test(w.text); }));
+      var rowH = kvMedian(labels.slice(1).map(function (l, i) { return l.cy - labels[i].cy; })) || sp;
+      var rows = {};
+      labels.forEach(function (l) { KV_ROWS.forEach(function (r) { if (!rows[r.k] && r.re.test(l.text)) rows[r.k] = l.cy; }); });
+      // Kuukausi otsikosta (rivit päivärivin yläpuolella), tarvittaessa erillisellä luvulla.
+      var month = kvMonthFrom(lines.filter(function (l) { return l.cy < head.line.cy; }).map(function (l) { return l.text; }).join(" "));
+      return { cv: cv, sp: sp, cols: cols, lastDay: lastDay, totalX: totalX, rowH: rowH, rows: rows, month: month, headY: head.line.cy };
+    }).then(function (g) {
+      var p = Promise.resolve();
+      if (!g.month && g.headY > g.rowH * 0.8) {
+        var top = kvCrop(g.cv, 0, 0, g.cv.width, Math.max(10, g.headY - g.rowH / 2), 1);
+        p = worker.setParameters({ tessedit_pageseg_mode: "6", tessedit_char_whitelist: "" })
+          .then(function () { return worker.recognize(top.canvas); })
+          .then(function (r) { g.month = kvMonthFrom(r.data.text); }, function () {});
+      }
+      return p.then(function () { return worker.setParameters({ tessedit_pageseg_mode: "7", tessedit_char_whitelist: "0123456789" }); }).then(function () { return g; });
+    }).then(function (g) {
+      var out = { month: g.month, lastDay: g.lastDay, rows: {}, days: {}, unknown: {}, totals: {} };
+      var jobs = [];
+      KV_ROWS.forEach(function (r) {
+        if (g.rows[r.k] === undefined) return;
+        out.rows[r.k] = true;
+        // Koko solu: harmaat ruudukkoviivat katoavat kynnystyksessä, ja luvut ovat usein solun reunassa.
+        var y0 = g.rows[r.k] - g.rowH * 0.47, h = g.rowH * 0.94;
+        Object.keys(g.cols).forEach(function (dn) { jobs.push({ r: r.k, d: +dn, x0: g.cols[dn] - g.sp * 0.49, w: g.sp * 0.98, y0: y0, h: h }); });
+        if (g.totalX) jobs.push({ r: r.k, d: 0, x0: g.totalX - g.sp * 0.75, w: g.sp * 1.5, y0: y0, h: h });
+      });
+      // Numerot tunnistetaan vertaamalla jokaista merkkiä selaimessa piirrettyihin numeromalleihin.
+      // Taulukon fontti on tavallinen verkkofontti, joten vertailu on tarkempi kuin tekstintunnistus yksittäisille numeroille.
+      function put(jb, v) {
+        if (jb.d === 0) { if (v !== null) out.totals[jb.r] = v; return; }
+        if (v === null) out.unknown[jb.d + jb.r] = true;
+        out.days[jb.d] = out.days[jb.d] || { t: 0, s: 0, l: 0 };
+        out.days[jb.d][jb.r] = v;
+      }
+      progress("Luetaan soluja…");
+      var cells = [];
+      jobs.forEach(function (jb) {
+        var cr = kvCrop(g.cv, jb.x0, jb.y0, jb.w, jb.h, 90 / g.rowH);
+        if (!cr.box) return;
+        var gl = kvGlyphs(cr);
+        if (gl.length) cells.push({ jb: jb, glyphs: gl });
+      });
+      var all = []; cells.forEach(function (c) { all = all.concat(c.glyphs); });
+      var font = kvPickFont(all);
+      cells.forEach(function (c) {
+        var txt = "", ok = true;
+        c.glyphs.forEach(function (gv) { var m = kvMatch(gv, font); if (m.d === -1) ok = false; else if (m.d >= 0) txt += m.d; });
+        if (ok && !txt) return; // pelkkää roskaa: tyhjä solu
+        put(c.jb, ok ? parseInt(txt, 10) : null);
+      });
+      return Promise.resolve(out);
+    });
+  }
+
+  // ---------- Numeroiden mallivertailu ----------
+  var KV_GW = 14, KV_GH = 20;
+  // Erottaa solun mustetta sisältävät pystysarakkeet merkeiksi ja normalisoi ne vertailuruudukkoon.
+  function kvGlyphs(cr) {
+    var on = cr.on, W = cr.W, b = cr.box, runs = [], x, y, cur = null;
+    for (x = b.x; x < b.x + b.w + 1; x++) {
+      var any = false; if (x < b.x + b.w) for (y = b.y; y < b.y + b.h; y++) if (on[y * W + x]) { any = true; break; }
+      if (any) { if (!cur) cur = { x0: x, x1: x }; else cur.x1 = x; }
+      else if (cur) { runs.push(cur); cur = null; }
+    }
+    var out = [];
+    runs.forEach(function (r) {
+      var y0 = Infinity, y1 = -1;
+      for (x = r.x0; x <= r.x1; x++) for (y = b.y; y < b.y + b.h; y++) if (on[y * W + x]) { if (y < y0) y0 = y; if (y > y1) y1 = y; }
+      var w = r.x1 - r.x0 + 1, h = y1 - y0 + 1;
+      if (h < b.h * 0.5 || w < h * 0.12) return; // viivan palaset ja roskat pois
+      out.push(kvFeat(function (xx, yy) { return on[yy * W + xx]; }, r.x0, y0, w, h));
+    });
+    return out;
+  }
+  function kvFeat(get, x0, y0, w, h) {
+    var f = new Float32Array(KV_GW * KV_GH);
+    for (var gy = 0; gy < KV_GH; gy++) for (var gx = 0; gx < KV_GW; gx++) {
+      var ax = x0 + gx * w / KV_GW, bx = x0 + (gx + 1) * w / KV_GW, ay = y0 + gy * h / KV_GH, by = y0 + (gy + 1) * h / KV_GH, sum = 0, n = 0;
+      for (var yy = Math.floor(ay); yy < Math.max(Math.floor(ay) + 1, Math.ceil(by)); yy++) for (var xx = Math.floor(ax); xx < Math.max(Math.floor(ax) + 1, Math.ceil(bx)); xx++) { sum += get(xx, yy) ? 1 : 0; n++; }
+      f[gy * KV_GW + gx] = n ? sum / n : 0;
+    }
+    return { f: f, ar: w / h };
+  }
+  var kvTpl = null;
+  function kvTemplates() {
+    if (kvTpl) return kvTpl;
+    kvTpl = [];
+    var fams = ["Arial", "Helvetica", "Verdana", "Tahoma", "Segoe UI", "Roboto", "sans-serif"], wts = ["400", "700"];
+    var c = document.createElement("canvas"); c.width = 120; c.height = 120;
+    var g = c.getContext("2d");
+    fams.forEach(function (fam) { wts.forEach(function (wt) {
+      var set = { name: fam + " " + wt, d: [] };
+      for (var dg = 0; dg <= 9; dg++) {
+        g.fillStyle = "#fff"; g.fillRect(0, 0, 120, 120);
+        g.fillStyle = "#000"; g.font = wt + " 80px " + (fam === "sans-serif" ? "sans-serif" : '"' + fam + '", sans-serif'); g.textBaseline = "middle";
+        g.fillText(String(dg), 20, 60);
+        var d = g.getImageData(0, 0, 120, 120).data, x0 = 999, y0 = 999, x1 = -1, y1 = -1;
+        var on = new Uint8Array(120 * 120);
+        for (var i = 0; i < on.length; i++) { if (d[i * 4] < 128) { on[i] = 1; var px = i % 120, py = Math.floor(i / 120); if (px < x0) x0 = px; if (px > x1) x1 = px; if (py < y0) y0 = py; if (py > y1) y1 = py; } }
+        set.d.push(kvFeat(function (xx, yy) { return on[yy * 120 + xx]; }, x0, y0, x1 - x0 + 1, y1 - y0 + 1));
+      }
+      kvTpl.push(set);
+    }); });
+    return kvTpl;
+  }
+  function kvDist(a, b) {
+    var s = 0; for (var i = 0; i < a.f.length; i++) { var q = a.f[i] - b.f[i]; s += q * q; }
+    var ar = Math.log(a.ar / b.ar); return s / a.f.length + ar * ar * 0.6;
+  }
+  function kvPickFont(glyphs) {
+    var best = null, bs = Infinity;
+    kvTemplates().forEach(function (set) {
+      var tot = 0; glyphs.forEach(function (gv) { var m = Infinity; set.d.forEach(function (t) { m = Math.min(m, kvDist(gv, t)); }); tot += m; });
+      if (tot < bs) { bs = tot; best = set; }
+    });
+    return best;
+  }
+  function kvMatch(gv, set) {
+    var best = -1, bd = Infinity, second = Infinity;
+    set.d.forEach(function (t, dg) { var d = kvDist(gv, t); if (d < bd) { second = bd; bd = d; best = dg; } else if (d < second) second = d; });
+    // Ei numero lainkaan (viivan pala tms.) / epävarma, jos kaksi numeroa on lähes yhtä lähellä.
+    if (bd > 0.6) return { d: -2 };
+    if (bd > 0.35 || second < bd * 1.05) return { d: -1 };
+    return { d: best, dist: bd };
+  }
+
+  function kvSums(days) {
+    var s = { t: 0, s: 0, l: 0 };
+    Object.keys(days).forEach(function (d) { KV_ROWS.forEach(function (r) { s[r.k] += +(days[d][r.k] || 0); }); });
+    return s;
+  }
+  function kvOpen() {
+    var inp = document.createElement("input");
+    inp.type = "file"; inp.accept = "image/*";
+    inp.addEventListener("change", function () { if (inp.files && inp.files[0]) kvStart(inp.files[0]); });
+    inp.click();
+  }
+  function kvStart(file) {
+    var ov = buildOverlay();
+    ov.card.classList.add("kv-card");
+    ov.card.innerHTML = '<div class="qa-head"><h3>Luetaan kuvaa</h3><button type="button" class="ov-x" aria-label="Sulje">✕</button></div>' +
+      '<div class="kv-busy"><span class="kv-spin"></span><span class="kv-msg">Aloitetaan…</span></div>';
+    var cancelled = false;
+    ov.card.querySelector(".ov-x").addEventListener("click", function () { cancelled = true; closeOverlay(ov); });
+    var msg = ov.card.querySelector(".kv-msg");
+    kvRead(file, function (t) { if (msg) msg.textContent = t; }).then(function (res) {
+      if (!cancelled) kvPreview(ov, res);
+    }, function (e) {
+      if (cancelled) return;
+      var net = e && /script|fetch|network|load/i.test(String(e.message || e));
+      ov.card.innerHTML = '<div class="qa-head"><h3>Kuvaa ei saatu luettua</h3><button type="button" class="ov-x" aria-label="Sulje">✕</button></div>' +
+        '<p class="kv-p">' + escapeHtml(net ? "Tekstintunnistusta ei saatu ladattua. Tarkista verkkoyhteys ja yritä uudelleen." : (e && e.message) || "Tuntematon virhe.") + '</p>' +
+        '<button type="button" class="btn btn-primary" id="kvRetry">Valitse toinen kuva</button>';
+      ov.card.querySelector(".ov-x").addEventListener("click", function () { closeOverlay(ov); });
+      ov.card.querySelector("#kvRetry").addEventListener("click", function () { closeOverlay(ov); kvOpen(); });
+    });
+  }
+  function kvPreview(ov, res) {
+    var mk = state.monthKey, p = parseMonthKey(mk);
+    var monthOk = !res.month || res.month === mk;
+    var dim = new Date(p.y, p.m + 1, 0).getDate();
+    var days = {};
+    Object.keys(res.days).forEach(function (d) { if (+d <= dim) days[d] = Object.assign({}, res.days[d]); });
+    var missing = KV_ROWS.filter(function (r) { return !res.rows[r.k]; });
+    function draw() {
+      var sums = kvSums(days);
+      var keys = Object.keys(days).map(Number).sort(function (a, b) { return a - b; });
+      var anyUnknown = keys.some(function (d) { return KV_ROWS.some(function (r) { return days[d][r.k] === null; }); });
+      ov.card.innerHTML = '<div class="qa-head"><h3>Kuvasta luettu</h3><button type="button" class="ov-x" aria-label="Sulje">✕</button></div>' +
+        '<p class="kv-p">Kuukausi: <b>' + escapeHtml(monthDisplay(res.month || mk)) + '</b>' + (res.month ? '' : ' (ei tunnistettu, oletetaan kuluva kuukausi)') + '</p>' +
+        (monthOk ? '' : '<p class="kv-warn">Kuvan kuukausi ei ole kuluva kuukausi (' + escapeHtml(monthDisplay(mk)) + '). Tuonti onnistuu vain kuluvalle kuukaudelle.</p>') +
+        (missing.length ? '<p class="kv-warn">Kuvasta ei löytynyt riviä: ' + missing.map(function (r) { return r.t; }).join(", ") + '.</p>' : '') +
+        '<div class="kv-sums">' + KV_ROWS.map(function (r) {
+          var tot = res.totals[r.k], ok = tot === undefined || tot === sums[r.k];
+          return '<div class="kv-sum' + (ok ? '' : ' bad') + '"><b>' + sums[r.k] + '</b><span>' + r.t + '</span>' +
+            (tot === undefined ? '' : '<em>' + (ok ? '✓ täsmää Yht-sarakkeeseen' : 'Yht-sarakkeessa ' + tot + ', tarkista') + '</em>') + '</div>';
+        }).join("") + '</div>' +
+        (anyUnknown ? '<p class="kv-warn">Punaisella merkittyjä soluja ei saatu luettua varmasti. Kirjoita luku itse.</p>' : '') +
+        '<div class="kv-tbl"><div class="kv-tr kv-th"><span>Päivä</span><span>Tarj.</span><span>Tilaus</span><span>Lask.</span></div>' +
+        (keys.length ? keys.map(function (d) {
+          var wd = ["su", "ma", "ti", "ke", "to", "pe", "la"][new Date(p.y, p.m, d).getDay()];
+          return '<div class="kv-tr"><span>' + wd + ' ' + d + '.' + (p.m + 1) + '.</span>' + KV_ROWS.map(function (r) {
+            var v = days[d][r.k];
+            return '<input type="number" inputmode="numeric" min="0" max="99" data-d="' + d + '" data-k="' + r.k + '" value="' + (v === null ? '' : v || '') + '"' + (v === null ? ' class="unk"' : '') + (res.rows[r.k] || v ? '' : ' disabled') + '>';
+          }).join("") + '</div>';
+        }).join("") : '<p class="kv-p">Kuvasta ei löytynyt lukuja.</p>') + '</div>' +
+        '<p class="kv-hint">Tallennus asettaa kuukauden tarjoukset ja tilaussopimukset (kaupat) kuvan mukaisiksi. Itse kirjatut tarjoukset säilyvät, ja niistä puuttuva määrä lisätään. Uusi tuonti korvaa edellisen.</p>' +
+        '<div class="oe-actions"><button type="button" class="btn btn-primary" id="kvSave"' + (monthOk && keys.length ? '' : ' disabled') + '>Tallenna luvut</button>' +
+        '<button type="button" class="btn btn-ghost" id="kvCancel">Peru</button></div>';
+      ov.card.querySelector(".ov-x").addEventListener("click", function () { closeOverlay(ov); });
+      ov.card.querySelector("#kvCancel").addEventListener("click", function () { closeOverlay(ov); });
+      Array.prototype.forEach.call(ov.card.querySelectorAll(".kv-tbl input"), function (el) {
+        el.addEventListener("change", function () {
+          var v = el.value === "" ? 0 : Math.max(0, Math.min(99, Math.round(+el.value) || 0));
+          days[el.getAttribute("data-d")][el.getAttribute("data-k")] = v;
+          var y = ov.card.scrollTop; draw(); ov.card.scrollTop = y;
+        });
+      });
+      ov.card.querySelector("#kvSave").addEventListener("click", function () {
+        var unk = Object.keys(days).some(function (d) { return KV_ROWS.some(function (r) { return days[d][r.k] === null; }); });
+        if (unk) { showToast("Täytä punaiset solut ensin"); return; }
+        closeOverlay(ov);
+        var extra = kvApply(days);
+        showToast("Luvut tallennettu" + (extra ? " (" + extra + " kauppaa ilman tarjousta lisätty myös tarjouksiin)" : ""));
+      });
+    }
+    draw();
+  }
+  // Asettaa kuluvan kuukauden luvut kuvan mukaisiksi. Palauttaa, montako ylimääräistä tarjousta piti luoda kaupoille.
+  function kvApply(days) {
+    var mk = state.monthKey, p = parseMonthKey(mk);
+    var base = (localOffers || []).filter(function (o) { return !o.im; });
+    var mt = {}, ms = {};
+    base.forEach(function (o) {
+      var d = new Date(o.ts); if (monthKeyOf(d) === mk) mt[d.getDate()] = (mt[d.getDate()] || 0) + 1;
+      if (o.closed && o.closedTs) { var c = new Date(o.closedTs); if (monthKeyOf(c) === mk) ms[c.getDate()] = (ms[c.getDate()] || 0) + 1; }
+    });
+    var keys = Object.keys(days).map(Number).sort(function (a, b) { return a - b; });
+    var syn = [], extra = 0;
+    keys.forEach(function (d) {
+      var need = Math.max(0, (+days[d].t || 0) - (mt[d] || 0));
+      for (var i = 0; i < need; i++) syn.push({ id: genId(), ts: new Date(p.y, p.m, d, 12, i).toISOString(), source: 0, closed: false, im: 1 });
+    });
+    keys.forEach(function (d) {
+      var need = Math.max(0, (+days[d].s || 0) - (ms[d] || 0));
+      for (var k = 0; k < need; k++) {
+        var o = syn.filter(function (x) { return !x.closed && new Date(x.ts).getDate() <= d; })[0];
+        if (!o) { o = { id: genId(), ts: new Date(p.y, p.m, d, 11, k).toISOString(), source: 0, closed: false, im: 1 }; syn.push(o); extra++; }
+        o.closed = true; o.closedTs = new Date(p.y, p.m, d, 15, k).toISOString(); o.st = "d";
+      }
+    });
+    syn.sort(function (a, b) { return new Date(a.ts) - new Date(b.ts); });
+    var kv = { ts: new Date().toISOString(), d: {} };
+    keys.forEach(function (d) { var v = days[d]; if (v.t || v.s || v.l) kv.d[String(d)] = [+v.t || 0, +v.s || 0, +v.l || 0]; });
+    localOffers = base.concat(syn);
+    setLocalOffersOnProfile();
+    setMonthField(mk, "kv", kv);
+    var patch = {}; patch[mk] = { offers: localOffers.slice(), kv: kv };
+    render();
+    queueSaveMonths(patch).catch(function () { showToast("Tallennus epäonnistui"); });
+    return extra;
+  }
+  // Tarjoukset-näkymän kortti: tuontinappi ja kuukauden luvut (laskutus vain kuvasta).
+  function kvCard() {
+    var doc = curMonthDoc() || {}, kv = doc.kv;
+    var offers = doc.offers || [];
+    var imN = offers.filter(function (o) { return o.im; }).length;
+    var lk = 0; if (kv && kv.d) Object.keys(kv.d).forEach(function (d) { lk += kv.d[d][2] || 0; });
+    var card = document.createElement("div");
+    card.className = "card kv-box";
+    card.innerHTML = '<div class="kv-top"><div><h2>Tuo kuvasta</h2><p class="add-sub">Kuvakaappaus tilastotaulukosta: luen päivät, tarjoukset, tilaussopimukset ja laskutuksen.</p></div></div>' +
+      (kv ? '<div class="kv-sums">' +
+        '<div class="kv-sum"><b>' + offers.length + '</b><span>Tarjoukset</span></div>' +
+        '<div class="kv-sum"><b>' + offers.filter(function (o) { return o.closed; }).length + '</b><span>Tilaussopimukset</span></div>' +
+        '<div class="kv-sum"><b>' + lk + '</b><span>Laskutus</span></div></div>' +
+        '<p class="kv-meta">Viimeksi luettu ' + escapeHtml(fmtDate(kv.ts)) + (imN ? ' · ' + imN + ' tarjousta kuvasta' : '') + '</p>' : '') +
+      '<button type="button" class="btn btn-primary kv-btn">' + (kv ? 'Päivitä uudella kuvalla' : 'Valitse kuva') + '</button>' +
+      '<p class="kv-meta kv-paste">Tietokoneella voit myös liittää kuvan leikepöydältä (Ctrl+V / ⌘V).</p>';
+    card.querySelector(".kv-btn").addEventListener("click", kvOpen);
+    return card;
+  }
+  document.addEventListener("paste", function (e) {
+    if (state.tab !== "add" || state.authStatus !== "ready" || document.querySelector(".ov-back")) return;
+    var items = (e.clipboardData && e.clipboardData.items) || [];
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].type && items[i].type.indexOf("image/") === 0) { var f = items[i].getAsFile(); if (f) { e.preventDefault(); kvStart(f); } return; }
+    }
   });
 
   // ---------- Viikkoralli ----------
