@@ -1321,66 +1321,83 @@
   .rd-x { background: none; border: none; color: var(--text-dim); font-size: 15px; width: 30px; height: 30px; border-radius: 8px; cursor: pointer; flex-shrink: 0; }
   .rd-nok #rdLoop:disabled { opacity: .45; }
   .rk-fwd .s { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  /* ---------- Viikkoralli ---------- */
-  main.vr-main { display: flex; flex-direction: column; gap: 12px; }
-  main.vr-main > .card { display: block; }
-  main.vr-main .vr-homecard, main.vr-main .vr-me { display: grid; }
-  .vr-title { font-family: var(--font-display); font-size: 26px; font-weight: 600; margin: 2px 0 12px; }
-  .vr-me { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-  .vr-big { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 10px; text-align: center; min-width: 0; }
-  .vr-big b { display: block; font-family: var(--font-display); font-size: 26px; font-weight: 600; line-height: 1.1; }
-  .vr-big span { font-size: 11.5px; color: var(--text-dim); }
-  .vr-chase { margin: 12px 0 0; font-size: 14px; color: var(--text-dim); }
-  .vr-lbl { font-family: var(--font-display); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-dim); }
-  .vr-dayrow { display: flex; gap: 12px; align-items: stretch; }
-  .vr-goal { flex: 1; min-width: 0; }
-  .vr-gt { font-size: 16px; font-weight: 700; margin: 4px 0 8px; }
-  .vr-goal.done .vr-gt { color: var(--good); }
-  .vr-dots { display: flex; flex-wrap: wrap; gap: 6px; }
-  .vr-dots i { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); background: var(--surface-2); }
-  .vr-dots i.on { background: var(--good); border-color: var(--good); }
-  .vr-streak { flex-shrink: 0; text-align: center; background: var(--gold-dim); border-radius: 12px; padding: 8px 14px; display: flex; flex-direction: column; justify-content: center; }
-  .vr-streak b { font-family: var(--font-display); font-size: 28px; font-weight: 600; color: var(--gold); line-height: 1.1; }
-  .vr-streak span { font-size: 11.5px; color: var(--text-dim); }
-  .vr-add { width: 100%; margin-top: 14px; }
-  .vr-lanes { display: flex; flex-direction: column; gap: 14px; }
-  .vr-who { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
-  .vr-rk { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--text-faint); width: 18px; flex-shrink: 0; }
-  .vr-lane.lead .vr-rk { color: var(--gold); }
-  .vr-nm { font-weight: 700; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
-  .vr-lane.self .vr-nm { color: var(--accent); }
-  .vr-td { font-size: 11.5px; font-weight: 700; color: var(--good); background: var(--good-dim); border-radius: 99px; padding: 1px 7px; white-space: nowrap; }
-  .vr-pt { margin-left: auto; font-family: var(--font-display); font-size: 17px; font-weight: 600; flex-shrink: 0; }
-  .vr-road { position: relative; height: 12px; margin: 7px 9px 4px 0; background: var(--surface-2); border: 1px solid var(--border); border-radius: 99px; }
-  .vr-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: var(--text-faint); opacity: .45; transition: width .5s ease; }
-  .vr-lane.self .vr-fill { background: var(--accent-fill); opacity: .55; }
-  .vr-lane.lead .vr-fill { background: var(--gold); opacity: .6; }
-  .vr-car { position: absolute; top: 50%; width: 18px; height: 18px; margin-left: -9px; transform: translateY(-50%); border-radius: 50%; background: var(--text-dim); border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--border); transition: left .5s ease; }
-  .vr-lane.self .vr-car { background: var(--accent-fill); }
-  .vr-lane.lead .vr-car { background: var(--gold); }
-  .vr-sub { font-size: 11.5px; color: var(--text-faint); padding-left: 26px; }
-  .vr-dim { color: var(--text-dim); font-size: 13.5px; margin: 10px 0 0; }
-  .vr-star { margin-top: 4px; font-size: 15px; }
-  .vr-star .vr-lbl { display: block; margin-bottom: 4px; }
-  .vr-star em, .vr-wins em { font-style: normal; color: var(--text-dim); font-size: 13px; }
-  .vr-wins { list-style: none; padding: 0; margin: 6px 0 0; display: flex; flex-direction: column; gap: 6px; }
-  .vr-wins li { display: flex; gap: 10px; align-items: baseline; font-size: 14px; }
-  .vr-wins li span { color: var(--text-faint); width: 44px; flex-shrink: 0; font-size: 12.5px; }
-  .vr-wins li b { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .vr-rules { margin-top: 14px; font-size: 13.5px; color: var(--text-dim); }
-  .vr-rules summary { cursor: pointer; font-weight: 700; color: var(--text); }
-  .vr-rules ul { margin: 8px 0 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
-  .vr-homecard { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; cursor: pointer; font-family: var(--font-body); color: var(--text); }
-  .vr-hc-l { flex: 1; min-width: 0; }
-  .vr-hc-t { font-family: var(--font-display); font-size: 20px; font-weight: 600; margin: 2px 0; }
-  .vr-hc-s { font-size: 13px; color: var(--text-dim); }
-  .vr-homecard .ar { color: var(--text-faint); display: flex; }
-  .vr-homecard .ar svg { width: 18px; height: 18px; }
+  /* ---------- Kauppakierros ---------- */
+  main.kk-main { display: flex; flex-direction: column; gap: 12px; }
+  main.kk-main > .card { display: block; }
+  .kk-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .kk-title { font-family: var(--font-display); font-size: 26px; font-weight: 600; line-height: 1.1; }
+  .kk-me { text-align: center; background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 6px 14px; }
+  .kk-me b { display: block; font-family: var(--font-display); font-size: 24px; font-weight: 600; line-height: 1.1; }
+  .kk-me span { font-size: 11px; color: var(--text-dim); }
+  .kk-wrap { position: relative; width: 100%; max-width: 520px; margin: 0 auto; }
+  .kk-board { display: block; width: 100%; height: auto; }
+  .kk-sq { fill: var(--surface-2); stroke: var(--border); stroke-width: 1; }
+  .kk-sq.mid { fill: var(--gold-dim); }
+  .kk-sq.corner { fill: var(--accent-dim); }
+  .kk-sq.start { fill: var(--accent-fill); stroke: none; }
+  .kk-sqt { fill: var(--on-accent); font: 700 7px var(--font-body); text-anchor: middle; letter-spacing: .02em; }
+  .kk-peg { transition: transform .6s ease; }
+  .kk-peg circle { stroke: var(--surface); stroke-width: 2.5; filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.35)); }
+  .kk-peg.self circle { stroke: var(--text); stroke-width: 2.5; }
+  .kk-peg text { fill: #fff; font: 800 11px var(--font-body); text-anchor: middle; pointer-events: none; }
+  .kk-center { position: absolute; inset: 13%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; }
+  .kk-c-lap { font-size: 12.5px; color: var(--text-dim); }
+  .kk-c-lap b { color: var(--text); }
+  .kk-c-steps { font-size: 13px; color: var(--text-dim); }
+  .kk-c-steps b { display: block; font-family: var(--font-display); font-size: clamp(34px, 11vw, 54px); font-weight: 600; color: var(--text); line-height: 1; }
+  .kk-c-hint { font-size: 12.5px; color: var(--text-dim); max-width: 200px; }
+  .kk-c-gap { font-size: 12.5px; font-weight: 700; color: var(--accent); }
+  .kk-c-gap.lead { color: var(--good); }
+  .kk-roll { display: flex; align-items: center; gap: 10px; background: var(--accent-fill); color: var(--on-accent); border: none; border-radius: 14px; padding: 8px 14px 8px 8px; font: 700 14px var(--font-body); cursor: pointer; box-shadow: 0 6px 18px var(--brand-glow); }
+  .kk-rolled { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--text-dim); }
+  .kk-die { width: 40px; height: 40px; flex-shrink: 0; background: #fff; border-radius: 9px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15), 0 2px 5px rgba(0,0,0,.25); display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); padding: 6px; box-sizing: border-box; }
+  .kk-die i { width: 7px; height: 7px; border-radius: 50%; place-self: center; }
+  .kk-die i.on { background: #111; }
+  .kk-die.q i.on { background: var(--accent-fill); }
+  .kk-die.spin { animation: kkspin .16s linear infinite; }
+  .kk-die.land { animation: kkland .45s ease-out; }
+  @keyframes kkspin { 50% { transform: rotate(18deg) scale(1.08); } }
+  @keyframes kkland { 0% { transform: scale(1.5) rotate(-20deg); } 100% { transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .kk-die.spin, .kk-die.land, .kk-peg { animation: none; transition: none; } }
+  .kk-gain { list-style: none; padding: 0; margin: 4px 0 0; display: flex; flex-direction: column; gap: 6px; }
+  .kk-gain li { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; }
+  .kk-gain li b { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--good); }
+  .kk-gain li.sum { border-top: 1px solid var(--border); padding-top: 8px; font-weight: 700; }
+  .kk-dim { color: var(--text-dim); font-size: 14px; margin: 4px 0 0; }
+  .kk-next { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+  .kk-next div { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 8px; text-align: center; min-width: 0; }
+  .kk-next span { display: block; font-size: 11px; color: var(--text-dim); }
+  .kk-next b { display: block; font-family: var(--font-display); font-size: 18px; font-weight: 600; }
+  .kk-add { width: 100%; margin-top: 12px; }
+  .kk-rank { list-style: none; padding: 0; margin: 4px 0 0; display: flex; flex-direction: column; gap: 6px; }
+  .kk-rank li { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); }
+  .kk-rank li.self { border-color: var(--accent); background: var(--accent-dim); }
+  .kk-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 0 2px var(--surface); }
+  .kk-rn { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--text-faint); width: 24px; flex-shrink: 0; }
+  .kk-nm { flex: 1; min-width: 0; font-weight: 700; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .kk-nm small, .kk-tt small { display: block; font-weight: 500; font-size: 11.5px; color: var(--text-dim); }
+  .kk-tg { font-size: 11.5px; font-weight: 700; color: var(--good); background: var(--good-dim); border-radius: 99px; padding: 1px 7px; white-space: nowrap; }
+  .kk-tt { text-align: right; flex-shrink: 0; }
+  .kk-tt b { font-family: var(--font-display); font-size: 18px; font-weight: 600; }
+  .kk-rules { margin-top: 14px; font-size: 13.5px; color: var(--text-dim); }
+  .kk-rules summary { cursor: pointer; font-weight: 700; color: var(--text); }
+  .kk-rules ul { margin: 8px 0 0; padding-left: 18px; display: flex; flex-direction: column; gap: 5px; }
+  .kk-rules b { color: var(--text); }
+  .kk-podium { list-style: none; padding: 0; margin: 4px 0 0; display: flex; flex-direction: column; gap: 6px; }
+  .kk-podium li { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+  .kk-podium em { margin-left: auto; font-style: normal; color: var(--text-dim); font-size: 13px; }
+  .kk-medal { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font: 700 12px var(--font-body); color: #fff; }
+  .kk-medal.m1 { background: var(--gold); } .kk-medal.m2 { background: #8f969e; } .kk-medal.m3 { background: #b0703c; }
+  .kk-homecard { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; cursor: pointer; font-family: var(--font-body); color: var(--text); }
+  .kk-hc-l { flex: 1; min-width: 0; }
+  .kk-hc-t { font-family: var(--font-display); font-size: 19px; font-weight: 600; margin: 2px 0; }
+  .kk-hc-s { font-size: 13px; color: var(--text-dim); }
+  .kk-homecard .ar { color: var(--text-faint); display: flex; }
+  .kk-homecard .ar svg { width: 18px; height: 18px; }
   .pr-switch { margin-bottom: 12px; }
   @media (min-width: 900px) {
-    main.vr-main { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: start; max-width: 1100px; margin: 0 auto; width: 100%; }
-    main.vr-main .vr-head { grid-column: 1 / -1; }
-    main.vr-main .vr-track { grid-column: 1; grid-row: 2 / span 2; }
+    main.kk-main { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: start; max-width: 1150px; margin: 0 auto; width: 100%; }
+    main.kk-main .kk-boardcard { grid-row: 1 / span 3; }
   }
   /* ---------- Tuo kuvasta ---------- */
   .kv-box .btn.kv-btn { width: 100%; margin-top: 12px; }
@@ -1467,8 +1484,8 @@
       Etusivu
     </button>
     <button data-tab="peli">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22V4"/><path d="M5 4h13l-2.5 4L18 12H5"/></svg>
-      Viikkoralli
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.3" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/></svg>
+      Kauppakierros
     </button>
     <button data-tab="runko">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
@@ -1910,7 +1927,7 @@
           offers.push({
             id: genId(), ts: ts.toISOString(), source: sc.sourceId,
             closed: closed, closedTs: closed ? ts.toISOString() : null,
-            bk: 1 // massakirjaus: ei yksittäinen työsuoritus (ei pisteitä Viikkorallissa)
+            bk: 1 // massakirjaus: ei yksittäinen työsuoritus (ei askelia Kauppakierroksessa)
           });
           i++;
         }
@@ -2840,7 +2857,7 @@
     watchBigAdd(addBtn);
 
     colA.appendChild(todoCard());
-    colA.appendChild(vrHomeCard());
+    colA.appendChild(kkHomeCard());
     colA.appendChild(rkHomeButton());
 
     // Kuun lopussa ja seuraavan kuun ensimmäisellä viikolla etusivulla näkyy raportin tiivistelmä.
@@ -6027,7 +6044,7 @@
   // Teksti luetaan selaimessa Tesseract-tekstintunnistuksella: ensin koko kuvasta päivien sarakkeet ja rivien nimet,
   // sitten jokainen solu, jossa on mustetta, erikseen numerona. Kuva ei lähde mihinkään palvelimelle.
   // Tallennus: kuukauden tietoihin kv = { ts, d: { "5": [tarjoukset, tilaussopimukset, laskutus] } } ja puuttuva määrä
-  // tarjouksia/kauppoja lisätään merkinnällä im: 1, jotta tilastot, tulostaulu ja Viikkoralli vastaavat kuvan lukuja.
+  // tarjouksia/kauppoja lisätään merkinnällä im: 1, jotta tilastot, tulostaulu ja Kauppakierros vastaavat kuvan lukuja.
   // Itse kirjatut tarjoukset säilyvät; uusi tuonti korvaa edellisen tuonnin.
   var KV_ROWS = [
     { k: "t", t: "Tarjoukset", re: /tarj/i },
@@ -6476,21 +6493,21 @@
     }
   });
 
-  // ---------- Viikkoralli ----------
-  // Kevyt viikkokisa, joka lasketaan suoraan tulostaulun tiedoista: ei omaa palvelinosaa eikä erillistä liittymistä.
-  // Tarjous = 1 piste, kauppa = 3 pistettä. Kisa alkaa joka maanantai alusta, joten kaikilla on joka viikko mahdollisuus.
-  var VR_OFFER = 1, VR_DEAL = 3;
-  var vr = { timer: null };
-  function vrWeekStart(d) { var x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x; }
-  function vrAddDays(d, n) { var x = new Date(d); x.setDate(x.getDate() + n); return x; }
-  function vrWeekNo(d) {
-    var t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-    var wd = t.getUTCDay() || 7; t.setUTCDate(t.getUTCDate() + 4 - wd);
-    return Math.ceil(((t - Date.UTC(t.getUTCFullYear(), 0, 1)) / 86400000 + 1) / 7);
-  }
-  function vrShort(d) { return d.getDate() + "." + (d.getMonth() + 1) + "."; }
+  // ---------- Kauppakierros ----------
+  // Kuukauden lautapeli, joka lasketaan suoraan kirjauksista (tulostaulun tiedot): ei omaa palvelinosaa.
+  // Jokainen myyjä on nappula radalla (40 ruutua). Askeleet:
+  //   tarjous 1 (enintään 4 tarjousta päivässä tuo askelia; kaikki lasketaan silti hitrateen)
+  //   kauppa 10 + hitrate-bonus 20 × hitrate (enintään +10, hitrate = kuukauden kaupat / max(tarjoukset, 5))
+  //   päivän boosteri: 2. kauppa samana päivänä +5, 3. ja seuraavat +10
+  //   päivän noppa: aktiivinen päivä (tarjous tai kauppa) tuo 1–6 askelta. Silmäluku on sama kaikille katsojille.
+  // Mitoitus (20 työpv): 60 tarj./8 kauppaa ≈ 25 tarj./8 kauppaa; 40/10 johtaa; 60/4 jää jälkeen.
+  var KK_OFFER = 1, KK_OFFER_CAP = 4, KK_DEAL = 10, KK_HR = 20, KK_HR_MAX = 0.5, KK_LAP = 40;
+  var KK_COLORS = ["#e0202a", "#2f7de1", "#1c9a63", "#e8a21e", "#8a4fd8", "#e0558f", "#13a3b5", "#7a8a1c", "#c76a2b", "#5b6170"];
+  var kk = { timer: null, rolling: false };
+  function kkHash(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+  function kkDie(name, day) { return kkHash(String(name).trim().toLowerCase() + "|" + day + "|kk") % 6 + 1; }
   // Myyjän päiväkohtaiset tapahtumat { "YYYY-MM-DD": [tarjoukset, kaupat] }.
-  function vrDays(doc) {
+  function kkDays(doc) {
     var out = {};
     function add(key, i) { if (!key) return; out[key] = out[key] || [0, 0]; out[key][i]++; }
     var months = (doc && doc.months) || {};
@@ -6509,175 +6526,216 @@
           out[key] = out[key] || [0, 0]; out[key][0] += v[0] || 0; out[key][1] += v[1] || 0;
         });
       }
-      // Edelliseltä kuulta siirtynyt tarjous, joka on kaupattu vasta tiivistämisen jälkeen.
       (m.carry || []).forEach(function (o) {
         if (o && !o.bk && o.closed && o.closedTs && monthKeyOf(new Date(o.closedTs)) !== mk) add(isoToYmd(o.closedTs), 1);
       });
     });
     return out;
   }
-  function vrPts(v) { return v ? v[0] * VR_OFFER + v[1] * VR_DEAL : 0; }
-  // Kaikki myyjät: oma profiili korvaa tulostaulun (mahdollisesti vanhemman) kopion.
-  function vrSellers() {
+  function kkSellers() {
     var me = ((state.profile && state.profile.nickname) || "").trim().toLowerCase();
     var docs = (state.leaderboardDocs || []).filter(function (d) { return ((d.nickname || "").trim().toLowerCase()) !== me; });
     if (state.profile) docs = docs.concat([state.profile]);
     return docs.map(function (d) {
-      return { name: d.nickname || "Nimetön", self: ((d.nickname || "").trim().toLowerCase()) === me, days: vrDays(d) };
+      return { name: d.nickname || "Nimetön", self: ((d.nickname || "").trim().toLowerCase()) === me, days: kkDays(d) };
     });
   }
-  function vrWeekTable(sellers, start) {
-    var keys = []; for (var i = 0; i < 7; i++) keys.push(ymd(vrAddDays(start, i)));
-    return sellers.map(function (s) {
-      var o = 0, dl = 0;
-      keys.forEach(function (k) { var v = s.days[k]; if (v) { o += v[0]; dl += v[1]; } });
-      return { name: s.name, self: s.self, offers: o, deals: dl, pts: o * VR_OFFER + dl * VR_DEAL, today: vrPts(s.days[ymd(new Date())]) };
-    }).sort(function (a, b) { return b.pts - a.pts || b.deals - a.deals || (a.self ? -1 : b.self ? 1 : a.name.localeCompare(b.name, "fi")); });
+  // Kuukauden pisteet päivä kerrallaan. Hitrate-bonus lasketaan päivän lopun kuukausihitratesta, joten nappula ei koskaan peräänny.
+  function kkScore(s, mk) {
+    var keys = Object.keys(s.days).filter(function (k) { return k.slice(0, 7) === mk; }).sort();
+    var co = 0, cd = 0, total = 0, byDay = {};
+    keys.forEach(function (k) {
+      var v = s.days[k], o = v[0] || 0, d = v[1] || 0;
+      co += o; cd += d;
+      var hr = Math.min(cd / Math.max(co, 5), KK_HR_MAX), hb = Math.round(KK_HR * hr);
+      var p = { o: Math.min(o, KK_OFFER_CAP) * KK_OFFER, d: d * KK_DEAL, hr: d * hb, boost: 0, die: 0, offers: o, deals: d };
+      for (var i = 1; i < d; i++) p.boost += i === 1 ? 5 : 10;
+      if (o > 0 || d > 0) p.die = kkDie(s.name, k);
+      p.sum = p.o + p.d + p.hr + p.boost + p.die;
+      total += p.sum; byDay[k] = p;
+    });
+    return { total: total, byDay: byDay, offers: co, deals: cd, hitRate: co ? cd / co : 0 };
   }
-  // Putki: peräkkäiset arkipäivät, joina on kirjattu vähintään yksi tarjous. Tämä päivä ei katkaise putkea vielä.
-  function vrStreak(days) {
-    var d = new Date(), n = 0, first = true;
-    for (var guard = 0; guard < 400; guard++) {
-      if (isWeekday(d)) {
-        var v = days[ymd(d)];
-        if (v && v[0] > 0) n++;
-        else if (!first) break;
-      }
-      first = false;
-      d = vrAddDays(d, -1);
+  function kkTable(mk) {
+    var t = ymd(new Date());
+    return kkSellers().map(function (s) {
+      var sc = kkScore(s, mk);
+      return { name: s.name, self: s.self, total: sc.total, offers: sc.offers, deals: sc.deals, hitRate: sc.hitRate, today: sc.byDay[t] || null, byDay: sc.byDay };
+    }).sort(function (a, b) { return b.total - a.total || b.deals - a.deals || (a.self ? -1 : b.self ? 1 : a.name.localeCompare(b.name, "fi")); });
+  }
+  function kkRevealKey() { return "ts_kk_die_" + ymd(new Date()); }
+  function kkRevealed() { try { var ls = safeLS(); return !!(ls && ls.getItem(kkRevealKey()) === "1"); } catch (e) { return false; } }
+  function kkSetRevealed() { try { var ls = safeLS(); if (ls) ls.setItem(kkRevealKey(), "1"); } catch (e) {} }
+  var KK_PIPS = { 1: [4], 2: [0, 8], 3: [0, 4, 8], 4: [0, 2, 6, 8], 5: [0, 2, 4, 6, 8], 6: [0, 2, 3, 5, 6, 8] };
+  function kkDieHtml(n, cls) {
+    var on = KK_PIPS[n] || [];
+    var h = ''; for (var i = 0; i < 9; i++) h += '<i' + (on.indexOf(i) !== -1 ? ' class="on"' : '') + '></i>';
+    return '<div class="kk-die ' + (cls || '') + '">' + h + '</div>';
+  }
+  // Rata: 11 × 11 ruudukon reuna = 40 ruutua, lähtö vasemmassa yläkulmassa, kulku myötäpäivään.
+  function kkCell(i) {
+    i = ((i % KK_LAP) + KK_LAP) % KK_LAP;
+    if (i <= 10) return { x: i, y: 0 };
+    if (i <= 20) return { x: 10, y: i - 10 };
+    if (i <= 30) return { x: 30 - i, y: 10 };
+    return { x: 0, y: 40 - i };
+  }
+  function kkBoardSvg(table, colors) {
+    var C = 40, P = 4, W = C * 11 + P * 2, h = '';
+    for (var i = 0; i < KK_LAP; i++) {
+      var c = kkCell(i), cls = i === 0 ? 'start' : i % 10 === 0 ? 'corner' : i % 5 === 0 ? 'mid' : '';
+      h += '<rect class="kk-sq ' + cls + '" x="' + (P + c.x * C + 2) + '" y="' + (P + c.y * C + 2) + '" width="' + (C - 4) + '" height="' + (C - 4) + '" rx="7"/>';
+      if (i === 0) h += '<text class="kk-sqt" x="' + (P + C / 2) + '" y="' + (P + C / 2 + 4) + '">LÄHTÖ</text>';
     }
-    return n;
-  }
-  function vrDailyGoal() {
-    var doc = curMonthDoc();
-    if (!doc || !doc.targetOffers) return 2;
-    var s = computeStats(doc);
-    return Math.max(1, Math.min(6, Math.ceil(s.neededPerDay || 0) || 1));
-  }
-  function vrMine() {
-    var me = vrSellers().filter(function (s) { return s.self; })[0];
-    return me ? me.days : {};
+    // Nappulat: samassa ruudussa olevat asetellaan rinnakkain.
+    var byCell = {};
+    table.forEach(function (r, idx) { if (!r.total && !r.self) return; var cell = r.total % KK_LAP; (byCell[cell] = byCell[cell] || []).push({ r: r, idx: idx }); });
+    var pegs = '';
+    Object.keys(byCell).forEach(function (cell) {
+      var list = byCell[cell], c = kkCell(+cell), n = list.length;
+      list.sort(function (a, b) { return (a.r.self ? 1 : 0) - (b.r.self ? 1 : 0); });
+      list.forEach(function (it, j) {
+        var ang = n === 1 ? 0 : (j / n) * Math.PI * 2, rad = n === 1 ? 0 : Math.min(10, 4 + n * 1.5);
+        var cx = P + c.x * C + C / 2 + Math.cos(ang) * rad, cy = P + c.y * C + C / 2 + Math.sin(ang) * rad;
+        var col = colors[it.r.name], ini = it.r.name.trim().slice(0, 1).toUpperCase();
+        pegs += '<g class="kk-peg' + (it.r.self ? ' self' : '') + '" style="transform:translate(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px)">' +
+          '<circle r="' + (it.r.self ? 12 : 10) + '" fill="' + col + '"/><text y="4">' + escapeHtml(ini) + '</text><title>' + escapeHtml(it.r.name) + ': ' + it.r.total + ' askelta</title></g>';
+      });
+    });
+    return '<svg class="kk-board" viewBox="0 0 ' + W + ' ' + W + '" role="img" aria-label="Pelilauta">' + h + pegs + '</svg>';
   }
 
   function renderPeli(main) {
-    main.classList.add("vr-main");
+    main.classList.add("kk-main");
     if (!state.leaderboardLoaded) {
-      main.innerHTML = '<div class="loading-wrap">Ladataan Viikkorallia&hellip;</div>';
+      main.innerHTML = '<div class="loading-wrap">Ladataan Kauppakierrosta&hellip;</div>';
       fetchLeaderboard();
       return;
     }
-    if (!vr.timer) vr.timer = setInterval(function () {
-      if (state.tab === "peli" && state.authStatus === "ready" && !document.querySelector(".ov-back")) fetchLeaderboard();
-      else if (state.tab !== "peli") { clearInterval(vr.timer); vr.timer = null; }
+    if (!kk.timer) kk.timer = setInterval(function () {
+      if (state.tab === "peli" && state.authStatus === "ready" && !document.querySelector(".ov-back") && !kk.rolling) fetchLeaderboard();
+      else if (state.tab !== "peli") { clearInterval(kk.timer); kk.timer = null; }
     }, 30000);
 
-    var now = new Date(), start = vrWeekStart(now), end = vrAddDays(start, 6);
-    var sellers = vrSellers();
-    var table = vrWeekTable(sellers, start);
+    var mk = state.monthKey, now = new Date(), t = ymd(now);
+    var table = kkTable(mk), colors = {};
+    table.forEach(function (r, i) { colors[r.name] = KK_COLORS[i % KK_COLORS.length]; });
     var meIdx = -1; table.forEach(function (r, i) { if (r.self) meIdx = i; });
-    var me = meIdx >= 0 ? table[meIdx] : { pts: 0, offers: 0, deals: 0, today: 0 };
-    var myDays = (sellers.filter(function (s) { return s.self; })[0] || { days: {} }).days;
-    var todayV = myDays[ymd(now)] || [0, 0];
-    var goal = vrDailyGoal(), streak = vrStreak(myDays);
-    var daysLeft = Math.round((end - new Date(now.getFullYear(), now.getMonth(), now.getDate())) / 86400000);
+    var me = meIdx >= 0 ? table[meIdx] : { total: 0, offers: 0, deals: 0, hitRate: 0, today: null };
+    var td = me.today, active = !!td, revealed = kkRevealed();
+    var showDie = active && !revealed;
+    // Ennen nopan heittoa omasta tuloksesta ei näytetä vielä noppaa.
+    var shownTotal = showDie ? me.total - td.die : me.total;
 
-    // Otsikko ja oma tilanne
-    var head = document.createElement("div");
-    head.className = "card vr-head";
-    var gap = meIdx > 0 ? table[meIdx - 1].pts - me.pts : 0;
-    var chase = meIdx === 0 && me.pts > 0
-      ? (table[1] ? 'Johdat ' + (me.pts - table[1].pts) + ' pisteellä.' : 'Johdat.')
-      : meIdx > 0 ? (gap === 0 ? 'Tasapisteissä edellä olevan kanssa.' : gap + ' p sijalle ' + meIdx + '. Yksi kauppa = ' + VR_DEAL + ' p.') : 'Kirjaa tarjous, niin pääset radalle.';
-    head.innerHTML =
-      '<div class="rk-eyebrow">Viikko ' + vrWeekNo(now) + ' · ' + vrShort(start) + '–' + vrShort(end) + '</div>' +
-      '<div class="vr-title">Viikkoralli</div>' +
-      '<div class="vr-me">' +
-        '<div class="vr-big"><b>' + (me.pts > 0 || meIdx >= 0 ? (meIdx + 1) + '.' : '–') + '</b><span>sija / ' + table.length + '</span></div>' +
-        '<div class="vr-big"><b>' + me.pts + '</b><span>pistettä</span></div>' +
-        '<div class="vr-big"><b>' + (daysLeft === 0 ? 'Tänään' : daysLeft) + '</b><span>' + (daysLeft === 0 ? 'maali' : 'pv maaliin') + '</span></div>' +
-      '</div>' +
-      '<p class="vr-chase">' + escapeHtml(chase) + '</p>';
-    main.appendChild(head);
+    // Lauta ja oma tilanne
+    var boardCard = document.createElement("div");
+    boardCard.className = "card kk-boardcard";
+    var lap = Math.floor(shownTotal / KK_LAP) + 1, cell = shownTotal % KK_LAP;
+    var gap = meIdx > 0 ? table[meIdx - 1].total - me.total : 0;
+    boardCard.innerHTML =
+      '<div class="kk-top"><div><div class="rk-eyebrow">' + escapeHtml(monthDisplay(mk)) + '</div><div class="kk-title">Kauppakierros</div></div>' +
+        '<div class="kk-me"><b>' + (meIdx >= 0 ? (meIdx + 1) + '.' : '–') + '</b><span>sija / ' + table.length + '</span></div></div>' +
+      '<div class="kk-wrap">' + kkBoardSvg(table.map(function (r) { return r.self && showDie ? Object.assign({}, r, { total: shownTotal }) : r; }), colors) +
+        '<div class="kk-center">' +
+          '<div class="kk-c-lap">Kierros <b>' + lap + '</b> · ruutu ' + cell + '/' + KK_LAP + '</div>' +
+          '<div class="kk-c-steps"><b>' + shownTotal + '</b> askelta</div>' +
+          (showDie ? '<button type="button" class="kk-roll" id="kkRoll">' + kkDieHtml(6, 'q') + '<span>Heitä päivän noppa</span></button>'
+            : active ? '<div class="kk-rolled">' + kkDieHtml(td.die) + '<span>Päivän noppa +' + td.die + '</span></div>'
+            : '<div class="kk-c-hint">Kirjaa päivän ensimmäinen tarjous, niin saat heittää noppaa.</div>') +
+          (meIdx > 0 ? '<div class="kk-c-gap">' + gap + ' askelta sijalle ' + meIdx + '</div>' : meIdx === 0 && me.total > 0 ? '<div class="kk-c-gap lead">Johdat!</div>' : '') +
+        '</div></div>';
+    main.appendChild(boardCard);
+    var roll = boardCard.querySelector("#kkRoll");
+    if (roll) roll.addEventListener("click", function () {
+      if (kk.rolling) return; kk.rolling = true;
+      var die = roll.querySelector(".kk-die"), n = 0;
+      roll.classList.add("rolling");
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var iv = setInterval(function () {
+        die.outerHTML = kkDieHtml((n % 6) + 1, 'spin'); die = roll.querySelector(".kk-die"); n++;
+        if (n >= (reduce ? 1 : 10)) {
+          clearInterval(iv);
+          die.outerHTML = kkDieHtml(td.die, 'land');
+          kkSetRevealed();
+          showToast("Noppa: " + td.die + "! +" + td.die + " askelta");
+          setTimeout(function () { kk.rolling = false; var y = window.scrollY; render(); window.scrollTo(0, y); }, reduce ? 300 : 900);
+        }
+      }, 80);
+    });
 
-    // Päivän haaste ja putki
-    var day = document.createElement("div");
-    day.className = "card vr-day";
-    var done = todayV[0] >= goal;
-    var dots = ""; for (var i = 0; i < Math.max(goal, todayV[0]); i++) dots += '<i class="' + (i < todayV[0] ? 'on' : '') + '"></i>';
-    day.innerHTML =
-      '<div class="vr-dayrow">' +
-        '<div class="vr-goal' + (done ? ' done' : '') + '"><div class="vr-lbl">Päivän haaste</div>' +
-          '<div class="vr-gt">' + (done ? 'Tehty! ' + todayV[0] + ' tarjousta tänään' : 'Kirjaa ' + goal + ' tarjousta tänään') + '</div>' +
-          '<div class="vr-dots">' + dots + '</div></div>' +
-        '<div class="vr-streak"><div class="vr-lbl">Putki</div><b>' + streak + '</b><span>' + (streak === 1 ? 'arkipäivä' : 'arkipäivää') + '</span></div>' +
-      '</div>' +
-      (done ? '' : '<button type="button" class="btn btn-primary vr-add"><span class="pl">+</span> Kirjaa tarjous</button>');
-    var addB = day.querySelector(".vr-add");
-    if (addB) addB.addEventListener("click", openQuickAdd);
-    main.appendChild(day);
-
-    // Rata
-    var track = document.createElement("div");
-    track.className = "card vr-track";
-    var top = Math.max(10, table.length ? table[0].pts : 0);
-    var onTrack = table.filter(function (r) { return r.pts > 0 || r.self; });
-    var idle = table.length - onTrack.length;
-    track.innerHTML = '<h2>Rata</h2>' +
-      (onTrack.length ? '<div class="vr-lanes">' + onTrack.map(function (r) {
-        var rank = table.indexOf(r) + 1;
-        var pct = Math.max(0, Math.min(100, (r.pts / top) * 100));
-        return '<div class="vr-lane' + (r.self ? ' self' : '') + (rank === 1 && r.pts > 0 ? ' lead' : '') + '">' +
-          '<div class="vr-who"><span class="vr-rk">' + rank + '</span><span class="vr-nm">' + escapeHtml(r.name) + '</span>' +
-            (r.today ? '<span class="vr-td">+' + r.today + ' tänään</span>' : '') +
-            '<span class="vr-pt">' + r.pts + ' p</span></div>' +
-          '<div class="vr-road"><div class="vr-fill" style="width:' + pct + '%"></div><div class="vr-car" style="left:' + pct + '%"></div></div>' +
-          '<div class="vr-sub">' + r.offers + ' tarjousta · ' + r.deals + ' kauppaa</div>' +
-        '</div>';
-      }).join("") + '</div>' : '<p class="vr-dim">Rata on vielä tyhjä tällä viikolla.</p>') +
-      (idle ? '<p class="vr-dim">' + idle + ' myyjää ei vielä lähtenyt liikkeelle tällä viikolla.</p>' : '');
-    main.appendChild(track);
-
-    // Päivän tähti ja viime viikkojen voittajat
-    var side = document.createElement("div");
-    side.className = "card vr-hist";
-    var todayBest = table.slice().sort(function (a, b) { return b.today - a.today; })[0];
-    var hist = [];
-    for (var w = 1; w <= 4; w++) {
-      var ws = vrAddDays(start, -7 * w), wt = vrWeekTable(sellers, ws);
-      if (wt.length && wt[0].pts > 0) {
-        var winners = wt.filter(function (r) { return r.pts === wt[0].pts; });
-        hist.push('<li><span>Vk ' + vrWeekNo(ws) + '</span><b>' + winners.map(function (r) { return escapeHtml(r.name); }).join(", ") + '</b><em>' + wt[0].pts + ' p</em></li>');
-      }
+    // Tänään: mistä askeleet tulivat
+    var today = document.createElement("div");
+    today.className = "card kk-today";
+    var rows = [];
+    if (td) {
+      if (td.offers) rows.push(['Tarjoukset ' + td.offers + (td.offers > KK_OFFER_CAP ? ' (askelia max ' + KK_OFFER_CAP + ')' : ''), td.o]);
+      if (td.deals) rows.push(['Kaupat ' + td.deals + ' × ' + KK_DEAL, td.d]);
+      if (td.hr) rows.push(['Hitrate-bonus', td.hr]);
+      if (td.boost) rows.push([td.deals >= 3 ? 'Boosteri: ' + td.deals + ' kauppaa samana päivänä' : 'Boosteri: tuplakauppapäivä', td.boost]);
+      if (td.die) rows.push(['Päivän noppa', showDie ? '?' : td.die]);
     }
-    side.innerHTML = '<h2>Kärjessä</h2>' +
-      '<div class="vr-star"><span class="vr-lbl">Päivän tähti</span>' +
-        (todayBest && todayBest.today > 0 ? '<b>' + escapeHtml(todayBest.name) + '</b> <em>+' + todayBest.today + ' p tänään</em>' : '<span class="vr-dim">Vielä auki, ensimmäinen kirjaus vie paikan.</span>') + '</div>' +
-      (hist.length ? '<div class="vr-lbl" style="margin-top:14px">Edelliset viikot</div><ul class="vr-wins">' + hist.join("") + '</ul>' : '') +
-      '<details class="vr-rules"><summary>Säännöt</summary><ul>' +
-        '<li>Tarjous = ' + VR_OFFER + ' piste, kauppa = ' + VR_DEAL + ' pistettä.</li>' +
-        '<li>Kisa alkaa joka maanantai nollasta ja päättyy sunnuntaina.</li>' +
-        '<li>Päivän haaste tulee kuukausitavoitteestasi: montako tarjousta tarvitset tänään, jotta pysyt tahdissa.</li>' +
-        '<li>Putki kasvaa jokaisesta arkipäivästä, jona kirjaat vähintään yhden tarjouksen.</li>' +
-        '<li>Pisteet tulevat suoraan kirjauksistasi. Massakirjaukset (menneen kuun luvut) eivät tuo pisteitä.</li>' +
+    var hrB = Math.round(KK_HR * Math.min(me.deals / Math.max(me.offers, 5), KK_HR_MAX));
+    today.innerHTML = '<h2>Tänään</h2>' +
+      (rows.length ? '<ul class="kk-gain">' + rows.map(function (r) { return '<li><span>' + escapeHtml(r[0]) + '</span><b>+' + r[1] + '</b></li>'; }).join("") +
+        '<li class="sum"><span>Yhteensä</span><b>+' + (showDie ? td.sum - td.die : td.sum) + (showDie ? ' + noppa' : '') + '</b></li></ul>'
+        : '<p class="kk-dim">Ei vielä askelia tänään. Tarjous vie askeleen eteenpäin, kauppa ' + (KK_DEAL + hrB) + ' askelta.</p>') +
+      '<div class="kk-next">' +
+        '<div><span>Seuraava kauppa</span><b>+' + (KK_DEAL + hrB) + (td && td.deals ? ' +' + (td.deals === 1 ? 5 : 10) + ' boost' : '') + '</b></div>' +
+        '<div><span>Hitratesi</span><b>' + Math.round(me.hitRate * 100) + ' %</b></div>' +
+        '<div><span>Tarjous</span><b>+' + (td && td.offers >= KK_OFFER_CAP ? 0 : KK_OFFER) + '</b></div>' +
+      '</div>' +
+      '<button type="button" class="btn btn-primary kk-add"><span class="pl">+</span> Kirjaa tarjous</button>';
+    today.querySelector(".kk-add").addEventListener("click", openQuickAdd);
+    main.appendChild(today);
+
+    // Sijoitukset
+    var list = document.createElement("div");
+    list.className = "card kk-list";
+    list.innerHTML = '<h2>Sijoitukset</h2><ol class="kk-rank">' + table.map(function (r, i) {
+      var tot = r.self && showDie ? shownTotal : r.total;
+      var tg = r.today ? (r.self && showDie ? r.today.sum - r.today.die : r.today.sum) : 0;
+      return '<li class="' + (r.self ? 'self' : '') + '"><span class="kk-dot" style="background:' + colors[r.name] + '"></span>' +
+        '<span class="kk-rn">' + (i + 1) + '.</span><span class="kk-nm">' + escapeHtml(r.name) +
+        '<small>' + r.offers + ' tarj. · ' + r.deals + ' kauppaa · ' + Math.round(r.hitRate * 100) + ' %</small></span>' +
+        (tg ? '<span class="kk-tg">+' + tg + '</span>' : '') +
+        '<span class="kk-tt"><b>' + tot + '</b><small>kierros ' + (Math.floor(tot / KK_LAP) + 1) + '</small></span></li>';
+    }).join("") + '</ol>' +
+      '<details class="kk-rules"><summary>Näin askeleet kertyvät</summary><ul>' +
+        '<li><b>Tarjous +' + KK_OFFER + '</b> (enintään ' + KK_OFFER_CAP + ' tarjousta päivässä tuo askelia, kaikki lasketaan hitrateen).</li>' +
+        '<li><b>Kauppa +' + KK_DEAL + '</b> ja päälle <b>hitrate-bonus</b>: 20 × kuukauden hitrate, enintään +10. Kova hitrate tekee jokaisesta kaupasta arvokkaamman.</li>' +
+        '<li><b>Boosteri:</b> toinen kauppa samana päivänä +5, kolmas ja sitä seuraavat +10 kukin.</li>' +
+        '<li><b>Päivän noppa:</b> jokainen aktiivinen päivä (tarjous tai kauppa) tuo 1–6 askelta.</li>' +
+        '<li>Rata on ' + KK_LAP + ' ruutua. Peli alkaa joka kuun alussa alusta. Eniten askelia kuun lopussa voittaa.</li>' +
+        '<li>Esimerkki kuukaudesta: 60 tarjousta ja 8 kauppaa sekä 25 tarjousta ja 8 kauppaa päätyvät lähes tasoihin. Kauppoja tekemällä pääsee kärkeen.</li>' +
       '</ul></details>';
-    main.appendChild(side);
+    main.appendChild(list);
+
+    // Edellisen kuun kärki
+    var pm = monthKeyOf(new Date(now.getFullYear(), now.getMonth() - 1, 1));
+    var prev = kkTable(pm).filter(function (r) { return r.total > 0; }).slice(0, 3);
+    if (prev.length) {
+      var pc = document.createElement("div");
+      pc.className = "card kk-prev";
+      pc.innerHTML = '<h2>' + escapeHtml(monthDisplay(pm)) + ' – kärki</h2><ol class="kk-podium">' + prev.map(function (r, i) {
+        return '<li><span class="kk-medal m' + (i + 1) + '">' + (i + 1) + '</span><b>' + escapeHtml(r.name) + '</b><em>' + r.total + ' askelta</em></li>';
+      }).join("") + '</ol>';
+      main.appendChild(pc);
+    }
   }
 
-  // Etusivun pikkukortti: sija, pisteet ja päivän haaste yhdellä silmäyksellä.
-  function vrHomeCard() {
+  // Etusivun pikkukortti
+  function kkHomeCard() {
     var card = document.createElement("button");
     card.type = "button";
-    card.className = "card vr-homecard";
+    card.className = "card kk-homecard";
     function fill() {
-      var now = new Date(), table = vrWeekTable(vrSellers(), vrWeekStart(now));
-      var idx = -1; table.forEach(function (r, i) { if (r.self) idx = i; });
-      var me = idx >= 0 ? table[idx] : { pts: 0 };
-      var todayV = vrMine()[ymd(now)] || [0, 0], goal = vrDailyGoal();
-      var gap = idx > 0 ? table[idx - 1].pts - me.pts : 0;
-      card.innerHTML = '<div class="vr-hc-l"><div class="rk-eyebrow">Viikkoralli</div>' +
-        '<div class="vr-hc-t">' + (state.leaderboardLoaded ? (idx + 1) + '. sija · ' + me.pts + ' p' : me.pts + ' p') + '</div>' +
-        '<div class="vr-hc-s">' + (todayV[0] >= goal ? 'Päivän haaste tehty ✓' : 'Haaste: ' + todayV[0] + '/' + goal + ' tarjousta tänään') +
-          (state.leaderboardLoaded && idx > 0 ? ' · ' + gap + ' p edellä olevaan' : '') + '</div></div>' +
+      var table = kkTable(state.monthKey), idx = -1; table.forEach(function (r, i) { if (r.self) idx = i; });
+      var me = idx >= 0 ? table[idx] : { total: 0, today: null };
+      var td = me.today, pend = td && !kkRevealed();
+      var tot = pend ? me.total - td.die : me.total;
+      card.innerHTML = '<div class="kk-hc-l"><div class="rk-eyebrow">Kauppakierros</div>' +
+        '<div class="kk-hc-t">' + (state.leaderboardLoaded && idx >= 0 ? (idx + 1) + '. sija · ' : '') + 'kierros ' + (Math.floor(tot / KK_LAP) + 1) + ' · ' + tot + ' askelta</div>' +
+        '<div class="kk-hc-s">' + (pend ? '🎲 Päivän noppa odottaa heittoa' : td ? 'Tänään +' + td.sum + ' askelta' : 'Kirjaa tarjous, niin pääset liikkeelle tänään') + '</div></div>' +
         '<span class="ar">' + RK_ICON.right + '</span>';
     }
     fill();
