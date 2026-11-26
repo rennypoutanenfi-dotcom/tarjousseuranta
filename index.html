@@ -1359,6 +1359,13 @@
   @keyframes kkspin { 50% { transform: rotate(18deg) scale(1.08); } }
   @keyframes kkland { 0% { transform: scale(1.5) rotate(-20deg); } 100% { transform: none; } }
   @media (prefers-reduced-motion: reduce) { .kk-die.spin, .kk-die.land, .kk-peg { animation: none; transition: none; } }
+  .kk-ladder { margin: 4px 0 12px; }
+  .kk-lt { font-size: 13.5px; font-weight: 700; margin-bottom: 6px; }
+  .kk-steps5 { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 5px; }
+  .kk-steps5 span { height: 30px; border-radius: 8px; display: grid; place-items: center; font: 700 12.5px var(--font-body); background: var(--surface-2); border: 1px solid var(--border); color: var(--text-faint); }
+  .kk-steps5 span.b4, .kk-steps5 span.b5 { border-color: var(--gold); color: var(--gold); }
+  .kk-steps5 span.on { background: var(--good); border-color: var(--good); color: #fff; }
+  .kk-steps5 span.b4.on, .kk-steps5 span.b5.on { background: var(--gold); border-color: var(--gold); color: #fff; }
   .kk-gain { list-style: none; padding: 0; margin: 4px 0 0; display: flex; flex-direction: column; gap: 6px; }
   .kk-gain li { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; }
   .kk-gain li b { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--good); }
@@ -6496,12 +6503,15 @@
   // ---------- Kauppakierros ----------
   // Kuukauden lautapeli, joka lasketaan suoraan kirjauksista (tulostaulun tiedot): ei omaa palvelinosaa.
   // Jokainen myyjä on nappula radalla (40 ruutua). Askeleet:
-  //   tarjous 1 (enintään 4 tarjousta päivässä tuo askelia; kaikki lasketaan silti hitrateen)
+  //   tarjous 1 (enintään 5 tarjousta päivässä tuo askelia; kaikki lasketaan silti hitrateen)
+  //   kova tarjouspäivä: 4 tarjousta +3, 5 tai enemmän +6 (autokaupassa 4–5 tarjousta päivässä on kova suoritus)
   //   kauppa 10 + hitrate-bonus 20 × hitrate (enintään +10, hitrate = kuukauden kaupat / max(tarjoukset, 5))
   //   päivän boosteri: 2. kauppa samana päivänä +5, 3. ja seuraavat +10
   //   päivän noppa: aktiivinen päivä (tarjous tai kauppa) tuo 1–6 askelta. Silmäluku on sama kaikille katsojille.
-  // Mitoitus (20 työpv): 60 tarj./8 kauppaa ≈ 25 tarj./8 kauppaa; 40/10 johtaa; 60/4 jää jälkeen.
-  var KK_OFFER = 1, KK_OFFER_CAP = 4, KK_DEAL = 10, KK_HR = 20, KK_HR_MAX = 0.5, KK_LAP = 40;
+  // Mitoitus (20 työpv): 25 tarj./8 kauppaa 231, 60/8 tasaisesti 236, 60/8 monella 4–5 päivällä 265, 40/10 264, 60/4 210.
+  var KK_DAY4 = 3, KK_DAY5 = 6;
+  function kkDayBonus(o) { return o >= 5 ? KK_DAY5 : o >= 4 ? KK_DAY4 : 0; }
+  var KK_OFFER = 1, KK_OFFER_CAP = 5, KK_DEAL = 10, KK_HR = 20, KK_HR_MAX = 0.5, KK_LAP = 40;
   var KK_COLORS = ["#e0202a", "#2f7de1", "#1c9a63", "#e8a21e", "#8a4fd8", "#e0558f", "#13a3b5", "#7a8a1c", "#c76a2b", "#5b6170"];
   var kk = { timer: null, rolling: false };
   function kkHash(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
@@ -6548,10 +6558,10 @@
       var v = s.days[k], o = v[0] || 0, d = v[1] || 0;
       co += o; cd += d;
       var hr = Math.min(cd / Math.max(co, 5), KK_HR_MAX), hb = Math.round(KK_HR * hr);
-      var p = { o: Math.min(o, KK_OFFER_CAP) * KK_OFFER, d: d * KK_DEAL, hr: d * hb, boost: 0, die: 0, offers: o, deals: d };
+      var p = { o: Math.min(o, KK_OFFER_CAP) * KK_OFFER, ob: kkDayBonus(o), d: d * KK_DEAL, hr: d * hb, boost: 0, die: 0, offers: o, deals: d };
       for (var i = 1; i < d; i++) p.boost += i === 1 ? 5 : 10;
       if (o > 0 || d > 0) p.die = kkDie(s.name, k);
-      p.sum = p.o + p.d + p.hr + p.boost + p.die;
+      p.sum = p.o + p.ob + p.d + p.hr + p.boost + p.die;
       total += p.sum; byDay[k] = p;
     });
     return { total: total, byDay: byDay, offers: co, deals: cd, hitRate: co ? cd / co : 0 };
@@ -6669,20 +6679,24 @@
     var rows = [];
     if (td) {
       if (td.offers) rows.push(['Tarjoukset ' + td.offers + (td.offers > KK_OFFER_CAP ? ' (askelia max ' + KK_OFFER_CAP + ')' : ''), td.o]);
+      if (td.ob) rows.push([td.offers >= 5 ? 'Huippupäivä: ' + td.offers + ' tarjousta' : 'Kova päivä: 4 tarjousta', td.ob]);
       if (td.deals) rows.push(['Kaupat ' + td.deals + ' × ' + KK_DEAL, td.d]);
       if (td.hr) rows.push(['Hitrate-bonus', td.hr]);
       if (td.boost) rows.push([td.deals >= 3 ? 'Boosteri: ' + td.deals + ' kauppaa samana päivänä' : 'Boosteri: tuplakauppapäivä', td.boost]);
       if (td.die) rows.push(['Päivän noppa', showDie ? '?' : td.die]);
     }
     var hrB = Math.round(KK_HR * Math.min(me.deals / Math.max(me.offers, 5), KK_HR_MAX));
-    today.innerHTML = '<h2>Tänään</h2>' +
+    var tOff = td ? td.offers : 0;
+    var ladder = '<div class="kk-ladder"><div class="kk-lt">' + (tOff >= 5 ? 'Huippupäivä! 5 tarjousta tehty' : tOff >= 4 ? 'Kova päivä! Vielä 1 tarjous: bonus nousee +' + KK_DAY5 + ':een' : 'Vielä ' + (4 - tOff) + (4 - tOff === 1 ? ' tarjous' : ' tarjousta') + ' kovaan päivään (+' + KK_DAY4 + ')') + '</div><div class="kk-steps5">' +
+      [1, 2, 3, 4, 5].map(function (n) { return '<span class="' + (n <= tOff ? 'on' : '') + (n === 4 ? ' b4' : n === 5 ? ' b5' : '') + '">' + (n === 4 ? '+' + KK_DAY4 : n === 5 ? '+' + KK_DAY5 : n) + '</span>'; }).join("") + '</div></div>';
+    today.innerHTML = '<h2>Tänään</h2>' + ladder +
       (rows.length ? '<ul class="kk-gain">' + rows.map(function (r) { return '<li><span>' + escapeHtml(r[0]) + '</span><b>+' + r[1] + '</b></li>'; }).join("") +
         '<li class="sum"><span>Yhteensä</span><b>+' + (showDie ? td.sum - td.die : td.sum) + (showDie ? ' + noppa' : '') + '</b></li></ul>'
         : '<p class="kk-dim">Ei vielä askelia tänään. Tarjous vie askeleen eteenpäin, kauppa ' + (KK_DEAL + hrB) + ' askelta.</p>') +
       '<div class="kk-next">' +
         '<div><span>Seuraava kauppa</span><b>+' + (KK_DEAL + hrB) + (td && td.deals ? ' +' + (td.deals === 1 ? 5 : 10) + ' boost' : '') + '</b></div>' +
         '<div><span>Hitratesi</span><b>' + Math.round(me.hitRate * 100) + ' %</b></div>' +
-        '<div><span>Tarjous</span><b>+' + (td && td.offers >= KK_OFFER_CAP ? 0 : KK_OFFER) + '</b></div>' +
+        '<div><span>Seuraava tarjous</span><b>+' + (tOff >= KK_OFFER_CAP ? 0 : KK_OFFER + (tOff === 3 ? KK_DAY4 : tOff === 4 ? KK_DAY5 - KK_DAY4 : 0)) + '</b></div>' +
       '</div>' +
       '<button type="button" class="btn btn-primary kk-add"><span class="pl">+</span> Kirjaa tarjous</button>';
     today.querySelector(".kk-add").addEventListener("click", openQuickAdd);
@@ -6702,11 +6716,12 @@
     }).join("") + '</ol>' +
       '<details class="kk-rules"><summary>Näin askeleet kertyvät</summary><ul>' +
         '<li><b>Tarjous +' + KK_OFFER + '</b> (enintään ' + KK_OFFER_CAP + ' tarjousta päivässä tuo askelia, kaikki lasketaan hitrateen).</li>' +
+        '<li><b>Kova tarjouspäivä:</b> 4 tarjousta samana päivänä +' + KK_DAY4 + ', 5 tai enemmän +' + KK_DAY5 + '. Viiden tarjouksen päivä on yhtä arvokas kuin kauppa.</li>' +
         '<li><b>Kauppa +' + KK_DEAL + '</b> ja päälle <b>hitrate-bonus</b>: 20 × kuukauden hitrate, enintään +10. Kova hitrate tekee jokaisesta kaupasta arvokkaamman.</li>' +
         '<li><b>Boosteri:</b> toinen kauppa samana päivänä +5, kolmas ja sitä seuraavat +10 kukin.</li>' +
         '<li><b>Päivän noppa:</b> jokainen aktiivinen päivä (tarjous tai kauppa) tuo 1–6 askelta.</li>' +
         '<li>Rata on ' + KK_LAP + ' ruutua. Peli alkaa joka kuun alussa alusta. Eniten askelia kuun lopussa voittaa.</li>' +
-        '<li>Esimerkki kuukaudesta: 60 tarjousta ja 8 kauppaa sekä 25 tarjousta ja 8 kauppaa päätyvät lähes tasoihin. Kauppoja tekemällä pääsee kärkeen.</li>' +
+        '<li>Esimerkki kuukaudesta: 25 tarjousta ja 8 kauppaa (kova hitrate) pärjää 60 tarjoukselle ja 8 kaupalle. Monet 4–5 tarjouksen päivät tuovat etumatkaa, mutta yksi kauppa lisää kuroo sen kiinni.</li>' +
       '</ul></details>';
     main.appendChild(list);
 
