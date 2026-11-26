@@ -6114,16 +6114,7 @@
   }
   function kvRead(file, progress) {
     var img, worker, cv;
-    progress("Ladataan tekstintunnistusta…");
-    return Promise.all([kvLoadImage(file), kvWorker()]).then(function (r) {
-      img = r[0]; worker = r[1];
-      // Pieni kuva suurennetaan ja iso pienennetään, jotta numerot ovat tunnistukselle sopivan kokoisia.
-      var sc = img.naturalWidth < 1400 ? 2 : img.naturalWidth > 2800 ? 2800 / img.naturalWidth : 1;
-      cv = document.createElement("canvas"); cv.width = Math.round(img.naturalWidth * sc); cv.height = Math.round(img.naturalHeight * sc);
-      var g = cv.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0, 0, cv.width, cv.height); g.drawImage(img, 0, 0, cv.width, cv.height);
-      progress("Luetaan taulukon rakennetta…");
-      return worker.setParameters({ tessedit_pageseg_mode: "11", tessedit_char_whitelist: "" }).then(function () { return worker.recognize(cv); });
-    }).then(function (res) {
+    function structure(res) {
       var words = (res.data.words || []).map(function (w) {
         var b = w.bbox; return { text: (w.text || "").trim(), x0: b.x0, x1: b.x1, y0: b.y0, y1: b.y1, cx: (b.x0 + b.x1) / 2, cy: (b.y0 + b.y1) / 2, h: b.y1 - b.y0 };
       }).filter(function (w) { return w.text; });
@@ -6163,10 +6154,55 @@
       var rowH = kvMedian(labels.slice(1).map(function (l, i) { return l.cy - labels[i].cy; })) || sp;
       var rows = {};
       labels.forEach(function (l) { KV_ROWS.forEach(function (r) { if (!rows[r.k] && r.re.test(l.text)) rows[r.k] = l.cy; }); });
+      if (!Object.keys(rows).length) throw new Error("Rivejä Tarjoukset, Tilaussopimukset ja Laskutus ei löytynyt. Rajaa kuva taulukkoon tai suurenna taulukko ennen kuvakaappausta.");
       // Kuukausi otsikosta (rivit päivärivin yläpuolella), tarvittaessa erillisellä luvulla.
       var month = kvMonthFrom(lines.filter(function (l) { return l.cy < head.line.cy; }).map(function (l) { return l.text; }).join(" "));
       return { cv: cv, sp: sp, cols: cols, lastDay: lastDay, totalX: totalX, rowH: rowH, rows: rows, month: month, headY: head.line.cy };
+    }
+    progress("Ladataan tekstintunnistusta…");
+    return Promise.all([kvLoadImage(file), kvWorker()]).then(function (r) {
+      img = r[0]; worker = r[1];
+      // Pieni kuva suurennetaan ja iso pienennetään, jotta numerot ovat tunnistukselle sopivan kokoisia.
+      var sc = img.naturalWidth < 1400 ? 2 : img.naturalWidth > 2800 ? 2800 / img.naturalWidth : 1;
+      cv = document.createElement("canvas"); cv.width = Math.round(img.naturalWidth * sc); cv.height = Math.round(img.naturalHeight * sc);
+      var g = cv.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0, 0, cv.width, cv.height); g.drawImage(img, 0, 0, cv.width, cv.height);
+      progress("Luetaan taulukon rakennetta…");
+      return worker.setParameters({ tessedit_pageseg_mode: "11", tessedit_char_whitelist: "" }).then(function () { return worker.recognize(cv); });
+    }).then(function (res) {
+      // Rakenne luetaan uudelleen suurennettuna, jos taulukko on kuvassa pieni (esim. puhelimen kuvakaappaus).
+      var g = null, err = null;
+      try { g = structure(res); } catch (e) { err = e; }
+      var k = g ? 60 / g.sp : 2.2;
+      if ((!g || g.sp < 45) && k > 1.15) {
+        k = Math.min(k, Math.sqrt(36e6 / (cv.width * cv.height)));
+        if (k > 1.15) {
+          var cv2 = document.createElement("canvas");
+          cv2.width = Math.round(cv.width * k); cv2.height = Math.round(cv.height * k);
+          var g2 = cv2.getContext("2d"); g2.fillStyle = "#fff"; g2.fillRect(0, 0, cv2.width, cv2.height);
+          g2.imageSmoothingQuality = "high"; g2.drawImage(img, 0, 0, cv2.width, cv2.height);
+          cv = cv2;
+          progress("Luetaan pientä taulukkoa tarkemmin…");
+          return worker.recognize(cv).then(function (r2) {
+            try { return structure(r2); } catch (e2) { if (g) { throw e2; } throw err || e2; }
+          });
+        }
+      }
+      if (!g) throw err;
+      return g;
     }).then(function (g) {
+      // Pieni taulukko: piirretään alkuperäinen kuva uudelleen isompana, jotta numerot erottuvat.
+      if (g.sp < 54) {
+        var k = Math.min(4, 58 / g.sp), cv2 = document.createElement("canvas");
+        cv2.width = Math.round(g.cv.width * k); cv2.height = Math.round(g.cv.height * k);
+        if (cv2.width * cv2.height < 40e6) {
+          var g2 = cv2.getContext("2d"); g2.fillStyle = "#fff"; g2.fillRect(0, 0, cv2.width, cv2.height);
+          g2.imageSmoothingQuality = "high"; g2.drawImage(img, 0, 0, cv2.width, cv2.height);
+          Object.keys(g.cols).forEach(function (d) { g.cols[d] *= k; });
+          Object.keys(g.rows).forEach(function (r) { g.rows[r] *= k; });
+          if (g.totalX) g.totalX *= k;
+          g.sp *= k; g.rowH *= k; g.headY *= k; g.cv = cv2;
+        }
+      }
       var p = Promise.resolve();
       if (!g.month && g.headY > g.rowH * 0.8) {
         var top = kvCrop(g.cv, 0, 0, g.cv.width, Math.max(10, g.headY - g.rowH / 2), 1);
@@ -6183,7 +6219,7 @@
         out.rows[r.k] = true;
         // Koko solu: harmaat ruudukkoviivat katoavat kynnystyksessä, ja luvut ovat usein solun reunassa.
         var y0 = g.rows[r.k] - g.rowH * 0.47, h = g.rowH * 0.94;
-        Object.keys(g.cols).forEach(function (dn) { jobs.push({ r: r.k, d: +dn, x0: g.cols[dn] - g.sp * 0.49, w: g.sp * 0.98, y0: y0, h: h }); });
+        Object.keys(g.cols).forEach(function (dn) { jobs.push({ r: r.k, d: +dn, x0: g.cols[dn] - g.sp * 0.45, w: g.sp * 1.0, y0: y0, h: h }); });
         if (g.totalX) jobs.push({ r: r.k, d: 0, x0: g.totalX - g.sp * 0.75, w: g.sp * 1.5, y0: y0, h: h });
       });
       // Numerot tunnistetaan vertaamalla jokaista merkkiä selaimessa piirrettyihin numeromalleihin.
@@ -6291,10 +6327,20 @@
     Object.keys(days).forEach(function (d) { KV_ROWS.forEach(function (r) { s[r.k] += +(days[d][r.k] || 0); }); });
     return s;
   }
+  // Valintakenttä pidetään sivulla: iPhonen Safari voi muuten hukata valinnan ennen change-tapahtumaa.
   function kvOpen() {
-    var inp = document.createElement("input");
-    inp.type = "file"; inp.accept = "image/*";
-    inp.addEventListener("change", function () { if (inp.files && inp.files[0]) kvStart(inp.files[0]); });
+    var inp = document.getElementById("kvFile");
+    if (!inp) {
+      inp = document.createElement("input");
+      inp.type = "file"; inp.accept = "image/*"; inp.id = "kvFile";
+      inp.style.cssText = "position:fixed;left:-9999px;top:0;width:1px;height:1px;opacity:0;";
+      inp.addEventListener("change", function () {
+        var f = inp.files && inp.files[0];
+        if (f) kvStart(f);
+        inp.value = "";
+      });
+      document.body.appendChild(inp);
+    }
     inp.click();
   }
   function kvStart(file) {
@@ -6312,6 +6358,7 @@
       var net = e && /script|fetch|network|load/i.test(String(e.message || e));
       ov.card.innerHTML = '<div class="qa-head"><h3>Kuvaa ei saatu luettua</h3><button type="button" class="ov-x" aria-label="Sulje">✕</button></div>' +
         '<p class="kv-p">' + escapeHtml(net ? "Tekstintunnistusta ei saatu ladattua. Tarkista verkkoyhteys ja yritä uudelleen." : (e && e.message) || "Tuntematon virhe.") + '</p>' +
+        '<p class="kv-meta">Tekninen syy: ' + escapeHtml(String((e && (e.message || e)) || "?").slice(0, 160)) + (file && file.type ? ' · ' + escapeHtml(file.type) : '') + (file && file.size ? ' · ' + Math.round(file.size / 1024) + ' kt' : '') + '</p>' +
         '<button type="button" class="btn btn-primary" id="kvRetry">Valitse toinen kuva</button>';
       ov.card.querySelector(".ov-x").addEventListener("click", function () { closeOverlay(ov); });
       ov.card.querySelector("#kvRetry").addEventListener("click", function () { closeOverlay(ov); kvOpen(); });
